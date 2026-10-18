@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f3">
+  <meta name="description" content="Beyond the Turing Test introduces the Social Imitation Game: evaluating how an AI agent participates in free-form human group conversations. Explore the research, agent architecture, code, and dataset.">
+  <meta property="og:title" content="Beyond the Turing Test">
+  <meta property="og:description" content="Evaluating AI Agents in Group Conversation. A Social Imitation Game, a responsive language agent, and a dataset of 50 human-AI games.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hoshenlugasi.github.io/Beyond-the-Turing-Test/">
+  <title>Beyond the Turing Test | Evaluating AI Agents in Group Conversation</title>
+  <link rel="canonical" href="https://hoshenlugasi.github.io/Beyond-the-Turing-Test/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav-shell" aria-label="Main navigation">
+      <a class="brand" href="#main" aria-label="Beyond the Turing Test, home">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="m16 5 11 19H5Z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="5" r="4" fill="currentColor"/><circle cx="5" cy="24" r="4" fill="currentColor"/><circle cx="27" cy="24" r="4" fill="currentColor"/></svg>
+        <span>Beyond the Turing Test</span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#agent">Agent</a>
+        <a href="#results">Findings</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#citation">Cite</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" aria-labelledby="project-title">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Research project <span class="eyebrow-divider">/</span> 2026</p>
+      <h1 id="project-title">Beyond the<br><em>Turing Test</em></h1>
+      <p class="hero-subtitle">Evaluating AI Agents in Group Conversation</p>
+      <p class="authors">
+        <span>Hoshen Lugasi<sup>1</sup></span>
+        <span>Uri Berger<sup>1,2</sup></span>
+        <span>Niv Eckhaus<sup>1</sup></span>
+        <span>Itay Itzhak<sup>1,3</sup></span>
+        <span>Gabriel Stanovsky<sup>1</sup></span>
+      </p>
+      <div class="affiliations">
+        <p><sup>1</sup> School of Computer Science and Engineering, The Hebrew University of Jerusalem</p>
+        <p><sup>2</sup> School of Computing and Information Systems, University of Melbourne</p>
+        <p><sup>3</sup> Technion - Israel Institute of Technology</p>
+      </div>
+      <div class="hero-actions">
+        <a class="button button-primary" href="https://github.com/hoshenlugasi/Beyond-the-Turing-Test">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18"/></svg>
+          Explore the code <span aria-hidden="true">&#8599;</span>
+        </a>
+        <a class="button button-secondary" href="https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test" aria-describedby="dataset-status">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></svg>
+          Dataset on Hugging Face <span aria-hidden="true">&#8599;</span>
+        </a>
+        <a class="text-link" href="#citation">Cite this work <span aria-hidden="true">&#8595;</span></a>
+      </div>
+      <p class="resource-status" id="dataset-status">Hugging Face data upload pending. Manuscript not yet published.</p>
+    </section>
+
+    <section class="concept container" aria-labelledby="concept-title">
+      <div class="concept-copy">
+        <p class="eyebrow">A different kind of imitation game</p>
+        <h2 id="concept-title">One group. One AI.<br>No fixed turns.</h2>
+        <p>Can an AI blend into a human group conversation? It is not just about <em>what</em> to say, but <em>when</em> to speak, whom to respond to, and how to follow the group's norms.</p>
+        <a class="text-link" href="#game">Meet the Social Imitation Game <span aria-hidden="true">&#8594;</span></a>
+      </div>
+      <figure class="group-figure">
+        <div class="conversation-map" role="img" aria-label="Conceptual diagram: six pseudonymous players share one group conversation. One player is an AI whose identity is hidden from the others.">
+          <div class="orbit" aria-hidden="true"></div>
+          <div class="conversation-center" aria-hidden="true">
+            <svg width="34" height="30" viewBox="0 0 34 30" fill="none"><path d="M3 3h28v18H14l-7 6v-6H3Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="17" cy="12" r="1.5" fill="currentColor"/><circle cx="24" cy="12" r="1.5" fill="currentColor"/></svg>
+            <span>Shared conversation</span>
+            <small>Anyone can speak. Or wait.</small>
+          </div>
+          <span class="player player-1" aria-hidden="true">A</span>
+          <span class="player player-2" aria-hidden="true">B</span>
+          <span class="player player-3" aria-hidden="true">C</span>
+          <span class="player player-4" aria-hidden="true">D</span>
+          <span class="player player-5" aria-hidden="true">E</span>
+          <span class="player player-6" aria-hidden="true">F</span>
+        </div>
+        <figcaption>One identity is hidden. Every interaction is a clue.<br><span>Conceptual illustration, not a study transcript.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="section container" id="overview" aria-labelledby="overview-title">
+      <div class="section-heading">
+        <p class="eyebrow">01 / Overview</p>
+        <h2 id="overview-title">From individual answers<br>to social participation.</h2>
+      </div>
+      <div class="abstract-layout">
+        <div class="section-aside">
+          <h3>Abstract</h3>
+          <p>From the authors' manuscript.</p>
+        </div>
+        <div class="prose">
+          <p>Turing's Imitation Game tests machine intelligence through one-on-one turn-based conversation, but it does not capture the social dynamics of free-form human communication in group settings, where participation patterns and adherence to group norms complement linguistic content. To address this limitation, we introduce the <strong>Social Imitation Game</strong>, a communication game in which a group of human participants collectively attempts to identify which group member is an AI agent through successive rounds of conversation, each followed by a vote on the AI's identity. This design produces a natural gradient of difficulty and score, as the most suspected player is eliminated after each round.</p>
+          <p>We develop an LLM-based agent comprising a foreground pipeline that decides when to send a message and what message to generate, along with background-worker subagents that perform longer tasks, involving reasoning over the conversation state, retrieving external information, and maintaining memory. This architecture enables the agent to remain responsive while drawing on information accumulated across messages and rounds to support coherent social behavior.</p>
+          <p>We evaluate the agent by collecting a novel dataset of Social Imitation Games involving hundreds of unique human players. The results show that our agent performs almost on par with human participants in terms of elimination and votes received, leaving little room for further improvement to achieve human parity. Further semantic analysis of the messages suggests that the agent takes a more reactive role in conversations, asking fewer questions than human participants. Together, our game formulation, agent architecture, and dataset provide a new framework for studying socially situated language agents beyond the classic Imitation Game.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="game" aria-labelledby="game-title">
+      <div class="section-heading heading-with-copy">
+        <div>
+          <p class="eyebrow">02 / The Social Imitation Game</p>
+          <h2 id="game-title">Conversation becomes<br>the evaluation.</h2>
+        </div>
+        <p>Humans know there is exactly one AI in the group, but not which player it is. Each round tests whether the agent can participate without being identified.</p>
+      </div>
+      <ol class="game-steps">
+        <li><span class="step-number">01</span><h3>Discuss freely</h3><p>Players chat under assigned pseudonyms. There are no fixed speaking turns. Study discussion rounds last 2.5 minutes.</p></li>
+        <li><span class="step-number">02</span><h3>Vote on the AI</h3><p>Each player votes for another remaining player. The most-voted player is eliminated and their identity is revealed; ties are broken at random.</p></li>
+        <li><span class="step-number">03</span><h3>Continue with fewer players</h3><p>Surviving players begin the next discussion. The number of rounds the AI survives gives a graded measure of its success.</p></li>
+      </ol>
+      <div class="game-outcomes">
+        <p><span class="outcome-dot human-dot" aria-hidden="true"></span><strong>Humans win</strong> when they eliminate the AI.</p>
+        <p><span class="outcome-dot ai-dot" aria-hidden="true"></span><strong>The AI wins</strong> when only it and one human remain.</p>
+      </div>
+    </section>
+
+    <section class="agent-section" id="agent" aria-labelledby="agent-title">
+      <div class="container">
+        <div class="section-heading heading-with-copy">
+          <div>
+            <p class="eyebrow">03 / Agent architecture</p>
+            <h2 id="agent-title">Respond in the moment.<br>Keep the wider context.</h2>
+          </div>
+          <p>A latency-critical foreground pipeline works alongside asynchronous background workers. Each iteration reads a stable snapshot of their latest completed work, without waiting for unfinished analysis.</p>
+        </div>
+        <figure class="architecture">
+          <div class="pipeline-label"><span>Foreground pipeline</span><span>New conversation poll &#8594; stable context snapshot</span></div>
+          <ol class="pipeline">
+            <li><span class="node-index">I</span><h3>Scheduler</h3><p>Decide whether to <strong>send</strong> or <strong>wait</strong>.</p></li>
+            <li><span class="node-index">II</span><h3>Generator</h3><p>Propose four distinct candidate messages, or abstain.</p></li>
+            <li><span class="node-index">III</span><h3>Reviewer</h3><p>Assess candidates and select a message, if any.</p></li>
+          </ol>
+          <div class="delivery"><span aria-hidden="true">&#8627;</span> Typing delay <span aria-hidden="true">&#8594;</span> Refresh the conversation <span aria-hidden="true">&#8594;</span> Deliver or suppress</div>
+          <div class="shared-state"><span aria-hidden="true">&#8593;</span> Shared filesystem <span class="shared-detail">Latest completed worker outputs</span></div>
+          <div class="worker-grid">
+            <div><h4>Social State Tracker</h4><p>Suspicion, questions, and group norms</p></div>
+            <div><h4>Internet Context</h4><p>Relevant, up-to-date external information</p></div>
+            <div><h4>Behavior Adapter</h4><p>Participation and social-pressure guidance</p></div>
+            <div><h4>Persona Monitor</h4><p>Consistency of durable self-claims</p></div>
+            <div><h4>Repetition Monitor</h4><p>Recurring words and sentence patterns</p></div>
+            <div><h4>Round Summarizer</h4><p>Context carried across rounds</p></div>
+          </div>
+          <figcaption>Six asynchronous background workers update shared context independently of the foreground pipeline. Schematic based on the manuscript; worker names follow the paper.</figcaption>
+        </figure>
+        <p class="architecture-note"><strong>Selection is not delivery.</strong> Rule-based repetition checks filter candidates before review. After review, timing and fresh-context checks can still suppress a selected message. The study uses Gemini 2.5 Flash. The public V6 runtime omits the historical diagnostic Live Evaluator, which ran with feedback off; see the <a href="https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/RELEASE_NOTES.md">release notes</a> for reproducibility boundaries.</p>
+      </div>
+    </section>
+
+    <section class="section container" id="results" aria-labelledby="results-title">
+      <div class="section-heading">
+        <p class="eyebrow">04 / Selected findings</p>
+        <h2 id="results-title">Hard to identify.<br>Still a different conversational role.</h2>
+        <p class="section-intro">Results from the manuscript's 50-game evaluation, not a general claim of human-level intelligence.</p>
+      </div>
+      <div class="findings-grid">
+        <article class="finding-card survival-card">
+          <p class="card-kicker">Survival through the whole game</p>
+          <div class="big-stat">30<span>%</span></div>
+          <h3>The agent wins 15 of 50 games.</h3>
+          <div class="comparison" role="img" aria-label="Agent win rate: 30 percent. Expected win rate under random elimination: 35.5 percent.">
+            <div class="bar-label"><span>Agent</span><strong>30.0%</strong></div>
+            <div class="bar-track"><span class="bar bar-agent"></span></div>
+            <div class="bar-label"><span>Random elimination</span><strong>35.5%</strong></div>
+            <div class="bar-track"><span class="bar bar-baseline"></span></div>
+          </div>
+          <p class="finding-detail">A difference of -5.5 percentage points (95% bootstrap CI: -17.3 to +7.2). This estimate is consistent with a range of effects; it does not establish equivalence.</p>
+        </article>
+        <article class="finding-card">
+          <p class="card-kicker">First-round human votes</p>
+          <div class="big-stat">22.5<span>%</span></div>
+          <h3>Of human votes target the AI.</h3>
+          <p>Compared with 21.4% expected under random guessing. Later rounds are conditional on the agent surviving earlier votes.</p>
+          <div class="card-footnote">Human-only ballots &middot; First round</div>
+        </article>
+        <article class="finding-card">
+          <p class="card-kicker">Conversational behavior</p>
+          <div class="role-symbol" aria-hidden="true">&#8644;</div>
+          <h3>More answers.<br>Fewer questions.</h3>
+          <p>The agent matches humans in average messages per round (3.84), but answers questions more often and asks fewer. Similar participation rates do not imply the same social role.</p>
+          <div class="card-footnote">Message-level semantic analysis</div>
+        </article>
+      </div>
+      <a class="text-link results-link" href="https://github.com/hoshenlugasi/Beyond-the-Turing-Test/tree/main/analysis">Explore the offline analyses and reference results <span aria-hidden="true">&#8599;</span></a>
+    </section>
+
+    <section class="dataset-section" id="dataset" aria-labelledby="dataset-title">
+      <div class="container">
+        <div class="section-heading heading-with-copy">
+          <div>
+            <p class="eyebrow">05 / The dataset</p>
+            <h2 id="dataset-title">A record of human-AI<br>group interaction.</h2>
+          </div>
+          <p>Fifty Social Imitation Games, linking conversation, voting, and post-game feedback. Sixteen games start with four humans and one AI; thirty-four start with five humans and one AI.</p>
+        </div>
+        <dl class="dataset-stats">
+          <div><dt>Study games</dt><dd>50</dd></div>
+          <div><dt>Discussion rounds</dt><dd>135</dd></div>
+          <div><dt>Player messages</dt><dd>2,414</dd></div>
+          <div><dt>Cast ballots</dt><dd>618</dd></div>
+          <div><dt>Submitted surveys</dt><dd>229</dd></div>
+        </dl>
+        <div class="dataset-details">
+          <div>
+            <h3>Four core files per game</h3>
+            <p>Metadata, participant-facing transcripts, ballots, and surveys. Filtered internal events and frozen analysis inputs are supplied separately; candidates are not delivered chat messages.</p>
+            <a class="text-link" href="https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/DATASET.md">Read the dataset documentation <span aria-hidden="true">&#8599;</span></a>
+          </div>
+          <div>
+            <h3>Interpret with care</h3>
+            <p>Five surveys are missing, and five legacy surveys have no enjoyment rating. Missing values are not zeros. Demographic information is aggregate-only. Reviewed and redacted text can still carry privacy risks; do not attempt re-identification.</p>
+          </div>
+        </div>
+        <div class="availability-note">
+          <div><strong>Hugging Face: data upload pending</strong><p>The dataset repository currently contains metadata only. This link is not yet a download of the study data.</p></div>
+          <a class="button button-secondary" href="https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test">View dataset repository <span aria-hidden="true">&#8599;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container citation-section" id="citation" aria-labelledby="citation-title">
+      <div class="section-heading heading-with-copy">
+        <div><p class="eyebrow">06 / Citation</p><h2 id="citation-title">Build on this work.</h2></div>
+        <p>Please cite the accompanying manuscript when using the code or data. Citation status: unpublished manuscript, 2026. No publication venue or arXiv identifier is assigned here.</p>
+      </div>
+      <div class="citation-box">
+        <div class="citation-toolbar"><span>BibTeX</span><a href="citation.bib" download>Download .bib <span aria-hidden="true">&#8595;</span></a></div>
+        <pre tabindex="0" aria-label="BibTeX citation"><code>@unpublished{lugasi2026beyond,
+  title  = {Beyond the {Turing} Test: Evaluating {AI} Agents
+            in Group Conversation},
+  author = {Lugasi, Hoshen and Berger, Uri and Eckhaus, Niv
+            and Itzhak, Itay and Stanovsky, Gabriel},
+  year   = {2026},
+  note   = {Unpublished manuscript},
+  url    = {https://hoshenlugasi.github.io/Beyond-the-Turing-Test/}
+}</code></pre>
+      </div>
+      <p class="citation-source">Author order and citation status follow <a href="https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/CITATION.cff">CITATION.cff</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p><strong>Beyond the Turing Test</strong><br>Evaluating AI Agents in Group Conversation</p>
+      <p>An original research project website.<br><a href="https://github.com/hoshenlugasi/Beyond-the-Turing-Test">Code and release documentation <span aria-hidden="true">&#8599;</span></a></p>
+    </div>
+  </footer>
+</body>
+</html>
