@@ -1,0 +1,32 @@
+[
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "didnt reply anything when asked towards the end",
+    "additional_comments": "I think the players need to reply a bit faster and incldue themselves more in the game, 1 person didnt type anything at all."
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The AI didn't say Im human",
+    "additional_comments": "No"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "when the AI was asked question about what he like the most to eat Ai didnt reply",
+    "additional_comments": "None"
+  }
+]

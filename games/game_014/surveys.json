@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 1,
+    "suspicion_reason": "he didnt reply to my message",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "It was more how everyone else was responding so I guess with the AI kind of sitting back I did not notice it was them",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Too fast to type. Sometimes didn't answer the question correctly.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I caught onto Sutton in the final and second to final round because they would respond to certain messages too quickly. The \"that makes sense avery\" message in the last round felt like it was sent within a second of me sending my message.",
+    "additional_comments": "None"
+  }
+]

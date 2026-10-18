@@ -1,0 +1,76 @@
+[19:33:18] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[19:33:37] Avery: this might be kinda difficult, ngl
+[19:33:43] Sutton: yeah gonna be tricky
+[19:34:02] Morgan: i think so to
+[19:34:19] Jordan: should which on is ai/
+[19:34:30] Taylor: very difficult
+[19:34:57] Sutton: who knows really
+[19:34:58] Taylor: how do you think the best way to identify ai
+[19:35:01] Jordan: only tell the true and state if your the imposter or not
+[19:35:07] Jordan: i am not
+[19:35:13] Avery: really hard to tell rn.
+[19:35:26] Taylor: i am not
+[19:35:29] Taylor: ai
+[19:35:31] Avery: i'm not the impostor
+[19:35:31] Morgan: me either
+[19:35:42] Sutton: who actually admits it
+[19:35:48] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[19:35:54] Game-Manager: 🗳️ Vote results:
+    Jordan: 2
+    Avery: 1
+    Sutton: 1
+    Taylor: 1
+    → eliminated: Jordan
+[19:35:54] Game-Manager: 📣 Jordan was eliminated. They were: Human
+[19:35:54] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[19:36:09] Avery: rip jordan :(
+[19:36:13] Taylor: omg
+[19:36:16] Sutton: that was quick
+[19:36:22] Taylor: yeah
+[19:36:42] Morgan: so what made everyone think it was jordan
+[19:36:44] Taylor: how old are you, iam 26
+[19:36:52] Morgan: 35
+[19:36:56] Avery: 32
+[19:37:13] Avery: i didn't think it was jordan
+[19:37:36] Taylor: sutton?
+[19:37:40] Sutton: i'm here
+[19:37:48] Avery: sutton?
+[19:37:49] Taylor: sus
+[19:37:57] Sutton: what's up
+[19:38:07] Avery: kinda sus yeah lol
+[19:38:10] Sutton: what about it
+[19:38:19] Sutton: yeah
+[19:38:24] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[19:38:30] Game-Manager: 🗳️ Vote results:
+    Sutton: 2
+    Taylor: 2
+    → eliminated: Taylor
+[19:38:30] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[19:38:30] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[19:38:57] Avery: interesting. i had a feeling it was taylor, but i guess not
+[19:39:01] Sutton: nah
+[19:39:11] Morgan: i thought the same
+[19:39:20] Sutton: who do you think it is avery?
+[19:39:33] Avery: anyone notice how the text in the chat doesn't register capital letters?
+[19:39:36] Sutton: who are you thinking then morgan
+[19:40:03] Morgan: no i did not notice that
+[19:40:19] Sutton: i actually noticed that too avery
+[19:40:29] Avery: i bet it's because the ai would always use capital letters at the right time, and it'd be an easy way to sus out the ai if everyone didn't properly capitalize things.
+[19:40:36] Sutton: that makes sense avery
+[19:40:48] Avery: that was a quick response sutton. very quick actually...
+[19:40:54] Sutton: what's wrong with that
+[19:41:00] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[19:41:05] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Sutton: 1
+    → eliminated: Avery
+[19:41:05] Game-Manager: 📣 Avery was eliminated. They were: Human

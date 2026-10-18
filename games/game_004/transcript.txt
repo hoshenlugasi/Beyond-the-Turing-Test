@@ -1,0 +1,60 @@
+[18:22:19] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:22:35] Avery: hello all
+[18:22:35] Casey: wassup guys
+[18:22:39] Kai: hey everyone
+[18:22:40] Jordan: hello guys
+[18:22:49] Taylor: hi guys
+[18:22:53] Avery: hows everyones day going?
+[18:22:58] Morgan: hello
+[18:23:01] Casey: bad hbu
+[18:23:10] Taylor: doing great and you?
+[18:23:12] Avery: mines not too bad
+[18:23:18] Jordan: i hate my life
+[18:23:20] Morgan: what are you doing guys
+[18:23:27] Kai: not much, chilling
+[18:23:38] Kai: same as avery
+[18:23:41] Casey: just chillin
+[18:23:51] Taylor: jordan, why do you hate your life?
+[18:23:52] Avery: meant to be working but doing this lol
+[18:24:06] Morgan: great, how is your day
+[18:24:29] Jordan: im just joking bro
+[18:24:34] Kai: whats your poison jordan
+[18:24:40] Taylor: ohh come on
+[18:24:44] Casey: morgan you being sus
+[18:24:49] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:25:11] Game-Manager: 🗳️ Vote results:
+    Morgan: 3
+    Casey: 1
+    Jordan: 1
+    Kai: 1
+    → eliminated: Morgan
+[18:25:11] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[18:25:11] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:25:20] Jordan: what?
+[18:25:23] Avery: oh no we got wrong person
+[18:25:26] Kai: yeah rip morgan
+[18:25:42] Jordan: i was sure he was an ai
+[18:25:49] Avery: i voted casey lol
+[18:25:53] Taylor: what? i was hoping for morgan to stay
+[18:26:05] Kai: that's what i thought about casey
+[18:26:08] Casey: what if its kai
+[18:26:19] Kai: nah you guys are tripping
+[18:26:32] Casey: what logic did you use when you voted for me
+[18:26:38] Taylor: it's definitely kai, he's sus
+[18:26:43] Kai: nah not me
+[18:26:55] Casey: righttt buddy
+[18:27:00] Kai: nah i'm just trying to figure it out too
+[18:27:01] Avery: dunno just got a vibe
+[18:27:19] Avery: this is hard
+[18:27:41] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:27:58] Game-Manager: 🗳️ Vote results:
+    Kai: 3
+    Casey: 2
+    → eliminated: Kai
+[18:27:58] Game-Manager: 📣 Kai was eliminated. They were: AI

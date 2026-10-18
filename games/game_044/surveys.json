@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 2,
+    "suspicion_reason": "Honestly every participant felt like AI. Everyone was so vague and generic with what they had to say, it was tough to sus out who. I got voted out for oversharing for trying to get everyone else engaged. The AI Jackie at least engaged what I had to say a bit. If the other participants were actually human (skeptical). Jackie acted more human than they did.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The AI felt very natural, I couldn't know who the AI was.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "the way they were talking. how formally they were writing",
+    "additional_comments": "no"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "It answered the question of who was chopin which made me kind of suspect.",
+    "additional_comments": "None."
+  }
+]

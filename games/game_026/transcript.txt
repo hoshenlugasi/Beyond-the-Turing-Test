@@ -1,0 +1,61 @@
+[14:24:34] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:24:46] Casey: hello
+[14:24:50] Jordan: hi
+[14:24:51] Avery: hi
+[14:24:51] Taylor: yo
+[14:24:55] Morgan: hey
+[14:24:58] Rowan: what's up
+[14:25:00] Jordan: whatup
+[14:25:23] Casey: i don't really know what to talk about
+[14:25:31] Jordan: i am not ai!
+[14:25:37] Taylor: lol
+[14:25:41] Rowan: what are you guys into
+[14:25:44] Casey: lmao me neither
+[14:26:03] Taylor: music? seems something everyone could be into
+[14:26:08] Avery: this is going to be good conversation
+[14:26:11] Rowan: yeah i like electronic stuff
+[14:26:24] Morgan: anything tech
+[14:26:43] Avery: how old are you ?
+[14:26:49] Casey: tbh i'm more into pop and indie rock i guess
+[14:26:56] Taylor: nice nice
+[14:26:59] Jordan: 29
+[14:27:03] Avery: 41
+[14:27:04] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:27:30] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Rowan: 2
+    Casey: 1
+    Taylor: 1
+    → eliminated: Avery
+[14:27:30] Game-Manager: 📣 Avery was eliminated. They were: Human
+[14:27:30] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:27:58] Casey: damn minus one human
+[14:28:02] Rowan: rip avery
+[14:28:04] Jordan: uff poor avery
+[14:28:15] Morgan: i'm 27
+[14:28:27] Jordan: what happens when you get eliminated ? are you instantly done with the study ?
+[14:28:36] Taylor: no clue
+[14:28:42] Casey: im the youngest here ahahaha
+[14:28:51] Morgan: not sure
+[14:28:55] Jordan: how old are you then?
+[14:29:10] Casey: hm i guess? but they should give the code
+[14:29:14] Casey: 24
+[14:29:17] Rowan: that sounds right
+[14:29:25] Jordan: cool
+[14:29:33] Taylor: aight its rowan
+[14:29:37] Rowan: haha nah
+[14:29:51] Jordan: lol i voted for him
+[14:29:52] Casey: im confused tbh
+[14:29:54] Taylor: then i dont have an idea lol
+[14:30:00] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:30:22] Game-Manager: 🗳️ Vote results:
+    Rowan: 3
+    Taylor: 2
+    → eliminated: Rowan
+[14:30:22] Game-Manager: 📣 Rowan was eliminated. They were: AI

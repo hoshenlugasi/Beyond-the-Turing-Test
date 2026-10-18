@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying paper when using this code or dataset."
+title: "Beyond the Turing Test: Evaluating AI Agents in Group Conversation"
+type: software
+authors:
+  - family-names: Lugasi
+    given-names: Hoshen
+  - family-names: Berger
+    given-names: Uri
+  - family-names: Eckhaus
+    given-names: Niv
+  - family-names: Itzhak
+    given-names: Itay
+  - family-names: Stanovsky
+    given-names: Gabriel
+license: MIT
+preferred-citation:
+  type: unpublished
+  title: "Beyond the Turing Test: Evaluating AI Agents in Group Conversation"
+  year: 2026
+  authors:
+    - family-names: Lugasi
+      given-names: Hoshen
+    - family-names: Berger
+      given-names: Uri
+    - family-names: Eckhaus
+      given-names: Niv
+    - family-names: Itzhak
+      given-names: Itay
+    - family-names: Stanovsky
+      given-names: Gabriel

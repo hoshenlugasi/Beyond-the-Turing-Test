@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "making jokes, \"aka haha really doing maths now\"",
+    "additional_comments": "none it was fun to play !"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 2,
+    "timing": 2,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Sage was too responsive and eager.",
+    "additional_comments": "i was correct on my first guess, maybe have give points to those who guess right?"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I got it wrong and by my increased efforts got myself eliminated. I shouuld have focused more on what was being said I think in hind sight",
+    "additional_comments": "Great, enjoyable survey, thanks"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 2,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I suspected Sage but the lack of engagement i thought was a purposeful strategy. I suspected participants who didn't answer pointed questions.",
+    "additional_comments": "It was fun!"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "text less frequent",
+    "additional_comments": "Honestly it was almost perfect"
+  }
+]

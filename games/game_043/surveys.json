@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I was suspecting someone else but i decided to listen to others",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I didn't get it correct - another player suspected Parker early on and acted on it.  Their call won the game for the humans",
+    "additional_comments": "Enjoyed this study - send me more like this.  It was fun :)"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "the rate of response and how fast it is",
+    "additional_comments": "none, it was fun"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 2,
+    "suspicion_reason": "I wasn't suspecting parker because he was using coloquialisims in its responses",
+    "additional_comments": "You should give some type of questions to answer for all people so it would be easier to converse. I had problem with starting to talk with other participants."
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 2,
+    "timing": 1,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I think i was speaking too fast",
+    "additional_comments": "None"
+  }
+]

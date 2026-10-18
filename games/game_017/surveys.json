@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Taylor",
+    "human_likeness": 2,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "When they said \"hope you can cool down a bit\", because it doesn't make a lot of sense.",
+    "additional_comments": "None, but wait time was a bit long even though all players were connected"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The way is was writting without any errors",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 2,
+    "timing": 1,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The first phrase used by Cameron. Not one uses \"hey there\" anymore to greet people.",
+    "additional_comments": "Have the AI uses others phrases to greet people"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "Voten the wrong one",
+    "additional_comments": "No"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "greeting as hey there seemed a bit formal",
+    "additional_comments": "None"
+  }
+]

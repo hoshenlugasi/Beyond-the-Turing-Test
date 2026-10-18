@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "i was going off on text and how they spell, use grammar or slang words but nothing seemed to make me think it was harley until the final round",
+    "additional_comments": "this was such a fun game, i've not had anything similar to this i loved it, you guys should do more they were real fun"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "They were kind of short with their answers.",
+    "additional_comments": "This was so much fun!"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I couldn't suspect AI at all because the conversation looked so natural, human like and was in the perfect flow. I could not even suspect Harley.",
+    "additional_comments": "The study was really very interesting, I enjoyed a lot. I would love to participate in such studies in future."
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I suspect others were wrong based on the answers.",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I did not suspect AI because of how the chats were so natural and human",
+    "additional_comments": "None"
+  }
+]

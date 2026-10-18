@@ -1,0 +1,68 @@
+[
+  {
+    "round": 1,
+    "voter": "Gray",
+    "voted_for": "Avery",
+    "is_ai_voter": true
+  },
+  {
+    "round": 1,
+    "voter": "Avery",
+    "voted_for": "Morgan",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Casey",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Taylor",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Jordan",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Morgan",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Gray",
+    "voted_for": "Morgan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 2,
+    "voter": "Casey",
+    "voted_for": "Gray",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Taylor",
+    "voted_for": "Casey",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Jordan",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Morgan",
+    "voted_for": "Gray",
+    "is_ai_voter": false
+  }
+]

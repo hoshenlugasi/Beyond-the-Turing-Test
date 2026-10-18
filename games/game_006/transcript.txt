@@ -1,0 +1,91 @@
+[19:47:02] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[19:47:10] Taylor: hey
+[19:47:14] Casey: hi!
+[19:47:15] Jordan: hi everyone
+[19:47:15] Morgan: hi
+[19:47:22] Brook: hey there
+[19:47:37] Casey: how is everyone?
+[19:47:41] Jordan: how's your day so far ?
+[19:47:56] Morgan: all good casey and how about you?
+[19:48:01] Taylor: good.been chilling.hbu?
+[19:48:07] Brook: yeah good, just relaxing
+[19:48:10] Casey: im good too, calm morning
+[19:48:20] Avery: hey everyone
+[19:48:28] Taylor: where are yall from?
+[19:48:53] Avery: i am in south africa, johannesburg and you
+[19:48:55] Jordan: mexico
+[19:48:56] Brook: switzerland for me
+[19:49:00] Morgan: somewhere in africa
+[19:49:01] Taylor: thats nice
+[19:49:02] Casey: mexico
+[19:49:05] Taylor: im from greece
+[19:49:29] Morgan: great stuff
+[19:49:32] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[19:49:42] Game-Manager: 🗳️ Vote results:
+    Casey: 3
+    Morgan: 2
+    Jordan: 1
+    → eliminated: Casey
+[19:49:42] Game-Manager: 📣 Casey was eliminated. They were: Human
+[19:49:42] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[19:49:55] Taylor: morgan feels like ai not gonna lie xd
+[19:50:03] Jordan: round 2
+[19:50:12] Brook: who do you think it is now
+[19:50:14] Avery: i thought casey, damn
+[19:50:21] Taylor: i think its morgan
+[19:50:31] Morgan: it’s hard to tell
+[19:50:38] Avery: right? the names sounds like ai
+[19:50:49] Taylor: from the start if you look at the conversation morgan replies are kinda weird
+[19:50:50] Morgan: can’t be
+[19:50:53] Brook: true the names don't help much
+[19:51:03] Morgan: i am from south africa
+[19:51:12] Brook: interesting, south africa has johannesburg right
+[19:51:14] Jordan: i thought that too avery, but im starting to think like taylor
+[19:51:17] Morgan: pretoria to be exact, so i don’t know
+[19:51:23] Brook: ah ok pretoria
+[19:51:24] Taylor: its not me
+[19:51:32] Morgan: not me too
+[19:51:48] Avery: haha is there even ai?
+[19:51:54] Morgan: avery where are you from again?
+[19:51:55] Taylor: maybe not xd
+[19:52:12] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[19:52:21] Game-Manager: 🗳️ Vote results:
+    Morgan: 3
+    Avery: 1
+    Brook: 1
+    → eliminated: Morgan
+[19:52:21] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[19:52:21] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[19:52:27] Taylor: damn
+[19:52:32] Brook: yeah that's rough
+[19:52:43] Brook: yeah that sucks
+[19:52:47] Avery: i am from south africa, [REDACTED]
+[19:52:54] Brook: that's pretty specific
+[19:52:58] Taylor: jordan were are you from again?
+[19:53:00] Avery: and you morgan?
+[19:53:08] Taylor: im from greece
+[19:53:13] Taylor: [REDACTED]
+[19:53:14] Jordan: mexico, from [REDACTED]
+[19:53:46] Brook: [REDACTED] sounds cool
+[19:53:53] Taylor: who do you think is ai?
+[19:54:08] Jordan: maybe brook ?
+[19:54:16] Brook: what makes you say that jordan
+[19:54:29] Brook: oh really why me
+[19:54:41] Brook: not sure why actually
+[19:54:50] Jordan: just a feeling , maybe you are maybe not
+[19:54:51] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[19:55:04] Game-Manager: 🗳️ Vote results:
+    Brook: 2
+    Jordan: 1
+    Taylor: 1
+    → eliminated: Brook
+[19:55:04] Game-Manager: 📣 Brook was eliminated. They were: AI

@@ -1,0 +1,89 @@
+[01:23:25] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:23:33] Casey: hi
+[01:23:37] Morgan: hello all
+[01:23:40] Avery: hello
+[01:23:40] Parker: hey everyone
+[01:23:41] Jordan: hi everyone
+[01:23:42] Casey: how are u
+[01:23:44] Taylor: hello
+[01:24:02] Jordan: ok who is the ai?
+[01:24:05] Taylor: all good
+[01:24:10] Casey: who are is ai
+[01:24:14] Morgan: how is everyone doing?
+[01:24:18] Parker: that's the game right
+[01:24:21] Jordan: casey you are sus
+[01:24:33] Morgan: hehe
+[01:24:53] Jordan: 2+2?
+[01:24:57] Jordan: lol
+[01:25:03] Taylor: i think it is too early to suspect
+[01:25:04] Casey: speak i.a "bot"
+[01:25:10] Parker: lol why the test
+[01:25:20] Casey: parker, is you?
+[01:25:25] Parker: nah not me
+[01:25:29] Jordan: i think its taylor
+[01:25:33] Casey: absolutely?
+[01:25:39] Taylor: no ai would say nah
+[01:25:48] Casey: parker, speak hi
+[01:25:55] Parker: haha nah just me
+[01:25:55] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:26:13] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Morgan: 2
+    Casey: 1
+    Parker: 1
+    → eliminated: Avery
+[01:26:13] Game-Manager: 📣 Avery was eliminated. They were: Human
+[01:26:13] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:26:24] Casey: hi
+[01:26:28] Casey: parker, is you
+[01:26:32] Casey: vote he
+[01:26:35] Jordan: ok its casey
+[01:26:36] Parker: why me always
+[01:26:36] Taylor: hi again
+[01:26:39] Morgan: damn it - i got it wrong
+[01:26:43] Casey: me no
+[01:26:48] Casey: i am human
+[01:26:51] Parker: what made you think it was them?
+[01:26:52] Casey: is parker
+[01:26:58] Jordan: lets all vote for taylor
+[01:27:03] Parker: just voting for casey
+[01:27:07] Casey: no
+[01:27:08] Taylor: projection
+[01:27:11] Casey: parker
+[01:27:15] Casey: vote on parker
+[01:27:18] Parker: what about it casey
+[01:27:24] Jordan: taylor is the ai
+[01:27:28] Taylor: it is jordan 100%
+[01:27:30] Casey: what taylor?
+[01:27:31] Morgan: parker - are you human?
+[01:27:34] Casey: where on
+[01:27:37] Parker: for sure
+[01:27:43] Casey: parker no is human
+[01:27:47] Casey: never
+[01:27:47] Jordan: taylor talks nonsense
+[01:27:49] Parker: yeah i am
+[01:27:52] Taylor: it is callled projection yall
+[01:28:00] Casey: parker speak smile
+[01:28:07] Parker: why is that important casey
+[01:28:08] Jordan: ok its not taylor
+[01:28:10] Casey: you are i.a
+[01:28:17] Taylor: no ai would mistype called
+[01:28:27] Casey: vote on parker
+[01:28:31] Casey: go
+[01:28:34] Parker: why me again
+[01:28:39] Casey: is you
+[01:28:41] Jordan: ok
+[01:28:43] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:29:02] Game-Manager: 🗳️ Vote results:
+    Parker: 2
+    Casey: 1
+    Jordan: 1
+    Taylor: 1
+    → eliminated: Parker
+[01:29:02] Game-Manager: 📣 Parker was eliminated. They were: AI

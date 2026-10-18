@@ -1,0 +1,44 @@
+[17:54:46] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[17:54:55] Avery: hey everyone :)
+[17:54:56] Jordan: hiii
+[17:54:59] Cameron: hi there
+[17:55:01] Casey: hi everyone
+[17:55:02] Taylor: hello!
+[17:55:12] Jordan: who is the ai??? :)))
+[17:55:14] Avery: hows everyones b ank hol going?
+[17:55:22] Avery: (if you're here in the uk of course!)
+[17:55:25] Cameron: good here just studying a bit
+[17:55:26] Taylor: haha
+[17:55:29] Casey: maybe jordan is!!!
+[17:55:41] Jordan: nooooo :p
+[17:55:52] Taylor: already accusing?
+[17:55:58] Avery: pahah, its taylor!?
+[17:56:00] Avery: surely
+[17:56:06] Taylor: nope
+[17:56:09] Cameron: seems like it already
+[17:56:12] Taylor: im just weird
+[17:56:14] Casey: what is everyone's favourite snack
+[17:56:20] Cameron: chips for sure
+[17:56:22] Jordan: i think it's cameron
+[17:56:27] Avery: just eating some quavers that are pretty good honestly
+[17:56:29] Avery: you?
+[17:56:32] Cameron: why me though jordan
+[17:56:35] Taylor: water and energy
+[17:56:48] Avery: water and energy!?
+[17:56:54] Casey: :) :) taylor
+[17:56:57] Jordan: idk just guessing
+[17:57:02] Cameron: yeah water and energy is pretty out there for a snack
+[17:57:04] Taylor: oh no, i mean..fish
+[17:57:10] Avery: what kinda fish
+[17:57:15] Cameron: what kind of fish taylor?
+[17:57:16] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[17:57:34] Game-Manager: 🗳️ Vote results:
+    Cameron: 2
+    Casey: 1
+    Jordan: 1
+    Taylor: 1
+    → eliminated: Cameron
+[17:57:34] Game-Manager: 📣 Cameron was eliminated. They were: AI

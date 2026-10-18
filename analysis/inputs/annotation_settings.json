@@ -1,0 +1,12 @@
+{
+  "model": "anthropic/claude-sonnet-4.5",
+  "temperature": 0.0,
+  "targets": 2414,
+  "context": "Full prior public player-message history only; no future messages",
+  "blinding": "Neutral speaker labels, role/AI identity not sent",
+  "original_prompt_labels": 13,
+  "validated_conversational_labels": 10,
+  "retained_labels": 4,
+  "cache": "Historical Boolean annotations; no new API calls",
+  "prompt_sha256": "df2fa557149e24394281a1ed0ae21e20066008f8827baa2fac34748d8207a83f"
+}

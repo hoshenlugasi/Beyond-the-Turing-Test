@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "talkative",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "i did not suspect until the last run because it was so natural and human like, then i checked the tone and realized it is different from others also he does not mention the occupation.",
+    "additional_comments": "no the game was so funny and i enjoyed."
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I thought the suspect was acting like a computer would talk",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I genuinely thought everyone was an AI",
+    "additional_comments": "None. Very fun!"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The writing style was very accurate and right",
+    "additional_comments": "No"
+  }
+]

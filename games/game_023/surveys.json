@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I thought that there is no AI because everybody seemed to be legit",
+    "additional_comments": "no"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "nothing",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "the last round, just out of discard",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Quinn",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The typing speed",
+    "additional_comments": "None"
+  }
+]

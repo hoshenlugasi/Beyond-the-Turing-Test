@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "je pensais depuis le début a Reese, sa manière de répondre !",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "From the way Reese was chatting, it seemed very human to me.",
+    "additional_comments": "None."
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I did not suspect the AI because it was talking just like any person would. Didnt use !?, etc.",
+    "additional_comments": "Give some premade topics so that the chat was forced to talk a bit more."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "AI was sending un natural message frequently",
+    "additional_comments": "None"
+  }
+]

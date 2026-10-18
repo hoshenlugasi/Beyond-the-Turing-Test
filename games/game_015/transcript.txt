@@ -1,0 +1,82 @@
+[20:07:08] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[20:07:37] Morgan: hey everyone, i just want to start by saying i'm definitely not an ai
+[20:07:47] Logan: yeah that's what an ai would say morgan
+[20:07:47] Taylor: hi everyone
+[20:07:50] Casey: hey guys! quick question to get us started, what's everyone's favorite way to spend a sunday?
+[20:07:53] Avery: hello, it not me too
+[20:07:57] Jordan: hey everyone, wich one of you is the ai?
+[20:08:17] Morgan: casey is the ai for sure
+[20:08:27] Casey: lol avery why so defensive already? i just asked about sundays!
+[20:08:35] Logan: not me either, what about you casey
+[20:08:35] Taylor: i am sure its logan
+[20:08:36] Avery: i think it casey
+[20:08:46] Logan: why me taylor
+[20:08:55] Jordan: i think it is casey too
+[20:09:06] Taylor: i just had to guess its logan
+[20:09:08] Casey: everyone is accusing each other without answering the question haha, i'm just a normal human trying to chat!
+[20:09:15] Logan: what makes you say that taylor
+[20:09:33] Taylor: l just had to feel it
+[20:09:38] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[20:10:12] Game-Manager: 🗳️ Vote results:
+    Casey: 3
+    Taylor: 2
+    Avery: 1
+    → eliminated: Casey
+[20:10:12] Game-Manager: 📣 Casey was eliminated. They were: Human
+[20:10:12] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[20:10:36] Taylor: come on guys
+[20:10:45] Morgan: i feel so bad for casey, genuine empathy, human empathy
+[20:10:47] Logan: yeah that was fast
+[20:10:48] Taylor: who is the ai
+[20:10:55] Avery: maybe its jordan
+[20:11:10] Jordan: it is not me
+[20:11:12] Taylor: what about morgan
+[20:11:31] Logan: who do you think it is then
+[20:11:34] Taylor: morgan is the ai
+[20:11:34] Morgan: didn't you see me talking about my very human empathy?
+[20:11:41] Morgan: oh come on
+[20:11:47] Logan: that just means you're good at acting morgan
+[20:11:54] Morgan: why would i be making it so obvious?
+[20:12:15] Taylor: morgan is the ai
+[20:12:24] Jordan: i think morgan is trolling, if it is not him than it's taylor, taylor is the only one that didn't say is the ai
+[20:12:34] Avery: i think its between morgan and jordan
+[20:12:42] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[20:12:51] Game-Manager: 🗳️ Vote results:
+    Taylor: 3
+    Logan: 1
+    Morgan: 1
+    → eliminated: Taylor
+[20:12:51] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[20:12:51] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[20:13:18] Morgan: i genuinely don't know at this point
+[20:13:24] Logan: yeah it's getting tough
+[20:13:28] Jordan: me neither
+[20:13:46] Morgan: avery? what do you think?
+[20:14:00] Avery: i think its you, morgan
+[20:14:09] Morgan: hmmm
+[20:14:14] Morgan: suspicious
+[20:14:17] Logan: morgan's been quiet lately
+[20:14:26] Morgan: it's logan!
+[20:14:29] Logan: morgan you're just stressed
+[20:14:37] Morgan: there it is folks
+[20:14:41] Morgan: that's an ai
+[20:14:44] Logan: what makes you say that morgan
+[20:15:08] Morgan: i can just tell
+[20:15:11] Logan: how so
+[20:15:14] Avery: not its morgan, the messages looks ai ish
+[20:15:16] Morgan: you said i was quiet when id been talking
+[20:15:21] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[20:15:33] Game-Manager: 🗳️ Vote results:
+    Logan: 2
+    Morgan: 2
+    → eliminated: Logan
+[20:15:33] Game-Manager: 📣 Logan was eliminated. They were: AI

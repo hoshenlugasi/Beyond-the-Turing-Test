@@ -1,0 +1,112 @@
+[13:44:13] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:44:21] Morgan: hi guys - how's everyones day going
+[13:44:25] Casey: hello!
+[13:44:29] Ariel: pretty chill day so far
+[13:44:31] Casey: everything is finee
+[13:44:32] Taylor: it's been goodd
+[13:44:45] Jordan: whats up everyone!
+[13:44:46] Casey: i'm studying for my exams
+[13:45:00] Casey: and you morgan?
+[13:45:03] Jordan: im gooood! will shower soon
+[13:45:06] Morgan: good to hear, my day's going alright too - short break from work to do this test
+[13:45:11] Ariel: nice, a shower sounds good
+[13:45:13] Avery: hello everyone. please can you type with spaces in between every letter so i can read it better?
+[13:45:27] Avery: if that's okay
+[13:45:32] Jordan: ok
+[13:45:40] Taylor: s u r e?
+[13:45:40] Morgan: d o y o u m e a n l i k e t h i s
+[13:45:42] Casey: l i k e t h i s? haha
+[13:45:50] Ariel: yeah like this is weird
+[13:46:03] Morgan: v e r y d i f f i c u l t
+[13:46:05] Avery: okay so clankers have been identified
+[13:46:08] Ariel: makes sense but it's tough to type
+[13:46:21] Taylor: what's a clanker
+[13:46:26] Avery: ai chatbots
+[13:46:27] Casey: clankers?
+[13:46:27] Morgan: that is potentially the worst test for ai i've ever seen
+[13:46:37] Avery: one of the easier ones
+[13:46:41] Casey: there's only one bot
+[13:46:43] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:46:57] Game-Manager: 🗳️ Vote results:
+    Avery: 3
+    Ariel: 1
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Avery
+[13:46:57] Game-Manager: 📣 Avery was eliminated. They were: Human
+[13:46:57] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:47:10] Morgan: hahahaha
+[13:47:13] Jordan: loool
+[13:47:17] Ariel: lol what was that about
+[13:47:20] Taylor: oh lol
+[13:47:26] Jordan: where is everyone from?
+[13:47:27] Casey: bye avery
+[13:47:48] Morgan: i'm from uk
+[13:47:50] Casey: i'm from italy
+[13:47:56] Ariel: anyone else from europe
+[13:47:57] Jordan: same i'm from the uk
+[13:47:58] Casey: but isn't this against the rules haha
+[13:48:11] Taylor: oh you're right
+[13:48:17] Casey: who cares
+[13:48:33] Ariel: true haha
+[13:48:48] Jordan: i thought personal information as in name age etc
+[13:48:56] Morgan: right enough one of us is an ai and i can't tell who it is
+[13:49:04] Casey: me neither
+[13:49:14] Casey: my guess is ariel right now
+[13:49:20] Ariel: yeah it's hard to tell who it is
+[13:49:27] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:49:39] Game-Manager: 🗳️ Vote results:
+    Ariel: 2
+    Casey: 2
+    Taylor: 1
+    → eliminated: Casey
+[13:49:39] Game-Manager: 📣 Casey was eliminated. They were: Human
+[13:49:39] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:49:52] Taylor: ohno
+[13:49:54] Jordan: i'm quite baffled
+[13:49:57] Ariel: rip casey too
+[13:49:59] Morgan: the tactic failed
+[13:50:01] Taylor: we're not too good at this huh
+[13:50:09] Morgan: lol
+[13:50:35] Morgan: i suppose the ai is just mimicking how we're all speaking now anyway so it'll blend in very well
+[13:50:37] Ariel: yeah we're struggling a bit
+[13:50:52] Morgan: what's everyone having for lunch
+[13:51:01] Ariel: not sure yet, maybe a quick sandwich
+[13:51:12] Taylor: soup maybe
+[13:51:12] Jordan: i will have a sandwich as well
+[13:51:23] Morgan: i'm about to make some tuna bagels after this
+[13:51:48] Taylor: yum tuna bagels sound gud
+[13:51:52] Ariel: tuna bagels sound good
+[13:52:09] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:52:24] Game-Manager: 🗳️ Vote results:
+    Ariel: 2
+    Morgan: 2
+    → eliminated: Morgan
+[13:52:24] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[13:52:24] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:52:35] Taylor: well
+[13:52:41] Ariel: tough game so far
+[13:52:50] Jordan: this is really tough ngl
+[13:53:09] Taylor: omg i don't know anymore ahaha
+[13:53:14] Ariel: really tricky now
+[13:54:30] Ariel: true we're not very good at this
+[13:54:52] Taylor: yea i'm just looking at past responses and deciding
+[13:54:54] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:55:12] Game-Manager: 🗳️ Vote results:
+    Ariel: 1
+    Jordan: 1
+    Taylor: 1
+    → eliminated: Ariel
+[13:55:12] Game-Manager: 📣 Ariel was eliminated. They were: AI

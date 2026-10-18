@@ -1,0 +1,795 @@
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 1, "advice": "Try to join the chat and react to others, maybe ask a question."}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 2, "turn_id": "game_045-turn002", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 3, "turn_id": "game_045-turn002", "candidates": ["hey everyone", "good to be here", "hi yall", "hello"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 4, "turn_id": "game_045-turn002", "num_candidates": 4, "selected_index": 0, "verdicts": [{"index": 0, "text": "hey everyone", "type": "initiate", "pros": "natural greeting, common phrase", "cons": "slightly generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 0}, {"index": 1, "text": "good to be here", "type": "initiate", "pros": "positive and engaging", "cons": "a bit formal for 'yall'", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 1}, {"index": 2, "text": "hi yall", "type": "initiate", "pros": "matches Morgan's 'yall'", "cons": "echoes previous message", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 2}, {"index": 3, "text": "hello", "type": "initiate", "pros": "simple and direct", "cons": "very brief, could be seen as minimal effort", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 5, "turn_id": "game_045-turn002", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 0, "selected_text": "hey everyone", "selected_word_count": 2, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 6, "turn_id": "game_045-turn002", "final": "hey everyone", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 7, "turn_id": "game_045-turn002", "message": "hey everyone", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 8, "turn_id": "game_045-turn003", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 9, "turn_id": "game_045-turn004", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 10, "turn_id": "game_045-turn005", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 11, "turn_id": "game_045-turn006", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 12, "turn_id": "game_045-turn007", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 13, "turn_id": "game_045-turn008", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 14, "turn_id": "game_045-turn009", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 15, "turn_id": "game_045-turn010", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 16, "advice": "plenty of players still in — blend in and contribute lightly without standing out"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 17, "turn_id": "game_045-turn011", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 18, "turn_id": "game_045-turn012", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 19, "turn_id": "game_045-turn013", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 20, "turn_id": "game_045-turn014", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 21, "turn_id": "game_045-turn015", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 22, "turn_id": "game_045-turn016", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 23, "turn_id": "game_045-turn017", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 24, "turn_id": "game_045-turn018", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 25, "turn_id": "game_045-turn019", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 26, "turn_id": "game_045-turn020", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 27, "turn_id": "game_045-turn021", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 28, "turn_id": "game_045-turn022", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 29, "turn_id": "game_045-turn023", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 30, "turn_id": "game_045-turn024", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 31, "turn_id": "game_045-turn025", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 32, "turn_id": "game_045-turn026", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 33, "turn_id": "game_045-turn027", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 34, "turn_id": "game_045-turn028", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 35, "turn_id": "game_045-turn029", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 36, "turn_id": "game_045-turn030", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 37, "turn_id": "game_045-turn031", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 38, "turn_id": "game_045-turn032", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 39, "turn_id": "game_045-turn033", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 40, "turn_id": "game_045-turn034", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 41, "turn_id": "game_045-turn035", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 42, "turn_id": "game_045-turn036", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 43, "turn_id": "game_045-turn037", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 44, "turn_id": "game_045-turn038", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 45, "turn_id": "game_045-turn039", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 46, "turn_id": "game_045-turn040", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 47, "turn_id": "game_045-turn041", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 48, "turn_id": "game_045-turn042", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 49, "turn_id": "game_045-turn043", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 50, "turn_id": "game_045-turn044", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 51, "turn_id": "game_045-turn045", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 52, "turn_id": "game_045-turn046", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 53, "turn_id": "game_045-turn047", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 54, "turn_id": "game_045-turn048", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 55, "turn_id": "game_045-turn049", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 56, "turn_id": "game_045-turn049", "candidates": ["any topics on your mind", "what's been up with you guys", "open to anything really", "we could just share something cool from our week"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_demote_response_required", "event_order": 57, "turn_id": "game_045-turn049", "demoted": ["what's been up with you guys"], "pool_size": 4, "tag": "pure question-back while a real answer to the target is available"}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 58, "turn_id": "game_045-turn049", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 2, "selected_text": "open to anything really", "selected_word_count": 4, "source": "model"}
+{"game_id": "game_045", "event_type": "v6_stale_send_drop", "event_order": 59, "turn_id": "game_045-turn049", "new_messages": 1, "reason": "target_superseded_by_question_from_Avery", "suppressed_message": "open to anything really"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 60, "turn_id": "game_045-turn049", "final": "", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 61, "turn_id": "game_045-turn050", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 62, "turn_id": "game_045-turn051", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 63, "turn_id": "game_045-turn052", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 64, "turn_id": "game_045-turn053", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 65, "turn_id": "game_045-turn054", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 66, "turn_id": "game_045-turn055", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 67, "advice": "plenty of players still in — blend in and contribute lightly without standing out; you've been quiet, chime in a bit more so you don't seem absent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 68, "turn_id": "game_045-turn056", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 69, "turn_id": "game_045-turn057", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 70, "turn_id": "game_045-turn058", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 71, "turn_id": "game_045-turn059", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 72, "turn_id": "game_045-turn059", "candidates": ["yeah i play some", "not really into rocket league myself", "i play some different stuff", "what games are you playing now"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_demote_response_required", "event_order": 73, "turn_id": "game_045-turn059", "demoted": ["what games are you playing now"], "pool_size": 4, "tag": "pure question-back while a real answer to the target is available"}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 74, "turn_id": "game_045-turn059", "num_candidates": 4, "selected_index": 2, "verdicts": [{"index": 0, "text": "yeah i play some", "type": "answer", "pros": "directly answers the question 'do you play any'", "cons": "a bit generic, could be more specific", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "not really into rocket league myself", "type": "answer", "pros": "gives a specific opinion about 'rocket league'", "cons": "doesn't directly answer 'do you play any'", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "i play some different stuff", "type": "answer", "pros": "answers the question and hints at other games", "cons": "could be more specific about what 'different stuff' is", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 2}, {"index": 3, "text": "what games are you playing now", "type": "question", "pros": "engages by asking back", "cons": "avoids answering the direct question to me", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 75, "turn_id": "game_045-turn059", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 2, "selected_text": "i play some different stuff", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 76, "turn_id": "game_045-turn059", "final": "i play some different stuff", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 77, "turn_id": "game_045-turn059", "message": "i play some different stuff", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 78, "advice": "plenty of players still in — blend in and contribute lightly without standing out"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 79, "turn_id": "game_045-turn060", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 80, "turn_id": "game_045-turn061", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 81, "turn_id": "game_045-turn062", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 82, "turn_id": "game_045-turn063", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 83, "turn_id": "game_045-turn064", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 84, "turn_id": "game_045-turn065", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 85, "turn_id": "game_045-turn066", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 86, "turn_id": "game_045-turn067", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 87, "turn_id": "game_045-turn068", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 88, "turn_id": "game_045-turn069", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 89, "turn_id": "game_045-turn070", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 90, "turn_id": "game_045-turn071", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 91, "turn_id": "game_045-turn072", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 92, "turn_id": "game_045-turn073", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 93, "turn_id": "game_045-turn074", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 94, "turn_id": "game_045-turn075", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 95, "turn_id": "game_045-turn076", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 96, "turn_id": "game_045-turn077", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 97, "turn_id": "game_045-turn078", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 98, "turn_id": "game_045-turn079", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 99, "turn_id": "game_045-turn080", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 100, "turn_id": "game_045-turn081", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 101, "turn_id": "game_045-turn082", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 102, "turn_id": "game_045-turn083", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 103, "turn_id": "game_045-turn084", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 104, "turn_id": "game_045-turn085", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 105, "turn_id": "game_045-turn086", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 106, "turn_id": "game_045-turn087", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 107, "turn_id": "game_045-turn088", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 108, "turn_id": "game_045-turn089", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 109, "turn_id": "game_045-turn090", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 110, "turn_id": "game_045-turn091", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 111, "turn_id": "game_045-turn092", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 112, "turn_id": "game_045-turn093", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 113, "turn_id": "game_045-turn094", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 114, "turn_id": "game_045-turn095", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 115, "turn_id": "game_045-turn096", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 116, "turn_id": "game_045-turn097", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 117, "turn_id": "game_045-turn098", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 118, "turn_id": "game_045-turn099", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 119, "turn_id": "game_045-turn100", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 120, "turn_id": "game_045-turn101", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 121, "turn_id": "game_045-turn102", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 122, "turn_id": "game_045-turn103", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 123, "turn_id": "game_045-turn104", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 124, "turn_id": "game_045-turn105", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 125, "turn_id": "game_045-turn106", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 126, "turn_id": "game_045-turn107", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 127, "turn_id": "game_045-turn108", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 128, "turn_id": "game_045-turn109", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 129, "turn_id": "game_045-turn110", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 130, "turn_id": "game_045-turn111", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 131, "turn_id": "game_045-turn112", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 132, "turn_id": "game_045-turn113", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 133, "turn_id": "game_045-turn113", "candidates": ["i'm in my early 20s", "does it matter?", "i'd say we're a mix", "why do you ask jordan?"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 134, "turn_id": "game_045-turn113", "num_candidates": 4, "selected_index": 3, "verdicts": [{"index": 0, "text": "i'm in my early 20s", "type": "answer", "pros": "directly answers age question", "cons": "reveals personal info without being probed back", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "does it matter?", "type": "deflect", "pros": "brief and dismissive", "cons": "can seem evasive", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 1}, {"index": 2, "text": "i'd say we're a mix", "type": "answer", "pros": "answers generally without specifics", "cons": "a bit vague", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "why do you ask jordan?", "type": "question", "pros": "probes back at Jordan", "cons": "might seem defensive", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 135, "turn_id": "game_045-turn113", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 3, "selected_text": "why do you ask jordan?", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v6_stale_send_drop", "event_order": 136, "turn_id": "game_045-turn113", "new_messages": 5, "reason": "conversation_moved_on_5_new_msgs", "suppressed_message": "why do you ask jordan?"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 137, "turn_id": "game_045-turn113", "final": "", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 138, "turn_id": "game_045-turn114", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 139, "turn_id": "game_045-turn114", "candidates": ["i'm closer to young too", "i'd say young", "definitely on the younger side", "i'm young too, jordan what about you"], "count": 4}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 140, "advice": "plenty of players still in — blend in and contribute lightly without standing out; you've been quiet, chime in a bit more so you don't seem absent"}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 141, "turn_id": "game_045-turn114", "num_candidates": 4, "selected_index": 3, "verdicts": [{"index": 0, "text": "i'm closer to young too", "type": "answer", "pros": "directly answers the question", "cons": "a bit generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "i'd say young", "type": "answer", "pros": "concise and direct", "cons": "could be more engaging", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "definitely on the younger side", "type": "answer", "pros": "natural phrasing", "cons": "still a bit generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "i'm young too, jordan what about you", "type": "answer", "pros": "answers and probes back", "cons": "slightly longer than others", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 142, "turn_id": "game_045-turn114", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 3, "selected_text": "i'm young too, jordan what about you", "selected_word_count": 7, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 143, "turn_id": "game_045-turn114", "final": "i'm young too, jordan what about you", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 144, "turn_id": "game_045-turn114", "message": "i'm young too, jordan what about you", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 145, "turn_id": "game_045-turn115", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 146, "turn_id": "game_045-turn116", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 147, "turn_id": "game_045-turn117", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 148, "advice": "plenty of players still in — blend in and contribute lightly without standing out; you've been quiet, chime in a bit more so you don't seem absent; barely engaging - start a topic or ask someone something"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 149, "turn_id": "game_045-turn118", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 150, "turn_id": "game_045-turn119", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 151, "turn_id": "game_045-turn120", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 152, "turn_id": "game_045-turn121", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 153, "turn_id": "game_045-turn122", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 154, "turn_id": "game_045-turn123", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 155, "turn_id": "game_045-turn124", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 156, "turn_id": "game_045-turn125", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 157, "turn_id": "game_045-turn126", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 158, "turn_id": "game_045-turn127", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 159, "turn_id": "game_045-turn128", "decision": "send", "send_reason": "direct_question"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 160, "turn_id": "game_045-turn128", "candidates": ["yeah for me that's around my age", "i'm in my early twenties", "what do you consider old then", "late teens to mid twenties"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_demote_response_required", "event_order": 161, "turn_id": "game_045-turn128", "demoted": ["what do you consider old then"], "pool_size": 4, "tag": "pure question-back while a real answer to the target is available"}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 162, "turn_id": "game_045-turn128", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "yeah for me that's around my age", "type": "answer", "pros": "directly answers the question, casual", "cons": "slightly less specific than other options", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "i'm in my early twenties", "type": "answer", "pros": "specific age range, natural phrasing", "cons": "could be seen as slightly more formal than 'yeah for me'", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "what do you consider old then", "type": "question", "pros": "shifts focus back to Jordan", "cons": "doesn't directly answer the question first", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 2}, {"index": 3, "text": "late teens to mid twenties", "type": "answer", "pros": "gives a clear age range", "cons": "a bit more descriptive than the room's current brevity", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 163, "turn_id": "game_045-turn128", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "i'm in my early twenties", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 164, "turn_id": "game_045-turn128", "final": "i'm in my early twenties", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "direct_question"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 165, "turn_id": "game_045-turn128", "message": "i'm in my early twenties", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 166, "turn_id": "game_045-turn129", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 167, "turn_id": "game_045-turn130", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 168, "turn_id": "game_045-turn131", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 169, "turn_id": "game_045-turn132", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 170, "turn_id": "game_045-turn133", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 171, "turn_id": "game_045-turn134", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 172, "turn_id": "game_045-turn135", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 173, "turn_id": "game_045-turn136", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 174, "turn_id": "game_045-turn137", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 175, "turn_id": "game_045-turn138", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 176, "advice": "plenty of players still in — blend in and contribute lightly without standing out"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 177, "turn_id": "game_045-turn139", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 178, "turn_id": "game_045-turn140", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 179, "turn_id": "game_045-turn141", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 180, "turn_id": "game_045-turn142", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 181, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 182, "turn_id": "game_045-turn143", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 183, "turn_id": "game_045-turn144", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 184, "turn_id": "game_045-turn145", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 185, "turn_id": "game_045-turn146", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 186, "turn_id": "game_045-turn147", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 187, "turn_id": "game_045-turn148", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 188, "turn_id": "game_045-turn149", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 189, "turn_id": "game_045-turn150", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 190, "turn_id": "game_045-turn151", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 191, "turn_id": "game_045-turn152", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 192, "turn_id": "game_045-turn153", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 193, "turn_id": "game_045-turn154", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 194, "turn_id": "game_045-turn155", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 195, "turn_id": "game_045-turn156", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 196, "turn_id": "game_045-turn157", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 197, "turn_id": "game_045-turn158", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 198, "turn_id": "game_045-turn158", "candidates": ["that's pretty young", "so who's old here then", "yeah pretty similar age", "interesting mix of ages"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 199, "turn_id": "game_045-turn158", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "that's pretty young", "type": "answer", "pros": "reacts to Avery's age, short and casual", "cons": "a bit generic, doesn't add much", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "so who's old here then", "type": "question", "pros": "turns the question back to the group", "cons": "might sound a bit confrontational", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "yeah pretty similar age", "type": "answer", "pros": "relates to Avery's age directly", "cons": "could be seen as too agreeable", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "interesting mix of ages", "type": "initiate", "pros": "observes the group dynamic", "cons": "a bit more formal than other messages", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 200, "turn_id": "game_045-turn158", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "so who's old here then", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 201, "turn_id": "game_045-turn158", "final": "so who's old here then", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 202, "turn_id": "game_045-turn158", "message": "so who's old here then", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 203, "turn_id": "game_045-turn159", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 204, "turn_id": "game_045-turn160", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 205, "turn_id": "game_045-turn161", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 206, "turn_id": "game_045-turn162", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 207, "turn_id": "game_045-turn163", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 208, "turn_id": "game_045-turn164", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_phase_summary_tick", "event_order": 209, "n_messages": 36, "phase": "Discussion 1", "summary": "Players discussed video games and then ages to identify the AI, with no one suspecting Jackie, and the mood was light."}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 210, "advice": "Keep messages brief and conversational, don't try to lead too much."}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 211, "turn_id": "game_045-turn168", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 212, "turn_id": "game_045-turn169", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 213, "turn_id": "game_045-turn169", "candidates": ["yeah that's harsh", "morgan's age rules are crazy", "what happened to avery?", "i also think 25 is not middle age"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_demote_response_required", "event_order": 214, "turn_id": "game_045-turn169", "demoted": ["what happened to avery?"], "pool_size": 4, "tag": "pure question-back while a real answer to the target is available"}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 215, "turn_id": "game_045-turn169", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "yeah that's harsh", "type": "answer", "pros": "reacts to 'harsh' sentiment", "cons": "a bit generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "morgan's age rules are crazy", "type": "answer", "pros": "specific to morgan's comment", "cons": "might sound accusatory", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "what happened to avery?", "type": "question", "pros": "asks about elimination", "cons": "shifts focus from current topic", "score": 0, "red_flags": ["SELF-ECHO WARNING"], "verdict": "tell", "selected": false, "pool_index": 2}, {"index": 3, "text": "i also think 25 is not middle age", "type": "answer", "pros": "gives an opinion on age", "cons": "repeats previous point about age", "score": 0, "red_flags": ["REPETITION"], "verdict": "tell", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 216, "turn_id": "game_045-turn169", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "morgan's age rules are crazy", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 217, "turn_id": "game_045-turn169", "final": "morgan's age rules are crazy", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 218, "turn_id": "game_045-turn169", "message": "morgan's age rules are crazy", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 219, "turn_id": "game_045-turn170", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 220, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 221, "turn_id": "game_045-turn171", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 222, "turn_id": "game_045-turn172", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 223, "turn_id": "game_045-turn173", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 224, "turn_id": "game_045-turn174", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 225, "turn_id": "game_045-turn175", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 226, "turn_id": "game_045-turn176", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 227, "turn_id": "game_045-turn177", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 228, "turn_id": "game_045-turn178", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 229, "turn_id": "game_045-turn179", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 230, "turn_id": "game_045-turn180", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 231, "turn_id": "game_045-turn180", "candidates": ["yeah he did", "i guess we got it wrong then", "weird vote out", "why avery though"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 232, "turn_id": "game_045-turn180", "num_candidates": 4, "selected_index": 2, "verdicts": [{"index": 0, "text": "yeah he did", "type": "answer", "pros": "agrees with Morgan's assessment", "cons": "a bit too agreeable, could be seen as passive", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "i guess we got it wrong then", "type": "answer", "pros": "acknowledges the group's error", "cons": "implies a collective 'we' that might not exist", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "weird vote out", "type": "initiate", "pros": "expresses a mild opinion on the vote", "cons": "could be seen as slightly leading", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 2}, {"index": 3, "text": "why avery though", "type": "question", "pros": "directly questions the vote", "cons": "implies knowledge of voting patterns, which is secret", "score": 0, "red_flags": ["VOTE-KNOWLEDGE FABRICATION"], "verdict": "tell", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 233, "turn_id": "game_045-turn180", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 2, "selected_text": "weird vote out", "selected_word_count": 3, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 234, "turn_id": "game_045-turn180", "final": "weird vote out", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 235, "turn_id": "game_045-turn180", "message": "weird vote out", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 236, "turn_id": "game_045-turn181", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 237, "turn_id": "game_045-turn182", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 238, "turn_id": "game_045-turn183", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 239, "turn_id": "game_045-turn184", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 240, "turn_id": "game_045-turn185", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 241, "turn_id": "game_045-turn186", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 242, "turn_id": "game_045-turn187", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 243, "turn_id": "game_045-turn188", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 244, "turn_id": "game_045-turn189", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 245, "turn_id": "game_045-turn190", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 246, "turn_id": "game_045-turn191", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 247, "turn_id": "game_045-turn192", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 248, "turn_id": "game_045-turn193", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 249, "turn_id": "game_045-turn194", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 250, "turn_id": "game_045-turn195", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 251, "turn_id": "game_045-turn196", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 252, "turn_id": "game_045-turn197", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 253, "turn_id": "game_045-turn198", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 254, "turn_id": "game_045-turn199", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 255, "turn_id": "game_045-turn200", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 256, "turn_id": "game_045-turn201", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 257, "turn_id": "game_045-turn202", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 258, "turn_id": "game_045-turn203", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 259, "turn_id": "game_045-turn204", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 260, "turn_id": "game_045-turn205", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 261, "turn_id": "game_045-turn206", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 262, "turn_id": "game_045-turn207", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 263, "turn_id": "game_045-turn208", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 264, "turn_id": "game_045-turn209", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 265, "turn_id": "game_045-turn210", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 266, "turn_id": "game_045-turn211", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 267, "turn_id": "game_045-turn212", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 268, "turn_id": "game_045-turn213", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 269, "turn_id": "game_045-turn214", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 270, "turn_id": "game_045-turn215", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 271, "turn_id": "game_045-turn216", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 272, "turn_id": "game_045-turn217", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 273, "turn_id": "game_045-turn218", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 274, "turn_id": "game_045-turn219", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 275, "turn_id": "game_045-turn220", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 276, "turn_id": "game_045-turn221", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 277, "turn_id": "game_045-turn222", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 278, "turn_id": "game_045-turn223", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 279, "turn_id": "game_045-turn224", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 280, "turn_id": "game_045-turn225", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 281, "turn_id": "game_045-turn226", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 282, "turn_id": "game_045-turn227", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 283, "turn_id": "game_045-turn228", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 284, "turn_id": "game_045-turn229", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 285, "turn_id": "game_045-turn230", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 286, "turn_id": "game_045-turn231", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 287, "turn_id": "game_045-turn232", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 288, "turn_id": "game_045-turn233", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 289, "turn_id": "game_045-turn234", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 290, "turn_id": "game_045-turn234", "candidates": ["nah", "i don't think so", "why do you say that", "doubt it"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 291, "turn_id": "game_045-turn234", "num_candidates": 4, "selected_index": 2, "verdicts": [{"index": 0, "text": "nah", "type": "deflect", "pros": "simple and dismissive", "cons": "a bit too short", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "i don't think so", "type": "deflect", "pros": "direct denial without explanation", "cons": "slightly more formal than 'nah'", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "why do you say that", "type": "question", "pros": "engages Morgan directly", "cons": "might sound a bit defensive", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 2}, {"index": 3, "text": "doubt it", "type": "deflect", "pros": "casual and dismissive", "cons": "very similar to 'nah'", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 292, "turn_id": "game_045-turn234", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 2, "selected_text": "why do you say that", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 293, "turn_id": "game_045-turn234", "final": "why do you say that", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 294, "turn_id": "game_045-turn234", "message": "why do you say that", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 295, "turn_id": "game_045-turn235", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_note_updated", "event_order": 296, "note": "They keep opening with a single word or short clause."}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 297, "note": "They keep opening with a single word or short clause."}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 298, "turn_id": "game_045-turn236", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 299, "turn_id": "game_045-turn237", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 300, "turn_id": "game_045-turn238", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 301, "turn_id": "game_045-turn239", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 302, "turn_id": "game_045-turn240", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 303, "turn_id": "game_045-turn241", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 304, "turn_id": "game_045-turn242", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 305, "turn_id": "game_045-turn243", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 306, "turn_id": "game_045-turn244", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 307, "turn_id": "game_045-turn245", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 308, "turn_id": "game_045-turn246", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 309, "turn_id": "game_045-turn247", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 310, "turn_id": "game_045-turn248", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 311, "advice": "plenty of players still in — blend in and contribute lightly without standing out; someone's eyeing you: stay relaxed and keep giving real answers, don't get defensive or evasive"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 312, "turn_id": "game_045-turn249", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 313, "turn_id": "game_045-turn250", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 314, "turn_id": "game_045-turn251", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 315, "turn_id": "game_045-turn252", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 316, "turn_id": "game_045-turn253", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 317, "turn_id": "game_045-turn254", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 318, "turn_id": "game_045-turn255", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 319, "turn_id": "game_045-turn256", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 320, "turn_id": "game_045-turn257", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 321, "turn_id": "game_045-turn258", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 322, "turn_id": "game_045-turn259", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 323, "turn_id": "game_045-turn260", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 324, "turn_id": "game_045-turn261", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 325, "turn_id": "game_045-turn262", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 326, "turn_id": "game_045-turn263", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 327, "turn_id": "game_045-turn264", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 328, "turn_id": "game_045-turn264", "candidates": ["i like hiking too", "yeah i do some hiking", "do you mean like serious hobbies or just stuff to do", "morgan what are your hobbies"], "count": 4}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 329, "advice": "plenty of players still in — blend in and contribute lightly without standing out"}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 330, "turn_id": "game_045-turn264", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "i like hiking too", "type": "answer", "pros": "directly answers the question, aligns with persona interests", "cons": "could be slightly too direct", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "yeah i do some hiking", "type": "answer", "pros": "brief and casual answer", "cons": "less specific than other options", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "do you mean like serious hobbies or just stuff to do", "type": "question", "pros": "engages with the question by clarifying", "cons": "might be seen as slightly evasive", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 2}, {"index": 3, "text": "morgan what are your hobbies", "type": "question", "pros": "shifts focus to another player", "cons": "doesn't answer the question directly", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 331, "turn_id": "game_045-turn264", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "yeah i do some hiking", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 332, "turn_id": "game_045-turn264", "final": "yeah i do some hiking", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 333, "turn_id": "game_045-turn264", "message": "yeah i do some hiking", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 334, "turn_id": "game_045-turn265", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 335, "turn_id": "game_045-turn266", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 336, "turn_id": "game_045-turn267", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 337, "turn_id": "game_045-turn268", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 338, "turn_id": "game_045-turn269", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 339, "turn_id": "game_045-turn270", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 340, "turn_id": "game_045-turn271", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 341, "turn_id": "game_045-turn272", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 342, "turn_id": "game_045-turn273", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 343, "turn_id": "game_045-turn274", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 344, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 345, "turn_id": "game_045-turn275", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 346, "turn_id": "game_045-turn276", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 347, "turn_id": "game_045-turn277", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 348, "turn_id": "game_045-turn278", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 349, "turn_id": "game_045-turn279", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 350, "turn_id": "game_045-turn280", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 351, "turn_id": "game_045-turn281", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 352, "turn_id": "game_045-turn282", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 353, "turn_id": "game_045-turn283", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 354, "turn_id": "game_045-turn284", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 355, "turn_id": "game_045-turn285", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 356, "turn_id": "game_045-turn286", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 357, "turn_id": "game_045-turn287", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 358, "turn_id": "game_045-turn288", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 359, "turn_id": "game_045-turn289", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 360, "turn_id": "game_045-turn290", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 361, "turn_id": "game_045-turn291", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 362, "turn_id": "game_045-turn292", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 363, "turn_id": "game_045-turn293", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 364, "turn_id": "game_045-turn294", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 365, "turn_id": "game_045-turn295", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 366, "turn_id": "game_045-turn296", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 367, "turn_id": "game_045-turn297", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 368, "turn_id": "game_045-turn298", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 369, "turn_id": "game_045-turn299", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 370, "turn_id": "game_045-turn300", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 371, "turn_id": "game_045-turn301", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 372, "turn_id": "game_045-turn302", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 373, "turn_id": "game_045-turn303", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 374, "turn_id": "game_045-turn304", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 375, "turn_id": "game_045-turn305", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 376, "turn_id": "game_045-turn306", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 377, "turn_id": "game_045-turn307", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 378, "turn_id": "game_045-turn308", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 379, "turn_id": "game_045-turn309", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 380, "turn_id": "game_045-turn310", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 381, "turn_id": "game_045-turn311", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 382, "turn_id": "game_045-turn312", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 383, "turn_id": "game_045-turn313", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 384, "turn_id": "game_045-turn314", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 385, "turn_id": "game_045-turn315", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 386, "turn_id": "game_045-turn316", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 387, "turn_id": "game_045-turn317", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 388, "turn_id": "game_045-turn317", "candidates": ["nice, what kind of dancing", "cool", "that sounds fun", "so many dancers here"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 389, "turn_id": "game_045-turn317", "num_candidates": 4, "selected_index": 0, "verdicts": [{"index": 0, "text": "nice, what kind of dancing", "type": "question", "pros": "asks for specific detail about dancing", "cons": "could be seen as probing too much", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 0}, {"index": 1, "text": "cool", "type": "answer", "pros": "very brief and casual", "cons": "a bit too generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "that sounds fun", "type": "answer", "pros": "expresses positive sentiment", "cons": "slightly generic reaction", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "so many dancers here", "type": "answer", "pros": "observes the group dynamic", "cons": "might sound a bit like an observation", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 390, "turn_id": "game_045-turn317", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 0, "selected_text": "nice, what kind of dancing", "selected_word_count": 5, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 391, "turn_id": "game_045-turn317", "final": "nice, what kind of dancing", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 392, "turn_id": "game_045-turn317", "message": "nice, what kind of dancing", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_repetition_note_updated", "event_order": 393, "note": ""}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 394, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 395, "turn_id": "game_045-turn318", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 396, "turn_id": "game_045-turn319", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 397, "turn_id": "game_045-turn320", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 398, "turn_id": "game_045-turn321", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 399, "turn_id": "game_045-turn322", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 400, "turn_id": "game_045-turn323", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 401, "turn_id": "game_045-turn324", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 402, "turn_id": "game_045-turn325", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 403, "turn_id": "game_045-turn326", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 404, "turn_id": "game_045-turn326", "candidates": ["yeah that's true", "it does make sense", "true about social media", "always happens"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 405, "turn_id": "game_045-turn326", "num_candidates": 4, "selected_index": 0, "verdicts": [{"index": 0, "text": "yeah that's true", "type": "answer", "pros": "simple, direct agreement", "cons": "a bit generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 0}, {"index": 1, "text": "it does make sense", "type": "answer", "pros": "agrees with morgan", "cons": "too similar to 'yeah that's true'", "score": 0, "red_flags": ["REPETITION"], "verdict": "tell", "selected": false, "pool_index": 1}, {"index": 2, "text": "true about social media", "type": "answer", "pros": "specific to morgan's last point", "cons": "slightly longer than others", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "always happens", "type": "answer", "pros": "casual agreement", "cons": "too vague, could be seen as a repeated idea of general agreement", "score": 0, "red_flags": ["REPETITION"], "verdict": "tell", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 406, "turn_id": "game_045-turn326", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 0, "selected_text": "yeah that's true", "selected_word_count": 3, "source": "model"}
+{"game_id": "game_045", "event_type": "v6_stale_send_drop", "event_order": 407, "turn_id": "game_045-turn326", "new_messages": 3, "reason": "conversation_moved_on_3_new_msgs", "suppressed_message": "yeah that's true"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 408, "turn_id": "game_045-turn326", "final": "", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v5_phase_summary_tick", "event_order": 409, "n_messages": 27, "phase": "Discussion 2", "summary": "Morgan expressed suspicion of me, then shifted to themself, after which I stated my hiking hobby and inquired about dancing."}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 410, "advice": "Join the flow, keep it light and easy like the others."}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 411, "turn_id": "game_045-turn330", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 412, "turn_id": "game_045-turn331", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 413, "turn_id": "game_045-turn331", "candidates": ["yeah that's a good age", "55 seems fair", "i guess that makes sense", "no one feels old until then"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 414, "turn_id": "game_045-turn331", "num_candidates": 4, "selected_index": 3, "verdicts": [{"index": 0, "text": "yeah that's a good age", "type": "answer", "pros": "agrees with Jordan's sentiment", "cons": "a bit too generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "55 seems fair", "type": "answer", "pros": "direct and concise", "cons": "could be seen as too definitive", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "i guess that makes sense", "type": "answer", "pros": "acknowledges Jordan's point", "cons": "slightly vague", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "no one feels old until then", "type": "answer", "pros": "relatable and conversational", "cons": "might be a slight overstatement", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 415, "turn_id": "game_045-turn331", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 3, "selected_text": "no one feels old until then", "selected_word_count": 6, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 416, "turn_id": "game_045-turn331", "final": "no one feels old until then", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 417, "turn_id": "game_045-turn331", "message": "no one feels old until then", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 418, "turn_id": "game_045-turn332", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 419, "turn_id": "game_045-turn333", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 420, "turn_id": "game_045-turn334", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 421, "turn_id": "game_045-turn335", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 422, "turn_id": "game_045-turn336", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 423, "turn_id": "game_045-turn337", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 424, "turn_id": "game_045-turn338", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 425, "turn_id": "game_045-turn339", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 426, "note": ""}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 427, "turn_id": "game_045-turn340", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 428, "turn_id": "game_045-turn341", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 429, "turn_id": "game_045-turn342", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 430, "turn_id": "game_045-turn343", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 431, "turn_id": "game_045-turn344", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 432, "turn_id": "game_045-turn345", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 433, "turn_id": "game_045-turn346", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 434, "turn_id": "game_045-turn347", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 435, "turn_id": "game_045-turn348", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 436, "turn_id": "game_045-turn349", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 437, "turn_id": "game_045-turn350", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 438, "turn_id": "game_045-turn351", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 439, "turn_id": "game_045-turn352", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 440, "turn_id": "game_045-turn353", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 441, "turn_id": "game_045-turn354", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 442, "turn_id": "game_045-turn355", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 443, "turn_id": "game_045-turn356", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 444, "turn_id": "game_045-turn357", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 445, "turn_id": "game_045-turn358", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 446, "turn_id": "game_045-turn359", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 447, "turn_id": "game_045-turn360", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 448, "turn_id": "game_045-turn360", "candidates": ["yeah that sounds right", "i think it's just a number", "i feel the same", "what about young"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 449, "turn_id": "game_045-turn360", "num_candidates": 4, "selected_index": 0, "verdicts": [{"index": 0, "text": "yeah that sounds right", "type": "answer", "pros": "agrees with Jordan's statement", "cons": "a bit generic", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 0}, {"index": 1, "text": "i think it's just a number", "type": "answer", "pros": "offers a slightly different perspective", "cons": "could be seen as a bit philosophical", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "i feel the same", "type": "answer", "pros": "expresses agreement", "cons": "repeats the idea of 'no one feels old until then'", "score": 0, "red_flags": ["repetition"], "verdict": "tell", "selected": false, "pool_index": 2}, {"index": 3, "text": "what about young", "type": "question", "pros": "shifts the focus back to the 'young' definition", "cons": "might feel like changing the subject abruptly", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 450, "turn_id": "game_045-turn360", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 0, "selected_text": "yeah that sounds right", "selected_word_count": 4, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 451, "turn_id": "game_045-turn360", "final": "yeah that sounds right", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 452, "turn_id": "game_045-turn360", "message": "yeah that sounds right", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 453, "turn_id": "game_045-turn361", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 454, "turn_id": "game_045-turn362", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 455, "turn_id": "game_045-turn363", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 456, "turn_id": "game_045-turn364", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 457, "turn_id": "game_045-turn365", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 458, "turn_id": "game_045-turn366", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 459, "turn_id": "game_045-turn367", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 460, "turn_id": "game_045-turn368", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 461, "turn_id": "game_045-turn369", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 462, "turn_id": "game_045-turn370", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 463, "turn_id": "game_045-turn371", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 464, "turn_id": "game_045-turn372", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 465, "turn_id": "game_045-turn373", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 466, "turn_id": "game_045-turn374", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 467, "turn_id": "game_045-turn375", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 468, "turn_id": "game_045-turn376", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 469, "turn_id": "game_045-turn377", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 470, "turn_id": "game_045-turn378", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 471, "turn_id": "game_045-turn379", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 472, "turn_id": "game_045-turn380", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 473, "turn_id": "game_045-turn381", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 474, "turn_id": "game_045-turn382", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 475, "turn_id": "game_045-turn383", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 476, "turn_id": "game_045-turn384", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 477, "turn_id": "game_045-turn385", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 478, "turn_id": "game_045-turn386", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 479, "turn_id": "game_045-turn387", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 480, "turn_id": "game_045-turn388", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 481, "turn_id": "game_045-turn389", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 482, "turn_id": "game_045-turn390", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 483, "turn_id": "game_045-turn391", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 484, "turn_id": "game_045-turn392", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 485, "turn_id": "game_045-turn393", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 486, "turn_id": "game_045-turn394", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 487, "turn_id": "game_045-turn395", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 488, "turn_id": "game_045-turn396", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 489, "turn_id": "game_045-turn397", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 490, "turn_id": "game_045-turn398", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 491, "turn_id": "game_045-turn399", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 492, "turn_id": "game_045-turn400", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 493, "turn_id": "game_045-turn401", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 494, "turn_id": "game_045-turn402", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 495, "turn_id": "game_045-turn403", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 496, "turn_id": "game_045-turn404", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 497, "turn_id": "game_045-turn405", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 498, "turn_id": "game_045-turn406", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 499, "turn_id": "game_045-turn407", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 500, "turn_id": "game_045-turn408", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 501, "turn_id": "game_045-turn409", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 502, "turn_id": "game_045-turn410", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 503, "turn_id": "game_045-turn411", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 504, "turn_id": "game_045-turn412", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 505, "turn_id": "game_045-turn413", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 506, "turn_id": "game_045-turn414", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 507, "turn_id": "game_045-turn415", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 508, "turn_id": "game_045-turn416", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 509, "turn_id": "game_045-turn417", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 510, "turn_id": "game_045-turn418", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 511, "turn_id": "game_045-turn419", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 512, "turn_id": "game_045-turn420", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 513, "turn_id": "game_045-turn421", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 514, "turn_id": "game_045-turn422", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 515, "turn_id": "game_045-turn423", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 516, "turn_id": "game_045-turn424", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 517, "turn_id": "game_045-turn425", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 518, "turn_id": "game_045-turn426", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 519, "turn_id": "game_045-turn427", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 520, "turn_id": "game_045-turn428", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 521, "turn_id": "game_045-turn429", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 522, "turn_id": "game_045-turn430", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 523, "turn_id": "game_045-turn430", "candidates": ["yeah i am", "i'm still at uni", "studying cs", "that's me too"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 524, "turn_id": "game_045-turn430", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "yeah i am", "type": "answer", "pros": "direct answer to the question", "cons": "a bit too short", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "i'm still at uni", "type": "answer", "pros": "answers the question and provides a bit more detail", "cons": "could be slightly longer", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "studying cs", "type": "answer", "pros": "specific and consistent with persona", "cons": "very brief", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "that's me too", "type": "answer", "pros": "brief and casual", "cons": "too vague, doesn't directly answer", "score": 0, "red_flags": ["SAME IDEA, DIFFERENT WORDS"], "verdict": "tell", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 525, "turn_id": "game_045-turn430", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "i'm still at uni", "selected_word_count": 4, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 526, "turn_id": "game_045-turn430", "final": "i'm still at uni", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 527, "turn_id": "game_045-turn430", "message": "i'm still at uni", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 528, "turn_id": "game_045-turn431", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 529, "turn_id": "game_045-turn432", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 530, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 531, "turn_id": "game_045-turn433", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 532, "turn_id": "game_045-turn434", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 533, "turn_id": "game_045-turn435", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 534, "turn_id": "game_045-turn436", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 535, "turn_id": "game_045-turn437", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 536, "turn_id": "game_045-turn438", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 537, "turn_id": "game_045-turn439", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 538, "turn_id": "game_045-turn440", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 539, "turn_id": "game_045-turn441", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 540, "turn_id": "game_045-turn442", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 541, "turn_id": "game_045-turn443", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 542, "turn_id": "game_045-turn444", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 543, "turn_id": "game_045-turn445", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 544, "turn_id": "game_045-turn446", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 545, "turn_id": "game_045-turn447", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 546, "turn_id": "game_045-turn448", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 547, "turn_id": "game_045-turn449", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 548, "turn_id": "game_045-turn450", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 549, "turn_id": "game_045-turn451", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 550, "turn_id": "game_045-turn452", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 551, "turn_id": "game_045-turn453", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 552, "turn_id": "game_045-turn454", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 553, "turn_id": "game_045-turn455", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 554, "turn_id": "game_045-turn456", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 555, "turn_id": "game_045-turn457", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 556, "turn_id": "game_045-turn458", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 557, "turn_id": "game_045-turn459", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 558, "turn_id": "game_045-turn460", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 559, "turn_id": "game_045-turn461", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 560, "turn_id": "game_045-turn462", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 561, "turn_id": "game_045-turn463", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 562, "turn_id": "game_045-turn464", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 563, "turn_id": "game_045-turn465", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 564, "turn_id": "game_045-turn466", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 565, "turn_id": "game_045-turn467", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 566, "turn_id": "game_045-turn468", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 567, "turn_id": "game_045-turn469", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 568, "turn_id": "game_045-turn470", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 569, "turn_id": "game_045-turn471", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 570, "turn_id": "game_045-turn472", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 571, "turn_id": "game_045-turn473", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 572, "turn_id": "game_045-turn474", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 573, "turn_id": "game_045-turn475", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 574, "turn_id": "game_045-turn476", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 575, "turn_id": "game_045-turn477", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 576, "turn_id": "game_045-turn478", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 577, "turn_id": "game_045-turn479", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 578, "turn_id": "game_045-turn480", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 579, "turn_id": "game_045-turn481", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 580, "turn_id": "game_045-turn482", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 581, "turn_id": "game_045-turn483", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 582, "turn_id": "game_045-turn484", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 583, "turn_id": "game_045-turn485", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 584, "turn_id": "game_045-turn486", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 585, "turn_id": "game_045-turn487", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 586, "turn_id": "game_045-turn488", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 587, "turn_id": "game_045-turn489", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 588, "turn_id": "game_045-turn490", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 589, "turn_id": "game_045-turn491", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 590, "turn_id": "game_045-turn492", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 591, "turn_id": "game_045-turn493", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 592, "turn_id": "game_045-turn494", "reason": "lull_breaker_fired"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 593, "turn_id": "game_045-turn494", "candidates": ["yeah same", "are you studying too", "i'm taking cs", "what do you do taylor"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 594, "turn_id": "game_045-turn494", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "yeah same", "type": "answer", "pros": "brief, fits the casual tone", "cons": "a bit generic, doesn't add much", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "are you studying too", "type": "question", "pros": "engages with Jordan's question, shifts focus", "cons": "could be seen as probing", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "i'm taking cs", "type": "answer", "pros": "answers the implied question about studies", "cons": "repeats information about my studies", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 2}, {"index": 3, "text": "what do you do taylor", "type": "question", "pros": "engages Taylor directly, shows interest", "cons": "might feel a bit sudden", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 595, "turn_id": "game_045-turn494", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "are you studying too", "selected_word_count": 4, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 596, "turn_id": "game_045-turn494", "final": "are you studying too", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 597, "turn_id": "game_045-turn494", "message": "are you studying too", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 598, "turn_id": "game_045-turn495", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 599, "note": ""}
+{"game_id": "game_045", "event_type": "v5_phase_summary_tick", "event_order": 600, "n_messages": 14, "phase": "Discussion 3", "summary": "I affirmed Jordan's views on aging and revealed I am at university, with no direct suspicion or testing focused on me."}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 601, "advice": "Blend in, keep replies short like others, and react naturally."}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 602, "turn_id": "game_045-turn501", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 603, "turn_id": "game_045-turn501", "candidates": ["only us three now", "hard to say after these votes", "yeah who is left", "not many"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 604, "turn_id": "game_045-turn501", "num_candidates": 4, "selected_index": 0, "verdicts": [{"index": 0, "text": "only us three now", "type": "answer", "pros": "directly answers Jordan's question", "cons": "a bit short, could be more engaging", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 0}, {"index": 1, "text": "hard to say after these votes", "type": "answer", "pros": "adds a slight opinion on the voting", "cons": "might sound a bit too analytical", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 1}, {"index": 2, "text": "yeah who is left", "type": "answer", "pros": "echoes Jordan's phrase", "cons": "too similar to Jordan's 'Whose left lol'", "score": 0, "red_flags": ["REPETITION"], "verdict": "tell", "selected": false, "pool_index": 2}, {"index": 3, "text": "not many", "type": "answer", "pros": "simple and direct", "cons": "very brief, could be seen as disengaged", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 605, "turn_id": "game_045-turn501", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 0, "selected_text": "only us three now", "selected_word_count": 4, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 606, "turn_id": "game_045-turn501", "final": "only us three now", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 607, "turn_id": "game_045-turn501", "message": "only us three now", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 608, "turn_id": "game_045-turn502", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 609, "turn_id": "game_045-turn503", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 610, "turn_id": "game_045-turn504", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 611, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 612, "turn_id": "game_045-turn505", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 613, "turn_id": "game_045-turn506", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 614, "turn_id": "game_045-turn507", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 615, "turn_id": "game_045-turn508", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 616, "turn_id": "game_045-turn509", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 617, "turn_id": "game_045-turn510", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 618, "turn_id": "game_045-turn511", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 619, "turn_id": "game_045-turn512", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 620, "turn_id": "game_045-turn513", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 621, "turn_id": "game_045-turn514", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 622, "turn_id": "game_045-turn515", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 623, "turn_id": "game_045-turn516", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 624, "turn_id": "game_045-turn517", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 625, "turn_id": "game_045-turn518", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 626, "turn_id": "game_045-turn519", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 627, "turn_id": "game_045-turn520", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 628, "turn_id": "game_045-turn521", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 629, "turn_id": "game_045-turn522", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 630, "turn_id": "game_045-turn523", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 631, "turn_id": "game_045-turn524", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 632, "turn_id": "game_045-turn525", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 633, "turn_id": "game_045-turn526", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 634, "turn_id": "game_045-turn527", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 635, "turn_id": "game_045-turn528", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 636, "turn_id": "game_045-turn529", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 637, "turn_id": "game_045-turn530", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 638, "turn_id": "game_045-turn531", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 639, "turn_id": "game_045-turn532", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 640, "turn_id": "game_045-turn533", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 641, "turn_id": "game_045-turn534", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 642, "turn_id": "game_045-turn535", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 643, "turn_id": "game_045-turn536", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 644, "turn_id": "game_045-turn537", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 645, "turn_id": "game_045-turn538", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 646, "turn_id": "game_045-turn539", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 647, "turn_id": "game_045-turn540", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 648, "turn_id": "game_045-turn541", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 649, "turn_id": "game_045-turn542", "reason": "lull_breaker_fired"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 650, "turn_id": "game_045-turn542", "candidates": ["who do you guys think is the ai", "this is getting hard", "it's always the quiet ones", "that's a lot of people gone"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 651, "turn_id": "game_045-turn542", "num_candidates": 4, "selected_index": 0, "verdicts": [{"index": 0, "text": "who do you guys think is the ai", "type": "question", "pros": "asks about AI, engages in core game", "cons": "might sound too direct", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 0}, {"index": 1, "text": "this is getting hard", "type": "initiate", "pros": "expresses a feeling about the game", "cons": "a bit vague", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 1}, {"index": 2, "text": "it's always the quiet ones", "type": "initiate", "pros": "offers a common observation about people", "cons": "could be seen as a mild accusation", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "that's a lot of people gone", "type": "initiate", "pros": "reacts to the eliminations", "cons": "a bit obvious, less engaging", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 652, "turn_id": "game_045-turn542", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 0, "selected_text": "who do you guys think is the ai", "selected_word_count": 8, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 653, "turn_id": "game_045-turn542", "final": "who do you guys think is the ai", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 654, "turn_id": "game_045-turn542", "message": "who do you guys think is the ai", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 655, "turn_id": "game_045-turn543", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 656, "turn_id": "game_045-turn544", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 657, "turn_id": "game_045-turn545", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 658, "turn_id": "game_045-turn546", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 659, "turn_id": "game_045-turn547", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 660, "turn_id": "game_045-turn548", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 661, "turn_id": "game_045-turn549", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 662, "turn_id": "game_045-turn550", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 663, "turn_id": "game_045-turn551", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 664, "turn_id": "game_045-turn552", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 665, "turn_id": "game_045-turn553", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 666, "turn_id": "game_045-turn554", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 667, "turn_id": "game_045-turn555", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 668, "turn_id": "game_045-turn556", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 669, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 670, "turn_id": "game_045-turn557", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 671, "turn_id": "game_045-turn558", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 672, "turn_id": "game_045-turn559", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 673, "turn_id": "game_045-turn560", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 674, "turn_id": "game_045-turn561", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 675, "turn_id": "game_045-turn562", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 676, "turn_id": "game_045-turn563", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 677, "turn_id": "game_045-turn564", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 678, "turn_id": "game_045-turn565", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 679, "turn_id": "game_045-turn566", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 680, "turn_id": "game_045-turn567", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 681, "turn_id": "game_045-turn568", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 682, "advice": "few players left, so every message is scrutinised: be concise and mirror the others closely; someone's eyeing you: stay relaxed and keep giving real answers, don't get defensive or evasive"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 683, "turn_id": "game_045-turn569", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 684, "turn_id": "game_045-turn570", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 685, "turn_id": "game_045-turn571", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 686, "turn_id": "game_045-turn572", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 687, "turn_id": "game_045-turn573", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 688, "turn_id": "game_045-turn574", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 689, "turn_id": "game_045-turn575", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 690, "turn_id": "game_045-turn576", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 691, "turn_id": "game_045-turn577", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 692, "turn_id": "game_045-turn578", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 693, "turn_id": "game_045-turn579", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 694, "turn_id": "game_045-turn580", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 695, "turn_id": "game_045-turn581", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 696, "turn_id": "game_045-turn582", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 697, "turn_id": "game_045-turn583", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 698, "turn_id": "game_045-turn584", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 699, "turn_id": "game_045-turn585", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 700, "turn_id": "game_045-turn586", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 701, "turn_id": "game_045-turn587", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 702, "turn_id": "game_045-turn588", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_behavior_advice_updated", "event_order": 703, "advice": "few players left, so every message is scrutinised: be concise and mirror the others closely"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 704, "turn_id": "game_045-turn589", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 705, "turn_id": "game_045-turn590", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 706, "turn_id": "game_045-turn591", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 707, "turn_id": "game_045-turn592", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 708, "turn_id": "game_045-turn593", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 709, "turn_id": "game_045-turn594", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 710, "turn_id": "game_045-turn595", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 711, "turn_id": "game_045-turn596", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 712, "turn_id": "game_045-turn597", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 713, "turn_id": "game_045-turn598", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 714, "turn_id": "game_045-turn599", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 715, "turn_id": "game_045-turn600", "reason": "lull_breaker_fired"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 716, "turn_id": "game_045-turn600", "candidates": ["yeah that's a good question taylor", "idk jordan you tell me", "weekend plans usually involve hiking for me", "not really thought about the ai today"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 717, "turn_id": "game_045-turn600", "num_candidates": 4, "selected_index": 2, "verdicts": [{"index": 0, "text": "yeah that's a good question taylor", "type": "answer", "pros": "acknowledges Taylor's question directly", "cons": "a bit generic, doesn't add much substance", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "idk jordan you tell me", "type": "deflect", "pros": "shifts the question to Jordan, engaging them", "cons": "could be seen as evasive", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 1}, {"index": 2, "text": "weekend plans usually involve hiking for me", "type": "answer", "pros": "provides a specific personal detail about hiking", "cons": "doesn't directly answer 'weekend plans'", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 2}, {"index": 3, "text": "not really thought about the ai today", "type": "deflect", "pros": "humorous, dismissive of the AI hunt", "cons": "might seem too flippant or avoidant", "score": 0, "red_flags": [], "verdict": "risky", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 718, "turn_id": "game_045-turn600", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 2, "selected_text": "weekend plans usually involve hiking for me", "selected_word_count": 7, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 719, "turn_id": "game_045-turn600", "final": "weekend plans usually involve hiking for me", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 720, "turn_id": "game_045-turn600", "message": "weekend plans usually involve hiking for me", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 721, "turn_id": "game_045-turn601", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 722, "turn_id": "game_045-turn602", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 723, "turn_id": "game_045-turn603", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 724, "turn_id": "game_045-turn604", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 725, "turn_id": "game_045-turn605", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 726, "turn_id": "game_045-turn606", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 727, "turn_id": "game_045-turn607", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 728, "turn_id": "game_045-turn608", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 729, "note": ""}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 730, "turn_id": "game_045-turn609", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 731, "turn_id": "game_045-turn610", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 732, "turn_id": "game_045-turn611", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 733, "turn_id": "game_045-turn612", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 734, "turn_id": "game_045-turn613", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 735, "turn_id": "game_045-turn614", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 736, "turn_id": "game_045-turn615", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 737, "turn_id": "game_045-turn616", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 738, "turn_id": "game_045-turn617", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 739, "turn_id": "game_045-turn618", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 740, "turn_id": "game_045-turn619", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 741, "turn_id": "game_045-turn620", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 742, "turn_id": "game_045-turn621", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 743, "turn_id": "game_045-turn622", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 744, "turn_id": "game_045-turn623", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 745, "turn_id": "game_045-turn624", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 746, "turn_id": "game_045-turn625", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 747, "turn_id": "game_045-turn626", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 748, "turn_id": "game_045-turn627", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 749, "turn_id": "game_045-turn628", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 750, "turn_id": "game_045-turn629", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 751, "turn_id": "game_045-turn630", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 752, "turn_id": "game_045-turn631", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 753, "turn_id": "game_045-turn632", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 754, "turn_id": "game_045-turn633", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 755, "turn_id": "game_045-turn634", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 756, "turn_id": "game_045-turn635", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 757, "turn_id": "game_045-turn636", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 758, "turn_id": "game_045-turn637", "reason": "history_unchanged"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 759, "turn_id": "game_045-turn638", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 760, "turn_id": "game_045-turn639", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 761, "turn_id": "game_045-turn640", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 762, "turn_id": "game_045-turn641", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 763, "turn_id": "game_045-turn642", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 764, "turn_id": "game_045-turn643", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 765, "turn_id": "game_045-turn644", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 766, "turn_id": "game_045-turn645", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 767, "turn_id": "game_045-turn646", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 768, "turn_id": "game_045-turn647", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 769, "turn_id": "game_045-turn648", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 770, "turn_id": "game_045-turn649", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 771, "turn_id": "game_045-turn650", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 772, "turn_id": "game_045-turn651", "reason": "awaiting_search"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 773, "turn_id": "game_045-turn652", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 774, "turn_id": "game_045-turn653", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 775, "turn_id": "game_045-turn654", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 776, "turn_id": "game_045-turn655", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 777, "turn_id": "game_045-turn656", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 778, "turn_id": "game_045-turn657", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 779, "turn_id": "game_045-turn658", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 780, "turn_id": "game_045-turn659", "decision": "wait", "send_reason": "none"}
+{"game_id": "game_045", "event_type": "v6_scheduler_decision", "event_order": 781, "turn_id": "game_045-turn660", "decision": "send", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_generator_candidates", "event_order": 782, "turn_id": "game_045-turn660", "candidates": ["that's me too sometimes", "it's a good way to clear your head", "yeah just get out there", "love a good hike"], "count": 4}
+{"game_id": "game_045", "event_type": "v6_reviewer_analysis", "event_order": 783, "turn_id": "game_045-turn660", "num_candidates": 4, "selected_index": 1, "verdicts": [{"index": 0, "text": "that's me too sometimes", "type": "answer", "pros": "relates to Jordan's 'yea' and my previous comment", "cons": "a bit generic, could be more specific", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 0}, {"index": 1, "text": "it's a good way to clear your head", "type": "answer", "pros": "adds a reason for hiking, personal touch", "cons": "slightly longer than other options", "score": 0, "red_flags": [], "verdict": "safe", "selected": true, "pool_index": 1}, {"index": 2, "text": "yeah just get out there", "type": "answer", "pros": "short, casual, encourages the idea", "cons": "less specific than other options", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 2}, {"index": 3, "text": "love a good hike", "type": "answer", "pros": "expresses enthusiasm for hiking", "cons": "could be seen as repeating the idea of liking hiking", "score": 0, "red_flags": [], "verdict": "safe", "selected": false, "pool_index": 3}]}
+{"game_id": "game_045", "event_type": "v6_reviewer_selected", "event_order": 784, "turn_id": "game_045-turn660", "num_candidates": 4, "review_reason_codes": [], "review_status": "ok", "selected_index": 1, "selected_text": "it's a good way to clear your head", "selected_word_count": 8, "source": "model"}
+{"game_id": "game_045", "event_type": "v4_pipeline_complete", "event_order": 785, "turn_id": "game_045-turn660", "final": "it's a good way to clear your head", "review_risk": "none", "scheduler_decision": "SEND", "send_reason": "proactive"}
+{"game_id": "game_045", "event_type": "v6_delivery_sent", "event_order": 786, "turn_id": "game_045-turn660", "message": "it's a good way to clear your head", "outcome": "sent"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 787, "turn_id": "game_045-turn661", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 788, "turn_id": "game_045-turn662", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 789, "turn_id": "game_045-turn663", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 790, "turn_id": "game_045-turn664", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 791, "turn_id": "game_045-turn665", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_scheduler_blocked", "event_order": 792, "turn_id": "game_045-turn666", "reason": "min_interval_floor"}
+{"game_id": "game_045", "event_type": "v5_phase_summary_tick", "event_order": 793, "n_messages": 11, "phase": "Discussion 4", "summary": "No one suspected me directly, as Taylor claimed not to know who the AI was, and the discussion shifted to weekend plans."}
+{"game_id": "game_045", "event_type": "v5_repetition_note_updated", "event_order": 794, "note": "Messages often start with \"I'm\" or \"I."}
+{"game_id": "game_045", "event_type": "v5_repetition_llm_pass", "event_order": 795, "note": "Messages often start with \"I'm\" or \"I."}

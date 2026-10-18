@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The AI had very human answers and was able to communicate well with us. To be honest I didn't thought it was an AI until the end.",
+    "additional_comments": "It was an awesome experiment, thanks for the opportunity!"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I wasn't suspecting Blake was the AI. It sounded extremely natural and humanized.",
+    "additional_comments": "The game was very funny!"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The generic answers about GTA and the timing on the response was too quick. Also, spoke way too much",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I thought two could have been AI when I played Blake and Jordan. I thought it was more likely Jordan because they were more quick to answer and the grammar was better. However, Blake also was kind of suspect because he never really added much to the conversation and waited for other people to start discussing this most of the time.",
+    "additional_comments": "None."
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "All the answers seemed human, I needed more complicated questions in order to detect the AI. The questions were very simple, any AI could answer them as humans.",
+    "additional_comments": "I expected more time for each conversation in order to ask more questions and catch the AI, there was no time to compare the 5 answers."
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "the way they responded with their vocubarlary",
+    "additional_comments": "i enjoyed the survey"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "response relativity",
+    "additional_comments": "It was very very good!"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Bailey's answers were so casual that i didn't suspect it.",
+    "additional_comments": "This was so fun, and great job on bailey it was hard to notice on who is the AI"
+  },
+  {
+    "participant": "Riley",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "early on when they said probably climate change right. it was the 'right' at the end.",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 2,
+    "suspicion_reason": "I got eliminated in the 1st round, so I really don't have many suspects.",
+    "additional_comments": "Perhaps to provide a topic before starting the conversation."
+  }
+]

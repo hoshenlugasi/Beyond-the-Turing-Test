@@ -1,0 +1,54 @@
+# Reviewed numeric inputs and cached decisions remain trackable; the credential
+# and cache exclusions below still take precedence inside this directory.
+!/analysis/inputs/
+!/analysis/inputs/**
+
+# Python / local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.venv/
+venv/
+env/
+.coverage*
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Credentials (the empty reference template is safe to track)
+.env
+.env.*
+!.env.example
+.secrets*
+secrets_dict.json
+*service-account*.json
+*service_account*.json
+*credentials*.json
+application_default_credentials.json
+*.pem
+*.key
+
+# Runtime state is NOT study data
+/sessions.json
+/logs/
+/messages/
+_outputs/
+*.log
+/games/*
+!/games/game_*/
+/games/game_*/*
+!/games/game_*/metadata.json
+!/games/game_*/transcript.txt
+!/games/game_*/votes.json
+!/games/game_*/surveys.json
+/games/real/
+/games/test/
+/local_exports/
+*.export.lock
+
+.DS_Store
+Thumbs.db

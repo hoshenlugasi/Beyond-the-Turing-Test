@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "his responses were not natural for a friendly discussion",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 1,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "their answers were very general and formal",
+    "additional_comments": "it was fun, thank you"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "i Suspected jordan as he/she was so active",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 2,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Because it used perfectly grammar and capitalization, while the other participants wrote the letter I as \"i\"",
+    "additional_comments": "I have no other concerns on the game, it's good as is"
+  }
+]

@@ -1,0 +1,2 @@
+# Cloud game runtime. The four offline paper analyses use only the standard library.
+-r requirements-server.txt

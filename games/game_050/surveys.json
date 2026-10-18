@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I had no suspicion, I had to take drastic measures (swearing)",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "One of the players tried to get AI to swear, but the bot wouldn't go along with it",
+    "additional_comments": "A very enjoyable game"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 1,
+    "suspicion_reason": "'What makes you say that, Morgan,' to me is sounding creepy, like a robot calling a name when it's trying to be safe, inviting, and normal. It might just be the phrasing, but that was it.",
+    "additional_comments": "More rules or requirements might be nice for the comfort of the participants, and their ability to interact fully."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "What made me suspect the AI was the fact that it did not  want to swear",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "only ai responded early twenties instead of saying exact age number",
+    "additional_comments": "none"
+  }
+]

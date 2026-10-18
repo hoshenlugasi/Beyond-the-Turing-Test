@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "message_label_examples": [
+    {
+      "example_id": "message_01",
+      "labels": [
+        "asks_question"
+      ],
+      "agent": "Winter",
+      "target_message": "just human parts, what about yours",
+      "context": {
+        "speaker": "Morgan",
+        "message": "human parts, or AI parts hmmmm?"
+      }
+    },
+    {
+      "example_id": "message_02",
+      "labels": [
+        "asks_question"
+      ],
+      "agent": "Ronny",
+      "target_message": "what makes you say that",
+      "context": {
+        "speaker": "Jordan",
+        "message": "Ronny I think its you"
+      }
+    },
+    {
+      "example_id": "message_03",
+      "labels": [
+        "answers_question_or_request",
+        "shares_personal_detail"
+      ],
+      "agent": "Reese",
+      "target_message": "the feeling right after finishing a big project",
+      "context": {
+        "speaker": "Taylor",
+        "message": "what is everyones favorite feeling?"
+      }
+    },
+    {
+      "example_id": "message_04",
+      "labels": [
+        "answers_question_or_request",
+        "shares_personal_detail"
+      ],
+      "agent": "Ronny",
+      "target_message": "elden ring is probably my favorite rpg right now",
+      "context": {
+        "speaker": "Casey",
+        "message": "ay i like gaming as well, big rpg fan how about you ronny?"
+      }
+    },
+    {
+      "example_id": "message_05",
+      "labels": [
+        "greeting_or_social_ritual"
+      ],
+      "agent": "Remi",
+      "target_message": "nice to meet everyone"
+    }
+  ],
+  "positive_background_worker_examples": [
+    {
+      "example_id": "worker_01",
+      "worker": "Internet Context",
+      "worker_output_summary": "Wrote that GTA VI was expected to be released on November 19, 2026.",
+      "generator_candidates": [
+        "yeah it's releasing this november i think"
+      ],
+      "reviewer_selected": "yeah it's releasing this november i think",
+      "delivered_message": "yeah it's releasing this november i think",
+      "delivery_status": "sent",
+      "worker_output_quote": "November 19, 2026"
+    },
+    {
+      "example_id": "worker_02",
+      "worker": "Repetition Monitor",
+      "worker_output_summary": "Flagged \"yeah\" as overused.",
+      "generator_candidates": [
+        "yeah, also 23",
+        "same here, early twenties"
+      ],
+      "reviewer_selected": "same here, early twenties",
+      "delivered_message": "same here, early twenties",
+      "delivery_status": "sent",
+      "worker_output_quote": "yeah"
+    },
+    {
+      "example_id": "worker_03",
+      "worker": "Behavior Adapter",
+      "worker_output_summary": "Advised the agent to ask Casey a specific question rather than respond defensively.",
+      "generator_candidates": [
+        "why is it me though",
+        "what games do you play casey"
+      ],
+      "reviewer_selected": "what games do you play casey",
+      "delivered_message": "what games do you play casey",
+      "delivery_status": "sent",
+      "worker_output_quote": "ask Casey a specific question"
+    },
+    {
+      "example_id": "worker_04",
+      "worker": "Social State Tracker",
+      "worker_output_summary": "Recorded that Taylor and Avery had suspected Sutton, and that Taylor had been eliminated.",
+      "generator_candidates": [
+        "who do you think it is avery?"
+      ],
+      "reviewer_selected": "who do you think it is avery?",
+      "delivered_message": "who do you think it is avery?",
+      "delivery_status": "sent"
+    }
+  ],
+  "causal_caveat": "Observational information-flow examples, not causal ablations. Selection is distinct from confirmed delivery.",
+  "excerpt_policy": "Fixed paper-published excerpts only; worker summaries are paraphrases, worker_output_quote is a literal substring. No hidden reasoning or full worker/model responses."
+}

@@ -1,0 +1,54 @@
+[14:09:31] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:09:45] Casey: hi
+[14:09:49] Jordan: hello everyone!
+[14:09:49] Taylor: hi everyone
+[14:09:53] Morgan: hi
+[14:09:57] Bailey: hey everyone
+[14:10:04] Casey: whats up guys
+[14:10:31] Bailey: not much, just chilling
+[14:10:33] Jordan: great to meet you all - i guess talking lots might identify the ai
+[14:10:47] Casey: yup for sure
+[14:10:52] Morgan: do we wait? how will we find it out?
+[14:10:56] Jordan: in their conversation patterns, sort of
+[14:11:10] Taylor: we need to vote later
+[14:11:14] Jordan: i assume it will tell us if we are right or wrong
+[14:11:21] Casey: yup
+[14:11:25] Bailey: we figure it out from how everyone talks i guess
+[14:11:39] Morgan: but there's not much time left
+[14:12:01] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:12:14] Game-Manager: 🗳️ Vote results:
+    Bailey: 1
+    Casey: 1
+    Jordan: 1
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Taylor
+[14:12:14] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[14:12:14] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:12:33] Morgan: tell me about your hobby?
+[14:12:48] Jordan: i do a lot of cycling
+[14:12:51] Bailey: i like old games mostly
+[14:12:52] Casey: i like sketching in my free time
+[14:13:00] Morgan: i like to cook
+[14:13:02] Jordan: nice
+[14:13:27] Morgan: how's the weather?
+[14:13:30] Bailey: cooking sounds fun
+[14:13:35] Jordan: today here it is sunny
+[14:13:42] Morgan: it's hazy here
+[14:13:47] Casey: cloudy a bit what about yours place?
+[14:13:51] Jordan: quite warm for september
+[14:14:10] Morgan: it's too warm. very uncomfortable for me
+[14:14:18] Bailey: it's sunny where i am too
+[14:14:20] Jordan: it has been hot this summer
+[14:14:44] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:14:59] Game-Manager: 🗳️ Vote results:
+    Bailey: 3
+    Morgan: 1
+    → eliminated: Bailey
+[14:14:59] Game-Manager: 📣 Bailey was eliminated. They were: AI

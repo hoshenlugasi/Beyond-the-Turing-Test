@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Because it tried to get the conversation into flow. But I only suspected because I knew there was an AI",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The answer to the music question seemed suspicious, but then the \"hahaha\" response made me doubt that he was ai",
+    "additional_comments": "It was very exciting"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The second to last message which seemed a bit out of order but he definitely had natural messages",
+    "additional_comments": "Game was really fun and tougher than I thought, I actually wasn't confident in my picks"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The way Rowan wrote \"i like electronic stuff\", i just assumed a human wouldn't write like that",
+    "additional_comments": "None, everything was fine"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I think when the AI said that sounds right, which made that a bit suspicious",
+    "additional_comments": "The game was fun"
+  }
+]

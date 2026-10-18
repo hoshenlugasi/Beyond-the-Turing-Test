@@ -1,0 +1,74 @@
+[
+  {
+    "round": 1,
+    "voter": "Sutton",
+    "voted_for": "Jordan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 1,
+    "voter": "Jordan",
+    "voted_for": "Sutton",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Morgan",
+    "voted_for": "Jordan",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Taylor",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Avery",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Sutton",
+    "voted_for": "Taylor",
+    "is_ai_voter": true
+  },
+  {
+    "round": 2,
+    "voter": "Morgan",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Taylor",
+    "voted_for": "Sutton",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Avery",
+    "voted_for": "Sutton",
+    "is_ai_voter": false
+  },
+  {
+    "round": 3,
+    "voter": "Sutton",
+    "voted_for": "Avery",
+    "is_ai_voter": true
+  },
+  {
+    "round": 3,
+    "voter": "Morgan",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 3,
+    "voter": "Avery",
+    "voted_for": "Sutton",
+    "is_ai_voter": false
+  }
+]

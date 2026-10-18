@@ -1,0 +1,10 @@
+# Preserve reviewed data bytes, including on Windows Git checkouts.
+games/** -text
+analysis/inputs/** -text
+internal_outputs/** -text
+analysis/results/** -text
+*.py text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+LICENSE text eol=lf
+.gitattributes text eol=lf

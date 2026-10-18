@@ -1,0 +1,38 @@
+[
+  {
+    "round": 1,
+    "voter": "Elliot",
+    "voted_for": "Taylor",
+    "is_ai_voter": true
+  },
+  {
+    "round": 1,
+    "voter": "Avery",
+    "voted_for": "Elliot",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Morgan",
+    "voted_for": "Elliot",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Jordan",
+    "voted_for": "Elliot",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Taylor",
+    "voted_for": "Elliot",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Casey",
+    "voted_for": "Morgan",
+    "is_ai_voter": false
+  }
+]

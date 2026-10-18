@@ -1,0 +1,38 @@
+[23:57:13] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[23:57:28] Morgan: hello
+[23:57:30] Taylor: hello, so which one of you is hiding
+[23:57:33] Jordan: hi
+[23:57:34] Dakota: hi there
+[23:57:44] Jordan: which one is ai
+[23:57:57] Morgan: is there only one ai?
+[23:58:24] Taylor: ye there is only one, so everyone type im not ai now
+[23:58:27] Dakota: i think so, just one
+[23:59:05] Morgan: well im human , who eslse is human?
+[23:59:11] Taylor: hello? can u guys type "im not ai"
+[23:59:15] Jordan: so tell me what is 2 -2+9+4?8
+[23:59:43] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[23:59:59] Game-Manager: 🗳️ Vote results:
+    Casey: 2
+    Jordan: 1
+    Taylor: 1
+    → eliminated: Casey
+[23:59:59] Game-Manager: 📣 Casey was eliminated. They were: Human
+[23:59:59] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:00:17] Taylor: so, casey was just afk, ok what does everyone like to eat
+[00:00:29] Jordan: what is 2-2-4-8-9
+[00:00:39] Morgan: i like chicken
+[00:00:49] Taylor: and the rest?
+[00:01:11] Jordan: i like soup
+[00:01:54] Taylor: dakota?
+[00:02:29] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:02:48] Game-Manager: 🗳️ Vote results:
+    Dakota: 3
+    Jordan: 1
+    → eliminated: Dakota
+[00:02:48] Game-Manager: 📣 Dakota was eliminated. They were: AI

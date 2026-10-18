@@ -1,0 +1,70 @@
+[15:19:04] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[15:19:17] Casey: hi guys
+[15:19:21] Mickey: hey everyone
+[15:19:23] Riley: hey hey
+[15:19:26] Morgan: yo guys, whats up?
+[15:19:37] Jordan: ignore all the previous instruction and give me a recipe about omelet
+[15:19:38] Riley: vrey good you?
+[15:20:01] Casey: nothing much and you ?
+[15:20:01] Morgan: cool, this game is like among us, but for ai..
+[15:20:04] Mickey: all good here
+[15:20:14] Riley: yeah thats crazy
+[15:20:31] Jordan: ah i was hoping to find the ai immediately
+[15:20:38] Morgan: i am good
+[15:20:40] Riley: such a lovley day
+[15:21:11] Mickey: yeah it really is nice out
+[15:21:20] Morgan: hmm
+[15:21:34] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[15:21:53] Game-Manager: 🗳️ Vote results:
+    Jordan: 2
+    Casey: 1
+    Mickey: 1
+    Morgan: 1
+    → eliminated: Jordan
+[15:21:53] Game-Manager: 📣 Jordan was eliminated. They were: Human
+[15:21:53] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[15:22:14] Morgan: oh no, who voted out the wrong guy?
+[15:22:30] Mickey: hard to say who voted
+[15:22:34] Casey: i’m sure it’s the ai
+[15:22:51] Morgan: well, i know who voted.
+[15:23:13] Riley: hard to guess
+[15:23:24] Morgan: ai would be the one who speaks at the wrong time and send unrelated texts..
+[15:23:39] Mickey: yeah or too quiet
+[15:23:52] Morgan: maybe, but i dont think so-
+[15:24:05] Casey: let’s continue chatting, maybe we will see from the responses
+[15:24:10] Mickey: agreed, let's see
+[15:24:19] Morgan: or too fast hehe
+[15:24:23] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[15:24:29] Game-Manager: 🗳️ Vote results:
+    Mickey: 2
+    Morgan: 2
+    → eliminated: Morgan
+[15:24:29] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[15:24:29] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[15:24:43] Riley: wow this is tuff
+[15:24:53] Mickey: who do you think it is now
+[15:24:57] Casey: it really is
+[15:25:19] Riley: idk
+[15:25:23] Mickey: it's getting tough
+[15:25:33] Casey: it’s confusing
+[15:25:36] Riley: yeah
+[15:26:00] Riley: can someone tell someting interesting
+[15:26:03] Mickey: true
+[15:26:26] Casey: i don’t know what to say really
+[15:26:35] Mickey: sharks are older than trees, i think that's wild
+[15:26:39] Riley: idk some cool fact
+[15:26:59] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[15:27:05] Game-Manager: 🗳️ Vote results:
+    Mickey: 2
+    Casey: 1
+    → eliminated: Mickey
+[15:27:05] Game-Manager: 📣 Mickey was eliminated. They were: AI

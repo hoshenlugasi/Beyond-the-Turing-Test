@@ -1,0 +1,76 @@
+[13:15:08] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:15:18] Jordan: hi
+[13:15:22] Hayden: hey everyone
+[13:15:28] Taylor: hello there
+[13:15:29] Morgan: hi guys
+[13:15:30] Avery: hi guys
+[13:15:35] Casey: hello
+[13:16:03] Casey: what's up?
+[13:16:08] Hayden: hope everyone is good
+[13:16:14] Jordan: is everyone else here from prolific?
+[13:16:35] Avery: this is so weird (yes jordan)
+[13:16:38] Taylor: not much, just spending my morning
+[13:16:39] Morgan: i'm good, yeah i'm from prolific
+[13:16:40] Casey: yes, i am
+[13:17:09] Hayden: yeah same here for prolific
+[13:17:10] Jordan: alright, who's the bot then?
+[13:17:31] Casey: i wonder which of you is ai
+[13:17:38] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:17:51] Game-Manager: 🗳️ Vote results:
+    Casey: 3
+    Taylor: 2
+    Jordan: 1
+    → eliminated: Casey
+[13:17:51] Game-Manager: 📣 Casey was eliminated. They were: Human
+[13:17:51] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:18:14] Taylor: this is going to be hard :)
+[13:18:16] Avery: poor casey sjdsdskd
+[13:18:22] Hayden: yeah that was fast
+[13:18:28] Morgan: we eliminated the wrong one
+[13:18:39] Jordan: well rip casey. taylor, you were pretty quiet at the end there, who did you vote for?
+[13:19:06] Taylor: rest in peace, kasey
+[13:19:09] Morgan: taylor is sus
+[13:19:12] Hayden: who do you think it is then taylor
+[13:19:23] Jordan: i'm still suspicious of taylor, that 'spending my morning' line sounded like a bot prompt
+[13:19:24] Avery: mmm taylor tell us more
+[13:19:31] Hayden: yeah that's too bad
+[13:19:51] Morgan: taylor what did you eat today?
+[13:20:03] Taylor: i am european, what about you, pals?
+[13:20:12] Hayden: switzerland for me
+[13:20:21] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:20:45] Game-Manager: 🗳️ Vote results:
+    Taylor: 4
+    Morgan: 1
+    → eliminated: Taylor
+[13:20:45] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[13:20:45] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:20:21] Avery: a european wouldn't say that
+[13:21:20] Avery: porcodio my guess is you are all ia
+[13:21:27] Hayden: who's next now
+[13:21:42] Jordan: hayden, why did you answer taylor's weird question with 'switzerland for me' instead of answering who you voted for?
+[13:21:43] Morgan: wrong again? let's think
+[13:21:49] Hayden: i was answering her question
+[13:22:02] Hayden: she asked me about location
+[13:22:10] Morgan: hayden you are so quick to respond
+[13:22:18] Hayden: yeah that question was weird anyway
+[13:22:23] Avery: jordan you want to know too much
+[13:22:44] Jordan: morgan is right, hayden your typing speed is insane.
+[13:22:51] Hayden: what about jordan then
+[13:23:00] Morgan: yeah i'm trying to find the answers
+[13:23:04] Hayden: just fast fingers i guess
+[13:23:15] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:23:28] Game-Manager: 🗳️ Vote results:
+    Hayden: 2
+    Jordan: 1
+    Morgan: 1
+    → eliminated: Hayden
+[13:23:28] Game-Manager: 📣 Hayden was eliminated. They were: AI

@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I never suspected them, their behavior was natural and the messages sounded very human. There was nothing that would have made me think it was them more than someone else.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "He was so human",
+    "additional_comments": "it was a great study, my congrats"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I didn't suspect them because they didn't stand out at all. Other players had behaviour that was more fishy, which made them suspect.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Everything was too natural. I really had no idea of who was the impostor",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I was certain it was Casey by how bold they were in their responses.",
+    "additional_comments": "I feel the participants were being random to confuse everyone."
+  }
+]

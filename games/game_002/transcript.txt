@@ -1,0 +1,101 @@
+[18:31:10] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:31:37] Jordan: hey guys
+[18:31:40] Morgan: hello guys
+[18:31:43] Ray: hey
+[18:31:44] Taylor: hie guys
+[18:31:47] Avery: hey
+[18:31:51] Morgan: what's up
+[18:31:57] Morgan: ...
+[18:32:07] Jordan: how are you guys doing?
+[18:32:16] Avery: what's up guys
+[18:32:22] Taylor: nothing much, what are you guys up to?
+[18:32:25] Ray: just chillin, how bout you all
+[18:32:30] Casey: how are you gys?
+[18:32:37] Morgan: chilling too
+[18:32:47] Morgan: what were you guys doing today
+[18:32:52] Jordan: nothing much, i am just chilling as well
+[18:33:04] Casey: what should we talk about?
+[18:33:12] Taylor: was watching movies the whole day,
+[18:33:15] Morgan: maybe boutfootball
+[18:33:18] Ray: any good ideas?
+[18:33:20] Avery: not much, any news from your side?
+[18:33:23] Morgan: about football*
+[18:33:34] Morgan: who is the goat
+[18:33:36] Jordan: let's talk about latest series that we are all watching
+[18:33:40] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:34:09] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Morgan: 2
+    Casey: 1
+    Jordan: 1
+    → eliminated: Avery
+[18:34:09] Game-Manager: 📣 Avery was eliminated. They were: Human
+[18:34:09] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:34:24] Morgan: okay then
+[18:34:30] Ray: that was quick
+[18:34:38] Casey: any one know phalstine?
+[18:34:46] Morgan: latest series for me was hannibal
+[18:34:51] Morgan: what about you guys
+[18:35:05] Taylor: no, i don't know phalstine, is it good?
+[18:35:25] Jordan: is hannibal good? please recommend a good series for me.
+[18:35:30] Morgan: you mean palestine?
+[18:35:34] Ray: yeah hannibal is pretty good
+[18:35:40] Morgan: hannibals great
+[18:35:49] Taylor: what is it abput?
+[18:35:52] Jordan: i should try it out
+[18:35:52] Morgan: especially first two seasons
+[18:36:02] Morgan: its osychological
+[18:36:09] Ray: yeah it gets really intense
+[18:36:21] Jordan: i prefer action though
+[18:36:22] Casey: is anyone else tired today or just me?
+[18:36:24] Taylor: what genre is it?
+[18:36:34] Morgan: psychological ithink
+[18:36:39] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:36:53] Game-Manager: 🗳️ Vote results:
+    Casey: 2
+    Morgan: 1
+    Ray: 1
+    Taylor: 1
+    → eliminated: Casey
+[18:36:53] Game-Manager: 📣 Casey was eliminated. They were: Human
+[18:36:53] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:37:04] Morgan: damn
+[18:37:09] Ray: rip casey
+[18:37:15] Morgan: okay lets keep going...
+[18:37:23] Morgan: ray
+[18:37:25] Ray: who do you think it is
+[18:37:26] Jordan: anyone here into horror and action like i am?
+[18:37:29] Morgan: you know dark?
+[18:37:31] Taylor: what should we talk about next
+[18:37:38] Ray: maybe action movies
+[18:37:43] Morgan: i mean, i guess its not you ray
+[18:37:50] Taylor: i like action movies
+[18:37:53] Ray: nah, not really my kind of thing
+[18:38:04] Morgan: yea i love john wick for example
+[18:38:11] Jordan: action movies are the best
+[18:38:14] Ray: what else is good these days
+[18:38:14] Morgan: it was fun
+[18:38:25] Morgan: avengers right
+[18:38:27] Taylor: i also prefer romcoms
+[18:38:32] Morgan: always top
+[18:38:50] Ray: yeah always a classic
+[18:39:02] Morgan: damn this is tough
+[18:39:08] Taylor: very tough
+[18:39:10] Morgan: ive got no clue kinda
+[18:39:12] Morgan: ...
+[18:39:23] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:39:30] Game-Manager: 🗳️ Vote results:
+    Ray: 2
+    Jordan: 1
+    Morgan: 1
+    → eliminated: Ray
+[18:39:30] Game-Manager: 📣 Ray was eliminated. They were: AI

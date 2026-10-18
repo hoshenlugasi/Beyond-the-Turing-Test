@@ -1,0 +1,108 @@
+[17:50:33] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[17:50:52] Casey: hi everyone
+[17:50:53] Avery: hi all, so who is the ai?
+[17:50:53] Taylor: who would everyone vote for if there was an election tomorrow?
+[17:51:01] Sage: that's a tough one, no idea
+[17:51:03] Taylor: i would vote labour
+[17:51:13] Avery: conservatives
+[17:51:26] Taylor: let's go!
+[17:51:31] Avery: whats 2+2
+[17:51:33] Morgan: honestly i have no clue yet. i think we should just pay attention to who seems overly rehearsed or is trying too hard to prove they're human."
+[17:51:35] Taylor: 4
+[17:51:39] Casey: 4
+[17:51:43] Sage: haha we really doing maths now
+[17:51:44] Morgan: 4
+[17:52:00] Avery: 4
+[17:52:08] Taylor: morgan, it isn't a controversial question, is it?
+[17:52:27] Taylor: what about everyone else?
+[17:52:41] Morgan: whats the question?
+[17:52:43] Avery: 2 more to answer the maths question
+[17:52:51] Morgan: if you suddenly got $10,000, what's the first stupid thing you'd buy?
+[17:53:03] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[17:54:06] Game-Manager: 🗳️ Vote results:
+    Morgan: 3
+    Sage: 2
+    → eliminated: Morgan
+[17:54:06] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[17:54:06] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[17:53:06] Casey: a rolex
+[17:54:18] Taylor: who would you vote for in a general election that was held tomorrow?
+[17:54:27] Sage: i'm with taylor, labour for me too
+[17:54:28] Avery: well we got that wrong
+[17:54:45] Casey: hi jordan
+[17:54:49] Taylor: jordan?
+[17:54:56] Taylor: casey?
+[17:55:01] Sage: who is jordan
+[17:55:08] Avery: sage, whats 2+2?
+[17:55:12] Sage: 4
+[17:55:29] Taylor: jordan and casey haven't answered, suspect???
+[17:55:32] Casey: jordan what is 3 + 4?
+[17:55:41] Casey: yes, suspect
+[17:56:10] Sage: where did jordan go anyway?
+[17:56:21] Taylor: casey, do you think it's controversial, my question and why?
+[17:56:23] Avery: jorden hasnt said anything ?
+[17:56:36] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[17:56:59] Game-Manager: 🗳️ Vote results:
+    Jordan: 3
+    Casey: 1
+    → eliminated: Jordan
+[17:56:59] Game-Manager: 📣 Jordan was eliminated. They were: Human
+[17:56:59] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[17:57:14] Avery: i bet were all human !
+[17:57:21] Sage: that's what they all say
+[17:57:24] Taylor: casey?
+[17:57:37] Casey: sup taylor
+[17:57:42] Avery: lets try this, can we all confirm we are human?
+[17:57:44] Avery: im human
+[17:57:48] Taylor: my question please?
+[17:58:01] Taylor: i'm human avery
+[17:58:08] Casey: avery is trying too hard
+[17:58:19] Avery: gulp....
+[17:58:25] Avery: just joining in
+[17:58:31] Sage: why the gulp avery
+[17:58:39] Avery: it was a joke
+[17:58:47] Avery: i dont thin ai,s joke tbf
+[17:59:01] Casey: avery what would you buy with 10k?
+[17:59:09] Taylor: casey what do you think about a kinked demand curve?
+[17:59:23] Avery: im in the uk so ill assume its pounds, prob a holiday
+[17:59:29] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[17:59:48] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Casey: 2
+    → eliminated: Avery
+[17:59:48] Game-Manager: 📣 Avery was eliminated. They were: Human
+[17:59:48] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:00:09] Casey: okay sage is ai then
+[18:00:17] Sage: nah what makes you say that
+[18:00:20] Taylor: what are everyone's interests
+[18:00:30] Sage: you were quiet until now
+[18:00:32] Taylor: i like sports, economics, family
+[18:00:46] Casey: chess, trading and video games
+[18:00:54] Sage: what games do you play casey
+[18:01:01] Taylor: what is your favourite trading strategy casey
+[18:01:04] Casey: mk11
+[18:01:07] Sage: what kind of video games
+[18:01:19] Casey: supply and demand
+[18:01:24] Sage: mk11 is pretty fun, good characters
+[18:01:38] Taylor: supply and demand what in stocks?
+[18:02:07] Taylor: can you teach me some of the basics, thanks
+[18:02:10] Casey: i don't trade stocks, forex and indices
+[18:02:10] Sage: taylor what kind of sports do you like
+[18:02:18] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:02:31] Game-Manager: 🗳️ Vote results:
+    Casey: 2
+    Sage: 1
+    → eliminated: Casey
+[18:02:31] Game-Manager: 📣 Casey was eliminated. They were: Human

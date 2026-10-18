@@ -1,0 +1,109 @@
+[00:25:59] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:26:19] Taylor: hi everyone
+[00:26:24] Blake: hey there
+[00:26:24] Casey: hi, people
+[00:26:28] Morgan: hello!!!
+[00:26:36] Avery: sup guys
+[00:26:39] Jordan: hello all
+[00:26:47] Avery: whats poppin
+[00:26:49] Casey: how are you doing?
+[00:26:57] Taylor: good, you?
+[00:27:00] Morgan: i'm pretty fine!
+[00:27:03] Blake: all good here too
+[00:27:05] Casey: fine, thank you!
+[00:27:10] Jordan: good, happy to be here
+[00:27:27] Morgan: do you guys like sports?
+[00:27:29] Avery: same, all good
+[00:27:35] Taylor: not really
+[00:27:41] Taylor: for the sports question
+[00:27:49] Blake: not into it that much
+[00:27:53] Casey: i do, who likes skiing?
+[00:27:56] Jordan: not into sports much unless its major sporting events
+[00:28:18] Morgan: i like to play basketball !!
+[00:28:25] Avery: same as jordan
+[00:28:29] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:28:58] Game-Manager: 🗳️ Vote results:
+    Casey: 2
+    Avery: 1
+    Jordan: 1
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Casey
+[00:28:58] Game-Manager: 📣 Casey was eliminated. They were: Human
+[00:28:58] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:29:19] Avery: where are you guys from?
+[00:29:24] Taylor: what is yall's favorite food?
+[00:29:25] Morgan: do you like music?
+[00:29:28] Blake: switzerland here
+[00:29:31] Morgan: from brazil!
+[00:29:45] Avery: lol brazil as well morgan
+[00:29:49] Jordan: south africa
+[00:29:50] Morgan: taylor: favorite food is barbecue!
+[00:29:51] Taylor: i do like music
+[00:29:58] Blake: what kind of music morgan?
+[00:30:25] Blake: what about you taylor?
+[00:30:42] Taylor: oh, i like a lot of different kinds of music
+[00:30:47] Morgan: i like electronic music!! aphex twin is awesome!!!
+[00:30:57] Taylor: classical, pop, and alternative and some rock too
+[00:31:11] Blake: nice mix
+[00:31:12] Avery: i'm very found of indie rock
+[00:31:22] Taylor: i normally like at least one song from like almost every artist
+[00:31:26] Jordan: indie rock is good
+[00:31:28] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:31:45] Game-Manager: 🗳️ Vote results:
+    Taylor: 2
+    Avery: 1
+    Blake: 1
+    Jordan: 1
+    → eliminated: Taylor
+[00:31:45] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[00:31:45] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:32:16] Avery: are u guys hyped for gta 6?
+[00:32:19] Morgan: i like to rave, and i'm also producer!!! techno!!
+[00:32:35] Morgan: don't know anything about gta6
+[00:32:38] Blake: pretty hyped for it
+[00:32:53] Blake: yeah it's releasing this november i think
+[00:33:13] Jordan: how many hours a day do you play video games blake
+[00:33:21] Blake: depends on the day honestly
+[00:33:35] Morgan: i played gta many years ago... the old version
+[00:33:37] Blake: sometimes a lot, sometimes none at all
+[00:33:40] Morgan: classic version!
+[00:33:52] Avery: hmmm
+[00:34:05] Jordan: why the hmmmm avery
+[00:34:14] Avery: "classic version"
+[00:34:15] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:34:22] Game-Manager: 🗳️ Vote results:
+    Avery: 1
+    Blake: 1
+    Jordan: 1
+    Morgan: 1
+    → eliminated: Avery
+[00:34:22] Game-Manager: 📣 Avery was eliminated. They were: Human
+[00:34:22] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:34:50] Jordan: morgan where did you say you were from
+[00:34:52] Morgan: how many time you are on prolific?
+[00:35:22] Blake: not too long for me
+[00:35:29] Jordan: been maybe a year or two
+[00:35:40] Morgan: wow, same here!
+[00:36:01] Morgan: [REDACTED]
+[00:36:20] Jordan: thats impressive
+[00:36:48] Jordan: any tips you could share
+[00:36:49] Morgan: do you guys play some music instrument?
+[00:36:52] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:36:58] Game-Manager: 🗳️ Vote results:
+    Blake: 2
+    Morgan: 1
+    → eliminated: Blake
+[00:36:58] Game-Manager: 📣 Blake was eliminated. They were: AI

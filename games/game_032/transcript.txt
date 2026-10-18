@@ -1,0 +1,49 @@
+[15:47:44] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[15:48:03] Avery: hello !
+[15:48:06] Taylor: hi
+[15:48:07] Morgan: hey, everyone.. how are you all doing?
+[15:48:09] Casey: hello
+[15:48:16] Avery: fine and you ?!
+[15:48:19] Reese: all good here, thanks for asking
+[15:48:24] Taylor: who is ai here?
+[15:48:26] Casey: cant complain, u?
+[15:48:35] Morgan: i am doing great. how has today been for you?
+[15:48:42] Reese: pretty chill so far thanks
+[15:48:47] Avery: i am working
+[15:48:53] Casey: same
+[15:49:18] Morgan: what kind of work are you busy with there, casey?
+[15:49:22] Reese: working on a thursday? tough
+[15:49:30] Casey: working on a sales project
+[15:49:45] Casey: ehh im my own boss so not too bad
+[15:50:02] Morgan: sounds interesting. what about you, avery?
+[15:50:14] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[15:50:50] Game-Manager: 🗳️ Vote results:
+    Morgan: 2
+    Avery: 1
+    Reese: 1
+    Taylor: 1
+    → eliminated: Morgan
+[15:50:50] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[15:50:50] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[15:51:05] Casey: damn, didnt expect that
+[15:51:10] Reese: rip morgan then
+[15:51:15] Avery: i work in indusry ! rip morgan
+[15:51:35] Taylor: hi everyone!
+[15:51:57] Casey: random thought, do you think the pool on the titanic is empty or full?
+[15:52:03] Reese: that was fast wow
+[15:52:18] Casey: wdym
+[15:52:48] Reese: pretty sure it was empty before sinking
+[15:52:57] Avery: probably full casey !
+[15:53:20] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[15:53:48] Game-Manager: 🗳️ Vote results:
+    Reese: 2
+    Avery: 1
+    Taylor: 1
+    → eliminated: Reese
+[15:53:48] Game-Manager: 📣 Reese was eliminated. They were: AI

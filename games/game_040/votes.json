@@ -1,0 +1,32 @@
+[
+  {
+    "round": 1,
+    "voter": "Skylar",
+    "voted_for": "Jordan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 1,
+    "voter": "Jordan",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Morgan",
+    "voted_for": "Skylar",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Taylor",
+    "voted_for": "Morgan",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Casey",
+    "voted_for": "Skylar",
+    "is_ai_voter": false
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "round": 1,
+    "voter": "Dakota",
+    "voted_for": "Jordan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 1,
+    "voter": "Taylor",
+    "voted_for": "Casey",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Morgan",
+    "voted_for": "Casey",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Jordan",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Dakota",
+    "voted_for": "Jordan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 2,
+    "voter": "Taylor",
+    "voted_for": "Dakota",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Morgan",
+    "voted_for": "Dakota",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Jordan",
+    "voted_for": "Dakota",
+    "is_ai_voter": false
+  }
+]

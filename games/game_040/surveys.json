@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I thought they were carrying the convo too hard or trying too hard",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Because Skylar was the one to keep the chat going by asking questions.",
+    "additional_comments": "Yes, I loved the experience."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I voted for Morgan, because they started talking about playing Swedish puzzles. I have never heard about that.",
+    "additional_comments": "Actually, I think all others were AI. Everyone responded too fast and had similar responses."
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "feel like an human",
+    "additional_comments": "none"
+  }
+]

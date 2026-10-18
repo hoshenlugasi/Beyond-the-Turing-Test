@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "i didn't suspect AI, i thought casey's language was more unrealistic",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "It was very difficult to figure out, but the AI was constantly repeating itself and talking in patterns instead of defending itself.",
+    "additional_comments": "I tried to deflect suspicion from myself right away, since AI would never say that he hates his life.\n\nOverall, we completed the task fairly quickly."
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Actually I have played as the morgan and I selected Kai as suspect but others choose me (morgan) in first discussion. I simply choose kai because \"kai\" does not make mistakes while typing while everybody in the group uses short forms for the word to make chat easy. Most of the humans now a days foor casual chat they simple use short forms like \"tbh- to be honest, lol- lots of love, OP- original poster\". We need make the AI agent use these words for normal conversion.  For formal conversion, it must use full words without any mistake.",
+    "additional_comments": "This chatting games really feels fresh to me. This type of game and task gives me fresh start. Instead of eliminating  AI in first round, it better to choose AI after completing chat for 3 rounds. I thinks, its very helpful to identify  AI very careful. But this game is very interesting to play.  What I want to suggest to act as more natural using short term letters to represent to actual word in social media. Most of the humans chat with more grammer mistakes never care for the actual right words in conversation in casual and friendly chat and For formal conversation it better to follow the grammer rules"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "What made me suspect Kai is that it was trying so hard to fit in",
+    "additional_comments": "No comments"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "they just had a weird vibe",
+    "additional_comments": "no"
+  }
+]

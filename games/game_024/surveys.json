@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Because my hobbies matched AI hobbies it made me less suspicious. To be honest, I though Brook is the last person to be AI.",
+    "additional_comments": "Absolutely great experiment. Enjoyed it a lot."
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The way they responded, they were saying the right things.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "the pacing of the answers",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "natural answers and typing like humans was the thing that made me not to suspect AI.",
+    "additional_comments": "I was eliminated in the second round but after watching third and fourth round i suspect Brook was AI but i was out of the game and was not able to participate."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "the ai was perfect to respond all the messages",
+    "additional_comments": "none"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "games": 50,
+  "messages": 2414,
+  "player_instances": 279,
+  "paired": {
+    "answers_question_or_request_share": {
+      "agent": 0.30506118700700746,
+      "humans": 0.23182797649475903,
+      "difference": 0.0732332105122484,
+      "denominator": "player-positive messages / own public messages; humans averaged within game, then games equally"
+    },
+    "asks_question_share": {
+      "agent": 0.20631882814467953,
+      "humans": 0.27319687576023083,
+      "difference": -0.06687804761555131,
+      "denominator": "player-positive messages / own public messages; humans averaged within game, then games equally"
+    },
+    "greeting_or_social_ritual_share": {
+      "agent": 0.09429474120650591,
+      "humans": 0.1488344356168801,
+      "difference": -0.05453969441037418,
+      "denominator": "player-positive messages / own public messages; humans averaged within game, then games equally"
+    },
+    "shares_personal_detail_share": {
+      "agent": 0.14378855819103498,
+      "humans": 0.1615612784996595,
+      "difference": -0.017772720308624534,
+      "denominator": "player-positive messages / own public messages; humans averaged within game, then games equally"
+    }
+  }
+}

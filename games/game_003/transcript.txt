@@ -1,0 +1,68 @@
+[17:41:44] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[17:41:59] Jordan: hi all
+[17:42:01] Taylor: hi
+[17:42:04] Dylan: hey everyone
+[17:42:09] Avery: hey
+[17:42:10] Morgan: wazzzzaaaaap
+[17:42:23] Morgan: how is everyone
+[17:42:24] Taylor: where are you guys from?
+[17:42:28] Dylan: all good here
+[17:42:30] Avery: wow morgan that energy
+[17:42:45] Jordan: do you guys like sports?
+[17:42:47] Morgan: whats with my energy
+[17:43:02] Morgan: i love sports
+[17:43:02] Avery: it's high, i like it
+[17:43:22] Avery: i love sports, would love to try playing tennis
+[17:43:22] Morgan: yeah all you others are dead and bot like lmaoo
+[17:43:27] Taylor: i actually don't like sport
+[17:43:30] Dylan: haha that's fair
+[17:43:30] Taylor: s
+[17:43:38] Taylor: i like dancing though
+[17:43:43] Morgan: write something that makes you not sound like a bot god dayumn
+[17:43:50] Taylor: i am not lol
+[17:43:51] Avery: wow maybe you are the bot
+[17:43:58] Dylan: what makes you say that morgan
+[17:44:02] Morgan: lmfao
+[17:44:06] Taylor: i am just shy
+[17:44:14] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[17:44:22] Game-Manager: 🗳️ Vote results:
+    Morgan: 3
+    Avery: 1
+    Jordan: 1
+    → eliminated: Morgan
+[17:44:22] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[17:44:22] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[17:44:42] Taylor: omg i thought he's the bot
+[17:44:43] Avery: so the ai is still in the chat?
+[17:44:48] Taylor: yes
+[17:44:52] Dylan: i can see why you thought that taylor
+[17:44:52] Taylor: it's so weird
+[17:45:00] Avery: i thought so too
+[17:45:05] Jordan: me too
+[17:45:13] Avery: what about jordan?
+[17:45:20] Jordan: why me?
+[17:45:28] Dylan: maybe cause morgan pointed it out
+[17:45:29] Avery: you are quiet
+[17:45:40] Taylor: i honestly don't even get who is each of you
+[17:45:59] Taylor: you can se by my bad english that i'm not a bot lol
+[17:46:03] Jordan: you like morgan attitude, and then vote to kick him out?
+[17:46:04] Taylor: see
+[17:46:15] Dylan: what about jordan's english then
+[17:46:16] Avery: how does water taste like? ai wouldn't know
+[17:46:24] Taylor: that's true
+[17:46:38] Taylor: what does it feel like to get cut?
+[17:46:48] Taylor: or burned
+[17:46:48] Avery: it stings
+[17:46:52] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[17:47:21] Game-Manager: 🗳️ Vote results:
+    Dylan: 2
+    Avery: 1
+    Jordan: 1
+    → eliminated: Dylan
+[17:47:21] Game-Manager: 📣 Dylan was eliminated. They were: AI

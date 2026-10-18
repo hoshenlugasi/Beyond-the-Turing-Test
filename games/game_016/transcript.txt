@@ -1,0 +1,80 @@
+[21:05:40] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[21:06:01] Jordan: hi how is everyone?
+[21:06:08] Elliot: not bad, enjoying the evening
+[21:06:13] Avery: hey, i am good
+[21:06:20] Casey: hi all
+[21:06:32] Morgan: hi, i'm doing great!
+[21:06:33] Taylor: hi everyone
+[21:06:43] Avery: how was dinner?
+[21:07:05] Jordan: chicken and sweet potato fries for me
+[21:07:36] Elliot: mine was also chicken, love sweet potato fries
+[21:07:40] Taylor: i just finish my meal, some beef from yesterday party.
+[21:07:41] Morgan: no dinner for me yet
+[21:08:07] Elliot: beef sounds good
+[21:08:10] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[21:08:31] Game-Manager: 🗳️ Vote results:
+    Taylor: 3
+    Elliot: 1
+    Jordan: 1
+    Morgan: 1
+    → eliminated: Taylor
+[21:08:31] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[21:08:31] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[21:09:06] Morgan: you guys got any hobbies?
+[21:09:20] Elliot: yeah i like coding and watching football
+[21:09:23] Avery: i am into photography and video games
+[21:09:24] Jordan: gardening, reading and diy for me
+[21:09:47] Avery: i just started a coding class. it is fun so far
+[21:09:51] Casey: watching football and jogging
+[21:09:55] Jordan: where in the country are you based?
+[21:09:58] Elliot: that's cool, what kind of coding
+[21:10:11] Avery: just basic html so far
+[21:10:15] Avery: canada
+[21:10:43] Jordan: nice how's the weather in canada?
+[21:10:46] Elliot: nice, html is useful
+[21:10:53] Avery: rainy
+[21:11:01] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[21:12:25] Game-Manager: 🗳️ Vote results:
+    Avery: 3
+    Casey: 1
+    → eliminated: Avery
+[21:12:25] Game-Manager: 📣 Avery was eliminated. They were: Human
+[21:12:25] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[21:13:03] Jordan: where is everyone else based?
+[21:13:09] Elliot: switzerland for me
+[21:13:15] Casey: south africa
+[21:13:36] Jordan: i'm scotland, it's rainy here too
+[21:14:04] Morgan: i'm in brazil!
+[21:14:19] Morgan: still afternoon here
+[21:14:39] Casey: i'd love to go to brazil
+[21:14:44] Elliot: yeah sounds nice
+[21:14:55] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[21:15:12] Game-Manager: 🗳️ Vote results:
+    Casey: 2
+    Elliot: 1
+    Morgan: 1
+    → eliminated: Casey
+[21:15:12] Game-Manager: 📣 Casey was eliminated. They were: Human
+[21:15:12] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[21:16:16] Jordan: so what's your thoughts on ai? force for good or bad?
+[21:16:47] Elliot: depends on how it's used right
+[21:17:04] Morgan: i agree it depends on the use
+[21:17:22] Jordan: yeah would agree
+[21:17:42] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[21:17:52] Game-Manager: 🗳️ Vote results:
+    Jordan: 2
+    Morgan: 1
+    → eliminated: Jordan
+[21:17:52] Game-Manager: 📣 Jordan was eliminated. They were: Human

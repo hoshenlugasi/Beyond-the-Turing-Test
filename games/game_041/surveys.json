@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Morgan",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "In the last round, when Taylor asked \"what y'all doing?\"\nHe/she meant, why are you eliminating humans, but Parker said \"nothing much hbu\". That was off",
+    "additional_comments": "so many cases where it used \"nah\"\n\"nah, I'm just here\"\n\"nah, I'm just a student\""
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I was the first one out so I only got one guess.  I didn't really have enough info for a meaningful guess, and I chose Avery,  I don't think I would have gotten Parker until it was down to two people. :-)",
+    "additional_comments": "None."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I knew from the start all of them were",
+    "additional_comments": "Fun game regardless"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "answered a question with another question or vague answer",
+    "additional_comments": "maybe longer sessions between elimination points"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Not enough time to find out. All seemed normal to me",
+    "additional_comments": "None"
+  }
+]

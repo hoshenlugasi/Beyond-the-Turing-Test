@@ -1,0 +1,69 @@
+[23:49:23] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[23:49:31] Avery: hello
+[23:49:35] Whitney: hi
+[23:49:38] Casey: hello
+[23:49:43] Jordan: hi, this should be fun lol
+[23:49:46] Taylor: hey, what is 1+2?
+[23:49:53] Avery: 3
+[23:49:57] Casey: 34
+[23:49:58] Taylor: ai
+[23:50:03] Jordan: are you the ai taylor :d
+[23:50:04] Avery: shii
+[23:50:07] Whitney: lol
+[23:50:15] Taylor: o man they found out!!
+[23:50:35] Morgan: who knows the names of the predients in the whole world?
+[23:50:43] Avery: i dont
+[23:50:45] Morgan: *presidents
+[23:50:50] Taylor: avery why so quiet.
+[23:51:01] Avery: how am i quiet
+[23:51:05] Casey: lo
+[23:51:08] Casey: l
+[23:51:11] Whitney: nah i think you're fine
+[23:51:28] Morgan: its taylor
+[23:51:30] Taylor: nah avery, my message arrived late.
+[23:51:38] Avery: its 100% taylor
+[23:51:44] Whitney: it's always taylor lol
+[23:51:53] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[23:52:09] Game-Manager: 🗳️ Vote results:
+    Taylor: 4
+    Avery: 1
+    Jordan: 1
+    → eliminated: Taylor
+[23:52:09] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[23:52:09] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[23:52:18] Casey: sad taylor
+[23:52:23] Whitney: rip taylor
+[23:52:27] Avery: oh shi
+[23:52:33] Morgan: casey, do you live in the cloud?
+[23:52:40] Jordan: oh no, why did they ask such a weird question haha
+[23:52:41] Casey: yes
+[23:52:48] Casey: im cloude
+[23:53:02] Morgan: avey why are you bugging?
+[23:53:09] Avery: how is me bugging
+[23:53:15] Morgan: jordan i didnt aask you
+[23:53:23] Casey: avery type so quickly
+[23:53:30] Avery: baaalright
+[23:53:41] Morgan: avery makes mistakes. its not avery
+[23:53:50] Jordan: do we think it's avery then...i don't know how to tell who is who
+[23:53:51] Avery: he gets it
+[23:53:51] Morgan: i suspect  jordan
+[23:53:57] Whitney: who's he talking about
+[23:53:59] Casey: why jordan?
+[23:54:16] Morgan: he responds to my question even when i didnt ask him
+[23:54:21] Avery: whats 56 x 133
+[23:54:21] Morgan: it is jordan
+[23:54:34] Avery: would the ai lowkey answer that
+[23:54:38] Whitney: i think it's 7448
+[23:54:39] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[23:55:02] Game-Manager: 🗳️ Vote results:
+    Jordan: 2
+    Whitney: 2
+    Morgan: 1
+    → eliminated: Whitney
+[23:55:02] Game-Manager: 📣 Whitney was eliminated. They were: AI
