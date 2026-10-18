@@ -128,10 +128,13 @@ difference in analyses; do not combine these games with Pro, custom or test game
 Five surveys are missing, and the five legacy surveys have no enjoyment rating;
 missing values are not zeros. Demographic data is aggregate-only.
 
-The reviewed data is included in this GitHub repository. A
-[Hugging Face dataset repository](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test)
-has been created; uploading its study data is pending. Text was
-reviewed and identifying spans removed; [public_redactions.json](public_redactions.json)
+The reviewed data is published in this GitHub repository and on
+[Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
+Shared dataset files are byte-identical; the repositories' root README and
+license files differ. See the
+[project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/) for an overview.
+
+Text was reviewed and identifying spans removed; [public_redactions.json](public_redactions.json)
 records the additional public redactions. Review reduces risk, but cannot
 guarantee that no person could ever be identified from context. Do not attempt
 re-identification. [DATASET.md](DATASET.md) describes **only the four-file core**;

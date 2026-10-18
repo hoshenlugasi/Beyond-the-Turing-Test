@@ -1,8 +1,9 @@
 # Release notes — updated 2026-10-18
 
-Initial GitHub release of the reviewed code and data. The Hugging Face dataset
-repository has been created, but its study-data upload is pending. The author permits
-release provided individual participants cannot be identified. Text review and
+Initial public release of the reviewed code and data on GitHub, with the dataset
+also published on [Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
+The [project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/) is also live.
+The author permits release provided individual participants cannot be identified. Text review and
 filtering reduce disclosure risk but do not guarantee anonymity or establish
 independent consent/IRB approval. New local-game exports always need their own
 review; they do not inherit the historical dataset's release permission.
@@ -77,8 +78,9 @@ adds four redacted spans across three files:
 **197 of 200 game files are unchanged** from the submitted baseline. No rows,
 ratings, ballots or outcomes changed.
 [public_redactions.json](public_redactions.json) records categories and locations,
-not the removed original strings. This GitHub release includes the reviewed core;
-the Hugging Face study-data upload is pending. The public core is not wholly byte-identical to the
+not the removed original strings. The 270 shared files, excluding the repositories'
+root README.md and LICENSE, were verified byte-identical between GitHub and
+Hugging Face. The public core is not wholly byte-identical to the
 submitted baseline. The copied [DATASET.md](DATASET.md) describes the submitted
 four-file core; its exclusion of internal outputs is scoped to that core.
 

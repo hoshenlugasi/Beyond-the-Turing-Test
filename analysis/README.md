@@ -28,9 +28,10 @@ are not runnable game directories. After manual review of all transcripts and
 survey files, the public core has four additional redacted spans across three
 files (197/200 game files unchanged); no rows, ratings, ballots or outcomes changed.
 See [../public_redactions.json](../public_redactions.json) for categories and
-locations, without the removed strings. This GitHub release includes the reviewed
-data; the Hugging Face study-data upload is pending. The public core is not wholly
-identical to the submitted baseline.
+locations, without the removed strings. The reviewed data is published here and on
+[Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
+Shared dataset files are byte-identical; the public core is not wholly identical
+to the submitted baseline.
 
 - `metadata.json`: `game_id`, `ai_pseudonym`, `num_human_players`, `total_rounds`,
   `ai_eliminated` (Boolean), `ai_elimination_round` (integer or null).
