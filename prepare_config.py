@@ -53,13 +53,13 @@ LLM_CONFIG_KEYS_INDEXED_OPTIONS = {
 }
 
 # Local CLI defaults only; scientific prompts and shared model constants stay intact.
-LOCAL_V6_DEFAULTS = {
+LOCAL_AGENT_DEFAULTS = {
     "model_name": "gemini-2.5-flash",
     "use_gemini": True,
     "use_together": False,
     "use_openrouter": False,
     "use_pipeline": False,
-    "async_type": "langgraph_v6",
+    "async_type": "social_turing_test_agent",
     "scheduler_model": "gemini-2.5-flash",
     "reviewer_enabled": True,
     "reviewer_backend": "gemini",
@@ -69,7 +69,7 @@ LOCAL_V6_DEFAULTS = {
     "investigator": True,
     "voting_strategy": "strategic",
     "pipeline_timeout_s": 35.0,
-    "orchestration_mode": "legacy",
+    "orchestration_mode": "synchronous",
     "allow_active_authoritative": False,
     "persona": "swiss_student",
     "agent_code": "current",
@@ -139,7 +139,7 @@ def parse_args():
     parser.add_argument("--reviewer-model", default=None,
                         help="override reviewer model name (requires --review-mode)")
     parser.add_argument("--scheduler-model", default=None,
-                        help="V6 only: override the send/wait scheduler model so it can "
+                        help="Override the send/wait scheduler model so it can "
                              "differ from the generator model (provider auto-detected). "
                             "Default: gemini-2.5-flash.")
     parser.add_argument("--provider",
@@ -147,7 +147,7 @@ def parse_args():
                         default="auto",
                         help="generator provider override. 'auto' (default) infers from model name.")
     parser.add_argument("--test", action="store_true",
-                        help="prepare this as a test game under games/test/v6/. "
+                        help="prepare this as a test game under games/test/. "
                              "(short -t is taken by --topic, so this flag is long-form only.)")
     args = parser.parse_args()
     return args
@@ -252,7 +252,7 @@ def handle_num_players(args):
 
 def get_llm_config(llm_numbered_symbol, args):
     llm_config = DEFAULT_LLM_CONFIG.copy()
-    llm_config.update(LOCAL_V6_DEFAULTS)
+    llm_config.update(LOCAL_AGENT_DEFAULTS)
     if args.llm_config_json_path is not None:
         print("Using the LLM configuration in provided path:", args.llm_config_json_path)
         with open(args.llm_config_json_path, "r", encoding="utf-8") as f:
@@ -273,7 +273,7 @@ def get_llm_config(llm_numbered_symbol, args):
         _apply_provider_flags(llm_config, args.provider)
         print(colored(f"✓ Provider override: {args.provider}", "green"))
 
-    # Apply --scheduler-model override (V6 only): dedicated send/wait model.
+    # Apply --scheduler-model override: dedicated send/wait model.
     if args.scheduler_model is not None and str(args.scheduler_model).strip():
         llm_config["scheduler_model"] = str(args.scheduler_model).strip()
         sched_provider = detect_provider_from_model(args.scheduler_model)
@@ -371,10 +371,9 @@ def get_llm_config(llm_numbered_symbol, args):
     elif args.reviewer_model is not None:
         print(colored("⚠ --reviewer-model ignored without --review-mode", "yellow"))
 
-    # Reviewer branches above historically select older player classes. The
-    # exported factory supports only V6; keep the chosen models/providers intact.
-    llm_config[ASYNC_TYPE_KEY] = "langgraph_v6"
-    llm_config["orchestration_mode"] = "legacy"
+    # Reviewer options configure roles within the single agent.
+    llm_config[ASYNC_TYPE_KEY] = "social_turing_test_agent"
+    llm_config["orchestration_mode"] = "synchronous"
     llm_config["allow_active_authoritative"] = False
     llm_config["agent_code"] = "current"
 

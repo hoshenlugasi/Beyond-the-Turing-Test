@@ -135,17 +135,17 @@ def eliminate(player):
 def _strategic_vote(player, candidate_vote_names: list, message_history: list) -> str:
     """Vote strategically — remove whoever most threatens the agent.
 
-    V6: prefer the SocialMemory slice (deterministic, no LLM) when the player
+    Prefer the social-state slice (deterministic, no LLM) when the player
     carries a snapshot — vote the accuser who's actually suspicious of us, else
     the room's prime suspect. This makes the vote consistent with the same
     social read the generator/behaviour agents already use. Falls back to the
-    LLM read (legacy path) and finally to random.
+    LLM read and finally to random.
     """
-    # V6 — SocialMemory-driven choice (only when a snapshot is present).
+    # Social-state-driven choice (only when a snapshot is present).
     snapshot = getattr(player, "snapshot", None)
     if snapshot is not None:
         try:
-            mem = snapshot.get_social_memory()
+            mem = snapshot.get_social_state()
             suspects = [s for s in (mem.get("suspects_me") or []) if s in candidate_vote_names]
             if suspects:
                 player.logger.log("strategic_vote", f"Chose accuser: {suspects[0]} (suspects_me)")
@@ -242,7 +242,7 @@ def add_message_to_game(player, message_history):
     if hasattr(player, 'generate_message_with_review_info') and hasattr(player, 'reviewer') and player.reviewer:
         review_info = player.generate_message_with_review_info(message_history)
         message = review_info.get("message", "").strip()
-        # LangGraph (V4/V5) players apply the typing delay inside the graph's
+        # LangGraph players apply the typing delay inside the graph's
         # output_node, so they set `typing_already_applied` to stop us waiting
         # twice. Flat ReviewedPlayers do NOT, so we still owe the outer wait.
         inner_typing_done = review_info.get("typing_already_applied", False)
@@ -277,7 +277,7 @@ def add_message_to_game(player, message_history):
     if message and hasattr(player, '_last_sent_message') and message == player._last_sent_message:
         player.logger.log("DEDUP_BLOCKED", f"Blocked duplicate message: '{message}'")
         _record_delivery_event(
-            player, "v6_delivery_dedup_drop", message,
+            player, "delivery_dedup_drop", message,
             outcome="dedup_suppressed",
         )
         return None
@@ -292,7 +292,7 @@ def add_message_to_game(player, message_history):
                 "AGENT_DROPPED_GENERATED_MESSAGE",
                 f"Dropped after generation (voting started): '{message}'")
             _record_delivery_event(
-                player, "v6_delivery_phase_drop", message,
+                player, "delivery_phase_drop", message,
                 outcome="phase_drop", stage="after_generation",
                 reason="voting_started",
             )
@@ -311,7 +311,7 @@ def add_message_to_game(player, message_history):
                 "AGENT_DROPPED_GENERATED_MESSAGE",
                 f"Dropped after typing-delay (voting started): '{message}'")
             _record_delivery_event(
-                player, "v6_delivery_phase_drop", message,
+                player, "delivery_phase_drop", message,
                 outcome="phase_drop", stage="after_typing_delay",
                 reason="voting_started",
             )
@@ -320,18 +320,16 @@ def add_message_to_game(player, message_history):
         with open(game_dir / PERSONAL_CHAT_FILE_FORMAT.format(player.name), "a", encoding="utf-8") as f:
             f.write(formatted_message)
         _record_delivery_event(
-            player, "v6_delivery_sent", message,
+            player, "delivery_sent", message,
             outcome="sent", append_target="personal_chat",
         )
-        # V6 Live-Activation blocker 4: the REAL public-chat append just happened.
-        # In active mode this is where v6_turn_sent + pipeline completion are
-        # emitted with the true chat_append_at — not inside the latency controller.
-        # No-op (and byte-identical) for legacy V6 / V5 players with no pending send.
+        # The authoritative personal-chat append just happened.
+        # Notify the player hook; the synchronous agent has no pending acknowledgement.
         if hasattr(player, "record_public_append"):
             try:
                 player.record_public_append(formatted_message)
             except Exception as exc:
-                player.logger.log("v6_record_public_append_error", str(exc))
+                player.logger.log("record_public_append_error", str(exc))
         # Track last sent message for dedup guard
         player._last_sent_message = message
         print(colored(MODEL_CHOSE_TO_USE_TURN_LOG, OPERATOR_COLOR))

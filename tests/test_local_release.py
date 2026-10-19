@@ -111,7 +111,7 @@ def make_game(server, count=0, ai=True, opened=True):
     game.mkdir(exist_ok=True)
     server.ensure_game_subdirs(game)
     settings = {
-        'async_type': 'langgraph_v6', 'orchestration_mode': 'legacy',
+        'async_type': 'social_turing_test_agent', 'orchestration_mode': 'synchronous',
         'agent_code': 'current',
     }
     players = ([{'name': 'Player1', 'real_name': 'LLM0', 'is_ai': True,
@@ -194,20 +194,20 @@ def test_model_controls_and_timing_remain_editable(client, provider):
         assert settings[key] == value
 
 
-def test_historical_and_advanced_pipeline_bypasses(client):
-    for pipeline in ('v3', 'v4', 'v5', 'v6_active'):
+def test_unsupported_and_advanced_pipeline_bypasses(client):
+    for pipeline in ('unsupported', 'other', 'experimental', 'unknown'):
         assert client.post('/api/admin/create_config', json={'pipeline': pipeline}).status_code == 400
-    assert client.post('/api/admin/create_config', json={'agent_code': 'hackathon-original'}).status_code == 400
+    assert client.post('/api/admin/create_config', json={'agent_code': 'unsupported'}).status_code == 400
     response = client.post('/api/admin/create_config', json={'advanced_llm_config': {
         'async_type': 'schedule_then_generate', 'orchestration_mode': 'active',
-        'allow_active_authoritative': True, 'agent_code': 'historical',
+        'allow_active_authoritative': True, 'agent_code': 'unsupported',
         'multi_candidate_generation': False, 'investigator': False,
         'voting_strategy': 'random',
     }})
     assert response.status_code == 200
     settings = response.get_json()['config']['players'][0]['llm_config']
-    assert settings['async_type'] == 'langgraph_v6'
-    assert settings['orchestration_mode'] == 'legacy'
+    assert settings['async_type'] == 'social_turing_test_agent'
+    assert settings['orchestration_mode'] == 'synchronous'
     assert settings['agent_code'] == 'current'
     assert not settings['allow_active_authoritative']
     assert settings['multi_candidate_generation'] is True
@@ -357,7 +357,7 @@ def test_page_requests_have_registered_routes(server):
     assert not paths - registered, sorted(paths - registered)
 
 
-@pytest.mark.parametrize('route', ['lobby_state', 'game_status', 'v5_state', 'v6_state',
+@pytest.mark.parametrize('route', ['lobby_state', 'game_status', 'component_state', 'agent_state',
                                   'ai_state', 'ai_metrics', 'ai_issues', 'reviewer_detail',
                                   'votes', 'survey_results'])
 def test_retained_admin_read_routes(server, client, monkeypatch, route):
@@ -365,8 +365,8 @@ def test_retained_admin_read_routes(server, client, monkeypatch, route):
     (game / server.LLM_LOG_FILE_FORMAT.format('Player1')).touch()
     events = [
         {'event_type': 'agent_ready'},
-        {'event_type': 'v5_snapshot_read_full', 'turn_index': 1, 'self_claims': []},
-        {'event_type': 'v6_orchestration_mode', 'effective_orchestration_mode': 'legacy'},
+        {'event_type': 'snapshot_observed', 'turn_index': 1, 'self_claims': []},
+        {'event_type': 'orchestration_mode', 'effective_orchestration_mode': 'synchronous'},
     ]
     server.game_file(game, 'game_events.jsonl', for_write=True).write_text(
         ''.join(json.dumps(event) + '\n' for event in events), encoding='utf-8')
@@ -378,7 +378,7 @@ def test_retained_admin_read_routes(server, client, monkeypatch, route):
 
 def test_lobby_state_and_overview_have_no_roster_cap(server, client, monkeypatch):
     game = make_game(server, count=6)
-    monkeypatch.setattr(server, 'iter_all_games', lambda **kwargs: [('test', 'v6', game)])
+    monkeypatch.setattr(server, 'iter_all_games', lambda **kwargs: [('test', 'social_turing_test_agent', game)])
     state = client.get('/api/admin/lobby_state?game_id=0001')
     assert state.status_code == 200
     data = state.get_json()
@@ -438,16 +438,16 @@ def cli_settings(local_cli, monkeypatch, *arguments):
     return args, local_cli.get_llm_config('LLM0', args)
 
 
-def test_cli_final_v6_defaults_and_sample_parity(local_cli, monkeypatch):
+def test_cli_agent_defaults_and_sample_parity(local_cli, monkeypatch):
     args, settings = cli_settings(local_cli, monkeypatch)
     expected = {
-        'async_type': 'langgraph_v6', 'model_name': 'gemini-2.5-flash',
+        'async_type': 'social_turing_test_agent', 'model_name': 'gemini-2.5-flash',
         'use_gemini': True, 'use_together': False, 'use_openrouter': False,
         'use_pipeline': False, 'scheduler_model': 'gemini-2.5-flash',
         'reviewer_enabled': True, 'reviewer_backend': 'gemini',
         'reviewer_model': 'gemini-2.5-flash', 'multi_candidate_generation': True,
         'num_candidates': 4, 'investigator': True, 'voting_strategy': 'strategic',
-        'pipeline_timeout_s': 35.0, 'orchestration_mode': 'legacy',
+        'pipeline_timeout_s': 35.0, 'orchestration_mode': 'synchronous',
         'allow_active_authoritative': False, 'persona': 'swiss_student',
         'agent_code': 'current',
     }
@@ -471,7 +471,7 @@ def test_cli_final_v6_defaults_and_sample_parity(local_cli, monkeypatch):
     ('Qwen/Qwen3-Next-80B-A3B-Instruct', 'together'),
     ('openai/gpt-4o-mini', 'openrouter'),
 ])
-def test_cli_explicit_models_keep_provider_and_v6(local_cli, monkeypatch, model, provider):
+def test_cli_explicit_models_keep_provider_and_agent(local_cli, monkeypatch, model, provider):
     _, settings = cli_settings(local_cli, monkeypatch,
                                '--generator-model', model,
                                '--scheduler-model', 'gemini-2.5-pro')
@@ -479,7 +479,7 @@ def test_cli_explicit_models_keep_provider_and_v6(local_cli, monkeypatch, model,
     assert settings['scheduler_model'] == 'gemini-2.5-pro'
     for candidate in ('gemini', 'together', 'openrouter'):
         assert settings['use_' + candidate] is (candidate == provider)
-    assert settings['async_type'] == 'langgraph_v6'
+    assert settings['async_type'] == 'social_turing_test_agent'
 
 
 @pytest.mark.parametrize('provider', ['gemini', 'together', 'openrouter', 'huggingface'])
@@ -490,14 +490,14 @@ def test_cli_explicit_provider_wins_over_detection(local_cli, monkeypatch, provi
     assert settings['use_pipeline'] is (provider == 'huggingface')
     for candidate in ('gemini', 'together', 'openrouter'):
         assert settings['use_' + candidate] is (candidate == provider)
-    assert settings['async_type'] == 'langgraph_v6'
+    assert settings['async_type'] == 'social_turing_test_agent'
 
 
 @pytest.mark.parametrize('mode', ['none', 'gemini', 'together', 'openrouter'])
 def test_cli_reviewer_selection_never_restores_old_async(local_cli, monkeypatch, mode):
     _, settings = cli_settings(local_cli, monkeypatch, '--review-mode', mode,
                                '--reviewer-model', 'custom/reviewer')
-    assert settings['async_type'] == 'langgraph_v6'
+    assert settings['async_type'] == 'social_turing_test_agent'
     assert settings['reviewer_enabled'] is (mode != 'none')
     if mode == 'none':
         assert 'reviewer_backend' not in settings
@@ -524,8 +524,8 @@ def test_cli_json_choices_survive_defaults_and_cli_overrides(local_cli, monkeypa
     for key, value in supplied.items():
         if key not in ('async_type', 'orchestration_mode'):
             assert settings[key] == value
-    assert settings['async_type'] == 'langgraph_v6'
-    assert settings['orchestration_mode'] == 'legacy'
+    assert settings['async_type'] == 'social_turing_test_agent'
+    assert settings['orchestration_mode'] == 'synchronous'
     assert_current_config(settings)
     _, settings = cli_settings(local_cli, monkeypatch, *arguments,
                                '--generator-model', 'gemini-2.5-pro',
@@ -554,9 +554,9 @@ def test_cli_name_fallback_only_after_pool_exhaustion(local_cli, monkeypatch):
     assert {p.name for p in local_cli.handle_num_players(args)} <= set(local_cli.OPTIONAL_CODE_NAMES)
 
 
-def test_local_sample_prepares_v6_without_touching_dataset(local_cli, monkeypatch, tmp_path):
+def test_local_sample_prepares_agent_without_touching_dataset(local_cli, monkeypatch, tmp_path):
     import prepare_game
-    from core import game_paths, game_version
+    from core import game_paths, game_identity
     from core.game_constants import DEFAULT_GAME_CONFIG
 
     monkeypatch.chdir(tmp_path)
@@ -568,14 +568,14 @@ def test_local_sample_prepares_v6_without_touching_dataset(local_cli, monkeypatc
     before = receipt.read_bytes()
     prepare_game.init_game('0001', str(ROOT / DEFAULT_GAME_CONFIG))
     game = game_paths.resolve_game_dir('0001')
-    assert game == tmp_path / 'games' / 'real' / 'v6' / '0001'
+    assert game == tmp_path / 'games' / 'real' / '0001'
     config = json.loads((game / 'config.json').read_text(encoding='utf-8'))
-    assert game_version.CURRENT_AGENT_VERSION == 'v6'
-    assert config['players'][-1]['llm_config']['agent_version'] == 'v6'
+    assert game_identity.CURRENT_AGENT_IDENTITY == 'social_turing_test_agent'
+    assert config['players'][-1]['llm_config'][game_identity.AGENT_IDENTITY_KEY] == 'social_turing_test_agent'
     assert game_paths.next_game_id() == '0002'
     assert receipt.read_bytes() == before
     assert game_paths.target_dir_for_config({'is_test': True}, '0002') == (
-        tmp_path / 'games' / 'test' / 'v6' / '0002')
+        tmp_path / 'games' / 'test' / '0002')
     for invalid in ('game_001', '../0001', '123', '12345', '0001\n'):
         with pytest.raises(ValueError, match='Invalid game_id'):
             game_paths.resolve_game_dir(invalid)
@@ -584,17 +584,17 @@ def test_local_sample_prepares_v6_without_touching_dataset(local_cli, monkeypatc
     assert [gd.name for _, _, gd in game_paths.iter_all_games()] == ['0001']
 
 
-def test_local_runtime_paths_resolve_real_test_and_flat(local_cli, monkeypatch, tmp_path):
+def test_local_runtime_paths_resolve_real_and_test(local_cli, monkeypatch, tmp_path):
     from core import game_paths
 
     monkeypatch.setattr(game_paths, 'DIRS_PREFIX', str(tmp_path))
-    for relative, gid in [('real/v6/0001', '0001'), ('test/v6/0002', '0002'),
-                          ('0003', '0003')]:
+    for relative, gid in [('real/0001', '0001'), ('test/0002', '0002'),
+                          ('real/0003', '0003')]:
         game = tmp_path / relative
         game.mkdir(parents=True)
         (game / 'config.json').write_text('{"players": []}', encoding='utf-8')
         assert game_paths.resolve_game_dir(gid) == game
-    assert game_paths.resolve_game_dir('0004') == tmp_path / 'real' / 'v6' / '0004'
+    assert game_paths.resolve_game_dir('0004') == tmp_path / 'real' / '0004'
     assert game_paths.next_game_id() == '0004'
 
 
@@ -610,7 +610,7 @@ def test_cli_provider_only_override_and_test_routing(local_cli, monkeypatch, tmp
     config = {'is_test': args.test, 'players': [
         {'is_ai': True, 'is_llm': True, 'llm_config': settings},
     ]}
-    assert game_paths.target_dir_for_config(config, '0001') == tmp_path / 'test' / 'v6' / '0001'
+    assert game_paths.target_dir_for_config(config, '0001') == tmp_path / 'test' / '0001'
 
 
 @pytest.mark.parametrize('key', RETIRED_KEYS)
@@ -744,7 +744,7 @@ def test_current_ui_and_schema_have_no_evaluator_controls(client):
     for retired in ('cfgLiveEval', 'live_evaluator', 'Live Evaluator', 'liveEvaluator'):
         assert retired.lower() not in html.lower()
     assert_current_config({item['key']: item.get('default') for item in CONFIG_SCHEMA})
-    assert_current_config(apply_defaults({'async_type': 'langgraph_v6'}))
+    assert_current_config(apply_defaults({'async_type': 'social_turing_test_agent'}))
     response = client.get('/')
     assert response.status_code == 200
     assert b'cfgLiveEval' not in response.data
@@ -752,19 +752,19 @@ def test_current_ui_and_schema_have_no_evaluator_controls(client):
 
 def test_activity_ignores_retired_events_and_preserves_six_retained_workers(server):
     events = [
-        {'event_type': 'v5_live_evaluator_tick', 'timestamp': 'offline'},
-        {'event_type': 'v5_live_evaluator_phase1', 'parsed': {'suspect': 'Player1'}},
-        {'event_type': 'v5_live_evaluator_phase2', 'self_weaknesses': ['retired']},
+        {'event_type': 'live_evaluator_tick', 'timestamp': 'offline'},
+        {'event_type': 'live_evaluator_phase1', 'parsed': {'suspect': 'Player1'}},
+        {'event_type': 'live_evaluator_phase2', 'self_weaknesses': ['retired']},
     ]
-    activity = server._v6_subagents_activity(events)
-    assert activity == server._v6_subagents_activity([])
+    activity = server._agent_subagents_activity(events)
+    assert activity == server._agent_subagents_activity([])
     assert 'live_evaluator' not in json.dumps(activity)
-    workers = {'internet_context', 'phase_summarizer', 'persona_monitor',
-               'social_memory', 'behavior_evolution', 'repetition_monitor'}
+    workers = {'internet_context', 'round_summarizer', 'persona_monitor',
+               'social_state_tracker', 'behavior_adapter', 'repetition_monitor'}
     assert workers <= activity.keys()
     assert {key for key, value in activity.items()
             if isinstance(value, dict) and value.get('enabled', True)} == workers
-    assert activity['player_profiler']['enabled'] is False
+    assert 'player_profiler' not in activity
 
 
 def test_runtime_worker_declaration_contains_only_six_retained_workers():
@@ -772,7 +772,7 @@ def test_runtime_worker_declaration_contains_only_six_retained_workers():
 
     Factory construction/request spies are covered by the credentials test module.
     """
-    path = ROOT / 'llm_players' / 'v6' / 'langgraph_v6_player.py'
+    path = ROOT / 'llm_players' / 'agent' / 'agent.py'
     tree = ast.parse(path.read_text(encoding='utf-8'))
     declarations = [node.value for node in ast.walk(tree)
                     if isinstance(node, ast.AnnAssign)
@@ -781,6 +781,6 @@ def test_runtime_worker_declaration_contains_only_six_retained_workers():
     assert len(declarations) == 1
     assert isinstance(declarations[0], ast.List)
     assert [ast.unparse(node.func) for node in declarations[0].elts] == [
-        'InternetContextAgent', 'PhaseSummarizerAgent', 'PersonaMonitorAgent',
-        'SocialMemoryAgent', 'BehaviorEvolutionAgent', 'RepetitionMonitorAgent',
+        'InternetContextAgent', 'RoundSummarizerAgent', 'PersonaMonitorAgent',
+        'SocialStateTrackerAgent', 'BehaviorAdapterAgent', 'RepetitionMonitorAgent',
     ]

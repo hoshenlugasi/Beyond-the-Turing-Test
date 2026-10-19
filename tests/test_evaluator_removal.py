@@ -20,8 +20,8 @@ from unittest.mock import Mock, patch
 EXPORT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(EXPORT))
 WORKERS = [
-    "InternetContextAgent", "PhaseSummarizerAgent", "PersonaMonitorAgent",
-    "SocialMemoryAgent", "BehaviorEvolutionAgent", "RepetitionMonitorAgent",
+    "InternetContextAgent", "RoundSummarizerAgent", "PersonaMonitorAgent",
+    "SocialStateTrackerAgent", "BehaviorAdapterAgent", "RepetitionMonitorAgent",
 ]
 
 
@@ -37,7 +37,7 @@ class EvaluatorRemovalTests(unittest.TestCase):
         self.factory = _module("llm_players.factory")
         self.wrapper = _module("llm_players.llm_wrapper")
         self.reviewer = _module("llm_players.gemini_reviewer")
-        self.base = _module("llm_players.v6.sub_agents.base")
+        self.base = _module("llm_players.agent.sub_agents.base")
         self.constants = _module("core.game_constants")
         self.environment = patch.dict(os.environ, {"GEMINI_API_KEY": "offline-sdk-spy"}, clear=True)
         self.environment.start()
@@ -46,7 +46,7 @@ class EvaluatorRemovalTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.game_dir = Path(self.temp.name) / "synthetic_game"
         self.game_dir.mkdir()
-        example = json.loads((EXPORT / "configurations/example_local_v6.json").read_text(encoding="utf-8"))
+        example = json.loads((EXPORT / "configurations/example_local_agent.json").read_text(encoding="utf-8"))
         self.example = next(p for p in example["players"] if p["is_ai"])
         # Real base constructors and Logger write only to this synthetic game.
         (self.game_dir / "logs").mkdir()
@@ -114,7 +114,7 @@ class EvaluatorRemovalTests(unittest.TestCase):
         self.assertTrue(all(not a.is_running for a in player.sub_agents))
         self.assertEqual(len(reviewers), 1)
         self.assertIs(player.reviewer, reviewers[0])
-        self.assertIsInstance(player, self.factory.LangGraphV6Player)
+        self.assertIsInstance(player, self.factory.SocialTuringTestAgent)
         self.assertIsInstance(player.llm, self.wrapper.LLMWrapper)
         self.assertIsInstance(player.reviewer, self.reviewer.GeminiReviewer)
         self.assertTrue(all(a.agent_llm is player.sub_llm for a in player.sub_agents))
@@ -175,23 +175,23 @@ class EvaluatorRemovalTests(unittest.TestCase):
                         config["game_dir"] = self.game_dir
                         (config if top_level else config["llm_config"])[key] = value
                         with patch.object(self.factory, "apply_defaults", side_effect=self.factory.ConfigError("forced fallback")) as defaults, \
-                                patch.dict(self.factory.llm_players_classes, {"langgraph_v6": Mock()}, clear=True), \
+                                patch.dict(self.factory.llm_players_classes, {"social_turing_test_agent": Mock()}, clear=True), \
                                 patch.object(self.wrapper.LLMWrapper, "__init__", side_effect=AssertionError("Constructor forbidden")) as wrapper_init, \
                                 patch.object(self.reviewer.GeminiReviewer, "__init__", side_effect=AssertionError("Constructor forbidden")) as reviewer_init:
                             with self.assertRaisesRegex(ValueError, "retired"):
                                 self.factory.llm_player_factory(config)
                             defaults.assert_not_called()
-                            self.factory.llm_players_classes["langgraph_v6"].assert_not_called()
+                            self.factory.llm_players_classes["social_turing_test_agent"].assert_not_called()
                             wrapper_init.assert_not_called()
                             reviewer_init.assert_not_called()
         self.client_constructor.assert_not_called()
         self.assertEqual(self.sdk_calls, [])
 
     def test_evaluator_modules_state_and_runtime_references_are_absent(self):
-        for relative in ("llm_players/v6/sub_agents/live_evaluator.py", "llm_players/evaluation_prompts.py"):
+        for relative in ("llm_players/agent/sub_agents/live_evaluator.py", "llm_players/evaluation_prompts.py"):
             self.assertFalse((EXPORT / relative).exists(), relative)
-        state = _module("llm_players.v6.agent_state")
-        snapshot = _module("llm_players.v6.shared_state").SharedSnapshot()
+        state = _module("llm_players.agent.agent_state")
+        snapshot = _module("llm_players.agent.shared_state").SharedSnapshot()
         self.assertNotIn("self_weaknesses", state.DEFAULT_STATE)
         self.assertNotIn("self_weaknesses", state.AgentState.__annotations__)
         self.assertNotIn("self_weaknesses", snapshot.read())
@@ -207,7 +207,7 @@ class EvaluatorRemovalTests(unittest.TestCase):
                 elif isinstance(node, ast.Constant) and isinstance(node.value, str):
                     self.assertNotIn(node.value, {"self_weaknesses", "self_weaknesses_state"}, str(path))
                 elif isinstance(node, ast.ImportFrom):
-                    self.assertNotIn(node.module, {"llm_players.evaluation_prompts", "llm_players.v6.sub_agents.live_evaluator"}, str(path))
+                    self.assertNotIn(node.module, {"llm_players.evaluation_prompts", "llm_players.agent.sub_agents.live_evaluator"}, str(path))
 
 
 if __name__ == "__main__":

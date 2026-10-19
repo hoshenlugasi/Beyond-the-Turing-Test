@@ -1,0 +1,97 @@
+{
+  "event_schema": 1,
+  "privacy_status": "reviewed_with_withholding",
+  "event_count": 811,
+  "component_counts": {
+    "Behavior Adapter": 71,
+    "Generator": 17,
+    "Internet Context": 152,
+    "Persona Monitor": 5,
+    "Repetition Monitor": 5,
+    "Reviewer": 16,
+    "Round Summarizer": 70,
+    "Scheduler": 358,
+    "Social State Tracker": 36,
+    "System": 81
+  },
+  "action_counts": {
+    "agent_models_status": 1,
+    "agent_ready": 1,
+    "behavior_advice_updated": 5,
+    "behavior_tick": 33,
+    "cadence_updated": 33,
+    "delivery_sent": 5,
+    "fixed_persona_facts_set": 1,
+    "generate_end": 5,
+    "generator_candidates": 6,
+    "generator_input": 6,
+    "internet_context_tick": 30,
+    "internet_decision_response": 14,
+    "internet_fact_stored": 10,
+    "internet_search_error": 4,
+    "internet_search_rejected": 16,
+    "internet_search_request": 28,
+    "internet_search_response": 12,
+    "internet_search_trace": 8,
+    "internet_seed": 2,
+    "internet_tick_begin": 14,
+    "internet_tick_end": 14,
+    "orchestration_mode": 1,
+    "persona_claims_updated": 2,
+    "persona_monitor_tick": 2,
+    "pipeline_complete": 6,
+    "repetition_llm_pass": 2,
+    "repetition_monitor_tick": 3,
+    "reviewer_analysis": 6,
+    "reviewer_demote_response_required": 4,
+    "reviewer_selected": 6,
+    "round_summary_response": 2,
+    "round_summary_tick": 2,
+    "round_summary_tick_begin": 33,
+    "round_summary_tick_end": 33,
+    "scheduler_blocked": 270,
+    "scheduler_decision": 88,
+    "snapshot_observed": 61,
+    "social_state_tick": 27,
+    "social_state_updated": 9,
+    "stale_send_drop": 1,
+    "turn_context": 5
+  },
+  "time_quality": {
+    "basis_counts": {
+      "since_first_event": 811
+    },
+    "known_elapsed_count": 811,
+    "unknown_elapsed_count": 0,
+    "precision_counts": [
+      {
+        "seconds": 1.0,
+        "count": 811
+      }
+    ],
+    "order_basis": "retained_write_order_not_causal_order"
+  },
+  "input_omission_counts": {
+    "malformed_input": 0,
+    "privacy_withheld": 0,
+    "retired_diagnostic": 15,
+    "unavailable_input": 0,
+    "unknown_event": 0
+  },
+  "input_omission_count": 15,
+  "limitations": [
+    "First-pass text review is complete; contextual verification was selective, not exhaustive.",
+    "Not flagged does not guarantee anonymity or establish redistribution rights.",
+    "Identifying combinations, paraphrases and external linkage may remain; no reidentification test was performed.",
+    "Persona and social-state outputs are model interpretations, not verified participant biographies.",
+    "Elapsed time is quantized to one second since the first raw event, not game START.",
+    "No chat-clock merge, inferred date, timezone correction or causal ordering is asserted.",
+    "Missing events do not establish inactivity; full snapshots, prompts and raw provider results are not included.",
+    "Recorded returned-item counts do not establish independent sources, grounding, use or influence.",
+    "Selection and pipeline completion do not establish delivery."
+  ],
+  "schema_version": 1,
+  "game_id": "game_047",
+  "source_event_count": 826,
+  "retained_event_count": 811
+}

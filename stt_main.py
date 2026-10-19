@@ -359,6 +359,13 @@ def wait_for_players(players):
         if havent_joined_yet:
             time.sleep(0.5)
     (game_dir / GAME_START_TIME_FILE).write_text(get_current_timestamp())
+    # Additive private UTC anchor only; never compare manager/AI monotonic clocks.
+    # Failure must not change game startup or the existing display-time file.
+    try:
+        from core.event_clock import write_game_start_anchor
+        write_game_start_anchor(game_dir)
+    except Exception:
+        pass
     print("Game is now running! Its content is displayed to players.")
 
 def get_all_player_out_of_voting_time():

@@ -28,11 +28,11 @@ class ScheduleThenGeneratePlayer(LLMPlayer):
         self.scheduler = self.llm  # using the same one for generation...
         self.message_in_progress = False  # Prevent duplicate messages during generation
 
-        # Adaptive typing-rhythm config (2.1) and memory window (2.4)
+        # Adaptive typing-rhythm configuration and memory window.
         llm_config = kwargs.get('llm_config', {})
         self._typing_enabled = llm_config.get("typing_delay_enabled", True)
         self._typing_sec_per_word = llm_config.get("typing_sec_per_word", 1.0)
-        self._typing_wps = llm_config.get("typing_wps", 1.6)  # legacy, unused
+        self._typing_wps = llm_config.get("typing_wps", 1.6)  # unused by seconds-per-word timing
         self._typing_jitter = llm_config.get("typing_jitter_pct", 0.25)
         self._typing_min = llm_config.get("typing_min_delay_sec", 0.8)
         self._typing_max = llm_config.get("typing_max_delay_sec", 20.0)
@@ -80,11 +80,11 @@ class ScheduleThenGeneratePlayer(LLMPlayer):
         return will_send
 
     def _apply_typing_delay(self, message: str, pipeline_elapsed: float):
-        """Sleep whatever remains of the ideal human-typing budget (2.1)."""
+        """Sleep whatever remains of the ideal human-typing budget."""
         if not self._typing_enabled or not message:
             return
         word_count = len(message.split())
-        # V5.11 — ~1s/word floor (see ReviewedPlayer._apply_typing_delay). 9054 —
+        # ~1s/word floor (see ReviewedPlayer._apply_typing_delay),
         # plus a constant base so even short replies aren't instant. The cap must
         # never drop below the floor (long messages under-waited).
         sec_per_word = getattr(self, "_typing_sec_per_word", 1.0)
@@ -198,15 +198,17 @@ class ScheduleThenGeneratePlayer(LLMPlayer):
         return stats + STRONGLY_QUIETER_PROMPT
 
     def _cadence_scheduling_nudge(self, directed_at_agent: bool) -> str:
-        """V5.11 — a cadence brake line for the scheduler prompt, from shared
-        memory (Behavior Evolution cadence + Social Dynamics room_norm). Empty
-        for V3/V4 (no snapshot) or when the agent isn't over-participating."""
+        """Cadence guidance for the scheduler prompt from shared memory.
+
+        Uses Behavior Adapter cadence and Social State Tracker room norms.
+        Returns an empty string without a snapshot or applicable guidance.
+        """
         snap = getattr(self, "snapshot", None)
         if snap is None:
             return ""
         try:
             cadence = snap.get_cadence() if hasattr(snap, "get_cadence") else {}
-            social = snap.get_social_memory() if hasattr(snap, "get_social_memory") else {}
+            social = snap.get_social_state() if hasattr(snap, "get_social_state") else {}
         except Exception:
             return ""
         level = (cadence or {}).get("level", "balanced")
@@ -226,12 +228,11 @@ class ScheduleThenGeneratePlayer(LLMPlayer):
 
     @staticmethod
     def _merge_talk_and_indifference(talk_signal: str, mentioned: bool):
-        """9079 fix (contradictory nudges): the same prompt used to contain BOTH
-        "participate and be as talkative as other players!" (talk-share encourage)
-        AND "prefer to WAIT and let someone else take this one" (indifference for
-        room-wide messages) — two opposite orders. When they would co-occur, merge
-        them into ONE coherent instruction and skip the separate indifference
-        nudge. Returns (talk_text, skip_indifference)."""
+        """Merge encouragement and room-wide indifference into one instruction.
+
+        Returns (talk_text, skip_indifference) so the scheduler does not receive
+        contradictory participation guidance.
+        """
         encourage = talk_signal.strip() == TALKATIVE_PROMPT.strip()
         if encourage and not mentioned:
             return ("Note: you've been quieter than the others. This particular "
@@ -326,14 +327,14 @@ class ScheduleThenGeneratePlayer(LLMPlayer):
                 task += f"Note: Someone may be asking something. Consider responding if it feels natural. "
         # Always inject talk-share signal so the LLM knows if it's over-talking,
         # even when it's being directly addressed (being asked doesn't disable the
-        # signal). 9079 fix: coordinated with the indifference nudge below so the
+        # signal). Coordinate with the indifference nudge below so the
         # prompt never carries "be talkative!" and "prefer to WAIT" together.
         talk_signal = self.talkative_scheduling_prompt_modifier(message_history)
         talk_text, skip_indifference = self._merge_talk_and_indifference(talk_signal, mentioned)
         task += talk_text
 
-        # V5.11 — cadence brake (applies EVEN when mentioned). Behavior Evolution
-        # writes how much the agent is talking vs others; Social Dynamics writes
+        # Cadence brake (applies EVEN when mentioned). Behavior Adapter
+        # writes how much the agent is talking vs others; Social State Tracker writes
         # whether the room answers every question. If the agent is over-talking,
         # this question isn't aimed at it, and the room is selective, strongly
         # prefer waiting — humans don't answer every single message. The LLM
@@ -342,7 +343,7 @@ class ScheduleThenGeneratePlayer(LLMPlayer):
         if not skip_indifference:
             task += self._cadence_scheduling_nudge(mentioned or asked_question)
 
-        # 9068 — when the recent message did NOT name the agent, it's a room-wide
+        # When the recent message did NOT name the agent, it's a room-wide
         # question/comment. Nudge the agent to stay a bit detached and not feel it
         # must answer every one — humans field only some open questions. Directly
         # addressed (name mentioned) skips this so the agent still answers those.

@@ -4,7 +4,7 @@ from pathlib import Path
 from core.game_constants import LLM_LOG_FILE_FORMAT, SUBDIR_LOGS, get_current_timestamp
 from llm_players.log_format import render_note
 
-# Legacy free-form entry (still used by .log() for one-off notes).
+# Free-form entry used by .log() for one-off notes.
 NEW_LOG_FORMAT = "# NEW LOG\n## TIME: {time}\n## OPERATION: {operation}\n## CONTENT: {content}\n\n"
 
 # Grouped, human-readable entry for a single LLM call. One block shows the
@@ -34,9 +34,9 @@ class Logger:
         self.game_dir = Path(game_dir)
         self.logs_dir = self.game_dir / SUBDIR_LOGS
         self.master_file = self.game_dir / LLM_LOG_FILE_FORMAT.format(name)
-        # Back-compat alias — older code referenced ``logger.log_file``.
+        # Public alias for the master log path.
         self.log_file = self.master_file
-        # Files now live in a subfolder (logs/); make sure it exists so the
+        # Ensure the logs/ subfolder exists so the
         # first append doesn't fail on a freshly-copied/sim game directory.
         self.logs_dir.mkdir(parents=True, exist_ok=True)
 

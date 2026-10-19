@@ -280,12 +280,10 @@ class LLMWrapper:
             generation_parameters = self.generation_parameters
         # Per-call output-length override. The chat generator runs with a tiny
         # max_tokens (e.g. 25) so messages stay 2-6 words; but background
-        # sub-agents that emit structured JSON (Social Memory, Internet Context,
+        # sub-agents that emit structured JSON (Social State Tracker, Internet Context,
         # Persona Monitor) need far more room or their output is truncated
-        # mid-object and fails to parse. Providers that honour max_tokens
-        # directly (OpenRouter, Together) were silently capped at 25 — Gemini
-        # only escaped because its allowed-param set excludes `max_tokens`.
-        # Setting both token keys covers every provider path.
+        # mid-object and fails to parse. Setting both token keys covers provider
+        # paths that use either max_tokens or max_new_tokens.
         if max_output_tokens is not None:
             generation_parameters = dict(generation_parameters)
             generation_parameters[MAX_TOKENS_KEY] = max_output_tokens
@@ -467,13 +465,12 @@ class LLMWrapper:
         else:
             full_prompt = input_text
 
-        # Build GenerationConfig from generation_parameters so max_tokens / temperature
-        # are actually respected (previously this dict was accepted but never forwarded).
+        # Build GenerationConfig from the supplied token and temperature settings.
         max_tokens = generation_parameters.get(MAX_NEW_TOKENS_KEY)
         temperature = generation_parameters.get(TEMPERATURE_KEY)
         config_kwargs = {}
         # Gemini thinking-model token budget strategy:
-        #   Gemini 3 (3.x):  thinking_budget was REPLACED by thinking_level ("low"/"high").
+        #   Gemini 3 (3.x):  use thinking_level ("low"/"high"), not thinking_budget.
         #                    Pro can't fully disable thinking, so use the lowest level to
         #                    cut latency. Applies to pro AND flash/flash-lite — Gemini 3
         #                    ignores thinking_budget entirely.

@@ -18,7 +18,7 @@ def create_reviewer(backend: str, model_name: str = None,
     logger:          Optional logger instance.
     api_timeout_sec: Per-call API timeout (only honored by GeminiReviewer
                      today; safely ignored by other backends).
-    experimental:    v4-prep flag — adds anti-shrink clause to retry prompt.
+    experimental:    flag that adds an anti-shrink clause to the retry prompt.
     """
     if backend == "together":
         from llm_players.together_reviewer import TogetherReviewer

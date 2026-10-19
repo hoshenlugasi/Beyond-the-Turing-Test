@@ -8,7 +8,7 @@ if _PROJ_ROOT not in _sys.path:
     _sys.path.insert(0, _PROJ_ROOT)
 
 from llm_players.llm_constants import LLM_CONFIG_KEY, ASYNC_TYPE_KEY
-from llm_players.v6.langgraph_v6_player import LangGraphV6Player
+from llm_players.agent.agent import SocialTuringTestAgent
 from core.config_schema import reject_retired_config
 
 # config_schema is optional — when missing (e.g. stale deployment), fall back
@@ -24,7 +24,7 @@ except ModuleNotFoundError:
         return dict(cfg) if cfg else {}
 
 llm_players_classes = {
-    LangGraphV6Player.TYPE_NAME: LangGraphV6Player,
+    SocialTuringTestAgent.TYPE_NAME: SocialTuringTestAgent,
 }
 
 def llm_player_factory(player_config):
@@ -32,7 +32,7 @@ def llm_player_factory(player_config):
     reject_retired_config(player_config)
     player_config = dict(player_config)
     raw_llm_cfg = dict(player_config.get(LLM_CONFIG_KEY, {}))
-    raw_llm_cfg.setdefault(ASYNC_TYPE_KEY, LangGraphV6Player.TYPE_NAME)
+    raw_llm_cfg.setdefault(ASYNC_TYPE_KEY, SocialTuringTestAgent.TYPE_NAME)
     try:
         player_config[LLM_CONFIG_KEY] = apply_defaults(raw_llm_cfg)
     except ConfigError as e:
@@ -44,7 +44,7 @@ def llm_player_factory(player_config):
             "[config_schema] Validation failed, using raw config unchanged: %s", e
         )
         player_config[LLM_CONFIG_KEY] = dict(raw_llm_cfg)
-    async_type = player_config[LLM_CONFIG_KEY].get(ASYNC_TYPE_KEY, LangGraphV6Player.TYPE_NAME)
+    async_type = player_config[LLM_CONFIG_KEY].get(ASYNC_TYPE_KEY, SocialTuringTestAgent.TYPE_NAME)
     if async_type not in llm_players_classes:
         raise ValueError(
             f"Unknown async_type '{async_type}'. "

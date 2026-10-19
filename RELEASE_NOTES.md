@@ -1,158 +1,116 @@
-# Release notes — updated 2026-10-18
+# Release notes — 2026-10-18
 
-Initial public release of the reviewed code and data on GitHub, with the dataset
-also published on [Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
-The [project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/) is also live.
-The author permits release provided individual participants cannot be identified. Text review and
-filtering reduce disclosure risk but do not guarantee anonymity or establish
-independent consent/IRB approval. New local-game exports always need their own
-review; they do not inherit the historical dataset's release permission.
+GitHub release updated from the 2026-10-18 package. The existing
+[Hugging Face mirror](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test)
+is being refreshed to match this revision. The author's release permission
+is conditional on not identifying participants. Text review and filtering reduce
+disclosure risk but do not guarantee anonymity or establish independent consent/IRB
+approval. New local-game exports always need their own review; they do not inherit
+the historical dataset's release permission.
 
-## Code and validation
+## Current package and validation boundary
 
-- 2026-10-18: Shortened both package READMEs into practical step-by-step guides.
-  Clarified that the four-file game core and the filtered internal events are
-  separate. Removed disposable staging caches and the unused duplicate V5 search
-  adapter/package. Updated credential/absence tests and two stale docstrings.
-  Active runtime statements, study data, frozen inputs and results are unchanged.
+This package provides one agent and one nested game-data layout.
+Scheduler, Generator and Reviewer retain the paper policies. The six background
+workers are Internet Context, Round Summarizer, Persona Monitor, Social State
+Tracker, Behavior Adapter and Repetition Monitor. System delivery controls and
+the shared-memory snapshot are not additional workers.
 
-- 2026-10-18: Added a standard-library-only explicit two-layer exporter for new
-  local games. Full runtime logging is unchanged; a fresh separate destination
-  receives the four core schemas and historical selected-event projection.
-  Exports remain privacy-pending/non-cohort/non-publication-authorized. No
-  historical data, analysis inputs, prompts, voting or runtime policies changed.
-  Earlier real Flash validation applies to the unchanged runtime, not to an
-  additional paid game; exporter checks are offline against synthetic fixtures
-  and the saved completed scripted game.
+Recorded study diagnostic evaluation used Gemini 2.5 Pro (`gemini-2.5-pro`) with
+feedback disabled; its 1,558 records are excluded from released timelines.
+Of 54,918 source records, 53,360 reviewed timeline records remain. The diagnostic
+outputs are not outputs of the six paper workers. Scientific inputs, decisions
+and results are frozen.
 
-- The public runtime retains six paper workers: InternetContext, PhaseSummarizer,
-  PersonaMonitor, SocialMemory, BehaviorEvolution and RepetitionMonitor. The
-  original research checkout's diagnostic Live Evaluator is intentionally removed,
-  including its model, feedback path and UI control; no Pro role is a default.
-  This is not a claim that the diagnostic never ran historically: it ran with
-  feedback off. Historical data, judgments and annotations are unchanged.
-- Fresh Windows Python 3.12.10 installation and `pip check` passed. Extracted
-  archives passed **427 tests / 27,987 subtests**, with two private-source checks
-  skipped; the staging suite passed 429 tests. All public-data integrations ran.
-  Twelve offline calculation runs matched the bundled results. External ZIP
-  extraction and a fresh venv were used under the same account, not a VM.
-  Real unmodified server startup and admin/config-only HTTP checks passed;
-  no AI game or model call was made. Current test scope is Windows only.
-  Linux/macOS and Docker remain unvalidated.
-- Earlier browser checks covered admin login, lobby creation, six human joins
-  and blocked START without AI readiness, with AI launch disabled. Separately,
-  one real Flash game passed with two scripted human-seat clients: 51 Flash-only
-  SDK responses, four full candidate/rank/delivery chains, all three ballots and
-  normal end. This revision removes three unused V5 files and updates two
-  docstrings; all retained executable runtime statements match that live-tested
-  archive. The new exporter ran offline on the saved game, with all 51 raw files
-  unchanged and 198 selected internal events exported. Grounded Search reliability
-  and live multi-round coverage remain unproven. Further paid tests need approval.
-- No Windows-verified lockfile is claimed by these notes.
+The final outside-ZIP validation report identifies the exact artifacts checked:
+12 offline scientific reproductions, tests in a new external Windows virtual
+environment, server checks and local dataset loading. Its evidence applies only
+to those artifacts, not automatically to edited files or rebuilt packages.
+No new model-backed game or scientific-quality validation is claimed.
+Linux/macOS, Docker and a remote Hub viewer remain unvalidated for this package.
+No full lockfile or perpetual model entitlement is claimed.
 
-Use your own admin password and provider key; the environment reference is not
-automatically loaded. Google's [official model catalog](https://ai.google.dev/gemini-api/docs/models/gemini),
-fetched 2026-10-15, limits Gemini 2.5 access to prior active users. New accounts or
-projects may lack access; provider entitlement and continued availability are
-conditional. No automatic upgrade is guaranteed, and choosing a replacement
-model does not reproduce the original model condition. Explicit custom model
-choices remain distinct from the Flash defaults.
+## Data, privacy and timing
 
-The manual local game requires at least two humans plus one AI, with no fixed
-five-human cap, configured target or automatic start. Codenames have a neutral
-unique fallback; the operator waits for AI readiness and presses START. This is
-not a new collection of the historical study condition.
+The [dataset guide](DATASET.md), [dictionary](DATA_DICTIONARY.md) and
+[dataset manifest](dataset_manifest.json) describe the released records.
+Each game has four core files and three nested event files. Four root JSONL
+tables provide game/message/ballot/survey access; events read per-game timelines.
+The Hugging Face card declares five configs and only the split `data`.
 
-## Public core and mirror identity
+A first pass reviewed 7,408 unique text values; 52 were withheld at 135 payload
+occurrences. A further 22 withheld values occur at 111 payload locations.
+Contextual verification was selective, not exhaustive; no
+re-identification test establishes anonymity. Full prompts/snapshots, raw provider
+responses, billing envelopes and private mappings are excluded.
 
-The submitted **201-file baseline tree** matched the workspace baseline. After
-full manual review of all 50 transcripts and 50 survey files, the public core
-adds four redacted spans across three files:
+All 50 same-stream historical event clocks were vetted, with sample inspection.
+Intervals have one-second precision **since the first source event, not START**.
+No date, event/chat alignment or three-hour timezone correction is inferred.
+Core chat retains its HH:MM:SS tokens; original scientific midnight windows and
+numeric word counts remain unchanged. Write order is not causal concurrency order.
+Future monotonic intervals start at a private logger-segment anchor, not START.
+There is no public segment-index column. Incomplete/restart-ambiguous unpaired
+timing stays null/unknown; invalid paired timing is refused. Valid restarted
+segments are independent and must not be stitched into a continuous game clock.
 
-| Game | Public file | Additional redaction |
-|---|---|---|
-| game_030 | [transcript](games/game_030/transcript.txt) | Two work-project tokens |
-| game_006 | [transcript](games/game_006/transcript.txt) | One location echo |
-| game_045 | [survey](games/game_045/surveys.json) | One family-event reference in an additional comment |
+The public core has four additional redacted spans across three files relative
+to the submitted core (197/200 unchanged), recorded in
+[public_redactions.json](public_redactions.json). No rows, ratings, ballots or
+outcomes changed. The historical cohort remains 50 games, including 16 four-human
+starts and 34 five-human starts. Review does not establish distinct-person linkage.
 
-**197 of 200 game files are unchanged** from the submitted baseline. No rows,
-ratings, ballots or outcomes changed.
-[public_redactions.json](public_redactions.json) records categories and locations,
-not the removed original strings. The 270 shared files, excluding the repositories'
-root README.md and LICENSE, were verified byte-identical between GitHub and
-Hugging Face. The public core is not wholly byte-identical to the
-submitted baseline. The copied [DATASET.md](DATASET.md) describes the submitted
-four-file core; its exclusion of internal outputs is scoped to that core.
+## Reference settings and interpretation
 
-## Reviewed internal-output export
+The reference defaults retain the paper agent's orchestration, Swiss student
+persona, Gemini 2.5 Flash (`gemini-2.5-flash`) for Scheduler/Generator/Reviewer and all six workers,
+four generated candidates, generator/reviewer temperatures 1.3/0.3, 35-second
+pipeline timeout and 2.5-minute discussion. Reviewer scoring, ranking, guards,
+strategic voting, question policy, timing and model defaults define the reference condition.
+The reviewer selects a candidate verbatim, not a rewrite.
 
-The separate [manifest](internal_outputs/manifest.json) and
-[scope guide](internal_outputs/README.md) accompany per-game event files, for
-example [game_001 events](internal_outputs/games/game_001/events/game_events.jsonl).
-The export contains **26,277 events across 50 games**. All **5,385 unique text
-values** in the initial projection were manually reviewed; **22 flagged or
-uncertain values were withheld at all 54 occurrences**. The conservative
-field-level privacy filter remains in place.
+Selection is not delivery: stale, timeout, phase, reviewer, parse and deduplication
+gates may suppress output. The AI personal-chat append is delivery authority.
+Recorded Internet returned-item counts are not independent sources or proof of
+grounding; seeds are not live retrieval. Available context does not prove use.
+Persona/social observations are model claims, not verified human attributes.
 
-Included: scheduler decisions, generated candidates, short explicit reviewer
-assessments/selections, deterministic guards, delivery statuses and selected
-behavior-advice, repetition and phase updates. This is **not all workers**, full
-social/persona memory, full prompts or snapshots. Cost/billing metadata and
-private identifiers are excluded. Omitted records are not zeros or WAITs;
-selection is not delivery, and candidates are not public-chat messages.
+The local game permits at least two humans plus one AI and manual START, not the
+historical recruitment protocol. Changing roster/models/settings creates a new
+experiment, not a replay. Full raw runtime saving under games/real/&lt;id&gt; or
+games/test/&lt;id&gt; is automatic. [export_game.py](export_game.py) is a separate,
+offline manual step after stopping the game and collecting desired surveys.
+Its fresh atomic 14-file output has four core files, three nested events, four
+access tables, loading metadata, a README and export manifest. It never overwrites, modifies source
+files, adds historical games, authorizes publication or creates new scientific
+judgments. Automatic masking leaves privacy status pending.
 
-## Reproduction scope and limitations
+## Reproduction scope
 
-- Four standard-library analysis scripts compute JSON from public numeric inputs
-  and cached model outputs. They generate no figures and make no API calls;
-  optional paid API-rerun code is not included. All paper numerical summaries use
-  frozen outputs offline; no paid analysis reruns are planned.
-- The exact annotation prefix/protocol, settings, frozen validation manifest and
-  [input provenance](analysis/inputs/PROVENANCE.md) are supplied; these are no
-  longer outstanding provenance gaps.
-- One game crosses midnight. Reproduction preserves the original time-of-day
-  window behavior and original counts/memberships, rather than silently fixing
-  the historical limitation. See
-  [analysis/REPRODUCIBILITY_NOTES.md](analysis/REPRODUCIBILITY_NOTES.md).
-- Tests confirm that survey sample SDs match the paper; no SD mismatch remains
-  outstanding. Missing enjoyment ratings in five legacy surveys are not zeros.
-- Demographic aggregates cover 226 records. The 234 starting human seats do not
-  establish 234 distinct people; public data does not verify individual linkage
-  or deduplication.
-
-See [README.md](README.md) for setup and password commands, and
-[analysis/README.md](analysis/README.md) for calculation inputs and methods.
-Copyright notices, license scope and citation metadata are unchanged.
-
-## Reference settings
-
-The defaults are V6 legacy orchestration, a Swiss student persona, Gemini 2.5
-Flash for generator/scheduler/reviewer and the six background workers, four
-candidates, generator/reviewer temperatures 1.3/0.3, a 35-second pipeline timeout
-and 2.5-minute discussions. Model/time controls remain available. Changing them
-or the roster creates a new experiment, not a replay of the study condition.
-
-The reviewer's choice is not proof of delivery. Stale, timeout, phase, parse,
-reviewer and deduplication checks can suppress it; the AI personal-chat append
-is the delivery record. Full runtime saving and the explicit exporter are both
-included. The exporter emits only allowlisted event fields, never full memory
-or prompts. Its manifest records missingness, omitted events, masking and hashes.
+The four [analysis commands](analysis/README.md) print JSON from frozen public
+inputs without API calls or figures. Exact annotation protocol/settings and
+cached decisions are supplied; no paid reannotation is claimed. Original cohort
+order, numeric word counts and midnight-window behavior must be preserved.
+Enjoyment is missing in five terminal-format surveys, not zero. Demographic aggregates
+cover 226 records and do not independently verify cross-game identity linkage.
+See [reproduction notes](analysis/REPRODUCIBILITY_NOTES.md).
 
 ## Other ways to run
 
-### Google credentials and other providers
+### Credentials and model access
 
-`GOOGLE_API_KEY` can be used instead of `GEMINI_API_KEY`. For Vertex AI, leave
-both API-key variables unset, set `GOOGLE_CLOUD_PROJECT` and
-`GOOGLE_CLOUD_LOCATION` to your own project and supported location, and configure
-Application Default Credentials for that account. Keep credential files outside
-the repository and container. No author project or credentials are supplied.
+`GOOGLE_API_KEY` may replace `GEMINI_API_KEY`. For your own Vertex AI endpoint,
+leave both keys unset, set `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`,
+and configure Application Default Credentials outside the repository/container.
+No author project, key or credential file is supplied. The environment reference
+is not automatically loaded. Check current provider entitlement; Gemini 2.5
+access can be restricted and there is no automatic model replacement.
 
 Optional `OPENROUTER_API_KEY` and `TOGETHER_API_KEY` support the corresponding
-per-role UI choices. InternetContext still uses Gemini for grounding and needs
-Google authentication even when other roles use another provider.
+per-role UI choices. InternetContext still needs Google authentication for Gemini
+grounding even when other roles use another provider. Live requests may incur costs.
 
-### Linux/macOS shell (not validated)
+### Linux/macOS (not validated)
 
 ```sh
 python3.12 -m venv .venv

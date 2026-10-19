@@ -6,8 +6,7 @@ keys and validates ranges. The admin UI is generated from `describe()` so any kn
 added here shows up in the form automatically.
 
 Design goals:
-- Defaults stay identical to pre-schema hard-coded values, so existing configs
-  behave the same after the switch.
+- Describe the synchronous agent configuration and its supported options.
 - Invalid values raise loudly (ConfigError) instead of silently accepting.
 - Schema is cheap to import — no heavy deps, no network.
 """
@@ -19,9 +18,9 @@ class ConfigError(ValueError):
 
 
 def reject_retired_config(config: Any) -> None:
-    """Reject retired live_evaluator_* keys in settings or nested game payloads.
+    """Reject unsupported live_evaluator_* keys in settings or nested game payloads.
 
-    Raises ConfigError (a ValueError) even when a retired value is false or null.
+    Raises ConfigError (a ValueError) even when an unsupported value is false or null.
     Does not mutate the input or include configuration values in the error.
     """
     if isinstance(config, dict):
@@ -41,8 +40,8 @@ def reject_retired_config(config: Any) -> None:
 CONFIG_SCHEMA: list[dict[str, Any]] = [
     # ── Routing / player type ──
     {"key": "async_type", "type": "choice", "group": "routing", "required": True,
-    "choices": ["langgraph_v6"],
-    "default": "langgraph_v6",
+    "choices": ["social_turing_test_agent"],
+    "default": "social_turing_test_agent",
      "description": "Player class to instantiate."},
     {"key": "persona", "type": "string", "group": "routing", "default": None,
      "description": "Persona ID from configurations/personas.json."},
@@ -76,13 +75,12 @@ CONFIG_SCHEMA: list[dict[str, Any]] = [
     {"key": "use_turn_token", "type": "string", "group": "scheduler",
      "default": "<send>"},
     {"key": "scheduler_model", "type": "string", "group": "scheduler", "default": None,
-     "description": "V6 only: override the model used for the send/wait scheduler. "
+    "description": "Override the model used for the send/wait scheduler. "
                     "Empty = share the generator's model_name. Provider is auto-detected "
                     "from the model name."},
     {"key": "num_words_per_second_to_wait", "type": "float", "group": "scheduler",
      "default": 1.0, "min": 0.1, "max": 10.0,
-     "description": "Legacy scheduler pacing knob (pre-typing-rhythm). "
-                    "See typing_wps for the new adaptive delay."},
+        "description": "Words-per-second pacing setting, distinct from typing_wps."},
 
     # ── Reviewer ──
     {"key": "reviewer_enabled", "type": "bool", "group": "reviewer", "default": True},
@@ -92,21 +90,22 @@ CONFIG_SCHEMA: list[dict[str, Any]] = [
      "description": "Override reviewer model. Empty = backend default (gemini-2.5-flash)."},
     {"key": "reviewer_threshold", "type": "int", "group": "reviewer",
      "default": 4, "min": 1, "max": 10,
-     "description": "Score ≥ threshold triggers rewrite."},
+        "description": "Single-draft helper: score ≥ threshold triggers a rewrite. "
+                    "Not used by four-candidate selection."},
     {"key": "reviewer_revert_threshold", "type": "int", "group": "reviewer",
      "default": 7, "min": 1, "max": 10,
-     "description": "If best attempt ≥ this, revert to original message."},
+        "description": "Single-draft helper: if the best attempt scores ≥ this, "
+                    "revert to the original draft. Not used by four-candidate selection."},
     {"key": "reviewer_max_attempts", "type": "int", "group": "reviewer",
      "default": 3, "min": 1, "max": 5,
-     "description": "Max review-and-rewrite attempts per message. "
-                    "DEFAULT 3 = generator output + up to 2 rewrites. "
-                    "Each attempt is one Gemini API call (~5–15s). "
-                    "Bounded by reviewer_budget_sec: if total time runs out, only "
-                    "attempts that finished count. Lower = faster but less polished; "
-                    "higher = better quality at risk of latency."},
+        "description": "Single-draft helper: maximum review-and-rewrite attempts "
+                    "per message, subject to reviewer_budget_sec. "
+                    "Not used by four-candidate selection."},
     {"key": "reviewer_self_consistency", "type": "bool", "group": "reviewer",
      "default": True,
-     "description": "Re-score the reviewer's own rewrite on flash-lite; abort if rewrite also fails."},
+        "description": "Single-draft helper: re-score the reviewer's rewrite on "
+                    "flash-lite; abort if it also fails. "
+                    "Not used by four-candidate selection."},
     {"key": "reviewer_skip_short_words", "type": "int", "group": "reviewer",
      "default": 0, "min": 0, "max": 10,
      "description": "Skip reviewer for messages ≤ N words (0 disables shortcut — review every message)."},
@@ -129,40 +128,32 @@ CONFIG_SCHEMA: list[dict[str, Any]] = [
      "default": 12.0, "min": 1.0, "max": 60.0},
     {"key": "typing_min_words", "type": "int", "group": "typing",
      "default": 2, "min": 0, "max": 10,
-     "description": "Legacy short-message skip threshold (no longer skips — the base "
-                    "delay below now applies to all messages)."},
+        "description": "Does not skip short messages; typing_base_delay_sec applies "
+                    "regardless of message length."},
     {"key": "typing_base_delay_sec", "type": "float", "group": "typing",
      "default": 2.0, "min": 0.0, "max": 10.0,
-     "description": "Constant reading/thinking delay added on top of ~1s/word, applied "
-                    "to ALL messages (incl. short) so the agent never replies instantly."},
+        "description": "Base reading/thinking component of the typing-delay target, "
+                    "including for short messages."},
     {"key": "reviewer_budget_sec", "type": "float_or_null", "group": "reviewer",
      "default": None, "min": 5.0, "max": 120.0,
-     "description": "MAX TOTAL LATENCY (seconds) from scheduler-decision-to-send. "
-                    "Includes generator + every reviewer attempt + typing wait. "
-                    "DEFAULT null = no budget cap (pre-change behavior). "
-                    "Set a number to enforce a hard cap; when exceeded mid-loop, "
-                    "the best-scored attempt so far is sent (NEVER dropped just "
-                    "because time ran out). Lower = snappier; higher = more time "
-                    "for quality fixes."},
+        "description": "Single-draft helper: time budget in seconds for the "
+                    "review-and-rewrite loop. null = no budget cap. "
+                    "Not used by four-candidate selection."},
     {"key": "reviewer_drop_score", "type": "int", "group": "reviewer",
      "default": 10, "min": 1, "max": 10,
-     "description": "DROP THRESHOLD: skip the turn entirely if even our best attempt "
-                    "scored ≥ N suspicion. DEFAULT 10 = never drop (always send "
-                    "something — pre-change behavior). Lower (e.g. 8) to drop when "
-                    "even rewrites still sound very AI."},
+        "description": "Single-draft helper: suspicion-score threshold for dropping "
+                    "a reviewed draft. 10 disables score-based dropping. "
+                    "Not used by four-candidate selection."},
     {"key": "reviewer_api_timeout_sec", "type": "float_or_null", "group": "reviewer",
      "default": None, "min": 2.0, "max": 60.0,
-     "description": "Per-call Gemini API timeout (seconds). DEFAULT null = no "
-                    "timeout (pre-change behavior — call blocks until done). "
-                    "Set a number to abort a hung Gemini call mid-attempt; on "
-                    "timeout the loop tries the next attempt or falls back to "
-                    "SELECTED_BEST."},
+        "description": "Single-draft helper: per-call reviewer API timeout in "
+                    "seconds. null = no configured per-call timeout. "
+                    "Not used by four-candidate selection."},
     {"key": "reviewer_backoff_enabled", "type": "bool", "group": "reviewer",
      "default": False,
-     "description": "If a reviewer attempt took >5s, sleep briefly before retrying "
-                    "(0.5s × attempt#). DEFAULT FALSE (pre-change behavior — retry "
-                    "immediately). Set true to give a slow Gemini backend time to "
-                    "recover instead of hammering it."},
+        "description": "Single-draft helper: pause before retrying after a reviewer "
+                    "attempt takes more than 5 seconds (0.5s × attempt number). "
+                    "Disabled by default. Not used by four-candidate selection."},
 
     # ── Memory window ──
     {"key": "memory_window_size", "type": "int_or_null", "group": "memory",
@@ -175,77 +166,74 @@ CONFIG_SCHEMA: list[dict[str, Any]] = [
     # ── Voting ──
     {"key": "voting_strategy", "type": "choice", "group": "voting",
         "choices": ["random", "strategic"], "default": "strategic",
-        "description": "Strategic (final V6 default) asks the LLM who most suspects "
+        "description": "Strategic (default) asks the LLM who most suspects "
                     "the AI; random ignores context."},
 
-    # ── Experimental (v4-prep bundle) ──
+    # ── Experimental emoji and length policy ──
     {"key": "experimental_agent", "type": "bool", "group": "experimental",
      "default": False,
-     "description": "Enable v4-prep bundle: emoji policy in system prompt, "
-                    "larger max_tokens (see experimental_max_tokens), and an "
-                    "anti-shrink clause in the reviewer retry prompt. "
-                    "DEFAULT FALSE = legacy agent unchanged."},
+    "description": "Optional emoji and length settings: emoji policy in the "
+                    "system prompt, experimental_max_tokens override, and an "
+                    "anti-shrink clause for single-draft helper retries. "
+                    "Disabled by default."},
     {"key": "experimental_max_tokens", "type": "int", "group": "experimental",
      "default": 80, "min": 0, "max": 400,
      "description": "When experimental_agent=true, override max_tokens / "
                     "max_new_tokens with this value. 0 keeps the original "
                     "max_tokens. DEFAULT 80."},
 
-    # ── V6 (langgraph_v6 only; ignored by earlier agents) ──
-    {"key": "multi_candidate_generation", "type": "bool", "group": "v6",
+    # ── Agent pipeline ──
+    {"key": "multi_candidate_generation", "type": "bool", "group": "agent",
         "default": True,
-     "description": "V6: generator emits several candidate messages and the "
-                    "reviewer SELECTS one (ranker mode) instead of rewriting. "
-                    "Avoids the reviewer drifting a good message into a bad one."},
-    {"key": "num_candidates", "type": "int", "group": "v6",
+    "description": "Generate candidate messages, then select one verbatim. "
+                    "The reviewer ranks candidates without rewriting them; "
+                    "the default is four candidates."},
+    {"key": "num_candidates", "type": "int", "group": "agent",
      "default": 4, "min": 2, "max": 8,
-     "description": "V6: how many candidates the generator produces when "
+    "description": "How many candidates the generator produces when "
                     "multi_candidate_generation=true."},
-    {"key": "investigator", "type": "bool", "group": "v6",
+    {"key": "investigator", "type": "bool", "group": "agent",
      "default": True,
-     "description": "V6: give the AI the human players' dual role — it also "
+    "description": "Give the AI the human players' dual role — it also "
                     "hunts the AI and votes, removing the passive-target "
-                    "asymmetry. Swaps in the V6 dual-role system prompt."},
-    {"key": "pipeline_timeout_s", "type": "float", "group": "v6",
+                    "asymmetry. Swaps in the dual-role system prompt."},
+    {"key": "pipeline_timeout_s", "type": "float", "group": "agent",
      "default": 35.0, "min": 5.0, "max": 120.0,
-     "description": "V6 safety net: drop a message only if the whole pipeline "
+    "description": "Safety net: drop a message only if the whole pipeline "
                     "took longer than this (extreme hang). A normal response "
                     "delay is fine and is never dropped."},
-    {"key": "orchestration_mode", "type": "choice", "group": "v6",
-        "default": "legacy", "choices": ["legacy"],
-        "description": "Final V6 legacy pipeline. The local backend locks this mode; "
-                    "shadow/active rollout modes are not supported."},
-    # ── V6 legacy InternetContext sub-agent tuning (Fix 5) ──
-    {"key": "internet_max_queries_per_tick", "type": "int", "group": "v6",
+    {"key": "orchestration_mode", "type": "choice", "group": "agent",
+        "default": "synchronous", "choices": ["synchronous"],
+        "description": "Synchronous agent pipeline; the only supported orchestration mode."},
+    # ── Internet Context tuning ──
+    {"key": "internet_max_queries_per_tick", "type": "int", "group": "agent",
      "default": 5, "min": 1, "max": 10,
      "description": "Max web searches the InternetContext sub-agent runs per tick. "
-                    "Raised from 2 so multiple distinct recent-event topics in one "
-                    "message are all searched (dedup/cache bound the cost)."},
-    {"key": "internet_detector_model", "type": "string", "group": "v6", "default": None,
+                    "Deduplication and caching limit repeated searches."},
+    {"key": "internet_detector_model", "type": "string", "group": "agent", "default": None,
      "description": "Optional cheaper model for the InternetContext 'should I search?' "
                     "decision call (e.g. gemini-2.5-flash-lite). None → reuse the main "
                     "model."},
-    # ── V6 Wave 1 — background research lane + LangSmith (all opt-in) ──
-    {"key": "background_intelligence_enabled", "type": "bool", "group": "v6",
+    # ── Optional research and tracing settings ──
+    {"key": "background_intelligence_enabled", "type": "bool", "group": "agent",
      "default": False,
-     "description": "V6 Wave 1: enable the separate BackgroundIntelligenceGraph "
-                    "research lane (off the authoritative hot path). Default off."},
-    {"key": "langsmith_tracing_enabled", "type": "bool", "group": "v6",
+    "description": "Unsupported option; leave false."},
+    {"key": "langsmith_tracing_enabled", "type": "bool", "group": "agent",
      "default": False,
-     "description": "V6: optional LangSmith tracing for the graph lanes. Never "
+    "description": "Optional LangSmith tracing for the synchronous agent pipeline. Never "
                     "authoritative; gameplay is identical when off. Default off."},
-    {"key": "langsmith_project", "type": "string", "group": "v6", "default": None,
-     "description": "V6: LangSmith project name (when tracing is enabled)."},
-    {"key": "langsmith_sample_rate", "type": "float", "group": "v6",
+    {"key": "langsmith_project", "type": "string", "group": "agent", "default": None,
+     "description": "LangSmith project name (when tracing is enabled)."},
+    {"key": "langsmith_sample_rate", "type": "float", "group": "agent",
      "default": 1.0, "min": 0.0, "max": 1.0,
-     "description": "V6: fraction of traces to sample when tracing is enabled "
+    "description": "Fraction of traces to sample when tracing is enabled "
                     "(0..1). 1.0 = trace everything; 0.0 = trace nothing."},
-    {"key": "langsmith_include_chat_content", "type": "bool", "group": "v6",
+    {"key": "langsmith_include_chat_content", "type": "bool", "group": "agent",
      "default": False,
-     "description": "V6: include chat content in traces. Default OFF (privacy)."},
-    {"key": "langsmith_redaction_enabled", "type": "bool", "group": "v6",
+    "description": "Include chat content in traces. Default OFF (privacy)."},
+    {"key": "langsmith_redaction_enabled", "type": "bool", "group": "agent",
      "default": True,
-     "description": "V6: redact excluded/sensitive fields before any trace emit."},
+    "description": "Redact excluded/sensitive fields before any trace emit."},
 ]
 
 _SCHEMA_BY_KEY = {entry["key"]: entry for entry in CONFIG_SCHEMA}
@@ -306,7 +294,8 @@ def _validate(key: str, value: Any, spec: dict) -> Any:
 def apply_defaults(user_config: dict | None) -> dict:
     """Return a new dict: user values + defaults for anything missing, all validated.
 
-    Unknown keys are preserved unchanged except retired settings, which are rejected.
+    Unknown keys are preserved unchanged except unsupported settings rejected by
+    reject_retired_config().
     Raises ConfigError if a required key has no value and no default, or if a
     supplied value fails its type/range check.
     """

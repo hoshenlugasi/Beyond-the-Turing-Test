@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from datetime import datetime
 import hashlib
 import json
 import math
@@ -18,37 +19,15 @@ import shutil
 import stat
 import tempfile
 
+from core.dataset_tables import write_tables
+from core.event_schema import classify_event, make_manifest, project_event, render_text
+from core.hub_features import dataset_infos
+
 
 class ExportError(ValueError):
     """Invalid, unsupported, inconsistent or unsafe export input."""
 
 
-# The exact historical public projection, not arbitrary raw event dictionaries.
-EVENT_FIELDS = {
-    "v4_pipeline_complete": "final review_risk scheduler_decision send_reason",
-    "v5_behavior_advice_updated": "advice",
-    "v5_overused_words_updated": "words",
-    "v5_phase_summary_tick": "n_messages phase summary",
-    "v5_repetition_llm_pass": "note",
-    "v5_repetition_note_updated": "note",
-    "v5_scheduler_blocked": "reason",
-    "v6_delivery_phase_drop": "message outcome reason stage",
-    "v6_delivery_sent": "message outcome",
-    "v6_generator_candidates": "candidates count",
-    "v6_reviewer_analysis": "num_candidates selected_index verdicts",
-    "v6_reviewer_demote_response_required": "demoted pool_size tag",
-    "v6_reviewer_demote_same_dodge_mode": "demoted dodge_streak mode pool_size tag",
-    "v6_reviewer_drop": "num_candidates review_reason_codes review_status source",
-    "v6_reviewer_filter_known_accusation": "kept removed",
-    "v6_reviewer_selected": "num_candidates review_reason_codes review_status selected_index selected_text selected_word_count source",
-    "v6_scheduler_decision": "decision send_reason",
-    "v6_stale_send_drop": "new_messages reason suppressed_message",
-    "v6_state_guard_filter": "kept removed",
-}
-VERDICT_FIELDS = "index pool_index text type pros cons score red_flags verdict selected".split()
-STRING_FIELDS = set("final review_risk scheduler_decision send_reason advice phase summary note reason message outcome stage tag mode selected_text source review_status suppressed_message decision".split())
-INTEGER_FIELDS = set("count num_candidates selected_index selected_word_count pool_size dodge_streak kept new_messages n_messages".split())
-LIST_FIELDS = {"candidates", "words", "review_reason_codes", "demoted"}
 MAX_FILE_BYTES = 32 * 1024 * 1024
 MAX_TOTAL_BYTES = 256 * 1024 * 1024
 ID_PATTERN = re.compile(r"[A-Za-z][A-Za-z0-9_-]{0,63}\Z")
@@ -316,64 +295,76 @@ def survey(inputs, name):
 
 def project_events(raw, export_id, redactor, turns):
     projected, omitted = [], Counter()
-
-    def strings(value):
-        require(isinstance(value, list) and all(isinstance(v, str) for v in value), "Expected event string list")
-        return [redactor.text(v, internal=True) for v in value]
-
+    segments = {}
     for row in raw:
-        kind = row.get("event_type")
-        require(isinstance(kind, str), "Event type missing or malformed")
-        if kind not in EVENT_FIELDS:
-            omitted[kind] += 1
+        disposition = classify_event(row)
+        require(disposition in {"included", "retired_diagnostic"},
+                "Unsupported or malformed neutral event; export requires explicit schema review")
+        if disposition != "included":
+            omitted[disposition] += 1
             continue
-        out = {"game_id": export_id, "event_type": kind, "event_order": len(projected) + 1}
-        if row.get("turn_id") is not None:
-            out["turn_id"] = turns[row["turn_id"]]
-        for key in EVENT_FIELDS[kind].split():
-            if key not in row:
-                continue  # Missing observation is not a default value or zero.
-            value = row[key]
-            if key in STRING_FIELDS:
-                out[key] = redactor.text(value, internal=True)
-            elif key in INTEGER_FIELDS:
-                require(type(value) is int, "Expected integer event field")
-                out[key] = value
-            elif key in LIST_FIELDS or (key == "removed" and kind != "v6_state_guard_filter"):
-                out[key] = strings(value)
-            elif key == "removed":
-                require(isinstance(value, list) and all(isinstance(v, dict) for v in value), "Malformed guard removals")
-                out[key] = [{k: redactor.text(v[k], internal=True) for k in ("text", "reason") if k in v} for v in value]
-            elif key == "verdicts":
-                require(isinstance(value, list) and all(isinstance(v, dict) for v in value), "Malformed reviewer verdicts")
-                verdicts = []
-                for verdict in value:
-                    clean = {}
-                    for field in VERDICT_FIELDS:
-                        if field not in verdict:
-                            continue
-                        v = verdict[field]
-                        if field in {"index", "pool_index"}:
-                            require(type(v) is int, "Malformed verdict index")
-                        elif field == "score":
-                            require(type(v) in (int, float) and math.isfinite(v), "Malformed verdict score")
-                        elif field == "selected":
-                            require(type(v) is bool, "Malformed verdict selection")
-                        elif field == "red_flags":
-                            v = strings(v)
-                        else:
-                            v = redactor.text(v, internal=True)
-                        clean[field] = v
-                    verdicts.append(clean)
-                out[key] = verdicts
-        if kind == "v6_scheduler_decision":
-            require(out.get("decision") in {"send", "wait"}, "Unknown scheduler decision")
-        if kind == "v6_generator_candidates":
-            require(out.get("count") == len(out.get("candidates", [])), "Candidate count mismatch")
-        if kind in {"v6_delivery_sent", "v6_delivery_phase_drop"}:
-            require(out.get("outcome") == ("sent" if kind == "v6_delivery_sent" else "phase_drop"), "Delivery outcome mismatch")
+        try:
+            out = project_event(row, export_id, len(projected) + 1,
+                                lambda text: redactor.text(text, internal=True),
+                                turns, timing=event_timing(row, segments))
+        except (ValueError, TypeError, OverflowError):
+            raise ExportError("Invalid retained event payload or timing") from None
+        require(out is not None, "Included event did not project")
+        # Counts and delivery claims must agree with the recorded observation.
+        kind, payload = out["action"], out["payload"]
+        if kind == "generator_candidates":
+            candidates = payload["candidates"]
+            require(candidates["candidates"] is not None and
+                    candidates["count"] == len(candidates["candidates"]),
+                    "Candidate count mismatch")
+        if kind == "scheduler_decision":
+            require(payload["scheduler"]["decision"] in {"send", "wait"}, "Unknown scheduler decision")
+        if kind in {"delivery_sent", "delivery_phase_drop"}:
+            require(payload["delivery"]["outcome"] ==
+                    ("sent" if kind == "delivery_sent" else "phase_drop"), "Delivery outcome mismatch")
         projected.append(out)
     return projected, omitted
+
+
+def event_timing(row, segments):
+    """Accept only the logger's paired monotonic-segment elapsed contract.
+
+    elapsed_seconds is measured since this logger segment's anchor, NOT START.
+    Wall occurrence dates validate syntax only and never supply relative time.
+    Bare elapsed, epoch/wall_t and ambiguous old HHMMSS records remain unknown;
+    no rollover, timezone bridge, missing interval or game anchor is inferred.
+    Segment identifiers/anchors remain private. Segment restarts are independent.
+    """
+    occurred = row.get("occurred_at_utc")
+    if occurred is not None:
+        require(isinstance(occurred, str), "Occurrence timestamp must be offset ISO")
+        try:
+            parsed = datetime.fromisoformat(occurred.replace("Z", "+00:00"))
+        except ValueError:
+            raise ExportError("Occurrence timestamp must be offset ISO") from None
+        require(parsed.tzinfo is not None and parsed.utcoffset() is not None,
+                "Occurrence timestamp must carry an offset")
+    paired = {"elapsed_seconds", "time_basis", "time_precision_seconds",
+              "segment_id", "monotonic_ns"}
+    if (not paired <= row.keys() or row.get("time_basis") != "monotonic_segment"
+            or row.get("elapsed_seconds") is None):
+        return None
+    elapsed, mono = row["elapsed_seconds"], row["monotonic_ns"]
+    segment, precision = row["segment_id"], row["time_precision_seconds"]
+    require(isinstance(segment, str) and bool(segment), "Invalid clock segment")
+    require(type(mono) is int and mono >= 0, "Invalid monotonic clock")
+    require(type(elapsed) in (int, float) and math.isfinite(elapsed) and elapsed >= 0,
+            "Invalid elapsed clock")
+    require(type(precision) in (int, float) and precision == .001,
+            "Unsupported monotonic precision")
+    if segment in segments:
+        previous_mono, previous_elapsed = segments[segment]
+        require(mono >= previous_mono and elapsed >= previous_elapsed and
+                abs((mono - previous_mono) / 1e9 - (elapsed - previous_elapsed)) <= .002,
+                "Inconsistent paired monotonic timing")
+    segments[segment] = (mono, elapsed)
+    return dict(elapsed_seconds=elapsed, time_basis="monotonic_segment",
+                time_precision_seconds=precision)
 
 
 def publish_noreplace(staging, target):
@@ -449,32 +440,40 @@ def export_game(game_dir: Path, output: Path, export_id: str, kind: str) -> dict
                 "total_rounds": len(audit), "ai_eliminated": eliminated,
                 "ai_elimination_round": len(audit) if eliminated else None}
     core = f"games/{export_id}/"
-    internal = f"internal_outputs/games/{export_id}/events/game_events.jsonl"
+    timeline = core + "events/timeline.jsonl"
     payloads = {core + "metadata.json": metadata, core + "votes.json": votes, core + "surveys.json": surveys}
     files = {path: json.dumps(obj, indent=2, ensure_ascii=False, allow_nan=False) + "\n" for path, obj in payloads.items()}
     files[core + "transcript.txt"] = redactor.text(transcript)
-    files[internal] = "".join(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in events)
-    internal_manifest = {"schema_version": 1, "games": 1, "events": len(events),
-                         "event_types": dict(sorted(Counter(row["event_type"] for row in events).items())),
-                         "scope": "Same historical field allowlist; selected worker updates, not full memory",
-                         "privacy_review": {"status": "pending"}, "publication_authorized": False}
-    files["internal_outputs/manifest.json"] = json.dumps(internal_manifest, indent=2) + "\n"
+    files[timeline] = "".join(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in events)
+    files[core + "events/timeline.txt"] = render_text(events)
+    files[core + "events/manifest.json"] = json.dumps(
+        make_manifest(events, omitted, privacy_status="pending"), indent=2, allow_nan=False) + "\n"
     manifest = {"schema_version": 1, "export_id": export_id, "collection_kind": kind,
                 "historical_cohort_member": False, "publication_authorized": False,
                 "privacy_review": {"status": "pending", "automatic_redaction_is_not_anonymity_guarantee": True,
                                    "requires": ["Review transcript and surveys", "Review rejected candidates, reviewer and worker text", "Check consent and redistribution rights"]},
                 "missing_surveys": missing, "omitted_abstention_slots": abstentions,
                 "omitted_event_count": sum(omitted.values()),
+                "omitted_event_reason_counts": dict(sorted(omitted.items())),
                 "automatic_redactions": {k: v for k, v in sorted(redactor.counts.items()) if v},
                 "limitations": ["Raw runtime files remain local and unchanged", "Selection is not delivery; missing events are not synthesized", "No paid annotations, historical word counts or judge decisions are created", "Stopped/dropped/rescue/ambiguous games fail rather than infer missing ballots"],
-                "files": {name: {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "bytes": len(text.encode("utf-8"))} for name, text in files.items()}}
-    files["export_manifest.json"] = json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
-    files["README.md"] = ("# New local game export — PRIVACY REVIEW PENDING\n\n"
+                "files": {}}
+    files["dataset_infos.json"] = json.dumps(dataset_infos(), indent=2, ensure_ascii=False) + "\n"
+    configuration = "---\nconfigs:\n" + "".join(
+        f"  - config_name: {name}\n" + ("    default: true\n" if name == "games" else "")
+        + f"    data_files:\n      - split: data\n        path: "
+        + ("games/*/events/timeline.jsonl" if name == "events" else f"tables/{name}.jsonl") + "\n"
+        for name in ("games", "messages", "votes", "surveys", "events")) + "---\n\n"
+    files["README.md"] = (configuration + "# New local game export — PRIVACY REVIEW PENDING\n\n"
         "NOT authorized for publication. NOT a member of the historical 50-game cohort.\n"
         f"Collection kind: {kind}.\n\n"
-        "games/ contains the four observational files in the historical schemas.\n"
-        "internal_outputs/ contains only allowlisted candidates, reviewer decisions,\n"
-        "delivery events and selected worker updates, not full memory or prompts.\n"
+        "games/<id>/ contains the four observational files in the historical schemas.\n"
+        "Its events/ directory contains timeline.jsonl, its full derived timeline.txt,\n"
+        "and a coverage manifest for foreground, system and all six worker outputs.\n"
+        "tables/ contains four deterministic access views derived from the core files.\n"
+        "Only schema-approved fields are projected, not full memory or prompts.\n"
+        "Event order is retained write order, not causal order. Monotonic timing is\n"
+        "since a logger segment anchor, not game START; ambiguous clocks stay null.\n"
         "Automatic masking is incomplete: manually review ALL text, including\n"
         "rejected candidates and derived worker/reviewer text, and verify consent\n"
         "and rights before any redistribution. Missing events are unknown, not zero.\n"
@@ -497,6 +496,19 @@ def export_game(game_dir: Path, output: Path, export_id: str, kind: str) -> dict
                 path = staging / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(text.encode("utf-8"))
+            try:
+                write_tables(staging)
+            except (ValueError, TypeError, OverflowError):
+                raise ExportError("Canonical core/table validation failed") from None
+            # Hash the complete payload, including tables built from staging and
+            # the readable view. The manifest cannot hash itself.
+            manifest["files"] = {
+                path.relative_to(staging).as_posix(): {
+                    "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                    "bytes": path.stat().st_size}
+                for path in sorted(staging.rglob("*")) if path.is_file()}
+            (staging / "export_manifest.json").write_bytes(
+                (json.dumps(manifest, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8"))
             inputs.unchanged()
             require(not target.exists(), "Output appeared during export; refusing overwrite")
             publish_noreplace(staging, target)

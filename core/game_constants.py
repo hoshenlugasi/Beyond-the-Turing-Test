@@ -22,7 +22,7 @@ except Exception:
 
 
 # new game preparation constants
-DEFAULT_GAME_CONFIG = "configurations/example_local_v6.json"
+DEFAULT_GAME_CONFIG = "configurations/example_local_agent.json"
 GAME_ID_NUM_DIGITS = 4
 NOTES_FILE = "notes.txt"  # for our use, post-game
 
@@ -260,7 +260,7 @@ def get_game_dir_from_argv():
     parser.add_argument("--player", default=None,
                         help="Code-name of the LLM player this process controls")
     args, _ = parser.parse_known_args()
-    # Phase C: resolve via game_paths so all layouts (new + legacy) are found.
+    # Resolve categorized and flat game directories through game_paths.
     from core.game_paths import resolve_game_dir
     game_dir = resolve_game_dir(args.game_id)
     if not game_dir.exists():

@@ -1,13 +1,6 @@
-"""Phase C — single source of truth for game directory paths.
+"""Runtime paths: games/real/<id>/ and games/test/<id>/.
 
-Target layout:
-    games/
-    real/  v6/<id>/
-    test/  v6/<id>/
-      simulations/      (unchanged)
-
-Flat local runtime directories (`games/<four-digit-id>/`) remain readable.
-Published dataset IDs (`game_001`, etc.) are not runtime game IDs.
+Published dataset IDs (game_001, etc.) are never runnable game IDs.
 """
 from __future__ import annotations
 
@@ -16,7 +9,7 @@ from pathlib import Path
 from typing import Iterator, Tuple
 
 from core.game_constants import DIRS_PREFIX
-from core.game_version import detect_agent_version, is_test_game, load_config
+from core.game_identity import CURRENT_AGENT_IDENTITY, is_test_game
 
 # Top-level category folders.
 DIRS_REAL = "real"
@@ -74,7 +67,7 @@ _FILE_FORCE_FLAT = {"phase_status.txt"}
 def subdir_for(filename: str) -> str | None:
     """Return the subfolder a game file belongs in, or None for top-level.
 
-    ``filename`` is a bare name (no directory component). v5_memory_trace*.jsonl
+    ``filename`` is a bare name (no directory component). memory_trace*.jsonl
     and all other single-instance files return None (stay at the top level).
     """
     filename = Path(filename).name
@@ -109,7 +102,7 @@ def game_file(game_dir, filename: str, *, for_write: bool = False) -> Path:
     """Resolve a bare game filename to its location inside ``game_dir``.
 
     For writes, returns the subfolder path and creates the subfolder. For
-    reads, prefers the subfolder path but falls back to a legacy flat path
+    reads, prefers the subfolder path but falls back to a flat path
     when the subfolder copy doesn't exist, so un-migrated / simulation game
     directories remain readable.
     """
@@ -129,98 +122,48 @@ def game_file(game_dir, filename: str, *, for_write: bool = False) -> Path:
 
 
 def resolve_game_dir(game_id: str) -> Path:
-    """Return the directory for ``game_id``, searching the new layout first.
-
-    Search order: real/v6, other real versions, test/v6, other test versions,
-    then flat local ``games/<id>``. The first existing
-    path wins; if nothing matches, the new-layout default
-    ``games/real/v6/<id>`` is returned (callers should check ``.exists()``).
-    """
+    """Resolve a real/test runtime game; default to the real-game location."""
     if not _VALID_ID_RE.fullmatch(game_id):
         raise ValueError(f"Invalid game_id: {game_id!r}")
     root = _games_root()
     for cat in (DIRS_REAL, DIRS_TEST):
-        cat_dir = root / cat
-        if not cat_dir.exists():
-            continue
-        # Known versions first (deterministic), then any other v* dirs present
-        # (e.g. v4/v5) so newer agent versions resolve correctly too.
-        present = [d.name for d in cat_dir.iterdir() if d.is_dir()]
-        ordered = [v for v in ("v6", "v3", "v1", "v2") if v in present]
-        ordered += [v for v in sorted(present) if v not in ordered]
-        for ver in ordered:
-            p = cat_dir / ver / game_id
-            if p.exists():
-                return p
-    # Legacy flat games/<id>
-    flat = root / game_id
-    if flat.exists():
-        return flat
-    # Default — caller should check .exists()
-    return root / DIRS_REAL / "v6" / game_id
+        path = root / cat / game_id
+        if path.exists():
+            return path
+    return root / DIRS_REAL / game_id
 
 
 def target_dir_for_config(config: dict, game_id: str) -> Path:
     """Compute the target directory for a *new* game from its config.
 
-    Routes by ``is_test`` flag (test vs real) and detected agent version.
+    Routes only by ``is_test`` flag (test vs real).
     Creates parent dirs eagerly so the caller can ``mkdir`` the leaf.
     """
     if not _VALID_ID_RE.fullmatch(game_id):
         raise ValueError(f"Invalid game_id: {game_id!r}")
     cat = DIRS_TEST if is_test_game(config) else DIRS_REAL
-    ver = detect_agent_version(config)
-    if ver == "unknown":
-        ver = "v6"
-    target = _games_root() / cat / ver / game_id
+    target = _games_root() / cat / game_id
     target.parent.mkdir(parents=True, exist_ok=True)
     return target
 
 
 def iter_all_games(include_simulations: bool = False) -> Iterator[Tuple[str, str, Path]]:
-    """Yield ``(category, version, path)`` for every game directory.
+    """Yield (category, agent_identity, path), retaining the three-item API.
 
-    Walks versioned runtime and flat four-digit local game paths.
-    ``simulations/`` is yielded
-    only when ``include_simulations=True``.
+    Only four-digit runtime directories directly inside real/test are games.
+    Optional simulation enumeration does not select another agent identity.
     """
     root = _games_root()
     if not root.exists():
         return
 
-    # New layout: real/<ver>/, test/<ver>/.
     for cat in (DIRS_REAL, DIRS_TEST):
         cat_dir = root / cat
         if not cat_dir.exists():
             continue
-        for ver_dir in sorted(cat_dir.iterdir()):
-            if not ver_dir.is_dir():
-                continue
-            ver = ver_dir.name
-            for gd in sorted(ver_dir.iterdir()):
-                if gd.is_dir() and _VALID_ID_RE.fullmatch(gd.name):
-                    yield cat, ver, gd
-
-    # Legacy flat games/<id> — classify on the fly.
-    for gd in sorted(root.iterdir()):
-        if not gd.is_dir():
-            continue
-        if gd.name in _NON_CATEGORY_TOP:
-            continue
-        if gd.name in (DIRS_REAL, DIRS_TEST):
-            continue
-        if not _VALID_ID_RE.fullmatch(gd.name):
-            continue
-        # Heuristic: must contain a config.json to be a game dir.
-        cfg_file = gd / "config.json"
-        if not cfg_file.exists():
-            continue
-        cfg = load_config(gd)
-        cat = DIRS_TEST if is_test_game(cfg) else DIRS_REAL
-        ver = detect_agent_version(cfg)
-        if ver == "unknown":
-            ver = "v6"
-        yield cat, ver, gd
+        for game_dir in sorted(cat_dir.iterdir()):
+            if game_dir.is_dir() and _VALID_ID_RE.fullmatch(game_dir.name):
+                yield cat, CURRENT_AGENT_IDENTITY, game_dir
 
     if include_simulations:
         sim = root / DIRS_SIM
@@ -237,7 +180,7 @@ def next_game_id() -> str:
     and category folders themselves) for the largest numeric id.
     """
     max_id = 0
-    for _cat, _ver, gd in iter_all_games(include_simulations=False):
+    for _category, _identity, gd in iter_all_games(include_simulations=False):
         try:
             n = int(gd.name)
         except ValueError:

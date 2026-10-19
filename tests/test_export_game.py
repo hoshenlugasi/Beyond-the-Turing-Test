@@ -6,6 +6,7 @@ uses only the exporter; these tests do not launch a game or change its timing.
 """
 
 import json
+import hashlib
 import os
 from pathlib import Path
 import re
@@ -16,6 +17,8 @@ import pytest
 
 import export_game as exporter
 from export_game import ExportError, export_game
+from core.dataset_tables import build_tables
+from core.event_schema import ENVELOPE_FIELDS, SCHEMAS, render_text, validate_event
 
 
 EXPORT_ID = "local_game_001"
@@ -24,28 +27,6 @@ CORE_FILES = {"metadata.json", "transcript.txt", "votes.json", "surveys.json"}
 META_KEYS = {"game_id", "ai_pseudonym", "num_human_players", "total_rounds",
              "ai_eliminated", "ai_elimination_round"}
 VOTE_KEYS = {"round", "voter", "voted_for", "is_ai_voter"}
-# Copied deliberately from test_release_data.py, not from the implementation.
-EVENT_FIELDS = {
-    "v4_pipeline_complete": "final review_risk scheduler_decision send_reason",
-    "v5_behavior_advice_updated": "advice",
-    "v5_overused_words_updated": "words",
-    "v5_phase_summary_tick": "n_messages phase summary",
-    "v5_repetition_llm_pass": "note",
-    "v5_repetition_note_updated": "note",
-    "v5_scheduler_blocked": "reason",
-    "v6_delivery_phase_drop": "message outcome reason stage",
-    "v6_delivery_sent": "message outcome",
-    "v6_generator_candidates": "candidates count",
-    "v6_reviewer_analysis": "num_candidates selected_index verdicts",
-    "v6_reviewer_demote_response_required": "demoted pool_size tag",
-    "v6_reviewer_demote_same_dodge_mode": "demoted dodge_streak mode pool_size tag",
-    "v6_reviewer_drop": "num_candidates review_reason_codes review_status source",
-    "v6_reviewer_filter_known_accusation": "kept removed",
-    "v6_reviewer_selected": "num_candidates review_reason_codes review_status selected_index selected_text selected_word_count source",
-    "v6_scheduler_decision": "decision send_reason",
-    "v6_stale_send_drop": "new_messages reason suppressed_message",
-    "v6_state_guard_filter": "kept removed",
-}
 VERDICT_KEYS = {"index", "text", "type", "pros", "cons", "score", "red_flags",
                 "verdict", "selected", "pool_index"}
 
@@ -137,16 +118,16 @@ def event_rows():
         "email": "hidden@example.invalid",
     } for i, text in enumerate(candidates)]
     payloads = [
-        ("v6_generator_candidates", {"count": 4, "candidates": candidates}),
-        ("v6_reviewer_analysis", {"num_candidates": 4, "selected_index": 0,
+        ("generator_candidates", {"count": 4, "candidates": candidates}),
+        ("reviewer_analysis", {"num_candidates": 4, "selected_index": 0,
                                    "verdicts": verdicts}),
-        ("v6_reviewer_selected", {"selected_text": candidates[0],
+        ("reviewer_selected", {"selected_text": candidates[0],
                                  "selected_word_count": 2, "selected_index": 0,
                                  "num_candidates": 4, "source": "model",
                                  "review_status": "ok", "review_reason_codes": []}),
-        ("v6_delivery_sent", {"message": candidates[0], "outcome": "sent"}),
-        ("v5_snapshot_read_full", {"snapshot": {"prompt": "omit-entire-event"}}),
-        ("v5_behavior_advice_updated", {"advice": "keep answers brief"}),
+        ("delivery_sent", {"message": candidates[0], "outcome": "sent"}),
+        ("diagnostic_evaluator_result", {"snapshot": {"prompt": "omit-entire-event"}}),
+        ("behavior_advice_updated", {"advice": "keep answers brief"}),
     ]
     return [dict(common, event_type=kind, **payload) for kind, payload in payloads]
 
@@ -157,7 +138,7 @@ def raw_game(tmp_path):
     players = [{"name": name, "real_name": f"Private {name}",
                 "is_ai": name == "AI", "is_llm": name == "AI",
                 "llm_config": {"model_name": "synthetic-model",
-                               "async_type": "langgraph_v6"} if name == "AI" else {}}
+                               "async_type": "social_turing_test_agent"} if name == "AI" else {}}
                for name in ("AI", "Blue", "Green")]
     write_json(base, "config.json", {"players": players, "is_test": True,
                                    "api_key": "synthetic-config-secret"})
@@ -184,8 +165,7 @@ def raw_game(tmp_path):
 
 
 def exported_events(output):
-    return read_jsonl(output / "internal_outputs" / "games" / EXPORT_ID /
-                      "events" / "game_events.jsonl")
+    return read_jsonl(output / "games" / EXPORT_ID / "events" / "timeline.jsonl")
 
 
 def assert_manifest(output, kind, missing=()):
@@ -206,10 +186,29 @@ def test_layout_exact_core_schemas_and_source_unchanged(raw_game, tmp_path, kind
     assert isinstance(result, dict)
     assert snapshot(raw_game) == before
     core = output / "games" / EXPORT_ID
-    assert {p.name for p in core.iterdir()} == CORE_FILES
+    assert {p.name for p in core.iterdir()} == CORE_FILES | {"events"}
     assert {p.name for p in (output / "games").iterdir()} == {EXPORT_ID}
-    assert (output / "internal_outputs" / "manifest.json").is_file()
-    assert isinstance(read_json(output / "internal_outputs" / "manifest.json"), dict)
+    expected = {f"games/{EXPORT_ID}/{name}" for name in CORE_FILES}
+    expected |= {f"games/{EXPORT_ID}/events/{name}" for name in
+                 ("timeline.jsonl", "timeline.txt", "manifest.json")}
+    expected |= {f"tables/{name}.jsonl" for name in ("games", "messages", "votes", "surveys")}
+    expected |= {"README.md", "export_manifest.json", "dataset_infos.json"}
+    assert {p.relative_to(output).as_posix() for p in output.rglob("*") if p.is_file()} == expected
+    assert len(expected) == 14
+    coverage = read_json(core / "events/manifest.json")
+    assert coverage["event_count"] == len(exported_events(output)) == 5
+    assert coverage["input_omission_counts"]["retired_diagnostic"] == 1
+    assert result["omitted_event_reason_counts"] == {"retired_diagnostic": 1}
+    assert (core / "events/timeline.txt").read_text(encoding="utf-8") == render_text(exported_events(output))
+    tables = build_tables(output / "games")
+    for name, records in tables.items():
+        assert read_jsonl(output / f"tables/{name}.jsonl") == records
+    assert tables["games"][0]["event_count"] == coverage["event_count"]
+    assert tables["surveys"][1]["enjoyment"] is None
+    assert set(result["files"]) == expected - {"export_manifest.json"}
+    for name, entry in result["files"].items():
+        data = (output / name).read_bytes()
+        assert entry == {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
     assert (output / "README.md").read_text(encoding="utf-8").strip()
     assert_manifest(output, kind)
     meta = read_json(core / "metadata.json")
@@ -253,22 +252,24 @@ def test_internal_allowlists_order_false_zero_and_turn_remapping(raw_game, tmp_p
     output = tmp_path / "export"
     export_game(raw_game, output, EXPORT_ID, "local_game")
     rows = exported_events(output)
-    assert [row["event_type"] for row in rows] == [
+    assert [row["action"] for row in rows] == [
         row["event_type"] for row in event_rows()
-        if row["event_type"] in EVENT_FIELDS]
+        if row["event_type"] != "diagnostic_evaluator_result"]
     for order, row in enumerate(rows, 1):
         assert row["game_id"] == EXPORT_ID
         assert type(row["event_order"]) is int
         assert row["event_order"] == order
-        allowed = {"game_id", "event_type", "event_order", "turn_id"}
-        allowed.update(EVENT_FIELDS[row["event_type"]].split())
-        assert set(row) <= allowed
+        assert set(row) == ENVELOPE_FIELDS
+        assert set(row["payload"]) == set(SCHEMAS)
+        assert validate_event(row)
+        assert row["elapsed_seconds"] is row["time_precision_seconds"] is None
+        assert row["time_basis"] == "unknown"
         assert row["turn_id"] == EXPORT_ID + "-turn001"
         assert not re.search(r"\b\d{2}:\d{2}:\d{2}\b", json.dumps(row))
-    generated = next(r for r in rows if r["event_type"] == "v6_generator_candidates")
+    generated = next(r for r in rows if r["action"] == "generator_candidates")["payload"]["candidates"]
     assert generated["count"] == 4
     assert generated["candidates"] == ["hello there", "nice weather", "fair enough", "sounds good"]
-    analysis = next(r for r in rows if r["event_type"] == "v6_reviewer_analysis")
+    analysis = next(r for r in rows if r["action"] == "reviewer_analysis")["payload"]["review"]
     assert analysis["selected_index"] == 0
     assert len(analysis["verdicts"]) == 4
     for index, verdict in enumerate(analysis["verdicts"]):
@@ -277,8 +278,8 @@ def test_internal_allowlists_order_false_zero_and_turn_remapping(raw_game, tmp_p
         assert verdict["score"] == 0 and type(verdict["score"]) in (int, float)
         assert verdict["selected"] is (index == 0)
         assert verdict["pros"] and verdict["cons"]
-    selected = next(r for r in rows if r["event_type"] == "v6_reviewer_selected")
-    delivery = next(r for r in rows if r["event_type"] == "v6_delivery_sent")
+    selected = next(r for r in rows if r["action"] == "reviewer_selected")["payload"]["review"]
+    delivery = next(r for r in rows if r["action"] == "delivery_sent")["payload"]["delivery"]
     assert selected["selected_text"] == delivery["message"] == "hello there"
     assert delivery["outcome"] == "sent"
 
@@ -295,14 +296,14 @@ def test_distinct_raw_turns_get_sequential_public_ids(raw_game, tmp_path):
 
 
 def test_selection_without_delivery_does_not_synthesize_an_outcome(raw_game, tmp_path):
-    rows = [row for row in event_rows() if row["event_type"] != "v6_delivery_sent"]
+    rows = [row for row in event_rows() if row["event_type"] != "delivery_sent"]
     write_jsonl(raw_game, "events/game_events.jsonl", rows)
     output = tmp_path / "export"
     export_game(raw_game, output, EXPORT_ID, "local_game")
     public = exported_events(output)
-    assert any(row["event_type"] == "v6_reviewer_selected" for row in public)
-    assert not any("delivery" in row["event_type"] for row in public)
-    assert not any("outcome" in row for row in public)
+    assert any(row["action"] == "reviewer_selected" for row in public)
+    assert not any("delivery" in row["action"] for row in public)
+    assert all(row["payload"]["delivery"] is None for row in public)
 
 
 def test_free_text_redaction_and_private_fields_never_escape(raw_game, tmp_path):
@@ -545,7 +546,7 @@ def test_cli_exports_scripted_test_offline(raw_game, tmp_path):
     )
     assert completed.returncode == 0, "offline exporter CLI failed"
     assert_manifest(output, "scripted_test")
-    assert {p.name for p in (output / "games" / EXPORT_ID).iterdir()} == CORE_FILES
+    assert {p.name for p in (output / "games" / EXPORT_ID).iterdir()} == CORE_FILES | {"events"}
     assert snapshot(raw_game) == before
 
 
@@ -555,15 +556,15 @@ def test_export_error_is_a_value_error():
 
 def test_nonfinite_discarded_diagnostic_not_copied(raw_game, tmp_path):
     rows = event_rows()
-    rows.append({"event_type": "v6_scheduler_decision", "decision": "wait",
+    rows.append({"event_type": "scheduler_decision", "decision": "wait",
                  "send_reason": "cooldown", "private_cadence": float("inf")})
     write_jsonl(raw_game, "events/game_events.jsonl", rows)
     output = tmp_path / "export"
     export_game(raw_game, output, EXPORT_ID, "local_game")
-    text = (output / "internal_outputs" / "games" / EXPORT_ID /
-            "events/game_events.jsonl").read_text(encoding="utf-8")
+    text = (output / "games" / EXPORT_ID /
+            "events/timeline.jsonl").read_text(encoding="utf-8")
     assert "Infinity" not in text and "private_cadence" not in text
-    assert exported_events(output)[-1]["decision"] == "wait"
+    assert exported_events(output)[-1]["payload"]["scheduler"]["decision"] == "wait"
 
 
 def test_nonfinite_retained_value_rejected(raw_game, tmp_path):
@@ -609,3 +610,229 @@ def test_atomic_publication_never_replaces_new_destination(raw_game, tmp_path, m
     with pytest.raises(ExportError):
         export_game(raw_game, output, EXPORT_ID, "local_game")
     assert output.is_dir() and not list(output.iterdir())
+
+
+def test_all_six_workers_actual_outputs_are_nested_and_redacted(raw_game, tmp_path):
+    rows = [
+        {"event_type": "internet_search_request", "query": "recent tournament result"},
+        {"event_type": "internet_search_response", "query": "recent tournament result",
+         "summary_text": "Blue mentioned a tournament", "n_results": 0, "grounded": False,
+         "results": [{"snippet": "never-publish-provider-marker"}]},
+        {"event_type": "round_summary_response", "phase": "discussion",
+         "summary_text": "Green asked about hobbies"},
+        {"event_type": "persona_claims_updated", "claims": ["I enjoy chess"], "count": 1},
+        {"event_type": "social_state_updated", "parsed": {
+            "players": {"Blue": "asked a direct question", "Green": "mentioned chess"},
+            "suspects_me": [], "attention_on_me": 0,
+            "group_mood": "friendly synthetic.person@example.invalid"}, "parse_ok": False},
+        {"event_type": "behavior_advice_updated", "advice": "answer Green briefly"},
+        {"event_type": "repetition_note_updated", "note": "avoid repeating chess"},
+    ]
+    write_jsonl(raw_game, "events/game_events.jsonl", rows)
+    before = snapshot(raw_game)
+    output = tmp_path / "export"
+    export_game(raw_game, output, EXPORT_ID, "local_game")
+    public = exported_events(output)
+    assert {r["component"] for r in public} == {
+        "Internet Context", "Round Summarizer", "Persona Monitor",
+        "Social State Tracker", "Behavior Adapter", "Repetition Monitor"}
+    assert all(r["turn_id"] is None for r in public)
+    internet = public[1]["payload"]["internet"]
+    assert internet["summary"] == "Blue mentioned a tournament"
+    assert internet["returned_item_count"] == 0
+    assert internet["grounded"] is False
+    assert public[2]["payload"]["round_summary"]["summary"] == "Green asked about hobbies"
+    assert public[3]["payload"]["persona"]["claims"] == ["I enjoy chess"]
+    social = public[4]["payload"]["social_state"]
+    assert social["players"] == [
+        {"pseudonym": "Blue", "observation": "asked a direct question"},
+        {"pseudonym": "Green", "observation": "mentioned chess"}]
+    assert social["parse_ok"] is False
+    assert social["attention_on_me"] == 0.0
+    assert social["suspects_me"] == [] and social["i_pointed_at"] is None
+    assert "[REDACTED_EMAIL]" in social["group_mood"]
+    assert public[5]["payload"]["behavior"]["advice"] == "answer Green briefly"
+    assert public[6]["payload"]["repetition"]["note"] == "avoid repeating chess"
+    text = (output / "games" / EXPORT_ID / "events/timeline.txt").read_text(encoding="utf-8")
+    assert text == render_text(public)
+    assert "never-publish-provider-marker" not in text
+    assert "synthetic.person@example.invalid" not in text
+    assert snapshot(raw_game) == before
+
+
+@pytest.mark.parametrize("event_type", ["unrecognized_neutral_event", "source-private-identifier", None, 0])
+def test_unknown_or_malformed_event_refuses_without_echoing_source(raw_game, tmp_path, event_type):
+    write_jsonl(raw_game, "events/game_events.jsonl", [{"event_type": event_type}])
+    output = tmp_path / "export"
+    before = snapshot(raw_game)
+    with pytest.raises(ExportError) as failure:
+        export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert "source-private-identifier" not in str(failure.value)
+    assert not output.exists()
+    assert snapshot(raw_game) == before
+
+
+@pytest.mark.parametrize("row", [
+    {"event_type": "generator_candidates", "count": True, "candidates": []},
+    {"event_type": "generator_candidates", "count": 2, "candidates": ["one"]},
+    {"event_type": "generator_candidates", "count": 1, "candidates": [None]},
+    {"event_type": "scheduler_decision", "decision": "maybe"},
+    {"event_type": "delivery_sent", "message": "hello", "outcome": "phase_drop"},
+    {"event_type": "delivery_phase_drop", "message": "hello", "outcome": "sent"},
+    {"event_type": "persona_claims_updated", "claims": "not a list"},
+    {"event_type": "social_state_updated", "players": {"Blue": {"private": "nested"}}},
+    {"event_type": "internet_search_response", "grounded": 0},
+    {"event_type": "behavior_tick", "talk_share": float("inf")},
+    {"event_type": "reviewer_analysis", "verdicts": [{"selected": 0}]},
+])
+def test_invalid_retained_fields_fail_closed(raw_game, tmp_path, row):
+    write_jsonl(raw_game, "events/game_events.jsonl", [row])
+    output = tmp_path / "export"
+    with pytest.raises(ExportError):
+        export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert not output.exists()
+
+
+def clock_row(elapsed=0, mono=10_000_000_000, segment="private-clock-segment", **extra):
+    return dict(event_type="scheduler_decision", decision="wait",
+                occurred_at_utc="2026-10-18T23:59:59.999+02:00",
+                segment_id=segment, monotonic_ns=mono, elapsed_seconds=elapsed,
+                time_basis="monotonic_segment", time_precision_seconds=.001, **extra)
+
+
+def test_paired_monotonic_clock_midnight_backstep_and_restart(raw_game, tmp_path):
+    rows = [clock_row(), clock_row(.001, 10_001_000_000),
+            clock_row(.002, 10_002_000_000),
+            clock_row(0, 20_000_000_000, "private-restart-segment")]
+    rows[1]["occurred_at_utc"] = "2026-10-19T00:00:00.000+02:00"
+    rows[2]["occurred_at_utc"] = "2026-10-18T22:00:00.000+02:00"
+    write_jsonl(raw_game, "events/game_events.jsonl", rows)
+    before = snapshot(raw_game)
+    output = tmp_path / "export"
+    export_game(raw_game, output, EXPORT_ID, "local_game")
+    public = exported_events(output)
+    assert [r["elapsed_seconds"] for r in public] == [0.0, .001, .002, 0.0]
+    assert all(r["time_basis"] == "monotonic_segment" and
+               r["time_precision_seconds"] == .001 for r in public)
+    assert [r["event_order"] for r in public] == [1, 2, 3, 4]
+    text = json.dumps(public)
+    assert not any(token in text for token in (
+        "private-clock-segment", "private-restart-segment", "2026-10-18",
+        "occurred_at_utc", "monotonic_ns", "segment_id"))
+    assert snapshot(raw_game) == before
+
+
+@pytest.mark.parametrize("rows", [
+    [{"event_type": "scheduler_decision", "decision": "wait", "elapsed_seconds": 12}],
+    [{"event_type": "scheduler_decision", "decision": "wait", "timestamp": clock}
+     for clock in ("23:59:59", "00:00:00", "12:00:00")],
+    [{"event_type": "scheduler_decision", "decision": "wait",
+      "occurred_at_utc": "2026-10-18T12:00:00Z", "wall_t": 1000}],
+    [{k: v for k, v in clock_row().items() if k != "elapsed_seconds"}],
+    [{k: v for k, v in clock_row().items() if k != "segment_id"}],
+    [dict(clock_row(), elapsed_seconds=None)],
+])
+def test_unanchored_or_ambiguous_timing_stays_unknown(raw_game, tmp_path, rows):
+    write_jsonl(raw_game, "events/game_events.jsonl", rows)
+    output = tmp_path / "export"
+    export_game(raw_game, output, EXPORT_ID, "local_game")
+    public = exported_events(output)
+    assert len(public) == len(rows)
+    assert all(r["elapsed_seconds"] is None and r["time_basis"] == "unknown"
+               and r["time_precision_seconds"] is None for r in public)
+
+
+@pytest.mark.parametrize("damage", ["naive", "bad_iso", "nonfinite", "bool_elapsed",
+                                  "bad_precision", "reverse", "inconsistent"])
+def test_invalid_paired_timing_rejected(raw_game, tmp_path, damage):
+    rows = [clock_row(), clock_row(1, 11_000_000_000)]
+    if damage == "naive":
+        rows[0]["occurred_at_utc"] = "2026-10-18T12:00:00"
+    elif damage == "bad_iso":
+        rows[0]["occurred_at_utc"] = "not a timestamp"
+    elif damage == "nonfinite":
+        rows[0]["elapsed_seconds"] = float("nan")
+    elif damage == "bool_elapsed":
+        rows[0]["elapsed_seconds"] = False
+    elif damage == "bad_precision":
+        rows[0]["time_precision_seconds"] = 1
+    elif damage == "reverse":
+        rows[1]["monotonic_ns"] = 1
+    else:
+        rows[1]["elapsed_seconds"] = 100
+    write_jsonl(raw_game, "events/game_events.jsonl", rows)
+    with pytest.raises(ExportError):
+        export_game(raw_game, tmp_path / "export", EXPORT_ID, "local_game")
+
+
+def test_table_failure_cleans_staging_and_lock(raw_game, tmp_path, monkeypatch):
+    output = tmp_path / "export"
+    before = snapshot(raw_game)
+
+    def fail(_):
+        raise ValueError("synthetic table validation error")
+
+    monkeypatch.setattr(exporter, "write_tables", fail)
+    with pytest.raises(ExportError):
+        export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert not output.exists() and not output.with_name("export.export.lock").exists()
+    assert not list(tmp_path.glob(".game-export-*"))
+    assert snapshot(raw_game) == before
+
+
+def test_source_change_during_table_build_refuses_publication(raw_game, tmp_path, monkeypatch):
+    output = tmp_path / "export"
+    original = exporter.write_tables
+
+    def mutate(staging):
+        result = original(staging)
+        write_text(raw_game, "votes/Blue_vote.txt", "AI\n")
+        return result
+
+    monkeypatch.setattr(exporter, "write_tables", mutate)
+    with pytest.raises(ExportError, match="changed during export"):
+        export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert not output.exists() and not list(tmp_path.glob(".game-export-*"))
+    assert not output.with_name("export.export.lock").exists()
+
+
+def test_existing_export_lock_is_not_removed(raw_game, tmp_path):
+    output = tmp_path / "export"
+    lock = output.with_name("export.export.lock")
+    lock.write_text("owned by another exporter", encoding="utf-8")
+    with pytest.raises(ExportError, match="locked"):
+        export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert lock.read_text(encoding="utf-8") == "owned by another exporter"
+    assert not output.exists()
+
+
+def test_empty_event_stream_is_unknown_coverage_not_fabricated_activity(raw_game, tmp_path):
+    write_jsonl(raw_game, "events/game_events.jsonl", [])
+    output = tmp_path / "export"
+    export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert exported_events(output) == []
+    events = output / "games" / EXPORT_ID / "events"
+    assert (events / "timeline.txt").read_bytes() == b""
+    manifest = read_json(events / "manifest.json")
+    assert manifest["event_count"] == 0
+    assert manifest["privacy_status"] == "pending"
+    assert all(count == 0 for count in manifest["component_counts"].values())
+    assert any("inactivity" in note for note in manifest["limitations"])
+    assert read_jsonl(output / "tables/games.jsonl")[0]["event_count"] == 0
+
+
+def test_rescue_audit_refuses_even_when_ballots_reconcile(raw_game, tmp_path):
+    rows = read_jsonl(raw_game / "events/elimination_audit.jsonl")
+    rows[0]["source"] = "force_tally"
+    write_jsonl(raw_game, "events/elimination_audit.jsonl", rows)
+    with pytest.raises(ExportError, match="Rescue"):
+        export_game(raw_game, tmp_path / "export", EXPORT_ID, "local_game")
+
+
+def test_destination_symlink_guard_without_platform_privileges(raw_game, tmp_path, monkeypatch):
+    output = tmp_path / "export"
+    original = Path.is_symlink
+    monkeypatch.setattr(Path, "is_symlink", lambda path: path == output or original(path))
+    with pytest.raises(ExportError, match="Symlink"):
+        export_game(raw_game, output, EXPORT_ID, "local_game")
+    assert not output.exists()

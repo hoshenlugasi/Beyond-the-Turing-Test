@@ -75,14 +75,13 @@ def init_game(game_id, config_path):
     with open(config_path, "r", encoding="utf-8") as original_file:
         config = json.load(original_file)
     reject_retired_config(config)
-    # Stamp the current agent version on the AI player's llm_config so the
-    # version isn't guessed from the model name later. New games are always v3.
-    from core.game_version import CURRENT_AGENT_VERSION, AGENT_VERSION_KEY
+    # Record the one public agent identity independently of model/provider.
+    from core.game_identity import CURRENT_AGENT_IDENTITY, AGENT_IDENTITY_KEY
     for p in config.get(PLAYERS_KEY_IN_CONFIG, []):
         if p.get("is_ai") or p.get("is_llm"):
             llm_cfg = p.setdefault("llm_config", {})
-            llm_cfg.setdefault(AGENT_VERSION_KEY, CURRENT_AGENT_VERSION)
-    # Phase C: route new games into games/{real|test}/{v1|v3}/<id>/.
+            llm_cfg[AGENT_IDENTITY_KEY] = CURRENT_AGENT_IDENTITY
+    # Runtime games are separate from the released study dataset.
     from core.game_paths import target_dir_for_config, ensure_game_subdirs
     game_dir = target_dir_for_config(config, game_id)
     game_dir.mkdir()
@@ -112,7 +111,7 @@ def init_game(game_id, config_path):
         (game_dir / CONVERSATION_TOPIC_FILE).write_text(topic, encoding="utf-8")
         print(f"Selected conversation topic: {topic}")
     else:
-        (game_dir / CONVERSATION_TOPIC_FILE).touch()  # Create empty file for backward compatibility
+        (game_dir / CONVERSATION_TOPIC_FILE).touch()  # Initialize the shared topic file.
     for player in players:
         (game_dir / PERSONAL_CHAT_FILE_FORMAT.format(player.name)).touch()
         (game_dir / PERSONAL_VOTE_FILE_FORMAT.format(player.name)).touch()

@@ -1,12 +1,8 @@
 """
-Reviewed Player - Player with AI Suspicion Detection
-=====================================================
+Shared review and typing helpers for the Social Turing Test agent pipeline.
 
-A player that uses the GeminiReviewer to filter messages before sending them.
-If a message is flagged as suspicious (likely to be detected as AI), it will
-either use a suggested fix or regenerate the message.
-
-This integrates seamlessly with the existing ScheduleThenGeneratePlayer architecture.
+Provides reviewer configuration, review-result handling, provenance logging and
+human-typing delays inherited by the LangGraph pipeline base.
 """
 
 from llm_players.schedule_then_generate_player import ScheduleThenGeneratePlayer
@@ -25,16 +21,15 @@ REVIEWER_BACKEND_KEY = "reviewer_backend"  # "gemini" (default) or "together"
 
 class ReviewedPlayer(ScheduleThenGeneratePlayer):
     """
-    A player that filters messages through a Gemini AI suspicion detector.
+    Shared reviewer setup, review helpers and typing-delay implementation.
     
-    Inherits all behavior from ScheduleThenGeneratePlayer, but adds a review
-    step before returning generated messages.
+    Supplies review and typing utilities to the pipeline through inheritance.
     
     Config options (add to llm_config):
         reviewer_enabled: bool - Enable/disable reviewer (default: True)
-        reviewer_threshold: int - Suspicion score threshold 1-10 (default: 6)
+        reviewer_threshold: int - Suspicion score threshold 1-10 (default: 4)
         reviewer_max_attempts: int - Max fix attempts (default: 3)
-        reviewer_model: str - Gemini model for reviewer (default: gemini-1.5-flash)
+        reviewer_model: str - Optional reviewer model override
     """
     
     TYPE_NAME = "reviewed_schedule_then_generate"
@@ -48,34 +43,31 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         self.reviewer_enabled = llm_config.get(REVIEWER_ENABLED_KEY, True)
         self.reviewer_threshold = llm_config.get(REVIEWER_THRESHOLD_KEY, 4)
         # Early-exit ceiling: after attempt 2, accept a message whose score is
-        # <= this value instead of burning a 3rd reviewer call. Kept just below
-        # the old 5 so borderline-suspicious (score 5) messages still get one
+        # <= this value instead of burning a 3rd reviewer call. Scores of 5
+        # remain borderline-suspicious, so those messages still get one
         # more fix attempt rather than being silently accepted.
         self.reviewer_good_enough_score = llm_config.get("reviewer_good_enough_score", 4)
-        # User decision: keep up to 3 attempts. The pipeline budget below caps
+        # Allow up to 3 attempts. The pipeline budget below caps
         # wall-clock time so a 3rd attempt only runs if the first two were fast.
         self.reviewer_max_attempts = llm_config.get(REVIEWER_MAX_ATTEMPTS_KEY, 3)
         # Hard wall-clock budget for the entire pipeline (gen + review + fix
         # loop), measured from the scheduler's send-decision moment. If
         # exceeded, SELECTED_BEST picks the best of attempts so far. The only
         # reason a message is dropped is reviewer_drop_score below.
-        # Default None = no budget cap (pre-change behavior). Set a float in
+        # Default None = no budget cap. Set a float in
         # llm_config / admin UI to enforce a max wall-clock latency.
         self.reviewer_budget_sec = llm_config.get("reviewer_budget_sec", None)
         # Drop score: skip the turn (stay SILENT) if even the best attempt is
-        # still ≥ N. Default 8 (V5.10): a message that is still suspicious after
-        # the fix loop is suppressed rather than sent — previously (10) only exact
-        # duplicates were dropped and 7–9 messages reverted to the suspicious
-        # original and were STILL sent. 10 disables dropping; raise it back per
-        # game via llm_config if you'd rather always send something.
+        # still ≥ N. Default 8: a message that is still suspicious after
+        # the fix loop is suppressed rather than sent. A threshold of 10
+        # suppresses only messages at the maximum suspicion score.
         self.reviewer_drop_score = llm_config.get("reviewer_drop_score", 8)
         # Per-call reviewer API timeout (seconds). Caps how long ONE reviewer
         # call can hang before we abort it; on timeout, review_message catches
         # the TimeoutError and returns a pass-through ReviewResult so the
         # agent stays alive and continues to the voting phase. Default 25s
-        # protects against indefinite SDK hangs (observed in game 0089 where
-        # a single hung reviewer call killed the agent process and prevented
-        # voting). 25s leaves headroom for multi-attempt Pro reviews (4
+        # protects against indefinite SDK hangs that could prevent voting.
+        # 25s leaves headroom for multi-attempt Pro reviews (4
         # attempts can reach ~19s). Hardened: any null/0/invalid value falls
         # back to 25.0 so accidental config like
         # `"reviewer_api_timeout_sec": null` cannot disable the protection.
@@ -89,23 +81,23 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         self.reviewer_api_timeout_sec = _v
         # Inter-attempt backoff: if a reviewer attempt took >5s, sleep
         # 0.5s × attempt# before retrying so a slow backend can recover.
-        # Default False = no backoff (pre-change behavior).
+        # Default False = no backoff.
         self.reviewer_backoff_enabled = llm_config.get("reviewer_backoff_enabled", False)
         self.reviewer_model = llm_config.get(REVIEWER_MODEL_KEY, None)
         self.reviewer_backend = llm_config.get(REVIEWER_BACKEND_KEY, "gemini")
         self.reviewer_self_consistency = llm_config.get("reviewer_self_consistency", True)
         self._lite_reviewer = None  # lazy-created for self-consistency re-scoring
 
-        # Adaptive typing-rhythm config (2.1). V5.11: ~1s/word floor so the
-        # total pre-send time ≥ word_count (realistic human typing). Cap raised
-        # to 20s so longer messages still get their full ~1s/word.
+        # Adaptive typing-rhythm config: ~1s/word floor so the
+        # total pre-send time ≥ word_count (realistic human typing).
+        # The 20s cap never reduces the per-word floor for longer messages.
         self._typing_enabled = llm_config.get("typing_delay_enabled", True)
         self._typing_sec_per_word = llm_config.get("typing_sec_per_word", 1.0)
-        self._typing_wps = llm_config.get("typing_wps", 1.6)  # legacy, unused by the 1s/word path
+        self._typing_wps = llm_config.get("typing_wps", 1.6)  # unused by the 1s/word path
         self._typing_jitter = llm_config.get("typing_jitter_pct", 0.25)
         self._typing_min = llm_config.get("typing_min_delay_sec", 0.8)
         self._typing_max = llm_config.get("typing_max_delay_sec", 20.0)
-        # 9054 — a constant "reading + thinking" base added ON TOP of ~1s/word,
+        # A constant "reading + thinking" base added ON TOP of ~1s/word,
         # applied to ALL messages (incl. short) so the agent doesn't reply
         # instantly. Total floor ≈ word_count + base seconds.
         self._typing_base_delay = llm_config.get("typing_base_delay_sec", 2.0)
@@ -142,7 +134,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                 self.reviewer = None
     
     def _apply_typing_delay(self, message: str, pipeline_elapsed: float):
-        """Sleep whatever remains of the ideal human-typing budget (2.1).
+        """Sleep whatever remains of the ideal human-typing budget.
 
         If generation + review already took longer than the ideal delay, we
         send immediately. This way a slow reviewer never adds extra latency on
@@ -151,7 +143,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         if not self._typing_enabled or not message:
             return
         word_count = len(message.split())
-        # V5.11 — human typing ≈ 1s/word. 9054 — plus a constant base so even a
+        # Human typing ≈ 1s/word, plus a constant base so even a
         # short reply isn't instant. The TOTAL time before the final message is
         # sent must be AT LEAST word_count*sec_per_word + base: if the pipeline
         # (sched+gen+rev) already took that long, add nothing; otherwise fill the
@@ -163,7 +155,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         # message under-waits: 25 words with cap 20 → 20s < 27s). Keep the cap only
         # as an upper bound ABOVE the floor.
         ideal = min(ideal, max(self._typing_max, floor))
-        # No jitter: user wants exactly word_count+2 seconds total, not more.
+        # No jitter: preserve the word-count-plus-base total delay.
         remaining = ideal - pipeline_elapsed
         if remaining > 0:
             self.logger.log("typing_delay", f"sleep {remaining:.2f}s (ideal {ideal:.2f}s, elapsed {pipeline_elapsed:.2f}s, base {base:.1f}s)")
@@ -229,7 +221,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                 self._apply_typing_delay(initial_message, time.time() - pipeline_start)
                 return initial_message
 
-            # Short-message shortcut: skip reviewer for very short messages (2.3.1)
+            # Short-message shortcut: skip reviewer for very short messages.
             if self._reviewer_skip_words > 0 and len(initial_message.split()) <= self._reviewer_skip_words:
                 self.logger.log("reviewer_skipped_short", f"{len(initial_message.split())} words ≤ {self._reviewer_skip_words}")
                 was_skipped_short = True
@@ -261,7 +253,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
             # Log the review outcome
             self._log_review_result(initial_message, final_message, review_result)
 
-            # User-requested drop: if the reviewer determined this message
+            # If the reviewer determined this message
             # should not be sent (best score ≥ reviewer_drop_score), skip the
             # turn. final_message is "" — caller treats that as "no send".
             if not final_message:
@@ -306,7 +298,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                     attempts_completed=getattr(review_result, "attempts_completed", None),
                     attempts_planned=getattr(review_result, "attempts_planned", None),
                     review_loop_duration_sec=getattr(review_result, "review_loop_duration_sec", None),
-                    # B6 drill-down: full per-attempt history + situation/expected
+                    # Drill-down: full per-attempt history + situation/expected
                     # analysis captured from the first reviewer call. Empty when
                     # no reviewer ran (short-skip / disabled) so the dashboard
                     # can distinguish "no review" from "review had 0 attempts".
@@ -338,8 +330,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         )
         self._log_cost("generator")
         gen_duration = time.time() - gen_start
-        # Fix 1D: log pure generator latency so the Metrics tab doesn't conflate
-        # generator + reviewer time (parent class logs this; we missed it here).
+        # Log pure generator latency separately from reviewer time.
         self.logger.log("generator_latency", f"{gen_duration:.2f}s")
 
         # Provenance: literal generator output (pre-trim, pre-humanizer).
@@ -371,9 +362,9 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
     def _persona_claims_for_review(self) -> list:
         """Durable self-claims to feed the reviewer's self-contradiction check.
 
-        V5 players carry a SharedSnapshot whose Persona Monitor populates
+        The agent carries a SharedSnapshot whose Persona Monitor populates
         ``self_claims``; this extends the reviewer's contradiction check beyond
-        the recent-message window. V3/V4 players have no snapshot → returns [].
+        the recent-message window. Returns [] when no snapshot is available.
         """
         snap = getattr(self, "snapshot", None)
         if snap is None:
@@ -384,8 +375,10 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
             return []
 
     def _current_info_for_review(self) -> str:
-        """Grounded facts (V5 Internet Context) so the reviewer doesn't strip a
-        message for stating something the agent legitimately knows. "" for V3/V4."""
+        """Internet Context facts available to the reviewer.
+
+        Returns an empty string when no snapshot is available.
+        """
         snap = getattr(self, "snapshot", None)
         if snap is None:
             return ""
@@ -395,8 +388,8 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
             return ""
 
     def _overused_words_for_review(self) -> list:
-        """Words the Repetition Monitor flagged as overused (V5.6 #5) so the
-        reviewer flags reuse and avoids adding them. [] for V3/V4."""
+        """Words the Repetition Monitor flagged as overused so the
+        reviewer flags reuse and avoids adding them. [] without a snapshot."""
         snap = getattr(self, "snapshot", None)
         if snap is None:
             return []
@@ -407,13 +400,12 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
 
     def _persona_for_review(self) -> str:
         """The agent's persona id so the reviewer treats in-character knowledge
-        as expected (V5.6 #6). "" when unknown."""
+        as expected. Returns an empty string when unknown."""
         return (getattr(self, "persona_id", None) or "") or ""
 
-    # ── V5.9: give the reviewer the SAME context the generator gets ──
-    # The reviewer was judging blind (only self-claims/facts/persona/overused).
-    # These add the remaining generator slices so neither stage sees less than
-    # the other. All return "" / [] for V3/V4 (no snapshot).
+    # Give the reviewer the same shared context as the generator.
+    # These helpers expose social state, behavior advice and repetition notes.
+    # All return empty values when no snapshot is available.
     def _social_memory_for_review(self) -> str:
         snap = getattr(self, "snapshot", None)
         try:
@@ -476,13 +468,13 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         # Collect revision steps for detailed logging
         revision_steps = [] if collect_steps else None
 
-        # V5.8 — emit ONE consolidated reviewer trace at whatever exit we take
+        # Emit ONE consolidated reviewer trace at whatever exit we take
         # (passed / good_enough / fixed / reverted / dropped), so the reviewer's
         # full draft→attempts→final is reconstructable from a single event.
         def _emit_reviewer_trace(final_msg, final_score, action):
             try:
                 self.write_game_event(
-                    "v5_reviewer_trace",
+                    "reviewer_trace",
                     draft_in=(message or "")[:200],
                     attempts=[{
                         "message": (m or "")[:160],
@@ -532,7 +524,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                     })
                 break
 
-            # Review current message. CB1: catch TimeoutError from a hung
+            # Review current message. Catch TimeoutError from a hung
             # Gemini API call so a single slow attempt can't block the pipeline
             # for the full 40s budget. Treat timeouts as a "skip" that falls
             # through to SELECTED_BEST (or the original message if no prior
@@ -628,7 +620,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                     return current_message, result, revision_steps
                 return current_message, result
 
-            # Fix 1C: Early-exit on "good enough" — after attempt 2, accept a
+            # Early-exit on "good enough" — after attempt 2, accept a
             # message scoring <= reviewer_good_enough_score (default 4) to avoid
             # burning a 3rd reviewer call when the fix is already reasonable.
             if attempt + 1 >= 2 and result.suspicion_score <= self.reviewer_good_enough_score:
@@ -676,7 +668,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                         revision_steps.append(step)
                     current_message = new_fix
                     self.logger.log(f"using_suggested_fix_{attempt+1}", current_message)
-                    # CB2: optional backoff (config-gated via reviewer_backoff_enabled).
+                    # Optional backoff (config-gated via reviewer_backoff_enabled).
                     # If the just-finished attempt took >5s, the backend is likely
                     # under load — sleep briefly so the next attempt has a chance
                     # at a faster response.
@@ -707,7 +699,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
                     revision_steps.append(step)
                 break
         
-        # Self-consistency (2.2): if the loop exited with an unscored fix in
+        # Self-consistency: if the loop exited with an unscored fix in
         # current_message, re-score it with flash-lite (cheap, fast).
         # If it fails too, discard it — SELECTED_BEST below will pick the
         # best of the already-scored attempts.
@@ -755,7 +747,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
             best_message, best_result, best_step = min(candidates, key=lambda x: x[1].suspicion_score)
             best_score = best_result.suspicion_score
 
-            # User decision: drop the message if even the best attempt is still
+            # Drop the message if even the best attempt is still
             # suspicion ≥ reviewer_drop_score (default 8). This is the ONLY way
             # a message gets dropped — never on time alone.
             dropped = best_score >= self.reviewer_drop_score
@@ -771,9 +763,8 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
             elif best_score >= 7:
                 # Soft fallback: normally send the ORIGINAL generator output
                 # instead of the reviewer's awkward fix. BUT if the ORIGINAL was
-                # itself flagged evasive/defensive (V5.7), reverting just keeps
-                # the tell (baseline 9034: "i don't have to tell you anything"
-                # scored 7/evasive and was kept) — prefer the best ENGAGED fix.
+                # itself flagged evasive/defensive, reverting keeps that tell;
+                # prefer the best ENGAGED fix instead.
                 orig_flags = [str(f).lower() for f in (all_attempts[0][1].red_flags or [])] \
                     if all_attempts else []
                 orig_was_evasive = any(
@@ -811,7 +802,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
             except Exception:
                 pass
 
-            # V5.8 — consolidated reviewer trace for the post-loop exit paths
+            # Consolidated reviewer trace for the post-loop exit paths
             # (dropped / reverted / selected-best).
             _emit_reviewer_trace(
                 best_message, best_score,
@@ -879,7 +870,7 @@ class ReviewedPlayer(ScheduleThenGeneratePlayer):
         """
         Generate a message and return detailed review information.
         
-        This is used by simulations to capture the full review process.
+        Captures the review process and its per-attempt provenance.
         
         Returns:
             dict with:

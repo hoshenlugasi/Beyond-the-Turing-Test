@@ -1182,7 +1182,7 @@
                 max-height: 92vh !important; overflow-y: auto !important;
                 padding: 12px !important;
             }
-            #v5SubagentStatus { font-size: 10px; line-height: 1.7; }
+            #componentSubagentStatus { font-size: 10px; line-height: 1.7; }
             /* Mobile voting: bottom sheet + 2-column grid */
             #votePanel.mobile-sheet {
                 position: fixed !important;
@@ -1206,24 +1206,24 @@
             body.voting-open #messagesContainer { padding-bottom: min(60vh, 400px); }
         }
 
-        /* ── V6 tab redesign ────────────────────────────────────────────── */
-        .v6-section-title { font-weight:700; color:#40348a; font-size:13.5px; margin:18px 0 8px; display:flex; align-items:center; gap:6px; }
-        .v6-section-title .sub { font-weight:400; font-size:11.5px; color:#8a80ad; }
-        .v6-card { background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:12px 14px; }
-        .v6-card h5 { margin:0 0 2px; font-size:12.5px; color:#40348a; display:flex; align-items:center; gap:6px; }
-        .v6-card .flow { font-size:10.5px; color:#9a92b8; margin-bottom:6px; }
-        .v6-card .count-badge { margin-inline-start:auto; background:#efeafb; color:#5a3fa0; border-radius:10px; padding:0 8px; font-size:10.5px; font-weight:700; }
-        .v6-card pre { white-space:pre-wrap; font-size:12px; color:#333; background:#faf9fd; border:1px solid #f0edf8; border-radius:8px; padding:8px; margin:0; max-height:130px; overflow:auto; line-height:1.5; }
-        .v6-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:10px; }
-        .v6-signals { display:flex; flex-wrap:wrap; gap:6px; background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:10px 12px; }
-        .v6-signals .sig { display:inline-flex; align-items:center; gap:5px; border-radius:14px; padding:3px 10px; font-size:12px; background:#f2f0f9; color:#444; }
-        .v6-agent-card { background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:10px 12px; }
-        .v6-agent-card .head { display:flex; align-items:center; gap:6px; font-weight:600; color:#40348a; font-size:12.5px; }
-        .v6-agent-card .status { margin-inline-start:auto; font-size:10.5px; font-weight:700; border-radius:10px; padding:1px 8px; }
-        .v6-agent-card .status.on { background:#e7f5ee; color:#1d7a3e; }
-        .v6-agent-card .status.off { background:#eef0f4; color:#888; }
-        .v6-agent-card .detail { font-size:11.5px; color:#555; margin-top:5px; line-height:1.55; }
-        .v6-agent-card .detail .aux { color:#999; }
+        /* ── Agent tab redesign ─────────────────────────────────────────── */
+        .agent-section-title { font-weight:700; color:#40348a; font-size:13.5px; margin:18px 0 8px; display:flex; align-items:center; gap:6px; }
+        .agent-section-title .sub { font-weight:400; font-size:11.5px; color:#8a80ad; }
+        .agent-card { background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:12px 14px; }
+        .agent-card h5 { margin:0 0 2px; font-size:12.5px; color:#40348a; display:flex; align-items:center; gap:6px; }
+        .agent-card .flow { font-size:10.5px; color:#9a92b8; margin-bottom:6px; }
+        .agent-card .count-badge { margin-inline-start:auto; background:#efeafb; color:#5a3fa0; border-radius:10px; padding:0 8px; font-size:10.5px; font-weight:700; }
+        .agent-card pre { white-space:pre-wrap; font-size:12px; color:#333; background:#faf9fd; border:1px solid #f0edf8; border-radius:8px; padding:8px; margin:0; max-height:130px; overflow:auto; line-height:1.5; }
+        .agent-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:10px; }
+        .agent-signals { display:flex; flex-wrap:wrap; gap:6px; background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:10px 12px; }
+        .agent-signals .sig { display:inline-flex; align-items:center; gap:5px; border-radius:14px; padding:3px 10px; font-size:12px; background:#f2f0f9; color:#444; }
+        .agent-worker-card { background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:10px 12px; }
+        .agent-worker-card .head { display:flex; align-items:center; gap:6px; font-weight:600; color:#40348a; font-size:12.5px; }
+        .agent-worker-card .status { margin-inline-start:auto; font-size:10.5px; font-weight:700; border-radius:10px; padding:1px 8px; }
+        .agent-worker-card .status.on { background:#e7f5ee; color:#1d7a3e; }
+        .agent-worker-card .status.off { background:#eef0f4; color:#888; }
+        .agent-worker-card .detail { font-size:11.5px; color:#555; margin-top:5px; line-height:1.55; }
+        .agent-worker-card .detail .aux { color:#999; }
     </style>
 </head>
 <body>
@@ -1359,7 +1359,7 @@
         <div id="adminScreen">
             <!-- Floating "Past Games" navigator: lets the admin jump to any
                  historical game's read-only admin view at any time, from any
-                 tab. Click → opens modal with category/version/game selects;
+                 tab. Click → opens modal with category/agent/game selects;
                  navigates to /game?game_id=XXXX&admin=true (existing
                  read-only handler in loadAdminForm). -->
             <button id="pastGamesFab" type="button" onclick="openPastGamesModal()"
@@ -1375,7 +1375,7 @@
                 <button class="admin-tab active" onclick="switchAdminTab('setup',this)">⚙️ Setup</button>
                 <button class="admin-tab" onclick="switchAdminTab('monitor',this)">📡 Monitor</button>
                 <button class="admin-tab" onclick="switchAdminTab('metrics',this)">📊 Metrics</button>
-                <button class="admin-tab" onclick="switchAdminTab('v6',this)" id="v6TabBtn" style="display:none;">🧬 V6</button>
+                <button class="admin-tab" onclick="switchAdminTab('agent',this)" id="agentTabBtn" style="display:none;">🧬 Agent</button>
                 <button class="admin-tab" onclick="switchAdminTab('issues',this)" id="issuesTabBtn">⚠️ Issues</button>
                 <button class="admin-tab" onclick="switchAdminTab('survey',this)" id="surveyTabBtn">📝 Survey</button>
                 <button class="admin-tab" onclick="switchAdminTab('ailog',this)">🤖 AI State</button>
@@ -1430,7 +1430,7 @@
                 <div class="form-group">
                     <label>Game Protocol</label>
                     <select id="cfgProtocol" onchange="updatePublicationMode()">
-                        <option value="flexible" selected>Local / manual — final V6 legacy</option>
+                        <option value="flexible" selected>Local / manual — Social Turing Test Agent</option>
                     </select>
                     <div id="publicationPresetHint" style="margin-top:6px; padding:8px 10px; border-radius:7px; background:#eef9f2; color:#17663a; font-size:11px; line-height:1.5;">
                         Flash generator/scheduler/reviewer, six background workers, four candidates, strategic voting, 35s timeout. Start manually with at least two humans when the AI is ready.
@@ -1475,25 +1475,24 @@
                 <div class="form-group" hidden>
                     <label>Agent Code</label>
                     <select id="cfgAgentCode">
-                        <option value="current">Final V6 legacy</option>
+                        <option value="current">Social Turing Test Agent</option>
                     </select>
                 </div>
 
                 <!-- AI Model Configuration -->
                 <div class="setup-subsection">AI Model Configuration</div>
 
-                <!-- Pipeline (Agent Version) Card -->
+                <!-- Agent Pipeline Card -->
                 <div class="model-card" id="pipelineCard" style="border-left:4px solid #7c3aed;">
                     <div class="model-card-header">
                         <span class="model-card-title" style="color:#7c3aed;">🧩 Agent Pipeline</span>
-                        <span class="model-card-subtitle">Final V6 legacy — background workers, candidate ranking and strategic voting</span>
+                        <span class="model-card-subtitle">Background workers, candidate ranking and strategic voting</span>
                     </div>
                     <div class="form-row">
                         <div class="form-group" style="margin-bottom:0;">
-                            <label>Pipeline Version</label>
+                            <label>Agent Pipeline</label>
                             <select id="cfgPipeline" onchange="updatePipelineHint()">
-                                <option value="v6" selected>V6 Legacy — langgraph_v6 (current authoritative path; multi-candidate + strategic voting)</option>
-<!-- V6 Active removed 2026-07: the active/shadow path was deleted from the codebase (never ran in production); the option silently mapped to legacy anyway. -->
+                                <option value="agent" selected>Social Turing Test agent — candidate ranking and strategic voting</option>
                             </select>
                             <div id="pipelineHint" style="font-size:11px; color:#666; margin-top:6px;"></div>
                         </div>
@@ -1531,11 +1530,11 @@
                     </div>
                 </div>
 
-                <!-- Scheduler Card (V6 only) -->
+                <!-- Scheduler Card (agent pipeline) -->
                 <div class="model-card model-card-gen" id="schedulerCard">
                     <div class="model-card-header">
                         <span class="model-card-title" style="color:#8a6fd9;">⏱️ Scheduler</span>
-                        <span class="model-card-subtitle">V6 only — the model that decides WHEN to send. Leave empty to share the generator model.</span>
+                        <span class="model-card-subtitle">Agent pipeline — model that decides WHEN to send. Leave empty to share the generator model.</span>
                     </div>
                     <div class="form-row">
                         <div class="form-group" style="margin-bottom:0;">
@@ -1560,12 +1559,12 @@
                     </div>
                 </div>
 
-                <!-- Sub-agents model (V6): background workers — social memory, behavior,
-                     persona, phase, repetition, internet -->
+                <!-- Sub-agents model (agent pipeline): background workers — social state, behavior,
+                     persona, round summaries, repetition, internet -->
                 <div class="model-card model-card-gen" id="subAgentsCard">
                     <div class="model-card-header">
                         <span class="model-card-title" style="color:#3f8fb3;">🛰️ Sub-agents</span>
-                        <span class="model-card-subtitle">V6 only — the model behind the six background sub-agents (memory, internet, behavior, persona, phase, repetition). Leave empty to share the generator model. They are most of the API calls — a cheaper model here cuts cost.</span>
+                        <span class="model-card-subtitle">Agent pipeline — model behind six background workers (social state, internet, behavior, persona, round summaries, repetition). Leave empty to share the generator model. They are most API calls, so cheaper models here reduce cost.</span>
                     </div>
                     <div class="form-row">
                         <div class="form-group" style="margin-bottom:0;">
@@ -1594,7 +1593,7 @@
                 <div class="model-card model-card-rev" id="reviewerCard">
                     <div class="model-card-header">
                         <span class="model-card-title" style="color:#e8a838;">🔍 Reviewer</span>
-                        <span class="model-card-subtitle">V6: scores, filters, and ranks generated candidates; it selects but does not rewrite them</span>
+                        <span class="model-card-subtitle">Scores, filters, and ranks generated candidates; it selects but does not rewrite them</span>
                     </div>
                     <div class="form-row">
                         <div class="form-group" style="margin-bottom:0;">
@@ -1621,7 +1620,7 @@
                         </div>
                     </div>
                     <div style="margin-top:10px;">
-                        <button onclick="testInternet()" id="btnTestInternet" style="padding:6px 12px; border:1px solid #bfe3cd; border-radius:6px; background:#f3fbf6; cursor:pointer; font-size:12px;" title="Verify the V5 internet/grounding search works in this environment (catches server credential issues before a game)">🌐 Test internet search</button>
+                        <button onclick="testInternet()" id="btnTestInternet" style="padding:6px 12px; border:1px solid #bfe3cd; border-radius:6px; background:#f3fbf6; cursor:pointer; font-size:12px;" title="Verify Internet Context grounding search works in this environment (catches server credential issues before a game)">🌐 Test internet search</button>
                         <span id="internetTestResult" style="font-size:11px; margin-left:8px;"></span>
                     </div>
                 </div>
@@ -1886,43 +1885,43 @@
                         </details>
                     </div>
 
-                    <!-- V5 Memory panel — only populated when async_type == langgraph_v5 -->
-                    <div id="metV5Section" style="display:none; margin-top:18px; padding:14px; border:1px solid #d4c5f9; border-radius:8px; background:#faf8ff;">
-                        <h4 style="margin:0 0 10px; color:#7c3aed;">🧠 V5 Sub-agents &amp; Shared Memory <span style="font-size:11px; color:#888; font-weight:normal;">(live)</span></h4>
-                        <div id="v5SubagentStatus" style="font-size:11px; color:#555; margin:0 0 12px; padding:6px 8px; background:#f3eeff; border-radius:6px;">sub-agents: —</div>
+                    <!-- Component State panel — populated for the social_turing_test_agent runtime -->
+                        <div id="metComponentSection" style="display:none; margin-top:18px; padding:14px; border:1px solid #d4c5f9; border-radius:8px; background:#faf8ff;">
+                            <h4 style="margin:0 0 10px; color:#7c3aed;">🧠 Component workers &amp; shared memory <span style="font-size:11px; color:#888; font-weight:normal;">(live)</span></h4>
+                            <div id="componentSubagentStatus" style="font-size:11px; color:#555; margin:0 0 12px; padding:6px 8px; background:#f3eeff; border-radius:6px;">workers: —</div>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
                             <div>
-                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">Current facts (<span id="v5SnapEntryCount">0</span>)</div>
-                                <pre id="v5SnapFacts" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:220px; overflow:auto; white-space:pre-wrap;">—</pre>
-                                <div id="v5SnapHedge" style="font-size:11px; color:#666; margin-top:4px;"></div>
+                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">Current facts (<span id="componentSnapEntryCount">0</span>)</div>
+                                <pre id="componentSnapFacts" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:220px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <div id="componentSnapHedge" style="font-size:11px; color:#666; margin-top:4px;"></div>
                             </div>
                             <div>
-                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">Phase summaries (<span id="v5PhaseCount">0</span>)</div>
-                                <pre id="v5PhaseSummaries" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:120px; overflow:auto; white-space:pre-wrap;">—</pre>
-                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px; margin-top:10px;">🪪 Persona self-claims (<span id="v5ClaimCount">0</span>)</div>
-                                <pre id="v5SelfClaims" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:80px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">Round summaries (<span id="componentRoundCount">0</span>)</div>
+                                <pre id="componentRoundSummaries" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:120px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px; margin-top:10px;">🪪 Persona self-claims (<span id="componentClaimCount">0</span>)</div>
+                                <pre id="componentSelfClaims" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:80px; overflow:auto; white-space:pre-wrap;">—</pre>
                                 <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px; margin-top:10px;">Turn timings (last 3)</div>
-                                <pre id="v5Turns" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:80px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <pre id="componentTurns" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:80px; overflow:auto; white-space:pre-wrap;">—</pre>
                             </div>
                         </div>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px;">
                             <div>
                                 <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">🌐 Internet Context — recent activity</div>
-                                <pre id="v5IcTicks" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:180px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <pre id="componentInternetTicks" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:180px; overflow:auto; white-space:pre-wrap;">—</pre>
                             </div>
                             <div>
                                 <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">⚖️ Recent decisions (why it waited / skipped)</div>
-                                <pre id="v5Decisions" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:180px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <pre id="componentDecisions" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:180px; overflow:auto; white-space:pre-wrap;">—</pre>
                             </div>
                         </div>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px;">
                             <div>
-                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">🕸️ Social memory (who suspects you)</div>
-                                <pre id="v5SocialMemory" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:120px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">🕸️ Social State Tracker (who suspects you)</div>
+                                <pre id="componentSocialState" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:120px; overflow:auto; white-space:pre-wrap;">—</pre>
                             </div>
                             <div>
                                 <div style="font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.5px;">🎯 Play-style directive (this stage)</div>
-                                <pre id="v5BehaviorAdvice" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:120px; overflow:auto; white-space:pre-wrap;">—</pre>
+                                <pre id="componentBehaviorAdvice" style="background:#fff; padding:8px; border-radius:6px; margin:6px 0 0; font-size:12px; max-height:120px; overflow:auto; white-space:pre-wrap;">—</pre>
                             </div>
                         </div>
                     </div>
@@ -1946,7 +1945,7 @@
                                 <th style="padding:8px 6px;">Total</th>
                                 <th style="padding:8px 6px;">Target</th>
                                 <th style="padding:8px 6px;" class="rev-col">Rev Score</th>
-                                <th style="padding:8px 6px;" class="rev-col" title="V6 ranker: which candidate was picked (🎯 #k/N). Legacy rewrite reviewer: whether the text was modified.">Picked / Modified</th>
+                                <th style="padding:8px 6px;" class="rev-col" title="Selected candidate (🎯 #k/N), selected verbatim by the reviewer.">Selected candidate</th>
                             </tr></thead>
                             <tbody id="metMsgTableBody"></tbody>
                         </table>
@@ -1958,121 +1957,118 @@
                 </div>
             </div>
 
-            <!-- V6 TAB — agent state: build, signals, sub-agents, shared memory, pipeline -->
-            <div id="adminTab_v6" class="admin-tab-content">
+            <!-- AGENT TAB — agent state: build, signals, sub-agents, shared memory, pipeline -->
+            <div id="adminTab_agent" class="admin-tab-content">
 
                 <!-- 1. Which agent code runs this game -->
-                <div id="v6BuildBanner" style="background:#f2fbf6; border:1px solid #b9e6cd; border-radius:12px; padding:10px 14px; margin-bottom:10px; font-size:12.5px; color:#1a6b40; display:none;"></div>
+                <div id="agentBuildBanner" style="background:#f2fbf6; border:1px solid #b9e6cd; border-radius:12px; padding:10px 14px; margin-bottom:10px; font-size:12.5px; color:#1a6b40; display:none;"></div>
 
                 <div style="background:linear-gradient(135deg,#f0f4ff,#faf5ff); border:1px solid #d9d0f5; border-radius:12px; padding:10px 14px; margin-bottom:4px;">
-                    <div style="font-weight:700; color:#5a3fa0; font-size:14px;">🧬 V6 Agent — live state</div>
+                    <div style="font-weight:700; color:#5a3fa0; font-size:14px;">🧬 Agent — live state</div>
                     <div style="font-size:11.5px; color:#7a6aa8; margin-top:2px;">
                         One shared memory feeds every decision; the generator proposes candidates and the reviewer selects (never rewrites).
-                        <span id="v6Agent" style="color:#9a8ac0;"></span>
+                        <span id="agentAgent" style="color:#9a8ac0;"></span>
                     </div>
                 </div>
 
                 <div style="display:grid; grid-template-columns:repeat(7,minmax(105px,1fr)); gap:6px; margin:10px 0 4px; overflow-x:auto;">
-                    <div class="v6-card" style="text-align:center;"><b>💬 Chat</b><div class="flow">live public history</div></div>
-                    <div class="v6-card" style="text-align:center;"><b>⏱ Scheduler</b><div class="flow">Flash · SEND / WAIT</div></div>
-                    <div class="v6-card" style="text-align:center;"><b>✨ Generator</b><div class="flow">Flash · 4 candidates</div></div>
-                    <div class="v6-card" style="text-align:center;"><b>🧹 Filters</b><div class="flow">answer · repeat · dodge</div></div>
-                    <div class="v6-card" style="text-align:center;"><b>🔍 Reviewer</b><div class="flow">Flash · score + select</div></div>
-                    <div class="v6-card" style="text-align:center;"><b>🛡 Output gates</b><div class="flow">stale · timeout · phase</div></div>
-                    <div class="v6-card" style="text-align:center;"><b>📨 Append</b><div class="flow">actual delivery truth</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>💬 Chat</b><div class="flow">live public history</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>⏱ Scheduler</b><div class="flow">Flash · SEND / WAIT</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>✨ Generator</b><div class="flow">Flash · 4 candidates</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>🧹 Filters</b><div class="flow">answer · repeat · dodge</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>🔍 Reviewer</b><div class="flow">Flash · score + select</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>🛡 Output gates</b><div class="flow">stale · timeout · phase</div></div>
+                    <div class="agent-card" style="text-align:center;"><b>📨 Append</b><div class="flow">actual delivery truth</div></div>
                 </div>
                 <div style="font-size:11px; color:#666; background:#f8f9ff; border:1px solid #e3e5f4; border-radius:8px; padding:7px 10px;">
-                    Background memory: Internet Context, Social Memory, Behavior Evolution, Persona Monitor, Repetition Monitor, and Phase Summarizer.
+                    Background memory: Internet Context, Social State Tracker, Behavior Adapter, Persona Monitor, Repetition Monitor, and Round Summarizer.
                 </div>
 
                 <!-- 2. Room signals — every live signal in ONE labeled strip -->
-                <div class="v6-section-title">📡 Room signals <span class="sub">what the agent believes about the room right now</span></div>
-                <div class="v6-signals">
-                    <span class="sig" id="v6RoomVibe" style="display:none;"></span>
-                    <span class="sig" id="v6RoomNorm" style="display:none;"></span>
-                    <span class="sig" id="v6Interrog"></span>
-                    <span class="sig" id="v6Attention"></span>
-                    <span class="sig" id="v6PressureType" style="display:none;"></span>
-                    <span class="sig" id="v6AwaitingSearch" style="display:none;"></span>
-                    <span class="sig" id="v6FixedFacts"></span>
+                <div class="agent-section-title">📡 Room signals <span class="sub">what the agent believes about the room right now</span></div>
+                <div class="agent-signals">
+                    <span class="sig" id="agentRoomVibe" style="display:none;"></span>
+                    <span class="sig" id="agentRoomNorm" style="display:none;"></span>
+                    <span class="sig" id="agentInterrog"></span>
+                    <span class="sig" id="agentAttention"></span>
+                    <span class="sig" id="agentPressureType" style="display:none;"></span>
+                    <span class="sig" id="agentAwaitingSearch" style="display:none;"></span>
+                    <span class="sig" id="agentFixedFacts"></span>
                 </div>
-                <div id="v6BehaviorAdvice" style="margin-top:8px; font-size:12px; color:#555; white-space:pre-wrap; background:#fffdf4; border:1px solid #f0e8c8; border-radius:10px; padding:8px 12px;"></div>
+                <div id="agentBehaviorAdvice" style="margin-top:8px; font-size:12px; color:#555; white-space:pre-wrap; background:#fffdf4; border:1px solid #f0e8c8; border-radius:10px; padding:8px 12px;"></div>
 
                 <!-- 3. Scheduler decisions -->
-                <div class="v6-section-title">⏱️ Scheduler decisions <span class="sub">SEND / WAIT balance and the guards that blocked a response</span></div>
+                <div class="agent-section-title">⏱️ Scheduler decisions <span class="sub">SEND / WAIT balance and the guards that blocked a response</span></div>
                 <div style="background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:10px 14px; font-size:12.5px; color:#555;">
-                    <div id="v6Scheduler">— (no scheduler decisions yet)</div>
+                    <div id="agentScheduler">— (no scheduler decisions yet)</div>
                 </div>
 
                 <!-- 4. Suppressed sends -->
-                <div id="v6SuppressedBox" style="background:#fff8f0; border:1px solid #f3ddba; border-radius:12px; padding:12px 14px; margin-top:14px; display:none;">
+                <div id="agentSuppressedBox" style="background:#fff8f0; border:1px solid #f3ddba; border-radius:12px; padding:12px 14px; margin-top:14px; display:none;">
                     <div style="font-weight:700; color:#a05a1f; margin-bottom:4px;">🚧 Chosen but not sent</div>
                     <div style="font-size:11.5px; color:#999; margin-bottom:8px;">Reviewer-selected messages that never reached chat: stale, timeout, voting-phase, reviewer/parse, or duplicate terminal outcomes.</div>
-                    <div id="v6Suppressed" style="display:flex; flex-direction:column; gap:6px;"></div>
+                    <div id="agentSuppressed" style="display:flex; flex-direction:column; gap:6px;"></div>
                 </div>
 
                 <!-- 5. Sub-agents -->
-                <div class="v6-section-title">🛰️ Sub-agents <span class="sub">background workers — each writes one slice of the shared memory</span></div>
-                <div id="v6Subagents" class="v6-grid">
+                <div class="agent-section-title">🛰️ Sub-agents <span class="sub">background workers — each writes one slice of the shared memory</span></div>
+                <div id="agentSubagents" class="agent-grid">
                     <div style="color:#888; font-size:13px;">— (no sub-agent activity yet)</div>
                 </div>
 
                 <!-- 6. Shared memory -->
-                <div class="v6-section-title">🧠 Shared memory <span class="sub">the slices the generator &amp; reviewer read every turn</span></div>
-                <div class="v6-grid">
-                    <div class="v6-card">
-                        <h5>🌐 Live web facts <span class="count-badge" id="v6SnapEntryCount">0</span></h5>
+                <div class="agent-section-title">🧠 Shared memory <span class="sub">the slices the generator &amp; reviewer read every turn</span></div>
+                <div class="agent-grid">
+                    <div class="agent-card">
+                        <h5>🌐 Live web facts <span class="count-badge" id="agentSnapEntryCount">0</span></h5>
                         <div class="flow">Internet Context ← searches → Generator &amp; Reviewer</div>
-                        <pre id="v6SnapFacts">—</pre>
-                        <div id="v6InternetSummary" style="font-size:11px; color:#999; margin-top:4px;"></div>
+                        <pre id="agentSnapFacts">—</pre>
+                        <div id="agentInternetSummary" style="font-size:11px; color:#999; margin-top:4px;"></div>
                     </div>
-                    <div class="v6-card">
+                    <div class="agent-card">
                         <h5>👥 Social standing</h5>
-                        <div class="flow">Social Memory → Generator, Scheduler &amp; voting</div>
-                        <pre id="v6SocialMemory">—</pre>
+                        <div class="flow">Social State Tracker → Generator, Scheduler &amp; voting</div>
+                        <pre id="agentSocialState">—</pre>
                     </div>
-                    <div class="v6-card">
-                        <h5>🎭 Self-claims <span class="count-badge" id="v6ClaimCount">0</span></h5>
+                    <div class="agent-card">
+                        <h5>🎭 Self-claims <span class="count-badge" id="agentClaimCount">0</span></h5>
                         <div class="flow">Persona Monitor → Generator &amp; Reviewer (never contradict)</div>
-                        <pre id="v6SelfClaims">—</pre>
+                        <pre id="agentSelfClaims">—</pre>
                     </div>
-                    <div class="v6-card">
+                    <div class="agent-card">
                         <h5>🔁 Repetition guard</h5>
                         <div class="flow">Repetition Monitor → Generator &amp; Reviewer</div>
-                        <pre id="v6Repetition">—</pre>
+                        <pre id="agentRepetition">—</pre>
                     </div>
-                    <div class="v6-card">
+                    <div class="agent-card">
                         <h5>❓ Open threads &amp; hedge advice</h5>
-                        <div class="flow">Social Memory / Internet Context → Generator</div>
-                        <pre id="v6OpenThreads">—</pre>
+                        <div class="flow">Social State Tracker / Internet Context → Generator</div>
+                        <pre id="agentOpenThreads">—</pre>
                     </div>
-                    <div class="v6-card">
-                        <h5>📝 Phase summaries <span class="count-badge" id="v6PhaseCount">0</span></h5>
-                        <div class="flow">Phase Summarizer → Generator (earlier in the game…)</div>
-                        <pre id="v6PhaseSummaries">—</pre>
+                    <div class="agent-card">
+                        <h5>📝 Round summaries <span class="count-badge" id="agentRoundCount">0</span></h5>
+                        <div class="flow">Round Summarizer → Generator (earlier in the game…)</div>
+                        <pre id="agentRoundSummaries">—</pre>
                     </div>
                 </div>
 
                 <!-- 7. Generation pipeline -->
-                <div class="v6-section-title">🧪 Generation → Review → Delivery <span class="sub">reviewer selection is not the same as a public send</span></div>
+                <div class="agent-section-title">🧪 Generation → Review → Delivery <span class="sub">reviewer selection is not the same as a public send</span></div>
                 <div style="background:#fff; border:1px solid #e6e1f2; border-radius:12px; padding:12px 14px;">
                     <div style="font-size:11px; color:#666; margin-bottom:10px; line-height:1.7;">
                         <b>Outcome legend:</b> ✅ SENT · ⏸ STALE SUPPRESSED · ⏱ TIMEOUT · 🗳 PHASE DROP · ⛔ REVIEWER DROP · ❌ PARSE DROP · 🔁 DUPLICATE SUPPRESSED · ❔ DELIVERY UNCONFIRMED
-                        <div id="v6OutcomeFilters" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:7px;">
-                            <button type="button" class="btn" data-outcome-filter="all" style="background:#667eea; color:#fff;" onclick="setV6OutcomeFilter('all')">All</button>
-                            <button type="button" class="btn" data-outcome-filter="sent" onclick="setV6OutcomeFilter('sent')">Sent</button>
-                            <button type="button" class="btn" data-outcome-filter="suppressed" onclick="setV6OutcomeFilter('suppressed')">Suppressed / dropped</button>
-                            <button type="button" class="btn" data-outcome-filter="delivery_unconfirmed" onclick="setV6OutcomeFilter('delivery_unconfirmed')">Unconfirmed</button>
+                        <div id="agentOutcomeFilters" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:7px;">
+                            <button type="button" class="btn" data-outcome-filter="all" style="background:#667eea; color:#fff;" onclick="setAgentOutcomeFilter('all')">All</button>
+                            <button type="button" class="btn" data-outcome-filter="sent" onclick="setAgentOutcomeFilter('sent')">Sent</button>
+                            <button type="button" class="btn" data-outcome-filter="suppressed" onclick="setAgentOutcomeFilter('suppressed')">Suppressed / dropped</button>
+                            <button type="button" class="btn" data-outcome-filter="delivery_unconfirmed" onclick="setAgentOutcomeFilter('delivery_unconfirmed')">Unconfirmed</button>
                         </div>
                     </div>
-                    <div id="v6Generations" style="display:flex; flex-direction:column; gap:14px;">
+                    <div id="agentGenerations" style="display:flex; flex-direction:column; gap:14px;">
                         <div style="color:#888; font-size:13px;">— (no candidate generations yet)</div>
                     </div>
                 </div>
 
-                <!-- Legacy cards from the deleted active/shadow path — kept hidden so old JS lookups stay safe -->
-                <div id="v6ActiveStatusCard" style="display:none;"><div id="v6ActiveStatus"></div></div>
-                <div id="v6FactUsageCard" style="display:none;"><div id="v6FactUsage"></div></div>
             </div>
 
             <!-- ISSUES TAB -->
@@ -2274,8 +2270,8 @@
                             style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:14px;"></select>
                 </div>
                 <div style="margin-bottom:12px;">
-                    <label style="font-size:12px; color:#666; font-weight:600; display:block; margin-bottom:4px;">Agent Version</label>
-                    <select id="pgVersion" onchange="onPastGamesFilterChange()"
+                    <label style="font-size:12px; color:#666; font-weight:600; display:block; margin-bottom:4px;">Agent</label>
+                    <select id="pgAgentIdentity" onchange="onPastGamesFilterChange()"
                             style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:14px;"></select>
                 </div>
                 <div style="margin-bottom:14px;">
@@ -2410,7 +2406,7 @@
         let discussionDurationMinutes = 2.0;  // Default, will be fetched from backend
         let discussionTimerInterval = null;
         let discussionSecondsRemaining = 0;
-        // Fix 2: server-anchored start time so timer matches across all clients
+        // Server-anchored start time keeps timers aligned across clients.
         let gameStartEpochMs = null;  // ms since epoch when current discussion started
         // Clock drift offset: added to Date.now() to approximate server time.
         // Updated on each poll from data.server_time_ms. Prevents wrong countdowns
@@ -2646,7 +2642,7 @@
         }
         
         function startDiscussionTimer() {
-            // Fix 2: anchor to server's game_start_time when available so all
+            // Anchor to server's game_start_time when available so all
             // players (and admin) see identical countdown values, regardless of
             // when each client joined / refreshed / fired its first poll.
             // No local Date.now() fallback: until the server anchor arrives, we
@@ -2686,7 +2682,7 @@
 
         function updateTimerDisplay() {
             // Compute remaining from server anchor (true elapsed) instead of decrementing
-            // a local counter. Fixes drift between players and refresh-restart bug.
+            // a local counter to keep players and page refreshes synchronized.
             if (gameStartEpochMs && discussionDurationMinutes) {
                 // Use server-adjusted "now" so clients with drifted clocks don't
                 // show a timer that's off by seconds/minutes. _clockOffset is the
@@ -2795,20 +2791,15 @@
                 // Typing indicator
                 updateTypingIndicator(data.typing_users || []);
 
-                // Fix 2: anchor timer STRICTLY to per-round discussion_start_time.
-                // Prefer the server-supplied epoch ms (drift-free) over HH:MM:SS
-                // string parsing. The HH:MM:SS path caused a midnight-wrap bug:
-                // if client clock was ahead of server by even 1 sec, the parsed
-                // Date fell "into the future", the `d > now` branch subtracted
-                // a day, elapsedSec became 86400, remaining clamped to 0 →
-                // timer stuck at 00:00 all round.
+                // Anchor the timer to the per-round discussion start, preferring
+                // server-supplied epoch milliseconds over time-of-day parsing.
                 if (data.daytime_minutes) {
                     discussionDurationMinutes = data.daytime_minutes;
                     if (typeof data.discussion_start_epoch_ms === 'number') {
                         gameStartEpochMs = data.discussion_start_epoch_ms;
                     } else if (!gameStartEpochMs) {
-                        // Legacy fallback: parse HH:MM:SS only when epoch not
-                        // available (old server). Still guarded against wrap.
+                        // Format fallback: parse HH:MM:SS only when epoch not
+                        // available, with a guard against midnight wrap.
                         const parseHMS = (str) => {
                             if (!str) return null;
                             const tp = str.split(':').map(Number);
@@ -2850,7 +2841,7 @@
                     stopDiscussionTimer();
                 }
                 
-                // TASK 2: Reset hasVoted flag when a new voting round starts
+                // Reset hasVoted when a new voting round starts.
                 if (data.can_vote && !previousCanVote) {
                     console.log('[Vote] New voting round started - resetting hasVoted');
                     hasVoted = false;
@@ -3225,7 +3216,7 @@
                 if (typeof startPolling === 'function') {
                     startPolling();
                 } else if (typeof pollInterval === 'undefined' || pollInterval === null) {
-                    // Older code uses setInterval(pollMessages, 1000) explicitly.
+                    // Start interval polling when no polling helper is available.
                     pollInterval = setInterval(pollMessages, 1000);
                     pollMessages();
                 }
@@ -3511,7 +3502,7 @@
                 return;
             }
             
-            // Issue 1: Block vote panel for eliminated players
+            // Block the vote panel for eliminated players.
             if (window.lastRemainingPlayers && !window.lastRemainingPlayers.includes(playerName)) {
                 console.log('[Vote Panel] Blocked - player is eliminated');
                 return;
@@ -3657,13 +3648,12 @@
         }
         
         function confirmVote(votedName) {
-            // Kept for backward compat but no longer called — one-click vote
-            // is the new flow. If invoked by legacy code path, submit directly.
+            // Submit the selected vote directly.
             vote(votedName);
         }
 
         function vote(votedName) {
-            // Issue 1: Block voting for eliminated players
+            // Block voting for eliminated players.
             if (window.lastRemainingPlayers && !window.lastRemainingPlayers.includes(playerName)) {
                 console.log('[Vote] Blocked - player is eliminated');
                 return;
@@ -4229,27 +4219,23 @@
             const hint = document.getElementById('pipelineHint');
             const revMode = document.getElementById('cfgReviewMode');
             const hints = {
-                v3: 'V3 — ScheduleThenGeneratePlayer. Reviewer (if set above) gates each message.',
-                v4: 'V4 — LangGraph pipeline with typed AgentState. Reviewer is built into the graph.',
-                v5: 'V5 — V4 + background sub-agents: Internet Context (web search via Gemini grounding) and Phase Summarizer. Best when a Conversation Topic is set.',
-                v6: 'V6 Legacy — V5 + dual-role investigator, multi-candidate generation (4 drafts ranked by the reviewer), strategic voting. This is the CURRENT authoritative path (orchestration_mode stays legacy).',
+                agent: 'Scheduler, Generator and Reviewer with six background workers, four candidate drafts and strategic voting. Synchronous orchestration.',
             };
             if (hint) hint.textContent = hints[v] || '';
-            // Scheduler card is V6-only (dedicated send/wait model). Hide it on
-            // V3/V4/V5 where the scheduler always shares the generator wrapper.
+            // Dedicated send/wait model; empty selection shares the generator.
             const schedCard = document.getElementById('schedulerCard');
             if (schedCard) {
-                schedCard.style.display = v === 'v6' ? '' : 'none';
+                schedCard.style.display = v === 'agent' ? '' : 'none';
             }
-            // V4/V5 always run with a reviewer (LangGraphPlayer inherits from ReviewedPlayer).
+            // The agent uses a reviewer to select among candidate messages.
             // Surface this to the user so the reviewer card's "None" option doesn't mislead.
             if (revMode) {
                 const noneOpt = revMode.querySelector('option[value="none"]');
                 if (noneOpt) {
-                    if (v === 'v4' || v === 'v5' || v === 'v6') {
+                    if (v === 'agent') {
                         if (revMode.value === 'none') revMode.value = 'gemini';
                         noneOpt.disabled = true;
-                        noneOpt.text = 'None (disabled in V4/V5/V6)';
+                        noneOpt.text = 'None (reviewer required)';
                     } else {
                         noneOpt.disabled = false;
                         noneOpt.text = 'None';
@@ -4317,7 +4303,7 @@
         }
 
         function updateSchedulerModels() {
-            // V6 optional dedicated scheduler. Empty provider = share the
+            // Optional dedicated scheduler. Empty provider = share the
             // generator model, so we clear the picker and the model input.
             const provider = document.getElementById('cfgSchedProvider').value;
             const list = document.getElementById('schedModelList');
@@ -4336,7 +4322,7 @@
         }
 
         function updateSubAgentModels() {
-            // V6 optional dedicated sub-agents model. Empty provider = share the
+            // Optional dedicated sub-agents model. Empty provider = share the
             // generator model (clear picker + input).
             const provider = document.getElementById('cfgSubProvider').value;
             const list = document.getElementById('subModelList');
@@ -4740,10 +4726,8 @@
         }
 
         // Load schema when Setup tab opens for the first time.
-        // NOTE: Use assignment (NOT a function declaration) so we don't shadow the
-        // original switchAdminTab via hoisting — that caused infinite recursion
-        // (both declarations got hoisted → the wrapper replaced the original →
-        // _origSwitchTab ended up pointing to the wrapper → stack overflow on click).
+        // Use assignment so the wrapper preserves the original switchAdminTab
+        // without function-declaration hoisting or recursive self-calls.
         let _schemaLoaded = false;
         const _origSwitchTab = switchAdminTab;
         switchAdminTab = function(tab, btn) {
@@ -4754,9 +4738,8 @@
             }
         };
 
-        // Preflight: smoke-test every model the game will actually call BEFORE
-        // creating it. Game 9088 launched with an unavailable model, crashed on
-        // init, and the Issues tab showed nothing — this catches it up front.
+        // Preflight: smoke-test every configured model before creating the game
+        // to surface unavailable models before initialization.
         // Non-blocking: on failure the admin can still force-create.
         async function _preflightModels(status) {
             const checks = [];
@@ -4846,9 +4829,9 @@
                 adminGameId = gameData.game_id;
                 window._lastMetMsgCount = -1;
 
-                // Show the backend's final V6 legacy-mode confirmation.
+                // Show the backend's orchestration confirmation.
                 const sr = gameData.staged_rollout || {};
-                if (sr.label && sr.label !== 'non-V6') {
+                if (sr.label && sr.label !== 'non-agent') {
                     let banner = document.getElementById('adminStagedRolloutBanner');
                     if (!banner) {
                         banner = document.createElement('div');
@@ -4858,7 +4841,7 @@
                             .insertBefore(banner, document.getElementById('adminGameIdDisplay'));
                     }
                     banner.style.background = '#fff4e5'; banner.style.color = '#b58900';
-                    banner.textContent = sr.label + ' — ' + (sr.warning || 'Final V6 legacy orchestration.');
+                    banner.textContent = sr.label + ' — ' + (sr.warning || 'Worker orchestration.');
                 }
 
                 // Step 3: open the lobby card. The admin clicks START GAME
@@ -5206,7 +5189,7 @@
                 // Game launched — drop the lobby-recovery marker.
                 try { sessionStorage.removeItem('stt_admin_active_lobby'); } catch(e){}
 
-                // Switch to the monitor view (same UI as the old auto-start path).
+                // Switch to the monitor view for the started game.
                 if (window._lobbyPollInterval) {
                     clearInterval(window._lobbyPollInterval);
                     window._lobbyPollInterval = null;
@@ -5514,7 +5497,7 @@
                     `<div style="font-size:12px;color:#999;font-style:italic;">No matching review_cycle event in game_events.jsonl. Either the reviewer was disabled, or this message predates structured logging.</div>`, false);
             }
 
-            // ── 3b. Shared memory + conversation history at send-time (V5) ──
+            // ── 3b. Shared memory + conversation history at send-time ──
             // The exact context the scheduler, generator AND reviewer all saw
             // before this message — shown ONCE so it's clear what the agent was
             // reacting to.
@@ -5527,7 +5510,7 @@
                     const rows = [
                         ['Current info (internet)', tc.current_info],
                         ['Self-claims (persona)', Array.isArray(tc.self_claims) ? tc.self_claims.join(' | ') : tc.self_claims],
-                        ['Social memory', tc.social_memory],
+                        ['Social State Tracker', tc.social_state],
                         ['Behavior advice', tc.behavior_advice],
                         ['Pressure type', tc.pressure_type],
                         ['Overused words', Array.isArray(tc.overused_words) ? tc.overused_words.join(', ') : tc.overused_words],
@@ -5542,8 +5525,8 @@
                 if (ctx.length) {
                     bodySM += _collapsiblePre(`💬 Conversation history seen by scheduler/generator/reviewer (${ctx.length} lines)`, ctx.join('\n'));
                 }
-                if (sm && sm.phase_summaries && sm.phase_summaries.length) {
-                    bodySM += _collapsiblePre('🗒️ Phase summaries', (sm.phase_summaries || []).join('\n'));
+                if (sm && sm.round_summaries && sm.round_summaries.length) {
+                    bodySM += _collapsiblePre('🗒️ Round summaries', (sm.round_summaries || []).join('\n'));
                 }
                 if (bodySM) {
                     html += _section('🧠', 'Shared memory & context at send-time', 'what the agent saw before deciding', bodySM, false);
@@ -6116,9 +6099,7 @@
 
         function _reviewerBlock(cycle) {
             if (cycle.scheduler_decision !== 'send') return '';
-            // V6 ranker: no numeric score / fix attempts — it SELECTS one of N
-            // candidates. Render selection provenance instead of the legacy
-            // "not enabled" fallback (which was wrong for every V6 game).
+            // Render provenance for the candidate selected verbatim by the ranker.
             if (cycle.reviewer_mode === 'ranker') {
                 const pick = cycle.selected_candidate_index != null
                     ? `picked candidate <b>#${cycle.selected_candidate_index + 1}</b> of ${cycle.num_candidates || '?'}`
@@ -6429,23 +6410,12 @@
                 document.getElementById('metWriteWait').textContent = fmtS(a.avg_writing_wait_s);
                 document.getElementById('metTotalLat').textContent = fmtS(a.avg_total_latency_s);
 
-                // Timing-source banner: never let LEGACY WAIT/TOTAL be mistaken for the
-                // V6 ACTIVE latency contract (ready_to_append_at / chat_append_at).
-                const orch = data.orchestration || {};
+                // Pipeline duration is distinct from confirmed delivery latency.
                 const tsEl = document.getElementById('metTimingSource');
                 if (tsEl) {
-                    if (orch.timing_source === 'v6_active') {
-                        tsEl.style.display = '';
-                        tsEl.style.background = '#eafaef'; tsEl.style.color = '#1d7a3e';
-                        tsEl.innerHTML = '🟢 V6 ACTIVE run — these times reflect the active latency '
-                            + 'contract (ready_to_append_at → chat_append_at, artificial delay).';
-                    } else {
-                        tsEl.style.display = '';
-                        tsEl.style.background = '#fff4e5'; tsEl.style.color = '#b58900';
-                        tsEl.innerHTML = '🟡 LEGACY timing (Sched+Gen+Rev+typing). effective_mode='
-                            + (orch.effective_mode || 'legacy') + '. This is NOT the V6 active '
-                            + 'latency contract — do not judge active latency from this run.';
-                    }
+                    tsEl.style.display = '';
+                    tsEl.style.background = '#fff4e5'; tsEl.style.color = '#b58900';
+                    tsEl.textContent = 'Pipeline timing: scheduling + generation + review + typing. These values do not establish confirmed delivery latency.';
                 }
 
                 // Wait-call stalls panel: surfaces individual <wait> calls
@@ -6481,7 +6451,7 @@
                 if (a.reviewer_enabled) {
                     document.getElementById('metReviewerSection').style.display = 'block';
                     document.getElementById('metRevScore').textContent = a.avg_reviewer_score != null ? a.avg_reviewer_score + '/10' : '—';
-                    // V6 ranker SELECTS one of N candidates verbatim — "modified"
+                    // Ranker SELECTS one of N candidates verbatim — "modified"
                     // is the wrong frame (it counted every non-first selection).
                     // Show selection provenance instead for selection-mode games.
                     const modCard = document.getElementById('metRevModified');
@@ -6545,10 +6515,10 @@
                     document.querySelectorAll('.rev-col').forEach(el => el.style.display = 'none');
                 }
 
-                // V6 panel + tab gating (must run before V5 so the V5 panel can
-                // defer to V6 for v6 games). Then the V5 Memory panel.
-                await adminPollV6State();
-                await adminPollV5State();
+                // Agent panel + tab gating (must run before Component so the Component panel can
+                // defer to Agent for agent games). Then the Component State panel.
+                await adminPollAgentState();
+                await adminPollComponentState();
 
                 // Footer stats
                 document.getElementById('metSchedSend').textContent = a.send_decisions;
@@ -6565,8 +6535,7 @@
                 tbody.innerHTML = '';
                 let _hiddenEmptyRows = 0;
                 msgs.forEach(m => {
-                    // Backend already drops phantom rows, but defend against
-                    // legacy logs / edge cases that still emit empty text.
+                    // Skip empty-text rows that do not represent a message.
                     if (!(m && (m.text || '').trim())) { _hiddenEmptyRows++; return; }
                     const latColor = v => {
                         if (v == null) return '';
@@ -6713,60 +6682,58 @@
             }
         }
 
-        // V5 Memory panel — polls /api/admin/v5_state every Monitor refresh.
-        // Surfaces the SharedSnapshot, last Internet Context activity, phase
-        // summaries, and per-turn pipeline timings. Auto-hidden for V3/V4 games.
-        async function adminPollV5State() {
+        // Component State panel — polls /api/admin/component_state every Monitor refresh.
+        // Shows shared snapshot slices, internet worker activity, round summaries,
+        // and per-turn pipeline timings. Auto-hidden when the dedicated Agent tab is active.
+        async function adminPollComponentState() {
             if (!adminGameId) return;
-            // V6 games share the V5 event stream but get their own dedicated tab,
-            // so suppress the legacy V5 Memory panel for them (see adminPollV6State).
-            if (window._adminIsV6) {
-                const p = document.getElementById('metV5Section');
+            if (window._adminHasAgent) {
+                const p = document.getElementById('metComponentSection');
                 if (p) p.style.display = 'none';
                 return;
             }
             try {
-                const r = await fetch(`/api/admin/v5_state?game_id=${adminGameId}`);
+                const r = await fetch(`/api/admin/component_state?game_id=${adminGameId}`);
                 if (!r.ok) return;
                 const data = await r.json();
-                const panel = document.getElementById('metV5Section');
-                const isV5 = data && (data.snapshot || (data.ic_ticks && data.ic_ticks.length) ||
-                                       (data.turns && data.turns.length) ||
-                                       (data.decisions && data.decisions.length) ||
-                                       (data.persona_claims && data.persona_claims.length));
-                panel.style.display = isV5 ? 'block' : 'none';
-                if (!isV5) return;
+                const panel = document.getElementById('metComponentSection');
+                const isComponent = data && (data.snapshot || (data.ic_ticks && data.ic_ticks.length) ||
+                                             (data.turns && data.turns.length) ||
+                                             (data.decisions && data.decisions.length) ||
+                                             (data.persona_claims && data.persona_claims.length));
+                panel.style.display = isComponent ? 'block' : 'none';
+                if (!isComponent) return;
 
                 // Sub-agent activity strip — confirms all SIX workers are alive.
                 const ss = data.subagent_status || {};
                 const dot = n => (n > 0 ? '🟢' : '⚪');
-                document.getElementById('v5SubagentStatus').innerHTML =
-                    `${dot(ss.internet)} Internet ${ss.internet||0} &nbsp; ` +
-                    `${dot(ss.phase)} Phase ${ss.phase||0} &nbsp; ` +
-                    `${dot(ss.persona)} Persona ${ss.persona||0} &nbsp; ` +
-                    `${dot(ss.social)} Social ${ss.social||0} &nbsp; ` +
-                    `${dot(ss.behavior)} Behavior ${ss.behavior||0} &nbsp; ` +
-                    `${dot(ss.repetition)} Repetition ${ss.repetition||0}`;
+                document.getElementById('componentSubagentStatus').innerHTML =
+                    `${dot(ss.internet)} Internet Context ${ss.internet||0} &nbsp; ` +
+                    `${dot(ss.phase)} Round Summarizer ${ss.phase||0} &nbsp; ` +
+                    `${dot(ss.persona)} Persona Monitor ${ss.persona||0} &nbsp; ` +
+                    `${dot(ss.social)} Social State Tracker ${ss.social||0} &nbsp; ` +
+                    `${dot(ss.behavior)} Behavior Adapter ${ss.behavior||0} &nbsp; ` +
+                    `${dot(ss.repetition)} Repetition Monitor ${ss.repetition||0}`;
 
                 const snap = data.snapshot || {};
-                document.getElementById('v5SnapEntryCount').textContent = snap.entry_count || 0;
-                document.getElementById('v5SnapFacts').textContent = snap.current_info || '— (snapshot empty)';
-                document.getElementById('v5SnapHedge').textContent =
+                document.getElementById('componentSnapEntryCount').textContent = snap.entry_count || 0;
+                document.getElementById('componentSnapFacts').textContent = snap.current_info || '— (snapshot empty)';
+                document.getElementById('componentSnapHedge').textContent =
                     snap.hedge_advice ? '⚠ ' + snap.hedge_advice : '';
-                const phaseSums = snap.phase_summaries || [];
-                document.getElementById('v5PhaseCount').textContent = phaseSums.length;
-                document.getElementById('v5PhaseSummaries').textContent =
-                    phaseSums.length ? phaseSums.join('\n') : '— (no phase summaries yet)';
+                const phaseSums = snap.round_summaries || [];
+                document.getElementById('componentRoundCount').textContent = phaseSums.length;
+                document.getElementById('componentRoundSummaries').textContent =
+                    phaseSums.length ? phaseSums.join('\n') : '— (no round summaries yet)';
 
                 // Persona self-claims (consistency tracker)
                 const claims = data.persona_claims || [];
-                document.getElementById('v5ClaimCount').textContent = claims.length;
-                document.getElementById('v5SelfClaims').textContent =
+                document.getElementById('componentClaimCount').textContent = claims.length;
+                document.getElementById('componentSelfClaims').textContent =
                     claims.length ? claims.map(c => '• ' + c).join('\n') : '— (none stated yet)';
 
-                // Social memory (who suspects the agent) + play-style directive
-                document.getElementById('v5SocialMemory').textContent =
-                    data.social_memory ? data.social_memory : '— (no accusations tracked yet)';
+                // Social State Tracker (who suspects the agent) + play-style directive
+                document.getElementById('componentSocialState').textContent =
+                    data.social_state ? data.social_state : '— (no accusations tracked yet)';
                 // Cadence (scheduler-facing) shown FIRST so it's not buried.
                 let behaviorText = '';
                 const cad0 = data.cadence || {};
@@ -6791,20 +6758,20 @@
                 if (data.repetition_note) {
                     behaviorText += `\n🔁 repetition note: ${data.repetition_note}`;
                 }
-                document.getElementById('v5BehaviorAdvice').textContent = behaviorText;
+                document.getElementById('componentBehaviorAdvice').textContent = behaviorText;
 
                 // Recent decisions — why the agent waited / skipped
                 const decIcon = {wait:'⏸', act:'🔊', dedup:'⚠', skip:'🤐'};
                 const decs = (data.decisions || []).map(d =>
                     `${d.ts || ''}  ${decIcon[d.kind] || '·'} ${d.reason}`
                 ).join('\n');
-                document.getElementById('v5Decisions').textContent = decs || '— (no waits/skips yet)';
+                document.getElementById('componentDecisions').textContent = decs || '— (no waits/skips yet)';
 
                 const turns = (data.turns || []).map(t =>
                     `turn ${t.turn_index}: pipeline ${t.pipeline_s?.toFixed?.(2) ?? '?'}s` +
                     (t.dropped ? ' (DROPPED)' : ` · ${t.final_chars} chars`)
                 ).join('\n');
-                document.getElementById('v5Turns').textContent = turns || '—';
+                document.getElementById('componentTurns').textContent = turns || '—';
 
                 const ic = (data.ic_ticks || []).map(t => {
                     const ts = t.ts || '';
@@ -6820,69 +6787,65 @@
                     }
                     return '';
                 }).filter(Boolean).join('\n');
-                document.getElementById('v5IcTicks').textContent = ic || '— (no internet-context activity yet)';
+                document.getElementById('componentInternetTicks').textContent = ic || '— (no internet-context activity yet)';
             } catch (e) {
-                console.error('[V5 State]', e);
+                console.error('[Component State]', e);
             }
         }
 
-        const _v6ExpandedCandidates = new Set();
-        let _v6OutcomeFilter = 'all';
+        const _agentExpandedCandidates = new Set();
+        let _agentOutcomeFilter = 'all';
 
-        function setV6OutcomeFilter(filter) {
-            _v6OutcomeFilter = filter || 'all';
-            document.querySelectorAll('#v6OutcomeFilters button').forEach(button => {
-                const active = button.dataset.outcomeFilter === _v6OutcomeFilter;
+        function setAgentOutcomeFilter(filter) {
+            _agentOutcomeFilter = filter || 'all';
+            document.querySelectorAll('#agentOutcomeFilters button').forEach(button => {
+                const active = button.dataset.outcomeFilter === _agentOutcomeFilter;
                 button.style.background = active ? '#667eea' : '';
                 button.style.color = active ? '#fff' : '';
             });
-            adminPollV6State();
+            adminPollAgentState();
         }
 
-        function toggleV6Candidate(key, elementId) {
+        function toggleAgentCandidate(key, elementId) {
             const detail = document.getElementById(elementId);
             if (!detail) return;
             const opening = detail.style.display === 'none';
             detail.style.display = opening ? 'block' : 'none';
-            if (opening) _v6ExpandedCandidates.add(key);
-            else _v6ExpandedCandidates.delete(key);
+            if (opening) _agentExpandedCandidates.add(key);
+            else _agentExpandedCandidates.delete(key);
         }
 
-        // V6 live panel — new shared memory + multi-candidate generation pipeline.
-        // Drives the dedicated 🧬 V6 tab (shown only for v6 games) and sets the
-        // window._adminIsV6 flag so the legacy V5 panel steps aside.
-        async function adminPollV6State() {
+        // Agent live panel — shared memory + multi-candidate generation pipeline.
+        async function adminPollAgentState() {
             if (!adminGameId) {
-                window._adminIsV6 = false;
+                window._adminHasAgent = false;
                 return;
             }
             try {
-                const r = await fetch(`/api/admin/v6_state?game_id=${adminGameId}`);
-                if (!r.ok) { window._adminIsV6 = false; return; }
+                const r = await fetch(`/api/admin/agent_state?game_id=${adminGameId}`);
+                if (!r.ok) { window._adminHasAgent = false; return; }
                 const data = await r.json();
-                const isV6 = !!data.is_v6;
-                window._adminIsV6 = isV6;
+                const isAgent = !!data.is_agent;
+                window._adminHasAgent = isAgent;
 
-                const tabBtn = document.getElementById('v6TabBtn');
-                if (tabBtn) tabBtn.style.display = isV6 ? '' : 'none';
-                if (!isV6) {
-                    // If we were on the V6 tab for a previous (v6) game, fall back.
-                    const v6c = document.getElementById('adminTab_v6');
-                    if (v6c && v6c.classList.contains('active')) {
+                const tabBtn = document.getElementById('agentTabBtn');
+                if (tabBtn) tabBtn.style.display = isAgent ? '' : 'none';
+                if (!isAgent) {
+                    // If the previous game's agent tab was open, fall back.
+                    const agentContent = document.getElementById('adminTab_agent');
+                    if (agentContent && agentContent.classList.contains('active')) {
                         switchAdminTab('metrics', document.querySelector(".admin-tab[onclick*=\"'metrics'\"]"));
                     }
                     return;
                 }
 
-                document.getElementById('v6Agent').textContent =
+                document.getElementById('agentAgent').textContent =
                     data.agent ? `(agent: ${data.agent})` : '';
 
                 // ── Shared memory ──
                 const snap = data.snapshot || {};
-                document.getElementById('v6SnapEntryCount').textContent = snap.entry_count || 0;
-                // Separate provenance: the one-time seed baseline is BACKGROUND
-                // KNOWLEDGE, not web-verified evidence — showing both under
-                // "Live web facts" misled the operator (9086 post-mortem).
+                document.getElementById('agentSnapEntryCount').textContent = snap.entry_count || 0;
+                // Separate seeded background knowledge from web-verified evidence.
                 const infoEntries = snap.info_entries || [];
                 if (infoEntries.length) {
                     const seedE = infoEntries.filter(e => e.origin === 'seed');
@@ -6893,14 +6856,14 @@
                     if (seedE.length) factsTxt += (factsTxt ? '\n\n' : '')
                         + '🌱 Seeded background knowledge (one-time baseline, not chat-driven):\n'
                         + seedE.map(fmt).join('\n');
-                    document.getElementById('v6SnapFacts').textContent = factsTxt;
+                    document.getElementById('agentSnapFacts').textContent = factsTxt;
                 } else {
-                    document.getElementById('v6SnapFacts').textContent =
+                    document.getElementById('agentSnapFacts').textContent =
                         snap.current_info || '— (snapshot empty)';
                 }
                 // Make it explicit these facts came from live web search (the
                 // Internet Context sub-agent), with its search activity inline.
-                const icSum = document.getElementById('v6InternetSummary');
+                const icSum = document.getElementById('agentInternetSummary');
                 if (icSum) {
                     const ic = (data.subagents || {}).internet_context || {};
                     const escIc = s => (s == null ? '' : String(s)
@@ -6914,8 +6877,7 @@
                     if (pend.length) {
                         icHtml += `<div style="margin-top:3px; color:#b58900;">⏳ in flight: ${pend.map(escIc).join(' · ')}</div>`;
                     }
-                    // Guard-rejected queries with stable reason codes — proves
-                    // the 2+2/time/meta filter works (9086 post-mortem ask).
+                    // Show guard-rejected queries with their stable reason codes.
                     const rej = ic.rejected_queries || [];
                     if (rej.length) {
                         const rows = rej.slice(-8).map(r =>
@@ -6924,28 +6886,28 @@
                     }
                     icSum.innerHTML = icHtml;
                 }
-                const phaseSums = snap.phase_summaries || [];
-                document.getElementById('v6PhaseCount').textContent = phaseSums.length;
-                document.getElementById('v6PhaseSummaries').textContent =
-                    phaseSums.length ? phaseSums.join('\n') : '— (no phase summaries yet)';
+                const phaseSums = snap.round_summaries || [];
+                document.getElementById('agentRoundCount').textContent = phaseSums.length;
+                document.getElementById('agentRoundSummaries').textContent =
+                    phaseSums.length ? phaseSums.join('\n') : '— (no round summaries yet)';
                 const claims = snap.self_claims || [];
-                document.getElementById('v6ClaimCount').textContent = claims.length;
-                document.getElementById('v6SelfClaims').textContent =
+                document.getElementById('agentClaimCount').textContent = claims.length;
+                document.getElementById('agentSelfClaims').textContent =
                     claims.length ? claims.map(c => '• ' + c).join('\n') : '— (none stated yet)';
-                document.getElementById('v6SocialMemory').textContent =
-                    snap.social_memory ? snap.social_memory : '— (no accusations tracked yet)';
-                document.getElementById('v6BehaviorAdvice').textContent =
+                document.getElementById('agentSocialState').textContent =
+                    snap.social_state ? snap.social_state : '— (no accusations tracked yet)';
+                document.getElementById('agentBehaviorAdvice').textContent =
                     snap.behavior_advice ? ('🎎 ' + snap.behavior_advice) : '';
 
-                // V6 immutable persona facts + numeric social signals.
+                // Immutable persona facts + numeric social signals.
                 const ff = data.fixed_persona_facts || {};
-                const ffEl = document.getElementById('v6FixedFacts');
+                const ffEl = document.getElementById('agentFixedFacts');
                 const ffBits = Object.entries(ff).map(([k, v]) => `${k}: ${v}`);
                 ffEl.textContent = ffBits.length ? ('📌 ' + ffBits.join(' · ')) : '';
                 ffEl.style.display = ffBits.length ? '' : 'none';
                 const sig = data.social_signals || {};
-                const ipEl = document.getElementById('v6Interrog');
-                const aoEl = document.getElementById('v6Attention');
+                const ipEl = document.getElementById('agentInterrog');
+                const aoEl = document.getElementById('agentAttention');
                 if (sig.interrogation_pressure != null) {
                     ipEl.textContent = `🔥 interrogation: ${Number(sig.interrogation_pressure).toFixed(2)}`;
                     ipEl.style.display = '';
@@ -6955,34 +6917,26 @@
                     aoEl.style.display = '';
                 } else { aoEl.style.display = 'none'; }
 
-                // ── Full shared-memory slices + legacy/active card visibility ──
+                // ── Full shared-memory slices ──
                 const esc0 = s => (s == null ? '' : String(s)
                     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-                const orch = data.orchestration || {};
-                const isLegacy = (orch.timing_source !== 'v6_active'
-                                  && orch.effective_mode !== 'active');
-                // Hide Active-only cards on a legacy game (they're empty/irrelevant).
-                ['v6ActiveStatusCard', 'v6FactUsageCard'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.style.display = isLegacy ? 'none' : '';
-                });
                 const chip = (id, label, val) => {
                     const el = document.getElementById(id);
                     if (!el) return;
                     if (val) { el.textContent = label + val; el.style.display = ''; }
                     else { el.style.display = 'none'; }
                 };
-                chip('v6RoomVibe', '🎭 vibe: ', snap.room_vibe);
-                chip('v6RoomNorm', '📐 norm: ', snap.room_norm);
-                chip('v6PressureType', '🔥 ', snap.pressure_type);
-                chip('v6AwaitingSearch', '🔎 ', snap.awaiting_search ? 'awaiting search…' : '');
-                const repEl = document.getElementById('v6Repetition');
+                chip('agentRoomVibe', '🎭 vibe: ', snap.room_vibe);
+                chip('agentRoomNorm', '📐 norm: ', snap.room_norm);
+                chip('agentPressureType', '🔥 ', snap.pressure_type);
+                chip('agentAwaitingSearch', '🔎 ', snap.awaiting_search ? 'awaiting search…' : '');
+                const repEl = document.getElementById('agentRepetition');
                 if (repEl) {
                     const ow = (snap.overused_words || []);
                     repEl.textContent = (ow.length ? ('overused: ' + ow.join(', ')) : 'overused: —')
                         + '\nnote: ' + (snap.repetition_note || '—');
                 }
-                const otEl = document.getElementById('v6OpenThreads');
+                const otEl = document.getElementById('agentOpenThreads');
                 if (otEl) {
                     const ot = (snap.open_threads || []);
                     otEl.textContent = (ot.length ? ot.map(t => '• ' + (typeof t === 'string' ? t : JSON.stringify(t))).join('\n') : '— (no directed questions)')
@@ -6990,22 +6944,14 @@
                 }
 
                 // ── Agent build banner ──
-                const bbEl = document.getElementById('v6BuildBanner');
+                const bbEl = document.getElementById('agentBuildBanner');
                 if (bbEl) {
                     bbEl.style.display = 'block';
                     const build = data.agent_build || {};
-                    const agentCode = data.game_agent_code || build.agent_code || 'current';
-                    const provenance = {
-                        'current': {
-                            label: 'CURRENT AGENT', color: '#1a6b40', bg: '#f2fbf6', border: '#b9e6cd',
-                            detail: `reported commit <code>${esc0(build.commit || 'unknown')}</code>`
-                                + (build.last_commit_subject ? ` — ${esc0(build.last_commit_subject)}` : ''),
-                        },
-                    };
-                    const meta = provenance[agentCode] || {
-                        label: `UNKNOWN AGENT CONDITION (${esc0(agentCode)})`, color: '#6b5b25',
-                        bg: '#fffbea', border: '#eadb9b',
-                        detail: `reported commit <code>${esc0(build.commit || 'unknown')}</code>`,
+                    const meta = {
+                        label: 'SOCIAL TURING TEST AGENT', color: '#1a6b40', bg: '#f2fbf6', border: '#b9e6cd',
+                        detail: `reported commit <code>${esc0(build.commit || 'unknown')}</code>`
+                            + (build.last_commit_subject ? ` — ${esc0(build.last_commit_subject)}` : ''),
                     };
                     const codeLabel = `<b style="color:${meta.color};">${meta.label}</b> · ${meta.detail}`;
                     bbEl.innerHTML = `🧬 ${codeLabel}`;
@@ -7015,26 +6961,26 @@
                 }
 
                 // ── Suppressed sends ──
-                const supBox = document.getElementById('v6SuppressedBox');
-                const supEl = document.getElementById('v6Suppressed');
+                const supBox = document.getElementById('agentSuppressedBox');
+                const supEl = document.getElementById('agentSuppressed');
                 const sup = ((data.subagents || {}).suppressed_sends) || [];
                 if (supBox && supEl && sup.length) {
                     supBox.style.display = 'block';
                     supEl.innerHTML = sup.map(s =>
                         `<div style="border:1px solid #f0e2c8; border-radius:8px; padding:6px 10px; background:#fffdf8; font-size:12.5px;">`
-                        + `<b style="color:#a05a1f;">${esc0(s.type === 'v6_pipeline_timeout_drop' ? '⏱ timeout' : '🌊 stale')}</b>`
+                        + `<b style="color:#a05a1f;">${esc0(s.type === 'pipeline_timeout_drop' ? '⏱ timeout' : '🌊 stale')}</b>`
                         + ` <span style="color:#333;">"${esc0(s.message)}"</span>`
                         + ` <span style="color:#888;">— ${esc0(s.reason || '')} · ${esc0(s.ts || '')}</span></div>`).join('');
                 }
 
                 // ── Sub-agent activity ──
-                const saEl = document.getElementById('v6Subagents');
+                const saEl = document.getElementById('agentSubagents');
                 if (saEl) {
                     const sa = data.subagents || {};
                     const LABELS = {
-                        internet_context: '🌐 Internet Context', social_memory: '👥 Social Memory',
-                        behavior_evolution: '🌱 Behavior Evolution', persona_monitor: '🎭 Persona Monitor',
-                        repetition_monitor: '🔁 Repetition Monitor', phase_summarizer: '📝 Phase Summarizer',
+                        internet_context: '🌐 Internet Context', social_state_tracker: '👥 Social State Tracker',
+                        behavior_adapter: '🌱 Behavior Adapter', persona_monitor: '🎭 Persona Monitor',
+                        repetition_monitor: '🔁 Repetition Monitor', round_summarizer: '📝 Round Summarizer',
                     };
                     const rows = Object.keys(LABELS).map(k => {
                         const a = sa[k] || {};
@@ -7048,11 +6994,11 @@
                             detail = `ticks ${a.ran||0} · searches ${a.searches||0} · last query: ${esc0(a.last_search||'—')}`
                                    + (a.seed ? `<br><span style="color:#888;">seed: ${esc0(a.seed)}</span>` : '')
                                    + `<br><span style="color:#888;">last decision: ${esc0(dec).slice(0,160)}</span>`;
-                        } else if (k === 'social_memory') {
+                        } else if (k === 'social_state_tracker') {
                             const p = a.parsed || {};
                             detail = `ticks ${a.ran||0}` + (p.room_vibe ? ` · vibe ${esc0(p.room_vibe)}` : '')
                                    + (p.pressure_type ? `<br><span style="color:#888;">${esc0(p.pressure_type)}</span>` : '');
-                        } else if (k === 'behavior_evolution') {
+                        } else if (k === 'behavior_adapter') {
                             detail = `ticks ${a.ran||0}` + (a.advice ? `<br><span style="color:#888;">${esc0(a.advice)}</span>` : '');
                         } else if (k === 'persona_monitor') {
                             const c = a.claims || [];
@@ -7061,11 +7007,11 @@
                             const ow = a.overused || [];
                             detail = `ticks ${a.ran||0} · overused: ${esc0(Array.isArray(ow)?ow.join(', '):ow) || '—'}`
                                    + (a.note ? `<br><span style="color:#888;">${esc0(a.note)}</span>` : '');
-                        } else if (k === 'phase_summarizer') {
+                        } else if (k === 'round_summarizer') {
                             const s = a.summaries || [];
                             detail = `ticks ${a.ran||0} · ${esc0(Array.isArray(s)?s.join(' | '):s) || '—'}`;
                         }
-                        return `<div class="v6-agent-card">`
+                        return `<div class="agent-worker-card">`
                             + `<div class="head">${LABELS[k]}${status}</div>`
                             + `<div class="detail">${detail}`
                             + (a.last_ts ? `<div class="aux" style="margin-top:3px;">last: ${esc0(a.last_ts)}</div>` : '')
@@ -7075,13 +7021,13 @@
                 }
 
                 // ── Scheduler decisions ──
-                const schEl = document.getElementById('v6Scheduler');
+                const schEl = document.getElementById('agentScheduler');
                 if (schEl) {
                     const sb = data.scheduler_breakdown || {};
                     const reasons = sb.blocked_reasons || {};
                     const rlist = Object.keys(reasons).map(r =>
                         `<span style="background:#f0eef8; border-radius:12px; padding:2px 8px; margin:2px; display:inline-block;">${esc0(r)}: ${reasons[r]}</span>`).join(' ');
-                    // V6: real WAIT decisions live in the text-log metrics (Metrics
+                    // Real WAIT decisions live in the text-log metrics (Metrics
                     // tab); event-stream "blocked" entries are cheap guard polls,
                     // shown separately so they never masquerade as decisions.
                     schEl.innerHTML = `<b style="color:#1d7a3e;">send ${sb.send||0}</b>`
@@ -7093,12 +7039,12 @@
                 }
 
                 // ── Generation pipeline (candidate ranking) ──
-                const wrap = document.getElementById('v6Generations');
+                const wrap = document.getElementById('agentGenerations');
                 const matchesOutcomeFilter = generation => {
                     const outcome = generation.outcome || 'delivery_unconfirmed';
-                    if (_v6OutcomeFilter === 'sent') return outcome === 'sent';
-                    if (_v6OutcomeFilter === 'delivery_unconfirmed') return outcome === 'delivery_unconfirmed';
-                    if (_v6OutcomeFilter === 'suppressed') {
+                    if (_agentOutcomeFilter === 'sent') return outcome === 'sent';
+                    if (_agentOutcomeFilter === 'delivery_unconfirmed') return outcome === 'delivery_unconfirmed';
+                    if (_agentOutcomeFilter === 'suppressed') {
                         return outcome !== 'sent' && outcome !== 'delivery_unconfirmed';
                     }
                     return true;
@@ -7157,11 +7103,11 @@
                             };
                             const hasDetail = Boolean(v) || candidateStatus.status !== 'scored';
                             const candidateKey = `${g.turn_id || g.ts || gi}:${i}`;
-                            const rid = `v6cand-${String(g.turn_id || g.ts || gi).replace(/[^a-zA-Z0-9_-]/g, '-')}-${i}`;
-                            const expanded = _v6ExpandedCandidates.has(candidateKey);
+                            const rid = `agent-candidate-${String(g.turn_id || g.ts || gi).replace(/[^a-zA-Z0-9_-]/g, '-')}-${i}`;
+                            const expanded = _agentExpandedCandidates.has(candidateKey);
                             const caret = hasDetail ? `<span style="color:#aaa; font-size:11px;">${expanded ? '▾' : '▸'}</span>` : '';
                             const cursor = hasDetail ? 'cursor:pointer;' : '';
-                            const onclick = hasDetail ? ` onclick="toggleV6Candidate('${candidateKey}', '${rid}')"` : '';
+                            const onclick = hasDetail ? ` onclick="toggleAgentCandidate('${candidateKey}', '${rid}')"` : '';
                             let detail = '';
                             if (v) {
                                 const flags = (v.red_flags || []).map(f =>
@@ -7231,61 +7177,9 @@
                     }).join('');
                 }
 
-                // ── Active orchestration operational status (blocker 1/5) ──
-                const asEl = document.getElementById('v6ActiveStatus');
-                if (asEl) {
-                    const st = data.active_status;
-                    if (!st) {
-                        asEl.innerHTML = '— (no orchestration status yet)';
-                    } else {
-                        const yn = b => b ? '✅' : '❌';
-                        const op = st.operational;
-                        const head = op
-                            ? '<span style="color:#1d7a3e; font-weight:700;">OPERATIONAL — active is authoritative</span>'
-                            : '<span style="color:#b58900; font-weight:700;">NOT operational — running legacy</span>';
-                        const esc3 = s => (s == null ? '' : String(s)
-                            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-                        asEl.innerHTML = head +
-                            `<div style="margin-top:6px;">requested: ${yn(st.requested)} · allowed: ${yn(st.allowed)}</div>` +
-                            `<div>scheduler adapter: ${yn(st.scheduler_adapter_available)} · ` +
-                            `generator adapter: ${yn(st.generator_adapter_available)} · ` +
-                            `reviewer adapter: ${yn(st.reviewer_adapter_available)} · ` +
-                            `fresh-state provider: ${yn(st.fresh_state_provider_available)}</div>` +
-                            (st.degraded_reason
-                                ? `<div style="margin-top:4px; color:#b3403f;">⚠ ${esc3(st.degraded_reason)}</div>`
-                                : '');
-                    }
-                }
-
-                // ── Honest fact usage + terminal outcome (AIP fix 8) ──
-                const fuWrap = document.getElementById('v6FactUsage');
-                if (fuWrap) {
-                    const esc2 = s => (s == null ? '' : String(s)
-                        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-                    const turns = (data.fact_usage_turns || []).slice().reverse();
-                    if (!turns.length) {
-                        fuWrap.innerHTML = '<div style="color:#888; font-size:13px;">— (no active/shadow pipeline turns yet)</div>';
-                    } else {
-                        const statusColor = st => st === 'verified' ? '#1d7a3e'
-                            : (st === 'unverified' ? '#b58900' : '#888');
-                        fuWrap.innerHTML = turns.map(t => {
-                            const used = t.verified_fact_ids_used || [];
-                            const avail = t.available_fact_ids || [];
-                            const st = t.fact_usage_status || 'none';
-                            return `<div style="border:1px solid #ece8f6; border-radius:8px; padding:8px 10px; background:#fcfbff;">` +
-                                `<div style="display:flex; justify-content:space-between; font-size:11px; color:#888;">` +
-                                `<span>${esc2(t.ts || '')} · ${esc2(t.final_response_act || '')}</span>` +
-                                `<span style="font-weight:700; color:${statusColor(st)};">fact usage: ${esc2(st)}</span></div>` +
-                                `<div style="font-size:12px; color:#333; margin-top:4px;">` +
-                                `used: <b>${used.length ? esc2(used.join(', ')) : '—'}</b> ` +
-                                `<span style="color:#aaa;">(available: ${avail.length ? esc2(avail.join(', ')) : '—'})</span></div>` +
-                                `</div>`;
-                        }).join('');
-                    }
-                }
             } catch (e) {
-                window._adminIsV6 = false;
-                console.error('[V6 State]', e);
+                window._adminHasAgent = false;
+                console.error('[Agent State]', e);
             }
         }
 
@@ -7403,10 +7297,8 @@
                     }
                 }
 
-                // Reconcile Per-Message Detail "Modified?" cells against reviewer_detail
-                // (single source of truth). Key by time+text because two messages may
-                // share the same final text (e.g. "good", "lol") — using text alone
-                // caused "Modified?" to flip for all duplicates.
+                // Reconcile reviewer-detail cells by time and text to distinguish
+                // separate messages that share identical final text.
                 try {
                     const byKey = new Map();
                     reviews.forEach(r => {
@@ -7414,8 +7306,8 @@
                         if (key.length > 2) byKey.set(key, {mod: r.was_modified, orig: r.raw_message || ''});
                     });
                     document.querySelectorAll('.rev-modified-cell').forEach(cell => {
-                        // V6 selection-mode cells show 🎯 #k/N provenance — the
-                        // legacy was_modified reconcile would mislabel them
+                        // Selection-mode cells show 🎯 #k/N provenance — the
+                        // was_modified reconciliation would mislabel them
                         // (selection ≠ modification). Leave them untouched.
                         if (cell.dataset.selectionMode === '1') return;
                         const t = cell.dataset.msgTime || '';
@@ -7520,10 +7412,8 @@
         function showTapPill() {
             if (!TAP_ENABLED) return;   // tap poll disabled
             if (!window.lastRemainingPlayers || window.lastRemainingPlayers.length < 2) return;
-            // Phase-gate: only show during the discussion phase. Previously
-            // we only blocked when the votePanel was visible, but once the
-            // user voted the panel hides itself and the tap pill leaked into
-            // voting phase as a duplicate "vote" UI (regression seen 2026-04).
+            // Show the tap pill only during discussion, including when the
+            // voting panel is hidden after a vote has been submitted.
             if (_lastPhaseForSender !== 'chat') {
                 scheduleTap(); // try again later (next discussion phase)
                 return;
@@ -7571,7 +7461,7 @@
 
         // ── Past Games navigator (admin) ──────────────────────────────
         // Fetches /api/games_list once, then drives 3 cascading selects:
-        // category (real/test) → agent_version (v1/v3/…) → game.
+        // category (real/test) → agent identity → game.
         // Clicking Open navigates to /game?game_id=XXXX&admin=true which the
         // existing loadAdminForm handler picks up to enter read-only mode.
         let _pastGamesData = null;  // raw list from /api/games_list
@@ -7612,31 +7502,31 @@
                 if (c === preferredCat) opt.selected = true;
                 catSel.appendChild(opt);
             });
-            _refreshVersionSelect();
+            _refreshAgentIdentitySelect();
         }
 
-        function _refreshVersionSelect() {
+        function _refreshAgentIdentitySelect() {
             const cat = document.getElementById('pgCategory').value;
             const filtered = _pastGamesData.filter(g => (g.category || 'unknown') === cat);
-            const versions = Array.from(new Set(filtered.map(g => g.agent_version || 'unknown'))).sort();
-            const verSel = document.getElementById('pgVersion');
-            verSel.innerHTML = '';
-            // Pick latest (last in sort order, but versions like v3 > v1)
-            const preferred = versions.slice().sort().pop();
-            versions.forEach(v => {
+            const identities = Array.from(new Set(filtered.map(g => g.agent_identity || 'unknown'))).sort();
+            const identitySel = document.getElementById('pgAgentIdentity');
+            identitySel.innerHTML = '';
+            const preferred = identities[0];
+            identities.forEach(identity => {
                 const opt = document.createElement('option');
-                opt.value = v; opt.textContent = v;
-                if (v === preferred) opt.selected = true;
-                verSel.appendChild(opt);
+                opt.value = identity;
+                opt.textContent = identity === 'social_turing_test_agent' ? 'Social Turing Test agent' : 'Unknown agent';
+                if (identity === preferred) opt.selected = true;
+                identitySel.appendChild(opt);
             });
             _refreshGameSelect();
         }
 
         function _refreshGameSelect() {
             const cat = document.getElementById('pgCategory').value;
-            const ver = document.getElementById('pgVersion').value;
+            const identity = document.getElementById('pgAgentIdentity').value;
             const filtered = _pastGamesData
-                .filter(g => (g.category || 'unknown') === cat && (g.agent_version || 'unknown') === ver)
+                .filter(g => (g.category || 'unknown') === cat && (g.agent_identity || 'unknown') === identity)
                 .sort((a, b) => (b.id || '').localeCompare(a.id || ''));  // newest first
             const sel = document.getElementById('pgGame');
             sel.innerHTML = '';
@@ -7679,18 +7569,18 @@
         }
 
         function onPastGamesFilterChange() {
-            // Triggered by category OR version dropdown (set via inline onchange).
-            // Detect which one fired by checking if version's set is stale.
+            // Triggered by category OR agent dropdown (set via inline onchange).
+            // Refresh the agent options when their category has changed.
             const cat = document.getElementById('pgCategory').value;
-            const verSel = document.getElementById('pgVersion');
-            const verPresent = Array.from(verSel.options).map(o => o.value);
+            const identitySel = document.getElementById('pgAgentIdentity');
+            const identitiesPresent = Array.from(identitySel.options).map(o => o.value);
             const validForCat = Array.from(new Set(
                 _pastGamesData.filter(g => (g.category || 'unknown') === cat)
-                              .map(g => g.agent_version || 'unknown')));
-            const stale = verPresent.length !== validForCat.length ||
-                          verPresent.some(v => !validForCat.includes(v));
+                              .map(g => g.agent_identity || 'unknown')));
+            const stale = identitiesPresent.length !== validForCat.length ||
+                          identitiesPresent.some(identity => !validForCat.includes(identity));
             if (stale) {
-                _refreshVersionSelect();
+                _refreshAgentIdentitySelect();
             } else {
                 _refreshGameSelect();
             }

@@ -317,7 +317,7 @@ Output ONLY valid JSON:
 }}'''
 
 
-# Experimental (v4-prep) anti-shrink clause. Appended to the retry prompt only
+# Experimental anti-shrink clause. Appended to the retry prompt only
 # when the per-player ``experimental_agent`` config flag is true.
 _EXPERIMENTAL_ANTI_SHRINK_CLAUSE = """
 
@@ -339,7 +339,7 @@ class ReviewResult:
     raw_response: str          # Raw API response for debugging
     situation_analysis: Optional[str] = None   # Situation summary from first call
     expected_human_response: Optional[str] = None  # What a human would say
-    # B6: per-attempt history (populated by review_and_fix for the drill-down UI).
+    # Per-attempt history (populated by review_and_fix for the drill-down UI).
     # Each entry: {message, score, red_flags, suggested_fix, action}.
     # action ∈ {"passed","rewritten","reverted","no_fix","final"}.
     attempts: list = field(default_factory=list)
@@ -374,8 +374,8 @@ class BaseReviewer(ABC):
         self.model_name = model_name
         self.threshold = threshold if threshold is not None else self.DEFAULT_THRESHOLD
         self.logger = logger
-        # Experimental (v4-prep) toggle — adds an anti-shrink clause to the
-        # reviewer retry prompt. Default false keeps legacy behavior.
+        # Experimental toggle — adds an anti-shrink clause to the
+        # reviewer retry prompt. Disabled by default.
         self.experimental = bool(experimental)
 
     @abstractmethod
@@ -468,7 +468,7 @@ class BaseReviewer(ABC):
                        avoid_phrases: list = None) -> ReviewResult:
         sender_msgs = self._extract_sender_messages(sender_name, message_history)
 
-        # ── Change 2: identical-check in code (case-insensitive, exact + normalized) ──
+        # ── Case-insensitive exact and normalized duplicate checks ──
         msg_norm = self._normalize(message)
         if message.strip().lower() in [m.strip().lower() for m in sender_msgs] or \
                 (msg_norm and msg_norm in [self._normalize(m) for m in sender_msgs]):
@@ -489,8 +489,8 @@ class BaseReviewer(ABC):
         )
         conversation_context = self._format_conversation_context(message_history or [])
 
-        # Persona self-claims (V5 Persona Monitor) — extends the self-contradiction
-        # check beyond the recent-message window. Empty for V3/V4 (param omitted).
+        # Persona Monitor self-claims extend the self-contradiction
+        # check beyond the recent-message window. Empty if omitted.
         claims = [c for c in (persona_claims or []) if str(c).strip()]
         if claims:
             persona_claims_section = (
@@ -502,9 +502,9 @@ class BaseReviewer(ABC):
         else:
             persona_claims_section = ""
 
-        # Grounded facts (V5 Internet Context) — these are real things the player
+        # Internet Context facts are information available to the player,
         # legitimately knows, so the reviewer must NOT flag them as "too
-        # knowledgeable" or strip them out. Empty for V3/V4 (param omitted).
+        # knowledgeable" or strip them out. Empty if omitted.
         facts = (current_info or "").strip()
         if facts:
             grounded_facts_section = (
@@ -520,7 +520,7 @@ class BaseReviewer(ABC):
         else:
             grounded_facts_section = ""
 
-        # Persona (V5.6 #6) — so in-character knowledge isn't flagged as
+        # Persona — so in-character knowledge isn't flagged as
         # "too_knowledgeable". e.g. an israeli_student SHOULD know hofesh gadol.
         persona_txt = (persona or "").strip().replace("_", " ")
         if persona_txt:
@@ -533,15 +533,14 @@ class BaseReviewer(ABC):
         else:
             persona_section = ""
 
-        # Overused words (V5.6 #5) — deterministic repetition tally from the
+        # Overused words — deterministic repetition tally from the
         # Repetition Monitor. Overrides the basic-filler exemption for words THIS
         # agent demonstrably overuses, and forbids adding them in a fix.
         ow = [w for w in (overused_words or []) if str(w).strip()]
         avoid = [w for w in (avoid_phrases or []) if str(w).strip()]
         # Words the fix must NEVER contain = already-overused + persona-avoided.
         # avoid_phrases are persona-static (e.g. an Israeli student doesn't say
-        # "lol") — without these the reviewer kept ADDING "lol" in fixes (9061)
-        # because the generator never produced it and overused was still empty.
+        # "lol") and apply even before a word appears in the repetition tally.
         banned = list(dict.fromkeys(ow + avoid))
         if ow or avoid:
             ow_part = (f"WORDS {sender_name} HAS ALREADY OVERUSED: {', '.join(ow)}. "
@@ -557,10 +556,9 @@ class BaseReviewer(ABC):
         else:
             overused_words_section = ""
 
-        # V5.9 — give the reviewer the SAME game context the GENERATOR sees, so it
-        # isn't judging blind: who suspects us / room mood (Social Dynamics), the
-        # current play-style + our weak spots (Self-Critique), and our repeated
-        # message-shape (Repetition LLM pass). Both stages must see everything.
+        # Give the reviewer the same game context as the generator:
+        # Social State Tracker observations, Behavior Adapter advice,
+        # and Repetition Monitor notes.
         gc_bits = []
         if (social_memory or "").strip():
             gc_bits.append(f"- Social read: {social_memory.strip()}")
@@ -576,7 +574,7 @@ class BaseReviewer(ABC):
         else:
             game_context_section = ""
 
-        # ── Change 1 / 4: pick the right template ──
+        # ── Pick the right review template ──
         if situation_context:
             # Retry call — use REVIEW_PROMPT_RETRY
             prev_lines = []
@@ -636,7 +634,7 @@ class BaseReviewer(ABC):
                 degraded=True,
             )
 
-        # ── Change 3: empty response → pass-through with clear log ──
+        # ── Empty response: pass-through with a clear log ──
         if not response_text:
             self._log("empty_response", "API returned empty response — passing message through")
             return ReviewResult(
@@ -730,7 +728,7 @@ class BaseReviewer(ABC):
                                         situation, expected_human, "passed")
                 return current_message, result
 
-        # ── Change 6: SELECTED_BEST guardrails ──
+        # ── SELECTED_BEST guardrails ──
         if all_evaluated:
             # Filter out score=10 (identical / catastrophic)
             candidates = [(m, r) for m, r in all_evaluated if r.suspicion_score < 10]
@@ -762,8 +760,8 @@ class BaseReviewer(ABC):
     def _populate_attempts(self, final_result: "ReviewResult", all_evaluated: list,
                            final_message: str, situation: Optional[str],
                            expected_human: Optional[str], final_action: str):
-        """B6: attach per-attempt history to the returned ReviewResult for
-        dashboard drill-down. Does not change behavior — pure metadata.
+        """Attach per-attempt history to the returned ReviewResult for
+        dashboard drill-down; this is review provenance metadata.
         """
         if final_result is None:
             return

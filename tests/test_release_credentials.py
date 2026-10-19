@@ -9,6 +9,8 @@ import os
 from contextlib import redirect_stdout
 from pathlib import Path
 import sys
+import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
@@ -25,61 +27,174 @@ def _module(name):
     return module
 
 
-def _without_original_evaluator_feedback(source, filename):
-    """Normalize ORIGINAL source only; accept precisely five known deletions.
+class PromptRestorationTests(unittest.TestCase):
+    def test_no_duplicate_top_level_definitions_or_constants(self):
+        paths = [EXPORT / "llm_players/llm_constants.py", EXPORT / "llm_players/factory.py"]
+        for package in ("agent", "pipeline_base"):
+            paths.extend((EXPORT / "llm_players" / package).rglob("*.py"))
+        for path in paths:
+            tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+            names = []
+            for node in tree.body:
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+                    names.append(node.name)
+                elif isinstance(node, ast.Assign):
+                    names.extend(t.id for t in node.targets if isinstance(t, ast.Name))
+                elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+                    names.append(node.target.id)
+            with self.subTest(path=path.relative_to(EXPORT)):
+                self.assertEqual(len(names), len(set(names)), "Duplicate module binding")
 
-    These fingerprints identify original AST statements, not a new exported
-    baseline. Everything else (including all remaining prompt literals) must
-    compare structurally with the unmodified exported AST. No original prompt
-    text or private source fixture is distributed.
-    """
-    allowed = {
-        "generator_node.py": {
-            "f9c3a4799a6cc477c50816dd45848bd5a2266db9c3e7de2c02185d5ee2d538f3",
-            "b23af3dfb20386ab54bfb575b2722a4cf980637ab36f44b06848de572e0121bb",
-        },
-        "reviewer_node.py": {
-            "54880157d860732a7fb5fc89a3ae777967cea662ff9853d9f96b1decb9ad3daf",
-            "b2aca750dc9fd22dfc0b083be65ed969d8cc3ebfe33281688229e15138f03797",
-            "80502c34b5cd4e6fd4ab5542ec6099c814c5bee0378e19806be0464b277956b7",
-        },
-    }[filename]
-    removed = []
+    def test_prompt_definitions_and_all_builder_branches(self):
+        constants = _module("llm_players.llm_constants")
+        self.assertTrue(callable(constants.build_identity_section))
+        self.assertTrue(constants.STYLE_AND_BEHAVIOR_GUIDELINES)
+        personas = [None, "missing-persona", *constants.load_personas()]
+        for persona in personas:
+            for investigator in (False, True):
+                for experimental in (False, True):
+                    for event in (None, "a synthetic local gathering"):
+                        with self.subTest(persona=persona, investigator=investigator,
+                                          experimental=experimental, event=event):
+                            prompt = constants.build_system_prompt(
+                                persona, experimental=experimental,
+                                investigator=investigator, event_context=event,
+                            )
+                            self.assertIn(constants.STYLE_AND_BEHAVIOR_GUIDELINES, prompt)
+                            self.assertIn(constants.build_identity_section(constants.get_persona(persona)), prompt)
+                            rules = (constants.INVESTIGATOR_GAME_RULES_PROMPT if investigator
+                                     else constants.GAME_RULES_PROMPT)
+                            self.assertIn(rules, prompt)
+                            self.assertEqual(constants.INVESTIGATOR_GUIDELINES in prompt, investigator)
+                            self.assertEqual(constants._EMOJI_POLICY_BLOCK in prompt, experimental)
+                            self.assertEqual("=== SHARED EVENT CONTEXT ===" in prompt, bool(event))
+        self.assertEqual(constants.GENERAL_SYSTEM_INFO,
+                         constants.build_system_prompt(constants.DEFAULT_PERSONA_ID))
 
-    def fingerprint(node):
-        return hashlib.sha256(ast.dump(node, include_attributes=False).encode()).hexdigest()
+    def test_imported_constant_symbols_exist(self):
+        constants = _module("llm_players.llm_constants")
+        for path in (EXPORT / "llm_players").rglob("*.py"):
+            tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ImportFrom) and node.module == "llm_players.llm_constants":
+                    for alias in node.names:
+                        if alias.name != "*":
+                            self.assertTrue(hasattr(constants, alias.name),
+                                            f"{path.relative_to(EXPORT)}: missing {alias.name}")
 
-    class OriginalFeedbackOnly(ast.NodeTransformer):
-        def visit_Assign(self, node):
-            return self._statement(node)
 
-        def visit_If(self, node):
-            return self._statement(node)
+class RenamedRuntimeStateTests(unittest.TestCase):
+    def test_explicit_import_symbols_exist_including_lazy_imports(self):
+        """A directory existing is insufficient: its initializer may be empty."""
+        for package in ("agent", "pipeline_base"):
+            for path in (EXPORT / "llm_players" / package).rglob("*.py"):
+                tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+                for node in ast.walk(tree):
+                    if (not isinstance(node, ast.ImportFrom) or not node.module
+                            or not node.module.startswith("llm_players.")):
+                        continue
+                    module = _module(node.module)
+                    for alias in node.names:
+                        if alias.name == "*" or hasattr(module, alias.name):
+                            continue
+                        child = EXPORT.joinpath(*node.module.split("."), alias.name)
+                        self.assertTrue(child.with_suffix(".py").is_file() or child.is_dir(),
+                                        f"{path.relative_to(EXPORT)}: {node.module}.{alias.name}")
 
-        def _statement(self, node):
-            digest = fingerprint(node)
-            if digest in allowed:
-                removed.append(digest)
-                return None
-            return self.generic_visit(node)
+    def test_defaults_cover_all_inherited_and_agent_channels(self):
+        base = _module("llm_players.pipeline_base.agent_state")
+        agent = _module("llm_players.agent.agent_state")
+        for module in (base, agent):
+            self.assertEqual(set(module.AgentState.__annotations__), set(module.DEFAULT_STATE))
+        self.assertLess(set(base.AgentState.__annotations__), set(agent.AgentState.__annotations__))
+        for key in ("round_summaries", "social_state", "behavior_advice"):
+            self.assertIn(key, agent.AgentState.__annotations__)
+        for key in ("phase_summaries", "social_memory", "behavior_adapter"):
+            self.assertNotIn(key, agent.DEFAULT_STATE)
 
-        def visit_Dict(self, node):
-            retained = []
-            for key, value in zip(node.keys, node.values):
-                item = ast.Tuple(elts=[key, value], ctx=ast.Load()) if key is not None else None
-                digest = fingerprint(item) if item is not None else None
-                if digest in allowed:
-                    removed.append(digest)
-                else:
-                    retained.append((key, value))
-            node.keys = [key for key, _ in retained]
-            node.values = [value for _, value in retained]
-            return self.generic_visit(node)
+    def test_snapshot_initial_read_mutators_and_copy_ownership(self):
+        snapshot = _module("llm_players.agent.shared_state").SharedSnapshot()
+        before = snapshot.read()
+        self.assertEqual(before["round_summaries"], [])
+        self.assertEqual(before["social_state"], "")
+        self.assertEqual(before["behavior_advice"], "")
+        memory = {"suspects_me": ["Blake"], "open_threads": ["a synthetic question"]}
+        snapshot.set_social_state(memory)
+        memory["suspects_me"].append("Casey")
+        self.assertEqual(snapshot.get_social_state()["suspects_me"], ["Blake"])
+        snapshot.append_round_summary("Discussion 1", "a synthetic summary")
+        snapshot.set_behavior_advice("  vary your phrasing  ")
+        current = snapshot.read()
+        self.assertEqual(snapshot.last_round_summarized, "Discussion 1")
+        self.assertEqual(current["round_summaries"], ["Discussion 1: a synthetic summary"])
+        self.assertIn("Blake", current["social_state"])
+        self.assertEqual(current["behavior_advice"], "vary your phrasing")
+        self.assertEqual(current["snapshot_revision"], before["snapshot_revision"] + 3)
+        current["social_state_raw"]["suspects_me"].append("Drew")
+        current["round_summaries"].append("not stored")
+        self.assertEqual(snapshot.get_social_state()["suspects_me"], ["Blake"])
+        self.assertEqual(len(snapshot.read()["round_summaries"]), 1)
 
-    normalized = OriginalFeedbackOnly().visit(ast.parse(source))
-    if set(removed) != allowed or len(removed) != len(allowed):
-        raise AssertionError(f"{filename}: original evaluator deletion allowlist changed: {removed}")
-    return normalized
+    def test_shared_channels_survive_real_langgraph_schema(self):
+        """Exercise real channel filtering without constructors, sleeps or models."""
+        graph = _module("llm_players.agent.graph")
+        state = _module("llm_players.agent.agent_state")
+        shared = {
+            "round_summaries": ["synthetic round context"],
+            "social_state": "synthetic social context",
+            "behavior_advice": "synthetic style directive",
+        }
+        seen = []
+
+        def generate(current):
+            seen.append({key: current[key] for key in shared})
+            return {"draft_message": "synthetic reply"}
+
+        with patch.object(graph, "make_state_builder_node", return_value=lambda s: {}), \
+                patch.object(graph, "make_scheduler_node", return_value=lambda s: {"scheduler_decision": "SEND"}), \
+                patch.object(graph, "make_context_builder_gen_node", return_value=lambda s: {}), \
+                patch.object(graph, "make_generator_node", return_value=generate), \
+                patch.object(graph, "make_output_node", return_value=lambda s: {}):
+            compiled = graph.build_graph(SimpleNamespace(reviewer=None))
+            result = compiled.invoke({**state.DEFAULT_STATE, **shared})
+        self.assertEqual(seen, [shared])
+        self.assertEqual(result["final_message"], "synthetic reply")
+
+    def test_generator_receives_shared_context_in_actual_prompt(self):
+        state = _module("llm_players.agent.agent_state")
+        with tempfile.TemporaryDirectory() as directory:
+            for package in ("agent", "pipeline_base"):
+                module = _module(f"llm_players.{package}.nodes.generator_node")
+                player = SimpleNamespace(
+                    name="Alex", game_dir=Path(directory), logger=Mock(),
+                    llm_config={}, llm=SimpleNamespace(generate=Mock(return_value="<skip>")),
+                    _apply_memory_window=lambda history: history,
+                    get_system_info_message=lambda **kwargs: "synthetic system prompt",
+                    _log_cost=Mock(),
+                )
+                current = {
+                    **state.DEFAULT_STATE,
+                    "round_summaries": ["ROUND_CONTEXT_SENTINEL"],
+                    "social_state": "SOCIAL_CONTEXT_SENTINEL",
+                    "behavior_advice": "STYLE_CONTEXT_SENTINEL",
+                }
+                with self.subTest(package=package):
+                    module.make_generator_node(player)(current)
+                    prompt = player.llm.generate.call_args.args[0]
+                    for sentinel in ("ROUND_CONTEXT_SENTINEL", "SOCIAL_CONTEXT_SENTINEL",
+                                     "STYLE_CONTEXT_SENTINEL"):
+                        self.assertIn(sentinel, prompt)
+
+    def test_graph_readers_do_not_use_retired_shared_keys(self):
+        for package in ("agent", "pipeline_base"):
+            for path in (EXPORT / "llm_players" / package / "nodes").glob("*.py"):
+                tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+                for node in ast.walk(tree):
+                    if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                            and node.func.attr == "get" and node.args
+                            and isinstance(node.args[0], ast.Constant)):
+                        self.assertNotIn(node.args[0].value, {"phase_summaries", "social_memory"},
+                                         str(path.relative_to(EXPORT)))
 
 
 class CredentialTests(unittest.TestCase):
@@ -195,8 +310,28 @@ class CredentialTests(unittest.TestCase):
             vertexai=True, project="operator-project", location="operator-location"
         )
 
+    def test_renamed_search_reaches_sdk_once_without_recursive_alias(self):
+        module = _module("llm_players.agent.sub_agents.web_search")
+        sdk = Mock()
+        sdk.models.generate_content.return_value = SimpleNamespace(
+            text="A synthetic search answer.", candidates=[],
+        )
+        with patch.object(module, "_get_client", return_value=sdk), \
+                patch.object(module._time, "sleep", side_effect=AssertionError("Unexpected retry")):
+            result = module.grounded_search("synthetic query", today_str="2026-10-18")
+        self.assertEqual(result, [{
+            "title": "answer", "snippet": "A synthetic search answer.", "url": "", "grounded": False,
+        }])
+        sdk.models.generate_content.assert_called_once()
+        request = sdk.models.generate_content.call_args.kwargs
+        self.assertEqual(request["model"], "gemini-2.5-flash")
+        self.assertIn("Today is 2026-10-18", request["contents"])
+        self.assertIn("Search for: synthetic query", request["contents"])
+        self.assertEqual(request["config"].temperature, 0.3)
+        self.assertIsNotNone(request["config"].tools[0].google_search)
+
     def test_search_helper_authenticates_without_network(self):
-        module = _module("llm_players.v6.sub_agents.web_search")
+        module = _module("llm_players.agent.sub_agents.web_search")
         with patch.object(module, "_client_cache", None):
             self.client.reset_mock()
             with self.assertRaisesRegex(RuntimeError, "authentication missing"):
@@ -218,26 +353,26 @@ class CredentialTests(unittest.TestCase):
 
 
 class RuntimeClosureTests(unittest.TestCase):
-    def test_factory_is_v6_only_and_defaults_before_schema(self):
+    def test_factory_is_single_agent_and_defaults_before_schema(self):
         factory = _module("llm_players.factory")
-        self.assertEqual(set(factory.llm_players_classes), {"langgraph_v6"})
+        self.assertEqual(set(factory.llm_players_classes), {"social_turing_test_agent"})
         fake_player = Mock()
-        with patch.dict(factory.llm_players_classes, {"langgraph_v6": fake_player}, clear=True):
+        with patch.dict(factory.llm_players_classes, {"social_turing_test_agent": fake_player}, clear=True):
             factory.llm_player_factory({"llm_config": {}})
-            self.assertEqual(fake_player.call_args.kwargs["llm_config"]["async_type"], "langgraph_v6")
+            self.assertEqual(fake_player.call_args.kwargs["llm_config"]["async_type"], "social_turing_test_agent")
             with self.assertRaisesRegex(ValueError, "Unknown async_type"):
-                factory.llm_player_factory({"llm_config": {"async_type": "langgraph_v5"}})
+                factory.llm_player_factory({"llm_config": {"async_type": "unsupported_agent"}})
 
     def test_inheritance_chain_is_unchanged(self):
-        player = _module("llm_players.v6.langgraph_v6_player").LangGraphV6Player
+        player = _module("llm_players.agent.agent").SocialTuringTestAgent
         self.assertEqual([base.__name__ for base in player.__mro__[:5]], [
-            "LangGraphV6Player", "LangGraphPlayer", "ReviewedPlayer",
+            "SocialTuringTestAgent", "PipelinePlayer", "ReviewedPlayer",
             "ScheduleThenGeneratePlayer", "LLMPlayer",
         ])
 
     def test_no_private_key_file_reader_or_author_project_in_retained_loaders(self):
         paths = ["llm_wrapper.py", "gemini_reviewer.py", "openrouter_reviewer.py",
-                 "together_reviewer.py", "v6/sub_agents/web_search.py"]
+                 "together_reviewer.py", "agent/sub_agents/web_search.py"]
         for relative in paths:
             with self.subTest(path=relative):
                 text = (EXPORT / "llm_players" / relative).read_text(encoding="utf-8")
@@ -261,69 +396,18 @@ class RuntimeClosureTests(unittest.TestCase):
     def test_dormant_architectures_and_profiler_are_absent(self):
         removed = [
             "every_x_messages_player.py", "fine_tuned_player.py", "generate_then_schedule_player.py",
-            "v5/sub_agents/web_search.py", "v5/sub_agents/__init__.py", "v5/__init__.py",
-            "v5/langgraph_v5_player.py", "v5/shared_state.py", "v5/sub_agents/base.py",
-            "v5/sub_agents/behavior_evolution.py", "v5/sub_agents/internet_context.py",
-            "v5/sub_agents/persona_monitor.py", "v5/sub_agents/phase_summarizer.py",
-            "v5/sub_agents/repetition_monitor.py", "v5/sub_agents/social_memory.py",
-            "v6/background_integration.py", "v6/background_worker.py", "v6/langsmith_tracing.py",
-            "v6/graphs/background_intelligence_graph.py", "v6/graphs/__init__.py",
-            "v6/sub_agents/player_profiler.py", "v6/sub_agents/live_evaluator.py",
+            "agent/background_integration.py", "agent/background_worker.py", "agent/langsmith_tracing.py",
+            "agent/graphs/background_intelligence_graph.py", "agent/graphs/__init__.py",
+            "agent/sub_agents/player_profiler.py", "agent/sub_agents/live_evaluator.py",
             "evaluation_prompts.py",
         ]
-        removed += [f"v6/research/{name}.py" for name in (
+        removed += [f"agent/research/{name}.py" for name in (
             "backend", "classifier", "fact_selection", "recovery", "researcher", "searcher",
             "seeder", "shared_snapshot_backend", "source_verifier",
         )]
         for name in removed:
             with self.subTest(name=name):
                 self.assertFalse((EXPORT / "llm_players" / name).exists())
-
-    def test_only_exact_evaluator_deletions_when_research_source_available(self):
-        research = EXPORT.parents[2]
-        paths = [f"llm_players/v6/nodes/{name}_node.py" for name in ("generator", "reviewer")]
-        if not all((research / relative).exists() for relative in paths):
-            self.skipTest("Original generator/reviewer source is intentionally not distributed")
-        for relative in paths:
-            with self.subTest(path=relative):
-                original = (research / relative).read_text(encoding="utf-8-sig")
-                exported = (EXPORT / relative).read_text(encoding="utf-8-sig")
-                normalized = _without_original_evaluator_feedback(original, Path(relative).name)
-                self.assertEqual(
-                    ast.dump(ast.parse(exported), include_attributes=False),
-                    ast.dump(normalized, include_attributes=False),
-                    "Only the exact original evaluator feedback statements may be deleted",
-                )
-
-    def test_scientific_files_hash_parity_when_research_source_available(self):
-        research = EXPORT.parents[2]
-        if not (research / "llm_players/v6/nodes/reviewer_node.py").exists():
-            self.skipTest("Research source is intentionally not distributed")
-        paths = [
-            "llm_player.py", "prompting_player.py", "schedule_then_generate_player.py",
-            "reviewed_player.py", "reviewer_base.py", "v6/graph.py", "v6/conversation_analysis.py",
-            "v6/research/query_validator.py", "v6/sub_agents/internet_context.py",
-            "v6/sub_agents/phase_summarizer.py", "v6/sub_agents/persona_monitor.py",
-            "v6/sub_agents/social_memory.py", "v6/sub_agents/behavior_evolution.py",
-            "v6/sub_agents/repetition_monitor.py",
-        ]
-        paths += [f"v6/nodes/{name}.py" for name in (
-            "state_builder", "scheduler_node", "context_builder", "output_node",
-        )]
-        for relative in paths:
-            with self.subTest(path=relative):
-                original = (research / "llm_players" / relative).read_bytes()
-                exported = (EXPORT / "llm_players" / relative).read_bytes()
-                self.assertEqual(hashlib.sha256(exported).hexdigest(), hashlib.sha256(original).hexdigest())
-        # Only architecture routing changes in this prompt-bearing module.
-        original = (research / "llm_players/llm_constants.py").read_text(encoding="utf-8-sig")
-        exported = (EXPORT / "llm_players/llm_constants.py").read_text(encoding="utf-8-sig")
-        before = ('ASYNC_TYPES = [SCHEDULE_THEN_GENERATE_TYPE, GENERATE_THEN_SCHEDULE_TYPE,\n'
-                  '               FINE_TUNED_TYPE, EVERY_X_MESSAGES_TYPE,\n'
-                  '               REVIEWED_SCHEDULE_THEN_GENERATE_TYPE]')
-        self.assertIn(before, original)
-        self.assertEqual(exported, original.replace(before, 'ASYNC_TYPES = ["langgraph_v6"]', 1))
-
 
 if __name__ == "__main__":
     unittest.main()

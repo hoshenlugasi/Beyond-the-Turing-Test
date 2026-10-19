@@ -1,6 +1,5 @@
 """
-Simple web interface for Social Turing Test game
-Run this instead of player_merged_chat_and_input.py for a chat-like UI
+Web interface for the Social Turing Test game and agent monitoring.
 """
 
 from flask import Flask, render_template, request, jsonify, send_from_directory, session
@@ -79,7 +78,7 @@ from core.vote_rounds import (
     vote_round_lock,
 )
 from core.game_paths import resolve_game_dir, target_dir_for_config, iter_all_games, ensure_game_subdirs, game_file, SUBDIR_EVENTS
-from core.game_version import detect_agent_version
+from core.game_identity import detect_agent_identity
 from core.config_schema import ConfigError, reject_retired_config
 from core.source_fingerprint import relevant_source_fingerprint
 from prepare_config import PlayerConfig
@@ -103,7 +102,7 @@ ADMIN_PASSWORD = _load_admin_password()
 if not ADMIN_PASSWORD:
     print("ADMIN PASSWORD NOT SET — admin panel disabled. Set STT_ADMIN_PASSWORD.")
 
-# ── Game-ID validation (1.1 — prevent path traversal) ──
+# ── Game-ID validation to prevent path traversal ──
 _GAME_ID_RE = re.compile(r"^\d{4}$")
 
 def _valid_game_id(game_id) -> bool:
@@ -118,7 +117,7 @@ server_api_keys = {}  # {"TOGETHER_API_KEY": "sk-...", "GOOGLE_CLOUD_PROJECT": "
 _typing_states: dict = {}
 _TYPING_TIMEOUT_SECS = 5  # stop showing indicator after 5 s of silence
 
-# ── Background eval state removed (legacy post-game evaluator removed) ──
+# ── Game orchestration state ──
 
 def _check_admin_auth():
     """Return error response if admin is not authenticated, else None."""
@@ -353,19 +352,13 @@ class WebPlayer:
         Read only *new* lines from manager & daytime chat files
         and return them as a list of {text, type} dicts.
 
-        BUG FIX: Classify messages ONLY by their file of origin:
+        Classify messages by their file of origin:
         - All lines from PUBLIC_MANAGER_CHAT_FILE → type="manager"
         - All lines from PUBLIC_DAYTIME_CHAT_FILE → type="chat"
 
-        This ensures 100% consistency - no text pattern matching needed!
-
-        Ordering: between polls both files may have grown. We previously emitted
-        ALL new manager lines first, then ALL new daytime lines, which placed
-        late manager announcements (e.g. round-2 "Discussion phase ended" at
-        20:54:14) ABOVE round-2 chat (20:52:36..20:54:00) that came in the same
-        poll batch — breaking chronology especially for eliminated spectators
-        whose polls span longer windows. Now we interleave the two batches by
-        their [HH:MM:SS] timestamp so the chat reads chronologically.
+        Interleave both batches by their [HH:MM:SS] clock values, retaining
+        file-order indices to break ties. This is a time-of-day display sort,
+        not a reconstruction of cross-day chronology.
         """
         messages = []
 
@@ -465,19 +458,17 @@ class WebPlayer:
 
 def get_llm_player_name(game_dir):
     """
-    Get the AI player's name using multiple fallback methods:
-    1. Check ai_player.txt file (newer games)
-    2. Find player with _log.txt file (original method)
-    3. Read directly from config.json (most reliable fallback)
+    Find the AI player's name from its marker file, a roster member's log,
+    or the AI entry in the game configuration, in that order.
     """
-    # Step 1: Check if ai_player.txt exists (newer games)
+    # Read the explicit AI-name marker first.
     ai_player_file = game_dir / AI_PLAYER_FILE
     if ai_player_file.exists():
         content = ai_player_file.read_text(encoding="utf-8").strip()
         if content:  # Make sure it's not empty
             return content
     
-    # Step 2: Find player with _log.txt file (original method)
+    # Otherwise identify a roster member with an AI log file.
     player_names_file = game_dir / PLAYER_NAMES_FILE
     if player_names_file.exists():
         for player_name in player_names_file.read_text(encoding="utf-8").splitlines():
@@ -561,7 +552,7 @@ def join_game():
     player_states[session_id] = WebPlayer(game_dir, code_name, is_ai)
     _persist_sessions()
 
-    # Mark as joined (same semantics as original CLI client)
+    # Record the player's joined status.
     status_file = game_dir / PERSONAL_STATUS_FILE_FORMAT.format(code_name)
     status_file.write_text(JOINED, encoding="utf-8")
 
@@ -573,8 +564,7 @@ def join_game():
             "code_name": code_name,
             "is_ai": is_ai,
             "role": role_display,
-            # RULES_OF_THE_GAME is still available if you ever want a static area,
-            # but we no longer inject it as a separate chat bubble to avoid duplicates.
+            # Provide rules as a separate response field, not a duplicate chat bubble.
             "rules": RULES_OF_THE_GAME,
         }
     )
@@ -889,7 +879,7 @@ def get_messages():
     #   - game not over
     can_chat = game_started and (not can_vote) and (not game_over)
 
-    # Fix 2: expose server-side game_start_time + daytime_minutes so the player's
+    # Expose server-side game_start_time + daytime_minutes so the player's
     # timer can sync to the server clock instead of running a drifting client-side
     # countdown that resets per browser tab.
     game_start_time_str = None
@@ -1033,12 +1023,9 @@ def _detect_stuck_game(game_dir, can_vote, remaining_players, dst_file, game_ove
 
 
 def _count_current_round_votes(game_dir, remaining_players, dst_file) -> int:
-    """Count votes cast in the CURRENT voting round only.
+    """Count current-round votes using the per-round token each writer records.
 
-    Counting every *_vote.txt ever created showed "4/3 voted" on round 2, and
-    comparing file mtimes to the round anchor counted the previous round's last
-    voter as having already voted in the new one. Both are answered exactly by
-    the per-round token each writer records.
+    Vote-file existence and modification times do not establish round membership.
     """
     return sum(1 for name in remaining_players
                if has_voted_this_round(game_dir, name))
@@ -1063,10 +1050,8 @@ _vote_locks_guard = threading.Lock()
 def _get_vote_lock(game_id: str, name: str) -> threading.Lock:
     """Serialize check-then-write for one player's vote.
 
-    Production runs Gunicorn with four threads, so a double-tap can put two
-    /vote requests in flight at once. Without this lock both would see "not
-    voted yet" and both would append, which is exactly the four-votes-in-one-
-    round record found in game 9094.
+    Concurrent /vote requests must not both pass the round check and append.
+    This lock serializes those operations within the server process.
     """
     key = (str(game_id), str(name))
     with _vote_locks_guard:
@@ -1148,11 +1133,8 @@ def send_message():
 def vote():
     """Append this player's vote for the current round.
 
-    One vote per player per round. Game 9094 recorded four votes from one
-    participant in a single round: the manager consumes the first line and
-    drops that player from the voting loop, so the extra lines sit unread and
-    are silently applied as that player's vote in LATER rounds - for a target
-    they never chose, possibly one already eliminated.
+    Enforce one vote per player per round so duplicate submissions do not
+    leave extra vote-file lines for a later round to consume.
     """
     data = request.json or {}
     session_id = data.get("session_id")
@@ -1293,7 +1275,7 @@ def lobby_status():
             "joined_count": len(lobby.get("humans", [])),
         })
 
-    # Post-start (or legacy game): existing logic.
+    # Use persisted player state after START or when no open lobby is present.
     player_names_file = player.game_dir / PLAYER_NAMES_FILE
     if not player_names_file.exists():
         return jsonify({"error": "Game not ready"}), 404
@@ -1426,7 +1408,7 @@ def submit_tap():
 def survey_submit():
     """
     Submit end-of-game survey results.
-    Writes to survey file in Niv's exact format matching game_constants.py:
+    Writes the survey fields defined by game_constants.py:
     TIME - <timestamp>
     Was the LLM identified - <not used, always 0>
     similarity to human behavior - <1-5>
@@ -1437,8 +1419,8 @@ def survey_submit():
     Suspicion reasoning: <suspicion_reason>
     Other comments or suggestions: <notes>
     
-    NOTE: We no longer ask "who was the AI" since it's already revealed.
-    The "Was the LLM identified" field is kept for backward compatibility but set to 0.
+    The AI is already revealed when this survey is shown. The identification
+    field is written as 0 and is not a participant response.
     """
     data = request.json or {}
     session_id = data.get("session_id")
@@ -1487,7 +1469,7 @@ def survey_submit():
     timestamp = datetime.now().strftime("%H:%M:%S")
     
     # Match exact format from game_constants.py
-    # Note: "Was the LLM identified" is set to 0 (not applicable) since we no longer ask this
+    # The identification field is 0 (not applicable), not a participant response.
     survey_content = f"TIME{METRIC_NAME_AND_SCORE_DELIMITER}{timestamp}\n"
     survey_content += f"Was the LLM identified{METRIC_NAME_AND_SCORE_DELIMITER}0\n"
     survey_content += f"similarity to human behavior{METRIC_NAME_AND_SCORE_DELIMITER}{human_likeness}\n"
@@ -1514,7 +1496,7 @@ _AGENT_BUILD_WRITE_LOCK = threading.Lock()
 
 
 def _agent_code_from_game(game_dir):
-    """Return the configured agent-code label, defaulting compatibly to current."""
+    """Return the configured agent-code label or the default agent label."""
     try:
         with open(game_dir / GAME_CONFIG_FILE, encoding='utf-8') as f:
             cfg = json.load(f)
@@ -1657,7 +1639,7 @@ def _launch_lobby_ai(game_id: str, game_dir: Path):
         spawn_cwd, extra_env, _preflight_build = _agent_spawn_preflight(game_dir)
     except AgentCheckoutVerificationError as exc:
         # Keep the failure visible to the existing Issues/readiness plumbing,
-        # but never start a mislabeled historical agent.
+        # but never start an agent whose source does not match its label.
         llm_log_f.write(f"AGENT CHECKOUT PRE-FLIGHT FAILED: {exc}\n")
         llm_log_f.flush()
         llm_log_f.close()
@@ -1914,7 +1896,7 @@ def _deep_test_call(provider, model_name, prompt, max_tokens):
 
 @app.route('/api/admin/test_internet', methods=['POST'])
 def admin_test_internet():
-    """Pre-game check that the V6 Internet Context grounding actually works in
+    """Pre-game check that Internet Context grounding actually works in
     THIS environment. Catches the server-side DefaultCredentialsError (Vertex
     with no ADC) BEFORE a game, so the internet sub-agent isn't silently dead."""
     auth_err = _check_admin_auth()
@@ -1924,7 +1906,10 @@ def admin_test_internet():
     start = _time.time()
     try:
         # Reset the cached client so this reflects the CURRENT auth/env.
-        import llm_players.v6.sub_agents.web_search as ws
+        try:
+            import llm_players.agent.sub_agents.web_search as ws
+        except Exception:
+            import llm_players.agent.sub_agents.web_search as ws
         ws._client_cache = None
         results = ws.gemini_grounded_search("biggest world news this week", max_results=2)
         elapsed_ms = int((_time.time() - start) * 1000)
@@ -2050,7 +2035,7 @@ def admin_topics():
 def admin_create_config():
     """Create a game configuration from web form data.
 
-    Open-lobby model: the admin no longer specifies player count or names.
+    Open-lobby model: humans supply their names when joining the lobby.
     Humans join via /lobby_join after the game directory is created. This
     config holds only the AI player (when has_llm) and game-wide settings;
     `min_players` is the gate for the admin's START GAME button.
@@ -2072,9 +2057,9 @@ def admin_create_config():
     persona = data.get('persona', 'swiss_student')
     topic = data.get('topic', '').strip() or None
     review_mode = data.get('review_mode', 'gemini')
-    pipeline = (data.get('pipeline') or 'v6').strip().lower()
-    if pipeline != 'v6':
-        return jsonify({'error': 'Only V6 legacy is available'}), 400
+    pipeline = (data.get('pipeline') or 'agent').strip().lower()
+    if pipeline != 'agent':
+        return jsonify({'error': 'Only the Social Turing Test agent is available'}), 400
     generator_model = data.get('generator_model', '').strip() or None
     generator_provider = data.get('generator_provider', '').strip() or None
     reviewer_model = data.get('reviewer_model', '').strip() or None
@@ -2101,7 +2086,7 @@ def admin_create_config():
 
         # Event context (same key prepare_config --event-context writes): the
         # shared physical setting of the human players, injected into the
-        # agent's fixed persona facts — the counter to the 9067/9070 traps.
+        # agent's fixed persona facts for consistent identity answers.
         event_context = (data.get('event_context') or '').strip()
         if event_context:
             llm_config["event_context"] = event_context
@@ -2115,7 +2100,7 @@ def admin_create_config():
             }), 400
         llm_config["agent_code"] = agent_code
 
-        # Public V6 defaults: Flash handles generation/scheduling/review.
+        # Public defaults: Flash handles generation/scheduling/review.
         gen_model = generator_model or "gemini-2.5-flash"
         llm_config[MODEL_NAME_KEY] = gen_model
         provider = generator_provider or _detect_provider(gen_model)
@@ -2123,8 +2108,7 @@ def admin_create_config():
         llm_config[USE_TOGETHER_KEY] = (provider == "together")
         llm_config[USE_OPENROUTER_KEY] = (provider == "openrouter")
 
-        # Reviewer mode — sets reviewer fields and a default V3 async_type.
-        # If pipeline is V4/V5 below, the async_type is replaced.
+        # Reviewer mode sets provider fields before the agent pipeline override.
         if review_mode == 'gemini':
             llm_config[ASYNC_TYPE_KEY] = REVIEWED_SCHEDULE_THEN_GENERATE_TYPE
             llm_config["reviewer_backend"] = "gemini"
@@ -2140,33 +2124,30 @@ def admin_create_config():
         else:
             llm_config[ASYNC_TYPE_KEY] = SCHEDULE_THEN_GENERATE_TYPE
 
-        # V5.11 — make the reviewer toggle ACTUALLY take effect. ReviewedPlayer
-        # (and the V4/V5 players that inherit it) default reviewer_enabled=True,
-        # and the V4/V5 blocks below setdefault a reviewer_model — so without
-        # this an admin choosing review_mode='none' still ran the reviewer
-        # (game 9036). Set it explicitly so 'none' disables review across all
-        # pipelines; the metrics/UI then correctly show "reviewer: off".
+        # Explicitly honor the reviewer toggle despite inherited defaults and
+        # the default reviewer model set below. The metrics/UI can then show
+        # "reviewer: off" when review_mode is 'none'.
         llm_config["reviewer_enabled"] = (review_mode != 'none')
 
-        # Pipeline override — V4/V5 use LangGraph-based players. The reviewer
+        # Pipeline override — agent-based players. The reviewer
         # config above is reused (LangGraphPlayer inherits from ReviewedPlayer).
-        if pipeline == 'v6':
-            llm_config[ASYNC_TYPE_KEY] = 'langgraph_v6'
+        if pipeline == 'agent':
+            llm_config[ASYNC_TYPE_KEY] = 'social_turing_test_agent'
             llm_config.setdefault("reviewer_backend", "gemini")
             llm_config.setdefault("reviewer_model", "gemini-2.5-flash")
-            # V6 — dual-role investigator + multi-candidate generation + ranker
-            # + strategic voting. Defaults mirror configurations/V6Israel.json;
+            # Agent pipeline — dual-role investigator + multi-candidate generation + ranker
+            # + strategic voting. Defaults mirror the release baseline;
             # advanced_llm_config (below) can still override any of these.
             llm_config.setdefault("multi_candidate_generation", True)
             llm_config.setdefault("num_candidates", 4)
             llm_config.setdefault("investigator", True)
             llm_config.setdefault("voting_strategy", "strategic")
             llm_config.setdefault("pipeline_timeout_s", 35.0)
-            # V6 — optional dedicated send/wait scheduler model (provider
-            # auto-detected by the V6 player). Empty = share the generator model.
+            # Optional dedicated send/wait scheduler model (provider
+            # auto-detected by the player). Empty = share the generator model.
             if scheduler_model:
                 llm_config["scheduler_model"] = scheduler_model
-            # Dedicated sub-agents model (V6): all background workers — memory,
+            # Dedicated sub-agents model: all background workers — memory,
             # internet, persona, repetition etc. Provider auto-detected by the player.
             if sub_agent_model:
                 llm_config["sub_agent_model"] = sub_agent_model
@@ -2180,32 +2161,25 @@ def admin_create_config():
         llm_config.update(advanced)
 
         # Pipeline integrity guard (post-merge). The advanced merge above can
-        # silently clobber what makes a pipeline that pipeline. A STALE frontend
-        # (browser not hard-refreshed after the sentinel fix) sends the schema
-        # defaults explicitly in advanced — multi_candidate_generation=false,
-        # voting_strategy=random — which downgraded selected-V6 games to a plain
-        # reviewer/rewrite flow with no candidate ranking and no investigator, so
-        # "V6 didn't manifest". The pipeline DROPDOWN is the single source of
-        # truth for pipeline identity, so re-assert the defining keys here AFTER
-        # the merge and UNCONDITIONALLY for the identity flags — selecting "V6"
-        # unambiguously means "run real V6", and there is no valid reason for a
-        # web-created V6 game to run the rewrite reviewer or random voting.
+        # silently clobber candidate ranking, investigation, or strategic voting
+        # with stale schema defaults. The pipeline selection is the source of
+        # truth, so re-assert its defining identity flags after the merge.
         # Only the genuinely tunable knobs (num_candidates, pipeline_timeout_s)
         # honor an explicit advanced override.
-        _PIPELINE_ASYNC_TYPE = {'v6': 'langgraph_v6'}
+        _PIPELINE_ASYNC_TYPE = {'agent': 'social_turing_test_agent'}
         if pipeline in _PIPELINE_ASYNC_TYPE:
             llm_config[ASYNC_TYPE_KEY] = _PIPELINE_ASYNC_TYPE[pipeline]
-        if pipeline == 'v6':
+        if pipeline == 'agent':
             # Identity flags — forced ON regardless of advanced (stale-frontend proof).
             llm_config["multi_candidate_generation"] = True
             llm_config["investigator"] = True
             llm_config["voting_strategy"] = "strategic"
-            # Tunable knobs — keep the V6 default unless the admin set one explicitly.
-            v6_tunables = {"num_candidates": 4, "pipeline_timeout_s": 35.0}
-            for k, v in v6_tunables.items():
+            # Tunable knobs — keep defaults unless the admin set one explicitly.
+            agent_tunables = {"num_candidates": 4, "pipeline_timeout_s": 35.0}
+            for k, v in agent_tunables.items():
                 if k not in advanced:
                     llm_config[k] = v
-        llm_config['orchestration_mode'] = 'legacy'
+        llm_config['orchestration_mode'] = 'synchronous'
         llm_config['allow_active_authoritative'] = False
         llm_config['agent_code'] = 'current'
 
@@ -2267,7 +2241,7 @@ def admin_create_game():
     if config_error:
         return jsonify({"error": config_error}), 400
 
-    # Phase C: route by config — is_test + detected agent version.
+    # Route by the configured real/test game category.
     game_dir = target_dir_for_config(config, game_id)
     game_dir.mkdir(parents=True)
     ensure_game_subdirs(game_dir)
@@ -2339,7 +2313,7 @@ def admin_create_game():
 
 
 def _local_config_error(config):
-    """Reject historical or active pipelines even when loading a saved config."""
+    """Validate the supported agent configuration, including saved configurations."""
     try:
         reject_retired_config(config)
     except ConfigError as exc:
@@ -2348,23 +2322,25 @@ def _local_config_error(config):
         if not player.get('is_llm'):
             continue
         settings = player.get('llm_config') or {}
-        if (settings.get('async_type') != 'langgraph_v6'
-                or settings.get('orchestration_mode', 'legacy') != 'legacy'
+        async_type = settings.get('async_type')
+        if (async_type not in {'social_turing_test_agent'}
+                or settings.get('orchestration_mode', 'synchronous') != 'synchronous'
                 or settings.get('agent_code', 'current') != 'current'
                 or settings.get('allow_active_authoritative', False)):
-            return 'Only current final V6 legacy is supported'
+            return 'Only the Social Turing Test agent configuration is supported'
     return None
 
 
 def _config_active_preflight(config):
-    """Post-hackathon: the experimental V6 active/shadow orchestration was removed
-    — every V6 game runs the legacy pipeline. Kept as a stable API for the admin
-    UI; always reports V6 Legacy."""
+    """Return the supported agent configuration status for the admin UI."""
     players = config.get("players", [])
     llm = [p for p in players if p.get("is_llm")]
-    any_v6 = any((p.get("llm_config") or {}).get("async_type") == "langgraph_v6" for p in llm)
-    return {"v6_active_requested": False,
-            "label": "V6 Legacy" if any_v6 else "non-V6",
+    has_agent = any(
+        (p.get("llm_config") or {}).get("async_type") in {"social_turing_test_agent"}
+        for p in llm
+    )
+    return {"active_requested": False,
+            "label": "Social Turing Test Agent" if has_agent else "non-agent",
             "preflight_ok": None,
             "warning": None}
 
@@ -3005,7 +2981,7 @@ def admin_recreate_game():
     config['publication_mode'] = False
     config['require_all_instructions_ack'] = False
 
-    # Stop old game if still running.
+    # Stop the source game if still running.
     if old_game_id in running_games:
         procs = running_games.pop(old_game_id)
         for key in ('manager', 'llm'):
@@ -3023,7 +2999,7 @@ def admin_recreate_game():
                     fh.close()
                 except Exception:
                     pass
-    # Tear down any pre-spawned lobby AI for the old game that never STARTed.
+    # Tear down any pre-spawned lobby AI for the source game that never STARTed.
     _cleanup_lobby_ai(old_game_id, terminate=True)
 
     for stale_key in ("config_original_path_when_game_created",):
@@ -4005,8 +3981,7 @@ def _time_to_seconds(t):
 
 
 def _read_discussion_start_hms(game_dir):
-    """HH:MM:SS from discussion_start_time.txt, or None (pre-discussion /
-    legacy games without the file)."""
+    """Read the discussion-start clock value, or None if absent or unreadable."""
     try:
         dst_file = game_dir / DISCUSSION_START_TIME_FILE
         if dst_file.exists():
@@ -4038,9 +4013,9 @@ def _compute_ai_metrics(
     Extract structured AI performance metrics from the log file.
 
     discussion_start_hms — "HH:MM:SS" from discussion_start_time.txt. When
-    given, messages_per_minute is measured from the moment discussion opened
-    instead of the first log line (which includes lobby idle time and made
-    the rate look artificially low).
+    given and usable, messages_per_minute uses the later of discussion start
+    and the first log entry. Otherwise the first log entry is the anchor.
+    Clock values are seconds since midnight, without date reconstruction.
 
     Returns dict with:
       messages  – per-message detail list
@@ -4064,14 +4039,14 @@ def _compute_ai_metrics(
             if m:
                 reason, text = m.group(1), m.group(2)
                 dropped_lookup[text] = reason
-        # V6 output gates: a selected message can still be suppressed AFTER the
-        # pipeline completes (timeout / staleness). 9107: 6 completes, 5 drops,
-        # 1 real chat message — these rows must carry sent=False too.
-        elif _e["operation"] in ("v6_pipeline_timeout_drop", "v6_stale_send_drop"):
+        # Output gates: a selected message can still be suppressed AFTER the
+        # pipeline completes (timeout / staleness). Mark these rows unsent;
+        # completion and selection alone do not establish delivery.
+        elif _e["operation"] in ("pipeline_timeout_drop", "stale_send_drop"):
             m = (_re_drop.search(r"suppressed:\s*'(.*)'\s*$", _e["content"].strip())
                  or _re_drop.search(r"'(.+?)'", _e["content"]))
             if m:
-                dropped_lookup[m.group(1)] = _e["operation"].replace("v6_", "").replace("_", " ")
+                dropped_lookup[m.group(1)] = _e["operation"].replace("_", " ")
 
     messages = []           # completed send events
     scheduler_calls = 0     # total scheduler invocations
@@ -4088,10 +4063,9 @@ def _compute_ai_metrics(
     generator_start_time = None
     current_send_decision_time = None
     current_raw_message = None
-    # Post-review final message (parsed from LIVE_REVIEW_SUMMARY's `FINAL (...)`
-    # line). This is what was actually sent to the chat — preferred over
-    # current_raw_message (which is the generator's pre-review output) so
-    # the Per-Message Detail table matches the public chat exactly.
+    # Post-review text from LIVE_REVIEW_SUMMARY's FINAL line. Prefer it over
+    # raw generator output, then reconcile delivery against the append file
+    # when available; a final text record alone does not establish delivery.
     current_final_message = None
     # True when the reviewer dropped the turn (best score ≥ drop threshold).
     # Drop events generate a review_cycle entry but no chat message, so we
@@ -4111,11 +4085,9 @@ def _compute_ai_metrics(
     current_typing_ideal = None      # ideal budget (word_count*1.0*(1+jitter))
     current_budget_exceeded = False  # Did reviewer hit its wall-clock budget?
     current_review_degraded = False  # Did the reviewer FAIL (404/empty/parse)?
-    # V6 multi-candidate pipeline: the generator logs the candidate pool
-    # (v6_generator_candidates) and the ranker logs which one it SENT
-    # (v6_reviewer_selected). With no reviewer configured, the pass-through
-    # sends candidates[0] (reviewer_node.py) and NO op carries the final
-    # text — so the candidate pool is the only source for the message text.
+    # Candidate pools and explicit selections supply text and selection
+    # provenance. The first candidate supplies fallback text without a
+    # selection record; that fallback is not evidence of reviewer activity.
     current_candidates = None        # list[str] | None
     current_selected_text = None     # str | None (ranker's chosen candidate)
     current_selected_n = None        # pool size from the selection log line
@@ -4134,9 +4106,8 @@ def _compute_ai_metrics(
         game_last_time = ts
 
         # ── Scheduler start ──
-        # V6 logs "v4_scheduler_prompt"; legacy logs "prompt in should_generate_message".
-        # Reset on either so per-round typing state never leaks across rounds.
-        if op in ("prompt in should_generate_message", "v4_scheduler_prompt"):
+        # Logs may use either prompt label; treat both as scheduler-start markers.
+        if op in ("prompt in should_generate_message", "scheduler_prompt"):
             scheduler_start_time = ts
             # Clear stale per-round state. LIVE_REVIEW_SUMMARY is logged
             # AFTER the round's UNLOCKED, so on the *next* round the
@@ -4157,15 +4128,11 @@ def _compute_ai_metrics(
             current_selected_n = None
 
         # ── Scheduler decision ──
-        # Legacy: "decision in should_generate_message" with <send>/<wait>.
-        # V6: "v4_scheduler_decision" with "decision=SEND|WAIT, ...".
-        if op in ("decision in should_generate_message", "v4_scheduler_decision"):
+        if op in ("decision in should_generate_message", "scheduler_decision"):
             scheduler_calls += 1
-            if op == "v4_scheduler_decision":
-                # Match the decision token itself — a bare "SEND" substring
-                # also matches "send_reason=none" on WAIT lines, which used
-                # to count every cycle as SEND (9091 showed 12/0 for a real
-                # 1 SEND / 11 WAIT round).
+            if op == "scheduler_decision":
+                # Match the decision token itself, not the SEND substring
+                # inside a send_reason field on a WAIT line.
                 is_send = re.search(r"decision\s*=\s*send", content, re.IGNORECASE)
                 decision_tag = "<send>" if is_send else "<wait>"
             else:
@@ -4196,8 +4163,8 @@ def _compute_ai_metrics(
         if op.startswith("final_output in generate") and generator_start_time is not None:
             current_raw_message = content
 
-        # ── V6 candidate pool + ranker selection ──
-        if op == "v6_generator_candidates":
+        # ── Candidate pool + ranker selection ──
+        if op == "generator_candidates":
             try:
                 import ast as _ast
                 # The list repr is single-line; cost-telemetry lines appended
@@ -4210,7 +4177,7 @@ def _compute_ai_metrics(
             except Exception:
                 current_candidates = None
 
-        if op == "v6_reviewer_selected":
+        if op == "reviewer_selected":
             _sel_m = re.match(r"^['\"](.*)['\"] from (\d+) candidates", content, re.DOTALL)
             if _sel_m:
                 current_selected_text = _sel_m.group(1)
@@ -4251,8 +4218,7 @@ def _compute_ai_metrics(
             import re as _re_td
             # The typing_delay line carries the FULL pipeline time, so we can compute
             # Total = natural pipeline latency (elapsed) + artificial wait (sleep)
-            # WITHOUT needing a separate reviewer_latency log entry (V6's ranker
-            # reviewer doesn't emit one). Forms:
+            # without requiring a separate reviewer_latency entry. Forms:
             #   "sleep X.XXs (ideal Y.YYs, elapsed Z.ZZs)"  → wait=X, natural=Z, total=Z+X
             #   "no_sleep: pipeline already took Z.ZZs ≥ ideal Y.YYs" → wait=0, natural=Z
             #   "skipped_short (N words)"                    → wait=0, natural unknown
@@ -4275,12 +4241,10 @@ def _compute_ai_metrics(
                     current_typing_ideal = float(mi.group(1))
             elif content.startswith("skipped_short"):
                 current_typing_wait = 0.0
-            # In LEGACY live-reviewer games, typing_delay is logged from
-            # llm_interface.wait_writing_time AFTER the row was appended (with no
-            # precise typing value), so we patch that row here. In V6 the
-            # typing_delay is logged BEFORE the row is appended, so the row already
-            # carries the precise value at append time (_typing_from_log=True) and
-            # must NOT be re-patched here (it would belong to the previous row).
+            # A typing_delay entry may follow its message row. Update only a
+            # row lacking an instrumented typing value. Rows populated before
+            # append carry _typing_from_log=True and must not receive another
+            # turn's delay.
             if (messages and current_typing_wait is not None
                     and not messages[-1].get("_typing_from_log")):
                 last_msg = messages[-1]
@@ -4323,9 +4287,8 @@ def _compute_ai_metrics(
             if ("API error" in content or "REVIEWER UNAVAILABLE" in content
                     or "REVIEWER PARSE FAILED" in content):
                 current_review_degraded = True
-            # Capture the post-review final message so the table shows what
-            # was actually sent (e.g. "i'm not" instead of generator output
-            # "i'm not!"). Format: FINAL (unchanged|modified): 'TEXT'
+            # Capture summary text in the form FINAL (<status>): 'TEXT'.
+            # Delivery evidence is reconciled separately when supplied.
             final_m = _re3.search(r"FINAL \([^)]+\):\s*'(.*)'\s*$", content, _re3.MULTILINE)
             if final_m:
                 current_final_message = final_m.group(1)
@@ -4349,7 +4312,7 @@ def _compute_ai_metrics(
                     if review_final_score is not None:
                         last_msg["reviewer_score"] = review_final_score
                     # Selection-mode rows keep reviewer_modified=False — the
-                    # V6 summary line says "(modified)" whenever the ranker
+                    # summary line says "(modified)" whenever the ranker
                     # picked any candidate other than the first draft, which
                     # is selection, not modification.
                     if not last_msg.get("selection_mode"):
@@ -4357,15 +4320,8 @@ def _compute_ai_metrics(
                     last_msg["reviewer_degraded"] = current_review_degraded
 
         # ── Reviewer dropped the turn ──
-        # The reviewer can drop a turn for two reasons that BOTH leave no
-        # message in the public chat:
-        #   1. drop_score=10 (best score ≥ drop threshold) — logged with
-        #      "Best score X/10 ≥ drop threshold ...; skipping turn entirely"
-        #   2. The fix loop produced an empty final message
-        # Either way LIVE_REVIEW_SUMMARY contains "FINAL (...): ''" and the
-        # current_final_message capture above lands as "". We use that as
-        # the canonical "dropped" signal so the table never shows phantom
-        # rows that aren't in the chat.
+        # An explicit drop-threshold record marks the current turn dropped.
+        # An empty FINAL value also suppresses its message row below.
         if "drop threshold" in content and "skipping turn entirely" in content:
             current_dropped = True
 
@@ -4388,11 +4344,9 @@ def _compute_ai_metrics(
             if current_generator_latency is not None:
                 generator_latency = current_generator_latency
 
-            # Prefer the post-review final message (matches public chat).
-            # Fallback chain for logs without LIVE_REVIEW_SUMMARY:
-            #   ranker selection line → raw generator output → candidates[0]
-            # (the V6 no-reviewer pass-through sends candidates[0], so without
-            # the last fallback such games showed 0 sent messages — 9094).
+            # Resolve text from summary FINAL, selection, raw generator output,
+            # then the first candidate. These are text sources, not proof of
+            # delivery; reconcile with the AI append file when supplied.
             msg_text = current_final_message
             if msg_text is None:
                 msg_text = current_selected_text
@@ -4403,11 +4357,9 @@ def _compute_ai_metrics(
             msg_text = msg_text or ""
             word_count = len(msg_text.split()) if msg_text else 0
 
-            # V6 selection provenance: which candidate of the pool was sent.
-            # index 0 = the generator's first draft; anything else means the
-            # ranker actively preferred a different candidate. This replaces
-            # the misleading "modified" flag for selection-mode reviewers
-            # (the V6 ranker selects, it does not rewrite).
+            # Selection provenance: zero-based position of the selected text
+            # in the candidate pool. A nonzero index indicates selection of
+            # a candidate other than the first.
             selection_mode = (current_selected_text is not None
                               or current_candidates is not None)
             selected_idx = None
@@ -4423,29 +4375,25 @@ def _compute_ai_metrics(
             # "Wait" = INTENTIONAL typing-delay sleep only. Prefer the value
             # parsed from the `typing_delay` log entry (precise, includes the
             # "no_sleep" / "skipped_short" branches as 0). Fall back to the
-            # observed wallclock residual only when no instrumented value
-            # exists (legacy logs).
+            # observed wallclock residual only when no instrumented value exists.
             if current_typing_wait is not None:
                 writing_wait = current_typing_wait
             else:
-                # Legacy fallback: estimate from total - (sched+gen+reviewer)
+                # Without an explicit wait, estimate the nonnegative residual.
                 comp = (scheduler_latency or 0) + (generator_latency or 0) + (current_reviewer_latency or 0)
                 if total_latency is not None:
                     writing_wait = max(0.0, total_latency - comp)
                 else:
-                    # No instrumented typing_delay and no measured total. The
-                    # pipeline (sched+gen+rev) almost always exceeds the ideal
-                    # typing budget, so the real sleep is 0 ("no_sleep"). Do NOT
-                    # fabricate a word-count estimate here — that invented a
-                    # phantom Wait (= word count) and inflated Total. Default 0.
+                    # No instrumented delay or measured total: use 0 as the
+                    # display default, not as evidence of an observed sleep.
+                    # Do not invent a word-count-based measurement.
                     writing_wait = 0.0
 
             # TOTAL = the full wall-clock before the message is sent = natural
             # pipeline latency + the artificial typing WAIT. Preferred source: the
             # typing_delay line's `elapsed` (natural) + `sleep` (artificial), which
-            # covers the FULL in-turn pipeline. Else sum the four phases (legacy);
-            # else the timestamp delta. Note: the V6 ranker reviewer DOES log
-            # reviewer_latency now (reviewer_node.py), it just emits no numeric score.
+            # covers the full in-turn pipeline. Otherwise sum available complete
+            # phase measurements, then fall back to the clock-value delta.
             if current_typing_elapsed is not None:
                 total_latency = round(current_typing_elapsed + writing_wait, 2)
             else:
@@ -4478,7 +4426,7 @@ def _compute_ai_metrics(
                 "generator_latency_s": round(generator_latency, 2) if generator_latency is not None else None,
                 "writing_wait_s": round(writing_wait, 1),
                 # True when this row already carries the precise typing value at
-                # append time (V6: typing_delay logged before UNLOCKED) — so the
+                # append time (typing_delay logged before UNLOCKED) — so the
                 # post-append patch must skip it. Stripped before returning.
                 "_typing_from_log": current_typing_wait is not None,
                 "ideal_latency_s": round(current_typing_ideal, 2) if current_typing_ideal is not None else None,
@@ -4489,18 +4437,12 @@ def _compute_ai_metrics(
                 "other_latency_s": other_latency,
                 "target_latency_s": target_latency,
                 "reviewer_latency_s": round(current_reviewer_latency, 2) if current_reviewer_latency is not None else None,
-                # Trust LIVE_REVIEW_SUMMARY (the post-loop summary) as the
-                # single source of truth for the score. Previously this was
-                # gated on `review_attempts` being non-empty, but the very
-                # first message of a game sometimes has its `review_attempt_N`
-                # entry missing/lost while the summary is still written —
-                # that's why "sup" appeared with score "—" in Per-Message
-                # Detail while the Reviewer Activity panel showed 1/10.
+                # Read the score from LIVE_REVIEW_SUMMARY independently of
+                # whether individual review_attempt entries are present.
                 "reviewer_score": review_final_score,
                 "reviewer_attempts": len(review_attempts) if review_attempts else 0,
-                # Selection-mode (V6 ranker) messages are never "modified" —
-                # the ranker picks one candidate verbatim. Keep the legacy
-                # flag only for rewrite-mode reviewers.
+                # A verbatim candidate selection is not a text modification.
+                # Only apply the summary's modification flag without selection.
                 "reviewer_modified": review_was_modified and not selection_mode,
                 "selection_mode": selection_mode,
                 "selected_candidate_index": selected_idx,
@@ -4515,8 +4457,7 @@ def _compute_ai_metrics(
             }
             # Reviewer-dropped turns produce a review_cycle but never reach
             # the public chat — omit from the table to keep it consistent
-            # with the chat history (no "phantom" rows like "yeah i can",
-            # "lol", "no why" that were never sent). Detection priority:
+            # with the chat history. Detection priority:
             #   (a) explicit drop log seen in this cycle, OR
             #   (b) LIVE_REVIEW_SUMMARY's FINAL value is empty (the canonical
             #       "no message sent" signal — covers all drop reasons).
@@ -4552,15 +4493,13 @@ def _compute_ai_metrics(
     # `messages`. (Renumber so msg_num stays contiguous in the UI.)
     messages = [m for m in messages if (m.get("text") or "").strip()]
 
-    # ── V5 phantom send-tick de-dup ──
-    # The V5 main loop logs "generate_message UNLOCKED" on EVERY scheduler tick,
+    # ── Phantom send-tick de-dup ──
+    # The main loop logs "generate_message UNLOCKED" on EVERY scheduler tick,
     # not only on a real send. A real send carries pipeline latencies
     # (scheduler+generator both present); the follow-up poll tick re-logs the
-    # SAME text with all pipeline latencies None and only a stray Wait. That
-    # produced the duplicated twin rows in the Per-Message table (game 9056:
-    # 17 rows for 9 real sends). Drop a row when sched+gen+rev are ALL None and
-    # its text matches the immediately-preceding kept row. A genuine message
-    # always went through the scheduler+generator, so it can never be all-None.
+    # same text with all pipeline latencies None and only a typing wait.
+    # Drop an adjacent repeated-text row when all three call latencies are
+    # absent, carrying any measured wait onto the retained row.
     deduped = []
     for m in messages:
         no_pipeline = (m.get("scheduler_latency_s") is None
@@ -4612,8 +4551,8 @@ def _compute_ai_metrics(
     sent_messages = [m for m in messages if m.get("sent", True)]
     total_sent = len(sent_messages)
     # Rate window: from the moment discussion opened (discussion_start_time.txt)
-    # to the last log entry. The old first-log-line anchor included lobby idle
-    # time, deflating messages_per_minute (9090: 3.9m elapsed for a 1.5m round).
+    # to the last log entry, using the first entry when the discussion anchor
+    # is unavailable or outside the usable clock-value range.
     rate_start = game_first_time
     if discussion_start_hms:
         ds = _time_to_seconds(discussion_start_hms.strip())
@@ -4626,11 +4565,8 @@ def _compute_ai_metrics(
         vals = [v for v in lst if v is not None]
         return round(sum(vals) / len(vals), 2) if vals else None
 
-    # "Reviewed" = the reviewer actually processed the message. The V6 ranker
-    # SELECTS without a numeric suspicion score, so score-presence alone
-    # classified every V6 message as unreviewed (9092: 1 sent, with_reviewer=0
-    # while reviewer_enabled=true). Selection provenance or a measured
-    # reviewer latency counts as reviewed.
+    # Count review evidence from a score, an identified candidate selection,
+    # or measured reviewer latency; a numeric score is not required.
     def _was_reviewed(m):
         return (m["reviewer_score"] is not None
                 or (m.get("selection_mode") and m.get("selected_candidate_index") is not None)
@@ -4674,24 +4610,16 @@ def _compute_ai_metrics(
         "avg_words_per_message": _safe_avg([m["word_count"] for m in sent_messages]),
         "messages_per_minute": round(total_sent / elapsed_min, 2) if elapsed_min > 0 else 0,
         "elapsed_minutes": round(elapsed_min, 1),
-        # A V6 ranker reviewer SELECTS a candidate (no numeric suspicion score), so
-        # reviewed_msgs (which needs reviewer_score) is empty even though the reviewer
-        # ran. Treat the reviewer as enabled whenever ANY message carries a reviewer
-        # latency — otherwise the whole .rev-col (incl. the Rev. latency column) is
-        # wrongly hidden for V6 games.
+        # Show reviewer columns when review evidence or reviewer latency exists.
         "reviewer_enabled": len(reviewed_msgs) > 0 or any(
             m.get("reviewer_latency_s") is not None for m in sent_messages),
         "avg_reviewer_score": _safe_avg([m["reviewer_score"] for m in reviewed_msgs]) if reviewed_msgs else None,
         "avg_reviewer_latency_s": _safe_avg([m["reviewer_latency_s"] for m in sent_messages if m.get("reviewer_latency_s") is not None]),
-        # Don't append `or None` here — it converted a legitimate 0.0 max
-        # (no reviewer ran) into None and the UI rendered it as "?". Keep
-        # the rounded float; the JS layer decides whether to show "0s" or "—".
+        # Preserve measured zero latency; return None when no latency is recorded.
         "max_reviewer_latency_s": round(max((m["reviewer_latency_s"] for m in sent_messages if m.get("reviewer_latency_s") is not None), default=0), 2) if any(m.get("reviewer_latency_s") is not None for m in sent_messages) else None,
         "messages_modified_by_reviewer": sum(1 for m in sent_messages if m["reviewer_modified"]),
-        # V6 ranker provenance: the reviewer SELECTS one of N candidates, it
-        # never rewrites. Surface how often the ranker preferred a candidate
-        # other than the generator's first draft (the honest replacement for
-        # the old "Messages Modified" card in selection-mode games).
+        # Candidate-selection provenance, including how often the selected
+        # candidate was not the first in the generator's pool.
         "selection_mode": any(m.get("selection_mode") for m in sent_messages),
         "messages_with_selection_index": sum(
             1 for m in sent_messages if m.get("selected_candidate_index") is not None),
@@ -4702,10 +4630,8 @@ def _compute_ai_metrics(
         # it ran past the wall-clock budget. Useful signal for Vertex latency
         # regressions or prompting bugs that make the reviewer keep retrying.
         "reviewer_budget_exceeded_count": sum(1 for m in sent_messages if m.get("reviewer_budget_exceeded")),
-        # Reviewer-on vs reviewer-off latency split — lets the admin see
-        # how much extra wall-clock time the reviewer adds on average.
-        # Splits by `reviewer_score is not None` (the same predicate that
-        # decides whether a message was actually evaluated by the reviewer).
+        # Descriptive latency split by recorded review evidence. This is
+        # not a causal estimate of latency added by the reviewer.
         "messages_with_reviewer": len(reviewed_msgs),
         "messages_without_reviewer": len(unreviewed_msgs),
         "avg_total_latency_with_reviewer_s": _safe_avg([m["total_latency_s"] for m in reviewed_msgs]),
@@ -4783,10 +4709,9 @@ def _compute_ai_cycles(log_text, max_cycles=20):
         content = e["content"]
         t = e["time"]
 
-        # V6 logs the scheduler invocation as `v4_scheduler_prompt` (legacy:
-        # `prompt in should_generate_message`). Treat both as a cycle start so the
-        # AI-State view populates for V6 — same root cause as the Metrics fix.
-        if op in ("prompt in should_generate_message", "v4_scheduler_prompt"):
+        # Treat both scheduler-prompt labels as cycle starts so the AI-State
+        # view populates for either supported log format.
+        if op in ("prompt in should_generate_message", "scheduler_prompt"):
             # Close any previous in-progress cycle that never completed (safety)
             if current is not None and current["status"] == "in_progress":
                 current["status"] = "completed_wait" if current["scheduler_decision"] == "wait" else "in_progress"
@@ -4815,8 +4740,8 @@ def _compute_ai_cycles(log_text, max_cycles=20):
                 current["end_time"] = t
                 cycles.append(current)
                 current = None
-        elif op == "v4_scheduler_decision":
-            # V6 scheduler decision: content is "decision=SEND, send_reason=…".
+        elif op == "scheduler_decision":
+            # Scheduler decision: content is "decision=SEND, send_reason=…".
             # Match the decision token itself — NOT a bare "SEND", which also
             # appears in "send_reason=…" on a WAIT line.
             if re.search(r"decision\s*=\s*send", content, re.IGNORECASE):
@@ -4828,11 +4753,11 @@ def _compute_ai_cycles(log_text, max_cycles=20):
                 cycles.append(current)
                 current = None
         elif op in ("prompt in generate_message", "prompt in _generate_raw_message",
-                    "v4_generator_prompt"):
+                    "generator_prompt"):
             current["generator_prompt_tail"] = _tail(content)
-        elif op.startswith("final_output in generate") or op == "v6_generator_candidates":
+        elif op.startswith("final_output in generate") or op == "generator_candidates":
             current["generator_raw_output"] = content.strip()
-            if op == "v6_generator_candidates":
+            if op == "generator_candidates":
                 try:
                     import ast as _ast
                     _pool = _ast.literal_eval(content.strip().splitlines()[0])
@@ -4840,14 +4765,13 @@ def _compute_ai_cycles(log_text, max_cycles=20):
                         current["_candidate_pool"] = [str(c) for c in _pool]
                 except Exception:
                     pass
-        elif op == "v6_reviewer_selected":
-            # V6 ranker: content is "'<sent text>' from N candidates (…)".
+        elif op == "reviewer_selected":
+            # Ranker: content is "'<selected text>' from N candidates (…)".
             m = re.match(r"^['\"](.*)['\"] from (\d+) candidates", content)
             if m:
                 current["final_message"] = m.group(1)
-                # Mark ranker mode so the AI-State panel renders selection
-                # provenance instead of "Reviewer: not enabled" (the V6
-                # ranker has no numeric score and no fix attempts).
+                # Show candidate-selection provenance even without a numeric
+                # reviewer score or per-attempt records.
                 current["reviewer_mode"] = "ranker"
                 current["num_candidates"] = int(m.group(2))
                 pool = current.get("_candidate_pool") or []
@@ -4855,7 +4779,7 @@ def _compute_ai_cycles(log_text, max_cycles=20):
                     current["selected_candidate_index"] = pool.index(m.group(1))
                 except ValueError:
                     current["selected_candidate_index"] = None
-        elif op == "v6_reviewer_red_flags":
+        elif op == "reviewer_red_flags":
             current["reviewer_red_flags"] = [
                 f.strip() for f in content.split(",") if f.strip()
             ]
@@ -4869,11 +4793,10 @@ def _compute_ai_cycles(log_text, max_cycles=20):
                 current["reviewer_latency_s"] = round(float(m.group(1)), 2)
         elif op in ("reviewer_budget_exceeded", "reviewer_budget_truncated"):
             current["reviewer_budget_exceeded"] = True
-        elif op in ("v6_pipeline_timeout_drop", "v6_stale_send_drop"):
-            # Game 9084: the message was selected but a safety gate discarded
-            # it — without this flag the timeline shows a green SEND with no
-            # matching chat message, which reads as a bug.
-            current["suppressed"] = ("timeout" if op == "v6_pipeline_timeout_drop"
+        elif op in ("pipeline_timeout_drop", "stale_send_drop"):
+            # Record output-gate suppression separately from selection so a
+            # SEND decision is not presented as confirmed delivery.
+            current["suppressed"] = ("timeout" if op == "pipeline_timeout_drop"
                                      else "stale")
             current["suppressed_detail"] = _tail(content)
         elif op.startswith("review_attempt_"):
@@ -4889,7 +4812,7 @@ def _compute_ai_cycles(log_text, max_cycles=20):
                     f.strip().strip("'\"") for f in flags_m.group(1).split(",") if f.strip()
                 ]
         elif op == "generate_message" and "UNLOCKED" in content:
-            # Cycle complete. In V6 this fires every poll (the generate_message
+            # Cycle complete. This fires every poll (the generate_message
             # wrapper's finally block); a WAIT cycle was already closed at the
             # decision, so an open cycle here means a SEND. Keep the reviewer's
             # selected final_message if we captured one, else the generator output.
@@ -4952,11 +4875,10 @@ def _compute_ai_cycles(log_text, max_cycles=20):
 
 
 def _game_event_files(game_dir, pattern="game_events*.jsonl"):
-    """Return matching event jsonl files, preferring the new ``events/`` subdir.
+    """Return matching event files from events/ and the game root.
 
-    New V5/V6 games write event logs under ``<game>/events/``; older/simulation
-    games keep them flat at the game root. We glob both (events/ first) and
-    de-dupe by filename so callers keep working across layouts.
+    Search events/ first and de-duplicate by filename so its record takes
+    precedence when a matching filename exists in both locations.
     """
     out, seen = [], set()
     for base in (game_dir / SUBDIR_EVENTS, game_dir):
@@ -4970,17 +4892,9 @@ def _game_event_files(game_dir, pattern="game_events*.jsonl"):
     return out
 
 
-@app.route('/api/admin/v5_state')
-def admin_v5_state():
-    """Surface live V5 sub-agent activity + SharedSnapshot for the admin dashboard.
-
-    Reads the per-game game_events.jsonl (already written by V5 components)
-    and returns:
-      - latest snapshot (last v5_snapshot_read_full event)
-      - last 5 internet-context tick groups (request → response paired)
-      - last 3 phase-summary events
-      - last 3 generate_message turn timings
-    """
+@app.route('/api/admin/component_state')
+def admin_component_state():
+    """Return live worker activity and the latest observed shared snapshot."""
     auth_err = _check_admin_auth()
     if auth_err:
         return auth_err
@@ -4990,12 +4904,8 @@ def admin_v5_state():
 
     game_dir = resolve_game_dir(game_id)
 
-    # Single-AI web games write the unsuffixed game_events.jsonl. Multi-agent
-    # auto-games (run_agents_game.py) write one suffixed file per agent
-    # (game_events_<name>.jsonl) — support those too so the admin can peek at an
-    # auto-game. With several agents, ?agent=<name> selects one; otherwise the
-    # first per-agent file is used (mixing agents would garble per-agent state
-    # like self_claims). agents_available lets the UI offer a picker.
+    # Prefer game_events.jsonl. If only name-suffixed event files are present,
+    # use the requested name or the first file without mixing state streams.
     events_file = game_file(game_dir, "game_events.jsonl")
     agents_available = []
     if not events_file.exists():
@@ -5028,14 +4938,14 @@ def admin_v5_state():
     # Latest snapshot view the graph received.
     snap = None
     for ev in reversed(events):
-        if ev.get("event_type") == "v5_snapshot_read_full":
+        if ev.get("event_type") == "snapshot_observed":
             snap = {
                 "turn_index":      ev.get("turn_index"),
                 "current_info":    ev.get("current_info"),
                 "hedge_advice":    ev.get("hedge_advice"),
-                "phase_summaries": ev.get("phase_summaries"),
+                "round_summaries": ev.get("round_summaries"),
                 "self_claims":     ev.get("self_claims", []),
-                "social_memory":   ev.get("social_memory", ""),
+                "social_state":    ev.get("social_state", ""),
                 "behavior_advice": ev.get("behavior_advice", ""),
                 "entry_count":     ev.get("entry_count"),
                 "timestamp":       ev.get("timestamp"),
@@ -5047,15 +4957,15 @@ def admin_v5_state():
     persona_claims = (snap or {}).get("self_claims") or []
     if not persona_claims:
         for ev in reversed(events):
-            if ev.get("event_type") == "v5_persona_claims_updated":
+            if ev.get("event_type") == "persona_claims_updated":
                 persona_claims = ev.get("claims", [])
                 break
 
-    # Social Memory — latest one-line standing (fallback to the update event).
-    social_memory = (snap or {}).get("social_memory") or ""
-    if not social_memory:
+    # Social State Tracker — latest standing (fallback to the update event).
+    social_state = (snap or {}).get("social_state") or ""
+    if not social_state:
         for ev in reversed(events):
-            if ev.get("event_type") == "v5_social_memory_updated":
+            if ev.get("event_type") == "social_state_updated":
                 bits = []
                 sm_susp = ev.get("suspects_me") or []
                 sm_point = ev.get("i_pointed_at") or []
@@ -5066,21 +4976,21 @@ def admin_v5_state():
                     bits.append(f"you pointed at {', '.join(sm_point)}")
                 if sm_out:
                     bits.append(f"{', '.join(sm_out)} voted out")
-                social_memory = "; ".join(bits)
+                social_state = "; ".join(bits)
                 break
 
-    # Behavior Evolution — latest play-style directive (fallback to update event).
+    # Behavior Adapter — latest play-style directive (fallback to update event).
     behavior_advice = (snap or {}).get("behavior_advice") or ""
     if not behavior_advice:
         for ev in reversed(events):
-            if ev.get("event_type") == "v5_behavior_advice_updated":
+            if ev.get("event_type") == "behavior_advice_updated":
                 behavior_advice = ev.get("advice", "")
                 break
 
     # Behavior diagnostics — latest participation assessment + any warnings.
     behavior_diag = {}
     for ev in reversed(events):
-        if ev.get("event_type") == "v5_behavior_evolution_tick":
+        if ev.get("event_type") == "behavior_tick":
             behavior_diag = {
                 "participation_assessment": ev.get("participation_assessment", ""),
                 "warnings": ev.get("warnings", []),
@@ -5096,7 +5006,7 @@ def admin_v5_state():
     decisions = []
     for ev in events:
         et = ev.get("event_type")
-        if et == "v5_scheduler_blocked":
+        if et == "scheduler_blocked":
             reason = ev.get("reason")
             if reason in _ROUTINE_WAIT_REASONS:
                 continue
@@ -5105,26 +5015,26 @@ def admin_v5_state():
             kind = "act" if reason == "lull_breaker_fired" else "wait"
             decisions.append({"ts": ev.get("timestamp"), "kind": kind,
                               "reason": reason})
-        elif et == "v5_dedup_blocked":
+        elif et == "dedup_blocked":
             decisions.append({"ts": ev.get("timestamp"), "kind": "dedup",
                               "reason": "duplicate response suppressed"})
-        elif et == "v5_generator_skip":
+        elif et == "generator_skip":
             decisions.append({"ts": ev.get("timestamp"), "kind": "skip",
                               "reason": ev.get("reason", "nothing specific to add")})
     decisions = decisions[-12:]
 
-    # Internet Context — pair v5_ic_decision_response + ticks
+    # Internet Context — pair internet_decision_response + ticks
     ic_ticks = []
     for ev in events:
         et = ev.get("event_type")
-        if et == "v5_ic_decision_response":
+        if et == "internet_decision_response":
             ic_ticks.append({
                 "kind":     "decision",
                 "ts":       ev.get("timestamp"),
                 "parsed":   ev.get("parsed"),
                 "latency":  ev.get("latency_s"),
             })
-        elif et == "v5_ic_search_response":
+        elif et == "internet_search_response":
             ic_ticks.append({
                 "kind":         "search",
                 "ts":           ev.get("timestamp"),
@@ -5133,7 +5043,7 @@ def admin_v5_state():
                 "summary_text": ev.get("summary_text"),
                 "latency":      ev.get("latency_s"),
             })
-        elif et == "v5_internet_context_tick" and ev.get("dropped"):
+        elif et == "internet_context_tick" and ev.get("dropped"):
             ic_ticks.append({
                 "kind":     "dropped",
                 "ts":       ev.get("timestamp"),
@@ -5141,10 +5051,10 @@ def admin_v5_state():
             })
     ic_ticks = ic_ticks[-8:]
 
-    # Phase Summarizer — last 3 emitted summaries.
+    # Round Summarizer — last 3 emitted summaries.
     ps_events = []
     for ev in events:
-        if ev.get("event_type") == "v5_phase_summary_tick":
+        if ev.get("event_type") == "round_summary_tick":
             ps_events.append({
                 "ts":           ev.get("timestamp"),
                 "phase":        ev.get("phase"),
@@ -5156,7 +5066,7 @@ def admin_v5_state():
     # Turn timings — last 3.
     turns = []
     for ev in events:
-        if ev.get("event_type") == "v5_generate_end":
+        if ev.get("event_type") == "generate_end":
             turns.append({
                 "turn_index":     ev.get("turn_index"),
                 "pipeline_s":     ev.get("pipeline_latency_s"),
@@ -5166,29 +5076,29 @@ def admin_v5_state():
             })
     turns = turns[-3:]
 
-    # Repetition Monitor — overused words + the new LLM shape/approach note.
+    # Repetition Monitor — overused words + the LLM shape/approach note.
     overused_words = list((snap or {}).get("overused_words") or [])
     repetition_note = (snap or {}).get("repetition_note") or ""
     if not repetition_note:
         for ev in reversed(events):
-            if ev.get("event_type") == "v5_repetition_note_updated":
+            if ev.get("event_type") == "repetition_note_updated":
                 repetition_note = ev.get("note", "")
                 break
     if not overused_words:
         for ev in reversed(events):
-            if ev.get("event_type") == "v5_overused_words_updated":
+            if ev.get("event_type") == "overused_words_updated":
                 overused_words = ev.get("words", []) or []
                 break
 
-    # Cadence (Behavior Evolution) + room_norm (Social Dynamics) — the
+    # Cadence (Behavior Adapter) + room_norm (Social State Tracker) — the
     # scheduler-facing signals, so the admin can see WHY the agent held back.
     cadence = {}
     room_norm = ""
     for ev in reversed(events):
-        if not cadence and ev.get("event_type") == "v5_cadence_updated":
+        if not cadence and ev.get("event_type") == "cadence_updated":
             cadence = {"level": ev.get("level"), "talk_share": ev.get("talk_share"),
                        "reason": ev.get("reason")}
-        if not room_norm and ev.get("event_type") == "v5_social_memory_updated":
+        if not room_norm and ev.get("event_type") == "social_state_updated":
             room_norm = ev.get("room_norm", "") or ""
         if cadence and room_norm:
             break
@@ -5198,18 +5108,18 @@ def admin_v5_state():
     def _count(et):
         return sum(1 for ev in events if ev.get("event_type") == et)
     subagent_status = {
-        "internet":   _count("v5_ic_tick_begin"),
-        "phase":      _count("v5_ps_tick_begin"),
-        "persona":    _count("v5_persona_monitor_tick"),
-        "social":     _count("v5_social_memory_tick"),
-        "behavior":   _count("v5_behavior_evolution_tick"),
-        "repetition": _count("v5_repetition_monitor_tick"),
+        "internet":   _count("internet_tick_begin"),
+        "phase":      _count("round_summary_tick_begin"),
+        "persona":    _count("persona_monitor_tick"),
+        "social":     _count("social_state_tick"),
+        "behavior":   _count("behavior_tick"),
+        "repetition": _count("repetition_monitor_tick"),
     }
 
     return jsonify({
         "snapshot":         snap,
         "persona_claims":   persona_claims,
-        "social_memory":    social_memory,
+        "social_state":     social_state,
         "behavior_advice":  behavior_advice,
         "behavior_diag":    behavior_diag,
         "overused_words":   overused_words,
@@ -5227,21 +5137,9 @@ def admin_v5_state():
     })
 
 
-@app.route('/api/admin/v6_state')
-def admin_v6_state():
-    """Surface the V6 agent's NEW pieces for the admin dashboard.
-
-    V6 reuses the V5 sub-agents/SharedSnapshot event stream, so this endpoint
-    focuses on what is genuinely new in V6 and renders it in a dedicated tab:
-
-      - shared memory snapshot (last v5_snapshot_read_full) + V6 immutable
-        persona facts and the numeric social signals (interrogation pressure /
-        attention-on-me) the snapshot now carries
-      - the multi-candidate generation pipeline: the generator emits several
-        candidates (v6_generator_candidates) and the reviewer RANKS+SELECTS one
-        instead of rewriting. We pair each candidate set with the following
-        v4_pipeline_complete to show which option was chosen.
-    """
+@app.route('/api/admin/agent_state')
+def admin_agent_state():
+    """Return agent snapshots, persona facts, and selection/delivery provenance."""
     auth_err = _check_admin_auth()
     if auth_err:
         return auth_err
@@ -5251,24 +5149,24 @@ def admin_v6_state():
 
     game_dir = resolve_game_dir(game_id)
 
-    # Authoritative v6 signal from the game config (works even before any
-    # candidates have been generated), so the UI can show the V6 tab promptly.
-    is_v6 = False
+    # Authoritative agent signal from the game config (works even before any
+    # candidates have been generated), so the UI can show the agent tab promptly.
+    is_agent = False
     try:
         cfg_path = game_dir / "config.json"
         if cfg_path.exists():
             cfg = json.loads(cfg_path.read_text(encoding="utf-8", errors="replace"))
-            is_v6 = detect_agent_version(cfg) == "v6"
+            is_agent = detect_agent_identity(cfg) == "social_turing_test_agent"
     except Exception:
-        is_v6 = False
+        is_agent = False
 
     # Build provenance is available even when the agent crashed before writing
     # its first event (the exact failure mode where it matters most).
     game_agent_code = _agent_code_from_game(game_dir)
     agent_build = _game_agent_build_info(game_dir)
 
-    # Same file-resolution as v5_state: single-AI web games use the unsuffixed
-    # events file; multi-agent auto-games use per-agent suffixed files.
+    # As in component_state, prefer the unsuffixed event file, then select
+    # one name-suffixed file without mixing state streams.
     events_file = game_file(game_dir, "game_events.jsonl")
     agents_available = []
     if not events_file.exists():
@@ -5276,7 +5174,7 @@ def admin_v6_state():
         agents_available = [p.stem[len("game_events_"):] for p in per_agent]
         if not per_agent:
             return jsonify({
-                "version": "v6", "is_v6": is_v6, "snapshot": None,
+                "version": "agent", "is_agent": is_agent, "snapshot": None,
                 "fixed_persona_facts": {}, "social_signals": {},
                 "generations": [], "agents_available": [],
                 "agent_build": agent_build,
@@ -5301,24 +5199,24 @@ def admin_v6_state():
     except OSError:
         return jsonify({"error": "could not read events file"}), 500
 
-    # ── Shared memory snapshot (same source the V5 panel uses) ──
+    # ── Shared-memory snapshot (same source the component panel uses) ──
     snap = None
     for ev in reversed(events):
-        if ev.get("event_type") == "v5_snapshot_read_full":
+        if ev.get("event_type") == "snapshot_observed":
             snap = {
                 "turn_index":      ev.get("turn_index"),
                 "current_info":    ev.get("current_info"),
-                "phase_summaries": ev.get("phase_summaries"),
+                "round_summaries": ev.get("round_summaries"),
                 "self_claims":     ev.get("self_claims", []),
-                "social_memory":   ev.get("social_memory", ""),
+                "social_state":    ev.get("social_state", ""),
                 "behavior_advice": ev.get("behavior_advice", ""),
                 "entry_count":     ev.get("entry_count"),
                 # Per-entry provenance (origin: "seed" | "search") — lets the
                 # panel separate background knowledge from verified lookups.
                 "info_entries":    ev.get("info_entries", []),
                 "timestamp":       ev.get("timestamp"),
-                # Full shared-memory slices (added so the V6 panel shows everything
-                # the agent saw, not just a subset). Older games omit these.
+                # Optional recorded shared-memory fields. Missing fields use
+                # display defaults, not evidence of what the agent observed.
                 "room_vibe":       ev.get("room_vibe", ""),
                 "room_norm":       ev.get("room_norm", ""),
                 "pressure_type":   ev.get("pressure_type", ""),
@@ -5330,18 +5228,17 @@ def admin_v6_state():
                 "pending_search_queries": ev.get("pending_search_queries", []),
                 "interrogation_pressure": ev.get("interrogation_pressure"),
                 "attention_on_me": ev.get("attention_on_me"),
-                # V6 Player Profiler — per-player communication-style map.
+                # Optional recorded per-player communication-style map.
                 "player_profiles": ev.get("player_profiles", {}) or {},
             }
             break
 
-    # V6 immutable persona facts (location/timezone) + numeric social signals —
-    # the snapshot slices that are new in V6. Pulled from the latest social
-    # memory tick's parsed payload (best-effort; absent on older/empty games).
+    # Immutable persona facts (location/timezone) + numeric social signals.
+    # Read the latest social-state tick's parsed payload when available.
     fixed_persona_facts = {}
     social_signals = {}
     for ev in reversed(events):
-        if ev.get("event_type") == "v5_social_memory_tick":
+        if ev.get("event_type") == "social_state_tick":
             parsed = ev.get("parsed") or {}
             if isinstance(parsed, dict):
                 for k in ("interrogation_pressure", "attention_on_me"):
@@ -5350,20 +5247,17 @@ def admin_v6_state():
             if social_signals:
                 break
     for ev in reversed(events):
-        # V6 Batch 1 fix: the snapshot emits these under event
-        # `v6_fixed_persona_facts_set` with the dict in the `facts` field — the
-        # old code read a non-existent top-level `fixed_persona_facts` key, so
-        # the panel was always empty. Read the real key (fall back to the old
-        # name for any legacy events).
-        ff = ev.get("facts") if ev.get("event_type") == "v6_fixed_persona_facts_set" \
+        # Read the facts dict from a fixed_persona_facts_set event's facts
+        # field, or from a payload's top-level fixed_persona_facts field.
+        ff = ev.get("facts") if ev.get("event_type") == "fixed_persona_facts_set" \
             else ev.get("fixed_persona_facts")
         if isinstance(ff, dict) and ff:
             fixed_persona_facts = ff
             break
 
     # ── Multi-candidate generation pipeline ──
-    # Historical games predate outer-loop delivery events. Reconcile them with
-    # the AI's actual append file and its explicit text-log phase-drop record.
+    # Reconcile event rows with the AI append file and explicit text-log
+    # phase-drop records when delivery outcomes are not present in events.
     ai_name = get_llm_player_name(game_dir)
     delivered_messages = []
     phase_dropped_messages = []
@@ -5379,20 +5273,20 @@ def admin_v6_state():
                     phase_dropped_messages.append(match.group(1))
         except OSError:
             pass
-    generations = _v6_generation_rows(
+    generations = _agent_generation_rows(
         events,
         delivered_messages=delivered_messages,
         phase_dropped_messages=phase_dropped_messages,
     )
 
-    # ── Honest per-turn fact usage + terminal outcome (AIP fix 7/8) ──
+    # ── Per-turn fact usage + terminal outcome ──
     # Built ONLY from the structured pipeline events. A fact is reported "used"
     # solely from `verified_fact_ids_used` / `fact_usage_status` emitted by the
     # validator — NEVER inferred from `available_fact_ids`. Each row also carries
     # the distinct terminal outcome and the gate reason for a cancellation.
     fact_usage_turns = []
     for ev in events:
-        if ev.get("event_type") != "v6_turn_pipeline_complete":
+        if ev.get("event_type") != "turn_pipeline_complete":
             continue
         available = ev.get("available_fact_ids", []) or []
         used = ev.get("verified_fact_ids_used", []) or []
@@ -5412,13 +5306,13 @@ def admin_v6_state():
         })
     fact_usage_turns = fact_usage_turns[-10:]
 
-    # ── Active orchestration operational status (Live-Activation blocker 1/5) ──
-    # The latest honest active status: requested/allowed/operational + which
+    # ── Orchestration operational status ──
+    # Latest requested/allowed/operational status, including which
     # production adapters are present + the degraded reason when not operational.
     active_status = None
     for ev in reversed(events):
-        if ev.get("event_type") in ("v6_orchestration_mode", "v6_active_not_operational"):
-            st = ev.get("active_status") if ev.get("event_type") == "v6_orchestration_mode" \
+        if ev.get("event_type") in ("orchestration_mode", "active_not_operational"):
+            st = ev.get("active_status") if ev.get("event_type") == "orchestration_mode" \
                 else {k: ev.get(k) for k in (
                     "requested", "allowed", "operational", "scheduler_adapter_available",
                     "generator_adapter_available", "reviewer_adapter_available",
@@ -5429,8 +5323,8 @@ def admin_v6_state():
 
     # Distinct terminal outcomes (sent / scheduler wait / generator failure /
     # reviewer drop / pre-send cancel) for the timeline panel.
-    _TERMINALS = {"v6_turn_sent", "v6_turn_scheduler_wait", "v6_turn_generator_failure",
-                  "v6_turn_reviewer_drop", "v6_turn_pre_send_cancel"}
+    _TERMINALS = {"turn_sent", "turn_scheduler_wait", "turn_generator_failure",
+                  "turn_reviewer_drop", "turn_pre_send_cancel"}
     terminal_outcomes = [
         {"turn_id": ev.get("turn_id"), "ts": ev.get("timestamp"),
          "outcome": ev.get("event_type"), "is_send": ev.get("is_send", False),
@@ -5440,11 +5334,10 @@ def admin_v6_state():
     ][-10:]
 
     return jsonify({
-        "version":             "v6",
-        "is_v6":               is_v6,
-        # Per-game spawn provenance, not the web server's own checkout.  New
-        # games read the persisted runtime fingerprint; historical games get
-        # an explicitly-labelled checkout inference instead of a false claim.
+        "version":             "agent",
+        "is_agent":            is_agent,
+        # Prefer the game's persisted spawn fingerprint. If absent, label
+        # checkout inference explicitly; it is not recorded process provenance.
         "agent_build":         agent_build,
         "game_agent_code":     game_agent_code,
         "snapshot":            snap,
@@ -5454,10 +5347,10 @@ def admin_v6_state():
         "fact_usage_turns":    fact_usage_turns,
         "terminal_outcomes":   terminal_outcomes,
         "active_status":       active_status,
-        # Legacy vs active provenance so the panel hides Active-only cards in legacy.
+        # Recorded orchestration and timing provenance for applicable status cards.
         "orchestration":       _orchestration_provenance(game_dir),
-        # Per-sub-agent latest activity (B2) + scheduler send/wait reasons (B3).
-        "subagents":           _v6_subagents_activity(events, generations),
+        # Latest sub-agent activity and scheduler send/wait reasons.
+        "subagents":           _agent_subagents_activity(events, generations),
         "scheduler_breakdown": _scheduler_reason_breakdown(events, generations),
         "agents_available":    agents_available,
         "agent":               events_file.stem[len("game_events_"):]
@@ -5508,8 +5401,7 @@ def _agent_source_fingerprint(checkout) -> dict:
 def _agent_build_info(checkout=None, *, refresh=False):
     """Return a runtime-derived git fingerprint for an agent checkout.
 
-    ``commit`` remains the short hash expected by the existing admin UI.  The
-    added fields make a locally patched worktree unmistakable and reproducible:
+    ``commit`` is the short hash displayed by the admin UI. Local changes use
     ``dirty`` plus a deterministic ``patch_marker`` derived from status+diff.
     """
     checkout = Path(checkout or _BASE_DIR).resolve()
@@ -5571,8 +5463,7 @@ def _agent_build_info(checkout=None, *, refresh=False):
             "commit_full": commit_full,
             "last_commit_subject": subject[:100],
             "dirty": dirty,
-            # Compatibility name retained for existing clients; it refers only
-            # to the tracked patch, never to untracked files.
+            # This field identifies only the tracked patch, not untracked files.
             "patch_marker": tracked_patch_marker,
             "tracked_dirty": tracked_dirty,
             "tracked_changes": tracked_changes,
@@ -5608,11 +5499,10 @@ def _agent_build_info(checkout=None, *, refresh=False):
 
 
 def _game_agent_build_info(game_dir):
-    """Load the exact recorded spawn fingerprint for a game.
+    """Load a game's recorded spawn fingerprint, or label checkout inference.
 
-    Old games predate the artifact.  For those, report a clearly marked
-    inference from the checkout their config selects; never mislabel the web
-    server's HEAD as the historical process's build.
+    If the artifact is absent or unreadable, the selected checkout supplies
+    an inference only, not evidence of the code that ran the game.
     """
     record_path = Path(game_dir) / _AGENT_BUILD_INFO_FILE
     try:
@@ -5640,13 +5530,13 @@ def _game_agent_build_info(game_dir):
     return inferred
 
 
-def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=None):
-    """Build honest Generation → Review rows from structured V6 turn events.
+def _agent_generation_rows(events, delivered_messages=None, phase_dropped_messages=None):
+    """Build honest Generation → Review rows from structured turn events.
 
     A reviewer selection and a delivered chat message are different stages.
-    Game 9131 selected ``yo`` safely, then the output gate suppressed it because
-    three newer messages arrived. Correlating by turn_id preserves both facts
-    and remains compatible with historical events without outcome fields.
+    Output gates can suppress selected text. Correlate by turn_id when present;
+    otherwise group sequential generation and review records. Use supplied
+    append-file evidence to reconcile rows without explicit delivery outcomes.
     """
     def _norm(text):
         return re.sub(r"\s+", " ", (text or "").lower()).strip().rstrip("!.?")
@@ -5683,7 +5573,7 @@ def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=
 
     for ev in events:
         et = ev.get("event_type")
-        if et == "v6_generator_candidates":
+        if et == "generator_candidates":
             row = _new_row(ev, candidates=ev.get("candidates") or [])
             rows.append(row)
             legacy_pending = row
@@ -5691,7 +5581,7 @@ def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=
                 by_turn[ev["turn_id"]] = row
             continue
 
-        if et == "v6_generator_parse_drop":
+        if et == "generator_parse_drop":
             row = by_turn.get(ev.get("turn_id"))
             if row is None:
                 row = _new_row(ev)
@@ -5710,15 +5600,15 @@ def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=
             continue
 
         if et in {
-            "v6_state_guard_filter",
-            "v6_reviewer_filter_response_required",
-            "v6_reviewer_filter_same_dodge_mode",
-            "v6_reviewer_filter_agreement_pileup",
-            "v6_reviewer_filter_time_answer",
-            "v6_reviewer_filter_known_accusation",
+            "state_guard_filter",
+            "reviewer_filter_response_required",
+            "reviewer_filter_same_dodge_mode",
+            "reviewer_filter_agreement_pileup",
+            "reviewer_filter_time_answer",
+            "reviewer_filter_known_accusation",
         }:
-            reason = et.replace("v6_reviewer_filter_", "").replace(
-                "v6_state_guard_filter", "state_guard"
+            reason = et.replace("reviewer_filter_", "").replace(
+                "state_guard_filter", "state_guard"
             )
             removed = ev.get("removed") or []
             explicit = []
@@ -5741,44 +5631,44 @@ def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=
                     else int(ev.get("removed") or 0)
                 ),
             })
-        elif et == "v6_reviewer_analysis":
+        elif et == "reviewer_analysis":
             row["verdicts"] = ev.get("verdicts") or []
             if ev.get("selected_index") is not None:
                 row["selected_index"] = int(ev.get("selected_index"))
-        elif et == "v6_reviewer_selected":
+        elif et == "reviewer_selected":
             row["selected"] = ev.get("selected_text") or ""
             if ev.get("selected_index") is not None:
                 row["selected_index"] = int(ev.get("selected_index"))
             row["review_status"] = ev.get("review_status", "ok")
-        elif et == "v6_reviewer_drop":
+        elif et == "reviewer_drop":
             row["outcome"] = "reviewer_drop"
             row["outcome_reason"] = ", ".join(ev.get("review_reason_codes") or [])
-        elif et == "v6_stale_send_drop":
+        elif et == "stale_send_drop":
             row["outcome"] = "suppressed_stale"
             row["outcome_reason"] = ev.get("reason") or "conversation moved on"
             row["new_messages"] = int(ev.get("new_messages") or 0)
             row["selected"] = row["selected"] or ev.get("suppressed_message") or ""
-        elif et == "v6_pipeline_timeout_drop":
+        elif et == "pipeline_timeout_drop":
             row["outcome"] = "suppressed_timeout"
             row["outcome_reason"] = (
                 f"pipeline exceeded {ev.get('timeout_s')}s"
                 if ev.get("timeout_s") is not None else "pipeline timeout"
             )
             row["selected"] = row["selected"] or ev.get("suppressed_message") or ""
-        elif et == "v6_delivery_sent":
+        elif et == "delivery_sent":
             row["outcome"] = "sent"
             row["outcome_reason"] = "appended to personal chat"
             row["selected"] = row["selected"] or ev.get("message") or ""
-        elif et == "v6_delivery_phase_drop":
+        elif et == "delivery_phase_drop":
             row["outcome"] = "phase_drop"
             row["outcome_reason"] = ev.get("reason") or "voting started"
             row["outcome_stage"] = ev.get("stage")
             row["selected"] = row["selected"] or ev.get("message") or ""
-        elif et == "v6_delivery_dedup_drop":
+        elif et == "delivery_dedup_drop":
             row["outcome"] = "dedup_suppressed"
             row["outcome_reason"] = "duplicate of previous delivered message"
             row["selected"] = row["selected"] or ev.get("message") or ""
-        elif et == "v4_pipeline_complete":
+        elif et == "pipeline_complete":
             final = ev.get("final") or ""
             row["review_risk"] = ev.get("review_risk", "none")
             if final:
@@ -5825,8 +5715,9 @@ def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=
             if not reason:
                 unresolved.append(index)
 
-        # Some filters historically logged only a count.  The absent verdicts
-        # are still enough to identify which original candidates they removed.
+        # Count-only filter payloads lack candidate identities. Assign their
+        # reported removals to unresolved positions as a display fallback;
+        # this does not establish which candidate texts the filter removed.
         count_only_events = [
             event for event in row["filter_events"]
             if event["removed_count"] and not event["removed"]
@@ -5845,10 +5736,10 @@ def _v6_generation_rows(events, delivered_messages=None, phase_dropped_messages=
     return rows
 
 
-def _v6_subagents_activity(events, generations=None):
+def _agent_subagents_activity(events, generations=None):
     """Per-sub-agent latest activity for the admin 'Sub-agent activity' panel — built
-    entirely from the existing event stream so the admin can see each sub-agent IS
-    working, what it produced, and when (V6 legacy)."""
+    entirely from the existing event stream so the admin can see each sub-agent is
+    working, what it produced, and when."""
     def _last(et, pred=None):
         for ev in reversed(events):
             if ev.get("event_type") == et and (pred is None or pred(ev)):
@@ -5858,23 +5749,22 @@ def _v6_subagents_activity(events, generations=None):
     def _count(et):
         return sum(1 for ev in events if ev.get("event_type") == et)
 
-    ic_dec = _last("v5_ic_decision_response")
-    ic_search = _last("v5_ic_search_response") or _last("v5_ic_search_trace")
-    ic_seed = _last("v5_ic_seed")
-    sm = _last("v5_social_memory_tick") or _last("v5_social_memory_updated")
-    be = _last("v5_behavior_advice_updated")
-    pm = _last("v5_persona_claims_updated") or _last("v5_persona_monitor_tick")
-    rm = _last("v5_repetition_note_updated") or _last("v5_repetition_monitor_tick")
-    ps = _last("v5_phase_summary_tick")
-    pp = _last("v6_player_profiles_updated") or _last("v6_player_profiler_tick")
+    ic_dec = _last("internet_decision_response")
+    ic_search = _last("internet_search_response") or _last("internet_search_trace")
+    ic_seed = _last("internet_seed")
+    sm = _last("social_state_tick") or _last("social_state_updated")
+    be = _last("behavior_advice_updated")
+    pm = _last("persona_claims_updated") or _last("persona_monitor_tick")
+    rm = _last("repetition_note_updated") or _last("repetition_monitor_tick")
+    ps = _last("round_summary_tick")
 
     def _ts(ev):
         return ev.get("timestamp") if ev else None
 
     return {
         "internet_context": {
-            "ran": _count("v5_ic_tick_end"),
-            "searches": _count("v5_ic_search_response"),
+            "ran": _count("internet_tick_end"),
+            "searches": _count("internet_search_response"),
             "last_decision": (ic_dec or {}).get("parsed") if ic_dec else None,
             "last_search": ((ic_search or {}).get("query") if ic_search else None),
             "seed": (ic_seed or {}).get("summary") if ic_seed else None,
@@ -5887,49 +5777,37 @@ def _v6_subagents_activity(events, generations=None):
                 {"query": ev.get("query", ""), "reason": ev.get("reason", ""),
                  "ts": ev.get("timestamp")}
                 for ev in events
-                if ev.get("event_type") == "v5_ic_search_rejected"
+                if ev.get("event_type") == "internet_search_rejected"
             ][-20:],
         },
-        "social_memory": {
-            "ran": _count("v5_social_memory_tick"),
+        "social_state_tracker": {
+            "ran": _count("social_state_tick"),
             "parsed": (sm or {}).get("parsed") if sm else None,
             "last_ts": _ts(sm), "healthy": bool(sm),
         },
-        "behavior_evolution": {
-            "ran": _count("v5_behavior_evolution_tick"),
+        "behavior_adapter": {
+            "ran": _count("behavior_tick"),
             "advice": (be or {}).get("advice") or (be or {}).get("behavior_advice") if be else None,
             "last_ts": _ts(be), "healthy": bool(be),
         },
         "persona_monitor": {
-            "ran": _count("v5_persona_monitor_tick"),
+            "ran": _count("persona_monitor_tick"),
             "claims": (pm or {}).get("self_claims") or (pm or {}).get("claims") if pm else None,
             "last_ts": _ts(pm), "healthy": bool(pm),
         },
         "repetition_monitor": {
-            "ran": _count("v5_repetition_monitor_tick"),
+            "ran": _count("repetition_monitor_tick"),
             "overused": (rm or {}).get("overused_words") if rm else None,
             "note": (rm or {}).get("note") or (rm or {}).get("repetition_note") if rm else None,
             "last_ts": _ts(rm), "healthy": bool(rm),
         },
-        "phase_summarizer": {
-            "ran": _count("v5_phase_summary_tick"),
-            "summaries": (ps or {}).get("phase_summaries") or (ps or {}).get("summary") if ps else None,
+        "round_summarizer": {
+            "ran": _count("round_summary_tick"),
+            "summaries": (ps or {}).get("round_summaries") or (ps or {}).get("summary") if ps else None,
             "last_ts": _ts(ps), "healthy": bool(ps),
         },
-        "player_profiler": {
-            # The W4 profiler wiring was explicitly reverted after measured
-            # quality regression.  Silence is a capability state, not an idle
-            # or unhealthy worker; expose that contract directly to the UI.
-            "enabled": False,
-            "wired": False,
-            "status": "disabled_reverted",
-            "ran": _count("v6_player_profiler_tick"),
-            "players": (pp or {}).get("players") if pp else None,
-            "last_ts": _ts(pp), "healthy": None,
-        },
-        # Suppressed sends — messages the agent CHOSE but that a safety gate
-        # discarded (pipeline timeout / stale-send / flash floor). Without this
-        # the admin sees SEND decisions with no matching chat message (9084).
+        # Non-delivery outcomes, kept distinct from selected text and SEND
+        # decisions. Selection does not establish an append to the chat.
         "suppressed_sends": [
             {
                 "type": row.get("outcome"),
@@ -5946,13 +5824,11 @@ def _v6_subagents_activity(events, generations=None):
 
 
 def _scheduler_reason_breakdown(events, generations=None):
-    """Count real scheduler decisions across current and historical schemas.
+    """Count scheduler decisions from boolean, token, or prose payload values.
 
-    Current V6 legacy emits ``v6_scheduler_decision``; older players emitted
-    ``scheduler_decision`` and some archived fixtures use
-    ``v4_scheduler_decision``/``scheduler_decision`` payload keys. Active V6
-    terminal events are a final fallback. Cheap blocked polls stay separate
-    from model WAIT decisions so send-rate is not diluted.
+    Prefer explicit decision events, then terminal turn events, then pipeline
+    completion or selection counts. Keep blocked polls separate from model
+    WAIT decisions and distinguish SEND decisions from delivered messages.
     """
     from collections import Counter
     decisions = Counter()
@@ -5975,7 +5851,7 @@ def _scheduler_reason_breakdown(events, generations=None):
                 return "send"
             if normalized in ("wait", "<wait>", "pass", "false"):
                 return "wait"
-            # A few early payloads stored prose such as "decision=SEND".
+            # Also accept a decision token embedded in prose, such as decision=SEND.
             match = re.search(r"(?:decision\s*=\s*)?<?(send|wait)>?", normalized)
             if match:
                 return match.group(1)
@@ -5983,24 +5859,24 @@ def _scheduler_reason_breakdown(events, generations=None):
 
     for ev in events:
         et = ev.get("event_type")
-        if et in ("v6_scheduler_decision", "scheduler_decision", "v4_scheduler_decision"):
+        if et in ("scheduler_decision", "scheduler_decision_legacy"):
             decision = _decision_value(ev)
             if decision:
                 decisions[decision] += 1
-        elif et == "v5_scheduler_blocked":
+        elif et == "scheduler_blocked":
             reason = ev.get("reason") or ev.get("reason_code") or ev.get("gate_reason") or "?"
             blocked[str(reason)] += 1
-        elif et == "v4_pipeline_complete":
+        elif et == "pipeline_complete":
             pipeline_completes += 1
-        elif et == "v6_reviewer_selected":
+        elif et == "reviewer_selected":
             reviewer_selected += 1
-        elif et == "v6_turn_sent":
+        elif et == "turn_sent":
             terminal_decisions["send"] += 1
-        elif et == "v6_turn_scheduler_wait":
+        elif et == "turn_scheduler_wait":
             terminal_decisions["wait"] += 1
-        elif et in ("v6_pipeline_timeout_drop", "v6_stale_send_drop"):
+        elif et in ("pipeline_timeout_drop", "stale_send_drop"):
             # pipeline_complete fires BEFORE these output gates — a suppressed
-            # turn is NOT a send (9107: 6 completes, 5 drops, 1 real message).
+            # turn is not confirmed delivery.
             suppressed_sends += 1
 
     if generations is not None:
@@ -6012,26 +5888,23 @@ def _scheduler_reason_breakdown(events, generations=None):
             if outcome not in ("sent", "delivery_unconfirmed")
         )
 
-    # Older V6 emitted no structured scheduler-decision events: sends came
-    # from the pipeline completing. A normal V6 send emits BOTH
-    # v4_pipeline_complete AND
-    # v6_reviewer_selected — summing them double-counted every message
-    # (9092 showed 2 SEND for 1 real send). Use pipeline_complete as the
-    # canonical count; reviewer_selected only as a fallback for logs that
-    # lack the pipeline event.
+    # Logs without structured scheduler decisions use pipeline completion.
+    # A candidate-selection cycle can emit both pipeline_complete and
+    # reviewer_selected. Prefer completion counts, using selection counts only
+    # when completion records are absent, to avoid counting a turn twice.
     pipeline_sends = max(0, (pipeline_completes or reviewer_selected) - suppressed_sends)
     if decisions:
         effective = decisions
         decision_source = "structured_scheduler"
     elif terminal_decisions:
         effective = terminal_decisions
-        decision_source = "v6_terminal"
+        decision_source = "turn_terminal"
     else:
         effective = Counter({"send": pipeline_sends})
         decision_source = "pipeline_fallback"
     sends = effective.get("send", 0)
-    # v5_scheduler_blocked fires on every cheap guard poll (~1/s), not per
-    # scheduler-model decision — 9092 real 11 WAITs vs 32 blocked polls.
+    # scheduler_blocked fires on every cheap guard poll (~1/s), not per
+    # scheduler-model decision.
     # Expose it honestly as blocked polls, not as WAIT decisions.
     blocked_polls = sum(blocked.values())
     waits = effective.get("wait", 0)
@@ -6041,8 +5914,7 @@ def _scheduler_reason_breakdown(events, generations=None):
         "blocked_polls": blocked_polls,
         "suppressed_sends": suppressed_sends,
         # SEND decisions are decisions; delivery is what reached the chat.
-        # 9107: 6 SEND decisions, 5 suppressed by output gates, 1 delivered —
-        # showing only "send 6" read as six chat messages.
+        # Output-gate suppression can prevent a SEND decision reaching the chat.
         "delivered": (
             outcome_breakdown.get("sent", 0)
             if generations is not None else max(0, sends - suppressed_sends)
@@ -6111,10 +5983,8 @@ def admin_ai_metrics():
             delivered_messages=_read_ai_delivered_messages(game_dir, ai_name),
         )
         result["ai_name"] = ai_name
-        # V5.11 — the scheduler send/wait counts come from V3-era llm_log ops
-        # that V5 doesn't emit, so the footer showed "0 send / 0 wait". Backfill
-        # from game_events for V5 games: sends = v4_pipeline_complete,
-        # waits = v5_scheduler_blocked.
+        # Backfill missing text-log counts from game_events: pipeline_complete
+        # and scheduler_blocked are the existing footer fallback sources.
         agg = result.get("aggregate", {})
         if agg and not agg.get("send_decisions") and not agg.get("wait_decisions"):
             ev_file = game_file(game_dir, "game_events.jsonl")
@@ -6128,9 +5998,9 @@ def admin_ai_metrics():
                         et = json.loads(ln).get("event_type")
                     except json.JSONDecodeError:
                         continue
-                    if et == "v4_pipeline_complete":
+                    if et == "pipeline_complete":
                         sends += 1
-                    elif et == "v5_scheduler_blocked":
+                    elif et == "scheduler_blocked":
                         waits += 1
                 if sends or waits:
                     agg["send_decisions"] = sends
@@ -6138,9 +6008,7 @@ def admin_ai_metrics():
                     total = sends + waits
                     agg["send_rate_pct"] = round(100 * sends / total, 1) if total else 0
 
-        # Orchestration provenance so the UI never mislabels LEGACY timing as the V6
-        # ACTIVE latency contract. effective mode comes from v6_orchestration_mode;
-        # is_active_run is confirmed by the presence of real v6_turn_sent events.
+        # Report the source of timing measurements without asserting delivery.
         result["orchestration"] = _orchestration_provenance(game_dir)
         return jsonify(result)
     except Exception as e:
@@ -6148,11 +6016,9 @@ def admin_ai_metrics():
 
 
 def _orchestration_provenance(game_dir):
-    """Read the recorded orchestration mode + whether the V6 ACTIVE path actually
-    ran (v6_turn_sent present). The legacy WAIT/TOTAL timing (Sched+Gen+Rev+typing)
-    is NOT the V6 active latency contract; the UI uses this to label the source."""
+    """Read pipeline timing metadata and explicit append observations."""
     info = {"effective_mode": None, "requested_mode": None, "is_active_run": False,
-            "active_status_operational": None, "timing_source": "legacy"}
+            "active_status_operational": None, "timing_source": "pipeline"}
     ev_file = game_file(game_dir, "game_events.jsonl")
     if not ev_file.exists():
         return info
@@ -6166,25 +6032,24 @@ def _orchestration_provenance(game_dir):
             except json.JSONDecodeError:
                 continue
             et = e.get("event_type")
-            if et == "v6_orchestration_mode":
+            if et == "orchestration_mode":
                 info["effective_mode"] = e.get("effective_orchestration_mode")
                 info["requested_mode"] = e.get("requested_orchestration_mode")
                 st = e.get("active_status") or {}
                 info["active_status_operational"] = st.get("operational")
-            elif et == "v6_turn_sent":
+            elif et == "turn_sent":
                 info["is_active_run"] = True
     except Exception:
         return info
-    info["timing_source"] = "v6_active" if (info["is_active_run"]
-                                            or info["effective_mode"] == "active") else "legacy"
+    info["timing_source"] = "active" if (info["is_active_run"]
+                                            or info["effective_mode"] == "active") else "pipeline"
     return info
 
 
 def _interface_log_issues(game_dir):
-    """Critical issues from llm_interface_log.txt — the ONLY place an
-    init-time crash lands (model 404, bad config, import error): the player
-    log doesn't exist yet, so the per-op scan below never sees it. Game 9088
-    crashed on an unavailable model and the Issues tab said "No issues"."""
+    """Read interface-log errors, including initialization failures that can
+    occur before a player operation log exists, such as unavailable models,
+    invalid configuration, and import errors."""
     issues = []
     try:
         iface_log = game_file(game_dir, "llm_interface_log.txt")
@@ -6618,11 +6483,10 @@ def admin_message_journey():
         except Exception:
             pass
 
-    # ── 5. V5 enrichment from game_events.jsonl ──
-    # V5 games don't log the V3-era llm_log op-names the blocks above look for,
-    # so scheduler/generator/review_cycle come back empty. Rebuild them from the
-    # structured V5 events (v4_pipeline_complete, v5_generator_input,
-    # v5_reviewer_trace, v5_turn_context, v5_snapshot_read_full). Join the send
+    # ── 5. Enrichment from game_events.jsonl ──
+    # Rebuild missing text-log detail from structured pipeline_complete,
+    # generator_input, reviewer_trace, turn_context, and snapshot_observed events.
+    # Join the send
     # by timestamp (±5s) and the shared-memory snapshot by turn_index.
     shared_memory = None
     turn_context = None
@@ -6656,12 +6520,12 @@ def admin_message_journey():
                         best, best_dt = ev, dt
                 return best
 
-            pipe = _closest("v4_pipeline_complete")
-            gen_in = _closest("v5_generator_input")
-            rtrace = _closest("v5_reviewer_trace")
-            tctx = _closest("v5_turn_context")
+            pipe = _closest("pipeline_complete")
+            gen_in = _closest("generator_input")
+            rtrace = _closest("reviewer_trace")
+            tctx = _closest("turn_context")
 
-            # Scheduler (V5) — only if the llm_log path didn't already find one.
+            # Scheduler — only if the llm_log path didn't already find one.
             if scheduler_block is None and pipe is not None:
                 dec = (pipe.get("scheduler_decision") or "").upper()
                 reason = pipe.get("send_reason") or ""
@@ -6673,7 +6537,7 @@ def admin_message_journey():
                     "decision": f"{dec}" + (f" ({reason})" if reason else ""),
                     "latency_s": None,
                 }
-            # Generator (V5)
+            # Generator
             if generator_block is None and (pipe is not None or gen_in is not None):
                 generator_block = {
                     "time": (gen_in or pipe).get("timestamp"),
@@ -6682,7 +6546,7 @@ def admin_message_journey():
                     "raw_output": (pipe or {}).get("draft"),
                     "latency_s": None,
                 }
-            # Reviewer (V5) — map v5_reviewer_trace.attempts → candidates.
+            # Reviewer — map reviewer_trace.attempts → candidates.
             if review_cycle is None and rtrace is not None:
                 attempts = rtrace.get("attempts") or []
                 cands = [{
@@ -6711,18 +6575,18 @@ def admin_message_journey():
                     "turn_index": tctx.get("turn_index"),
                     "current_info": tctx.get("current_info"),
                     "self_claims": tctx.get("self_claims"),
-                    "social_memory": tctx.get("social_memory"),
+                    "social_state": tctx.get("social_state"),
                     "behavior_advice": tctx.get("behavior_advice"),
                     "pressure_type": tctx.get("pressure_type"),
                     "overused_words": tctx.get("overused_words"),
                 }
                 ti = tctx.get("turn_index")
                 for ev in evs:
-                    if (ev.get("event_type") == "v5_snapshot_read_full"
+                    if (ev.get("event_type") == "snapshot_observed"
                             and ev.get("turn_index") == ti):
                         shared_memory = {k: ev.get(k) for k in (
                             "turn_index", "current_info", "hedge_advice",
-                            "phase_summaries", "self_claims", "social_memory",
+                            "round_summaries", "self_claims", "social_state",
                             "behavior_advice", "entry_count")}
                         break
         except Exception:
@@ -7073,7 +6937,7 @@ _PLAYER_READABLE_FILES = {
     PHASE_STATUS_FILE,              # phase_status.txt
     CONVERSATION_TOPIC_FILE,        # conversation_topic.txt
     "game_events.jsonl",            # unified reviewer/scheduler event log (public, game-state)
-    # B7: additional public game-state files surfaced in the Raw Files drawer.
+    # Public game-state files available in the Raw Files drawer.
     "all_messages.txt",             # merged chat transcript
     "player_names.txt",             # display names (already seen in chat)
     "remaining_players.txt",        # current survivors
@@ -7102,18 +6966,15 @@ def _is_player_readable(filename: str) -> bool:
 def serve_file():
     """Serve game files. Player-readable files are public; sensitive files require admin auth."""
     path = request.args.get('path', '')
-    # Phase C back-compat: requests use the legacy flat layout
-    # `games/<id>/<file>`. Translate that to the actual location resolved by
-    # `resolve_game_dir()`, which handles real/test × v1/v3 + legacy fallback.
+    # Resolve games/<id>/<file> requests through the game's runtime directory.
     parts = path.replace('\\', '/').split('/')
     if len(parts) >= 3 and parts[0] == 'games' and _valid_game_id(parts[1]):
         gid = parts[1]
         rest = parts[2:]
         gd = resolve_game_dir(gid)
-        # New layout moves single-instance files into subfolders (logs/, events/,
-        # messages/, transcripts/, ...). When the caller passes a bare filename
-        # (legacy flat path), resolve it through game_file so it lands in the
-        # right subfolder, falling back to the flat path for un-migrated games.
+        # Resolve a bare filename through game_file's category subdirectory
+        # lookup and direct-path fallback. Explicit subpaths remain relative
+        # to the resolved game directory.
         if len(rest) == 1:
             abs_path = os.path.abspath(str(game_file(gd, rest[0])))
         else:
@@ -7178,7 +7039,7 @@ def list_files():
 
 @app.route('/api/admin/list_game_files')
 def admin_list_game_files():
-    """B7: Admin-only listing of all files in a game dir with size + mtime.
+    """Admin-only listing of all files in a game dir with size + mtime.
 
     Used by the Raw Files drawer to display every file under games/<id>/
     (including sensitive logs that /api/list_files would hide from players).
@@ -7214,24 +7075,22 @@ def admin_list_game_files():
 
 @app.route('/api/games_list')
 def api_games_list():
-    """Return a lightweight list of ALL real games under games/ (sorted new→old).
+    """List runtime games for dashboard cards, newest first.
 
-    Used by the Dashboard 🎮 Games tab to render a card grid without touching
-    the per-model simulation folders. Each entry has just enough to render a
-    card (id, outcome, duration, AI player, player count, date).
+    Each entry includes id, outcome, duration, AI player, player count, and date.
     """
     games_root = Path(DIRS_PREFIX)
     if not games_root.exists():
         return jsonify({"games": []})
     items = []
-    # Phase C: walk new (real|test)/v{n}/ layout AND legacy flat games/<id>/.
-    all_dirs = [(c, v, d) for (c, v, d) in iter_all_games(include_simulations=False)
+    # Enumerate runtime games directly under the real/test category folders.
+    all_dirs = [(c, identity, d) for (c, identity, d) in iter_all_games(include_simulations=False)
                 if d.name.isdigit()]
     # Sort newest first by id.
     all_dirs.sort(key=lambda t: t[2].name, reverse=True)
-    for cat, ver, gdir in all_dirs:
+    for cat, identity, gdir in all_dirs:
         gid = gdir.name
-        entry = {"id": gid, "category": cat, "agent_version": ver}
+        entry = {"id": gid, "category": cat, "agent_identity": identity}
         # Config → players, AI, daytime
         try:
             cfg_path = gdir / GAME_CONFIG_FILE
@@ -7478,10 +7337,8 @@ def api_game_detail():
                 modified, total = 0, 0
                 outcomes = _parse_review_outcomes_from_log(log_file)  # may not exist
                 if outcomes is not None:
-                    # B6: enrich with per-attempt drill-down from game_events.jsonl.
-                    # We match events 1:1 in file order because review_outcome is
-                    # written by the same code path as review_cycle. Legacy games
-                    # without game_events.jsonl just get outcomes without drill-down.
+                    # Enrich outcomes from review_cycle events in file order.
+                    # Without event records, retain the parsed log outcomes.
                     events_file = game_file(gdir, "game_events.jsonl")
                     if events_file.exists():
                         review_events = []
@@ -7505,8 +7362,8 @@ def api_game_detail():
                                 o["expected_human_response"] = ev.get("expected_human_response") or ""
                                 o["reviewer_attempts"] = ev.get("reviewer_attempts")
                                 o["reviewer_ms"] = ev.get("reviewer_ms")
-                    # D2 fallback: legacy games without game_events.jsonl. Walk
-                    # the AI log directly to backfill candidates/situation/etc.
+                    # For outcomes lacking candidates, read attempt details
+                    # directly from the AI log and pair cycles by position.
                     needs_legacy = any(not o.get("candidates") for o in outcomes)
                     if needs_legacy:
                         legacy_cycles = _parse_review_attempts_from_log(log_file)
@@ -7630,7 +7487,7 @@ def _parse_review_outcomes_from_log(log_file: Path):
             import ast
             data = ast.literal_eval(content_match.group(1).strip())
             if isinstance(data, dict):
-                # Support both legacy ("original") and current ("original_message") keys.
+                # Accept both original_message and original payload keys.
                 orig = data.get("original_message", data.get("original", ""))
                 final = data.get("final_message", data.get("final", ""))
                 score = data.get("final_score", data.get("score"))
@@ -7653,8 +7510,7 @@ def _parse_review_outcomes_from_log(log_file: Path):
 
 
 def _parse_review_attempts_from_log(log_file: Path):
-    """D2: Legacy drill-down parser — extract per-attempt review history from
-    the AI's llm_log_{name}.txt for games predating game_events.jsonl.
+    """Extract per-attempt review details from the AI's text log.
 
     Walks `# NEW LOG` blocks and groups them per review cycle (terminated by a
     `review_outcome` block). Within each cycle, pairs the i-th

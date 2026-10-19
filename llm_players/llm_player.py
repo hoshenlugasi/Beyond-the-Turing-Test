@@ -13,7 +13,7 @@ from llm_players.logger import Logger
 
 # Module-level lock for game_events.jsonl / cost_log.jsonl appends. Guards
 # against interleaved writes when multiple players run in the same process
-# (CB6). File.write() on CPython 3 is thread-safe for single short writes,
+# File.write() on CPython 3 is thread-safe for single short writes,
 # but we acquire a lock for extra safety (partial-line corruption would
 # break JSONL parsers downstream).
 _EVENT_LOG_LOCK = threading.Lock()
@@ -32,9 +32,9 @@ class LLMPlayer(ABC):
         self.logger = Logger(name, game_dir)
         # Multi-agent (agent-vs-agent) games run N players in N separate
         # processes that would otherwise clobber the shared game_events.jsonl /
-        # cost_log.jsonl / v5_memory_trace.jsonl. When `multi_agent_logs` is set
-        # we namespace those files per player. Single-AI games keep the legacy
-        # shared filenames so the dashboard/readers stay unaffected.
+        # cost_log.jsonl / memory_trace.jsonl. When `multi_agent_logs` is set
+        # we namespace those files per player. Single-AI games use shared
+        # filenames for the dashboard and readers.
         self.multi_agent_logs = bool(llm_config.get("multi_agent_logs", False))
         self._log_suffix = f"_{name}" if self.multi_agent_logs else ""
         self.pass_turn_token = llm_config[PASS_TURN_TOKEN_KEY]
@@ -42,8 +42,8 @@ class LLMPlayer(ABC):
         self.num_words_per_second_to_wait = llm_config[WORDS_PER_SECOND_WAITING_KEY]
         # Get persona from config, or use None for default
         self.persona_id = llm_config.get(PERSONA_KEY, None)
-        # Experimental (v4-prep) toggle — affects system prompt + reviewer
-        # prompts + max_tokens override. Default false keeps legacy behavior.
+        # Experimental toggle — affects system prompt + reviewer
+        # prompts + max_tokens override. Disabled by default.
         self.experimental = bool(llm_config.get("experimental_agent", False))
         # Build personalized system prompt
         self.system_prompt = build_system_prompt(self.persona_id, experimental=self.experimental)
@@ -112,7 +112,7 @@ class LLMPlayer(ABC):
         raise NotImplementedError()
     
     def _apply_memory_window(self, message_history: list) -> list:
-        """Return message_history trimmed to the configured memory window (2.4).
+        """Return message_history trimmed to the configured memory window.
 
         memory_window_size=None (default): full history.
         memory_decay_mode='drop_older': keep last N.
@@ -161,9 +161,7 @@ class LLMPlayer(ABC):
     def _log_cost(self, component: str, **extra):
         """Write LLM usage from the last generate() call to cost_log.jsonl.
 
-        ``extra`` fields (e.g. latency_s) are merged into the entry — added for
-        the reviewer, which was the only LLM component with no cost/latency
-        telemetry (its 8.4s spikes in game 9084 were invisible)."""
+        ``extra`` fields (e.g. latency_s) are merged into the usage entry."""
         usage = self.llm.pop_usage()
         if not usage:
             return
@@ -175,7 +173,7 @@ class LLMPlayer(ABC):
             **extra,
         }
         cost_file = self.game_dir / "events" / f"cost_log{self._log_suffix}.jsonl"
-        # CB6: lock-protected append to avoid interleaved partial writes.
+        # Lock-protected append to avoid interleaved partial writes.
         with _EVENT_LOG_LOCK:
             cost_file.parent.mkdir(parents=True, exist_ok=True)
             with open(cost_file, 'a', encoding='utf-8') as f:
@@ -188,23 +186,20 @@ class LLMPlayer(ABC):
         counterfactual viewer). Writes are best-effort — failures are silently
         swallowed so logging never breaks the game loop.
 
-        CB6: serialized through a module-level lock to prevent partial-line
+        Serialized through a module-level lock to prevent partial-line
         corruption when multiple players in the same process log concurrently.
         """
         try:
+            from core.event_clock import append_event
+
             entry = {
-                "schema_version": 1,
-                "timestamp": time.strftime("%H:%M:%S"),
                 "event_type": event_type,
                 "player": self.name,
             }
             entry.update(fields)
             out = self.game_dir / "events" / f"game_events{self._log_suffix}.jsonl"
-            line = json.dumps(entry, ensure_ascii=False) + "\n"
             with _EVENT_LOG_LOCK:
-                out.parent.mkdir(parents=True, exist_ok=True)
-                with open(out, 'a', encoding='utf-8') as f:
-                    f.write(line)
+                append_event(out, entry)
         except Exception as e:
             # Never let logging kill the game.
             try:

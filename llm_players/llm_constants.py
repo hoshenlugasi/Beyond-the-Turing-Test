@@ -299,15 +299,8 @@ don't know is MORE human than a precise-but-wrong answer.
 """
 
 
-# ── V6 game rules + dual-role / investigator guidelines ─────────────────────
-# V6 (revised): the agent has ONE role, identical to every human player — it gets
-# the SAME instructions everyone got (embedded verbatim below), plays the same
-# game, and hunts the AI among the OTHERS just like them. Investigating is NOT a
-# "second role"; it is part of the single shared task. This removes the role
-# asymmetry that exposed V5 (everyone investigated; the agent only answered)
-# WITHOUT changing the experimental base rate. Selected via config
-# `investigator: true` (default for V6).
-GAME_RULES_PROMPT_V6 = """
+# Shared player instructions and investigator guidelines.
+INVESTIGATOR_GAME_RULES_PROMPT = """
 WELCOME TO THE SOCIAL TURING TEST
 
 You are a player in a group game called the "Social Turing Test". Several humans
@@ -356,12 +349,9 @@ YOUR SINGLE HIGHEST PRIORITY AT EVERY MOMENT is to sound and behave like a
 natural human participant in a social group chat.
 """
 
-# V6 (revised): read-the-room / vibe-matching behaviour. Appended to the style
-# guides so the agent stops playing a purely passive "interrogated" role (the
-# clearest behavioural tell across 9043-9046: everyone probed; the agent only
-# answered) — WITHOUT swinging to reflexive dodging. The point is judgement:
-# know when to answer, when to initiate, and when to deflect.
-INVESTIGATOR_GUIDELINES_V6 = """
+# Read-the-room / vibe-matching behaviour, appended to the style guidelines.
+# Balance answering, initiating and deflecting rather than remaining passive.
+INVESTIGATOR_GUIDELINES = """
 === READ THE ROOM AND MATCH ITS VIBE ===
 Real players aren't passive. Don't just wait to be asked and then answer — and
 don't dodge everything either. Each moment, read the room and pick what a real
@@ -401,7 +391,7 @@ turn to turn so no fixed pattern (always-answer / always-dodge) ever emerges.
 """
 
 
-# Experimental (v4-prep) emoji policy. Appended to the style guidelines only
+# Experimental emoji policy. Appended to the style guidelines only
 # when the per-player ``experimental_agent`` config flag is true.
 _EMOJI_POLICY_BLOCK = """=== EMOJI POLICY ===
 - Default to NO emojis. Most casual chat here is plain text.
@@ -413,26 +403,25 @@ def build_system_prompt(persona_id=None, experimental=False, investigator=False,
                         event_context=None):
     """Build complete system prompt with persona.
 
-    When ``experimental=True`` the v4-prep emoji policy block is appended
-    after the style/behavior guidelines. Default is unchanged from the
-    legacy agent.
+    When ``experimental=True`` the emoji policy block is appended
+    after the style/behavior guidelines. It is omitted by default.
 
-    V6 knob (defaults to legacy behavior so V1-V5 are untouched):
-      - ``investigator=True`` (Fix H+I) swaps in the V6 dual-role rules prompt
+        Optional shared-player instructions:
+            - ``investigator=True`` swaps in the shared-player rules prompt
         (single AI, but the agent ALSO hunts the AI like a human player) and
         appends the investigate-the-room behaviour guidelines.
-      - ``event_context`` (games 9067/9070): the real-world event ALL players
+            - ``event_context``: the real-world event ALL players
         share (a hackathon, a class). Rendered as ground truth so private
         shared-context references can't expose the agent as an outsider.
     """
     persona = get_persona(persona_id)
     style = STYLE_AND_BEHAVIOR_GUIDELINES
     if investigator:
-        style = style + "\n" + INVESTIGATOR_GUIDELINES_V6
+        style = style + "\n" + INVESTIGATOR_GUIDELINES
     if experimental:
         style = style + "\n" + _EMOJI_POLICY_BLOCK
 
-    rules = GAME_RULES_PROMPT_V6 if investigator else GAME_RULES_PROMPT
+    rules = INVESTIGATOR_GAME_RULES_PROMPT if investigator else GAME_RULES_PROMPT
 
     event_block = ""
     if event_context:
@@ -450,20 +439,20 @@ This is your shared reality — when the chat references the event (the venue, t
 {style}
 """
 
-# for backward compatibility
+# Default-persona system prompt.
 GENERAL_SYSTEM_INFO = build_system_prompt(DEFAULT_PERSONA_ID)
 # END PERSONA CONFIGURATION SYSTEM
 # ==============================================================================
 
-# LLM players type names:
+# Player-base type labels:
 SCHEDULE_THEN_GENERATE_TYPE = "schedule_then_generate"
 GENERATE_THEN_SCHEDULE_TYPE = "generate_then_schedule"
 FINE_TUNED_TYPE = "fine_tuned"
 EVERY_X_MESSAGES_TYPE = "every_x_messages"
-# Reviewed player (with Gemini AI suspicion detector)
+# Review-helper base type label.
 REVIEWED_SCHEDULE_THEN_GENERATE_TYPE = "reviewed_schedule_then_generate"
 
-ASYNC_TYPES = ["langgraph_v6"]
+ASYNC_TYPES = ["social_turing_test_agent"]
 DEFAULT_ASYNC_TYPE = ASYNC_TYPES[0]
 
 # API keys and secrets
@@ -558,7 +547,7 @@ OPENROUTER_SCHEDULING_GENERATION_PARAMETERS = {
     MAX_TOKENS_KEY: 3,
 }
 GEMINI_SCHEDULING_GENERATION_PARAMETERS = {
-    MAX_NEW_TOKENS_KEY: 10,  # Enough for <send> or <wait>; bumped from 3 because
+    MAX_NEW_TOKENS_KEY: 10,  # Enough for <send> or <wait> because
                               # thinking_budget=0 is set in generate_with_gemini, so all
                               # 10 tokens go to text — no thinking overhead.
 }
@@ -596,7 +585,7 @@ INDIFFERENCE_NUDGE = "This wasn't aimed at you by name — it's a question to th
 def turn_task_into_prompt(task, message_history, *, current_time=None, current_date=None):
     """Build a turn prompt, optionally using the persona's local clock.
 
-    Game/chat logs keep the server's Israel timestamps. V6 passes the persona's
+    Game/chat logs keep the server's Israel timestamps. The agent passes the persona's
     local date and time here so the model never receives two conflicting clocks.
     """
     prompt_date = current_date or get_current_date()
@@ -769,7 +758,7 @@ def analyze_period_usage(message_history):
 
 # Generation-scaffolding leak guard. Some models (esp. reasoning/preview
 # variants) emit their internal "pick a register" deliberation as the answer,
-# e.g. the literal 9056 send: "Option 2 (casual vague):* missed it, who".
+# e.g. "Option 2 (casual vague):* missed it, who".
 # We (a) drop a message that is a full multi-option deliberation dump, and
 # (b) strip a single leading option/register label so a salvageable reply
 # ("missed it, who") survives. Returns the cleaned text ("" = drop the send).
@@ -810,8 +799,8 @@ def strip_generation_scaffolding(message):
 def make_more_human_like(message, message_history=None, normalize_commas=False):
     import random
 
-    # Drop/strip any leaked generation scaffolding ("Option 2 (casual vague):*
-    # ...") BEFORE any other processing so it can never reach the chat.
+    # Drop/strip any leaked generation scaffolding ("Option 2 (casual vague):*"
+    # ...) BEFORE any other processing so it can never reach the chat.
     message = strip_generation_scaffolding(message)
 
     # Strip leading chat-log prefix if the LLM echoed the conversation format.
@@ -826,7 +815,7 @@ def make_more_human_like(message, message_history=None, normalize_commas=False):
     # Strip "PlayerName: " prefix without timestamp (e.g. "Avery: sounds good").
     # Conservative: a single capitalised word followed by ": " and at least one
     # non-space character. This avoids stripping "ok: yes" (no leading capital)
-    # but catches all observed LLM self-reference patterns from the V4/V5 runs.
+    # but catches observed LLM self-reference patterns.
     _name_pat = re.compile(r'^([A-Z][a-zA-Z]+):\s+(\S)')
     _m = _name_pat.match(message)
     if _m:

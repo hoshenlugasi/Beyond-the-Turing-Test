@@ -50,13 +50,13 @@ records, not participant-level records or an independently rerunnable recruitmen
 API export. The 234 initial human seats are not, by themselves, evidence of 234
 unique individuals. No cross-game identity linkage is released.
 
-The public source retains the six paper workers and legacy orchestration, but
-intentionally omits the original research checkout's diagnostic Live Evaluator,
-its model, feedback path and UI control. There is no default Pro role. The
-diagnostic ran historically with feedback off; omission is not evidence it never
-ran. Historical data, cached judgments and annotations remain unchanged. This
-does not establish that every historical server build was byte-identical to
-today's checkout.
+The agent has Scheduler, Generator and Reviewer plus six paper workers: Internet
+Context, Round Summarizer, Persona Monitor, Social State Tracker, Behavior Adapter
+and Repetition Monitor. The reference model is Gemini 2.5 Flash
+(`gemini-2.5-flash`); the Reviewer selects a generated candidate verbatim, without
+rewriting. Recorded study diagnostic evaluation used Gemini 2.5 Pro
+(`gemini-2.5-pro`) with feedback disabled; its 1,558 records are excluded from
+released timelines. Historical data, cached judgments and annotations are frozen.
 
 Provider-side model behavior, availability, latency and live web-search results
 can change. Google's [official model catalog](https://ai.google.dev/gemini-api/docs/models/gemini),
@@ -65,21 +65,42 @@ or projects may lack access. Entitlement must be checked with the chosen provide
 there is no automatic-upgrade or continued-availability guarantee. A replacement
 model is a new experiment, not the original model condition.
 
-Fresh Windows archive validation passed 427 tests and 27,987 subtests; two
-private-source checks skipped while all public-data integrations ran. Twelve
-stdlib-only analysis runs reproduced bundled results without network calls or
-original-tree reads. The fresh venv and external extraction used the same Windows
-account, not a VM. One separately approved real Flash functional game passed
-with two scripted human-seat clients; it did not replay cohort outcomes or
-establish scientific quality, live multi-round or reliable Search coverage.
-Further paid tests require separate approval.
+The final outside-ZIP validation report identifies the exact artifacts checked,
+including 12 offline scientific reproductions, tests in a new external Windows
+virtual environment, server checks and local dataset loading. Its evidence applies
+only to those artifacts, not automatically to edited files or rebuilt packages.
+Isolation used same-account external directories and guarded processes, not a VM.
+No new model-backed game, scientific-quality validation or remote Hub viewer
+validation is claimed here.
 
-## Internal observability
+## Component observability, clocks and privacy
 
-The separately documented structured-output export is not a full execution log.
-Missing events are not inferred. Candidate generation, reviewer selection and
-confirmed delivery are distinct stages. Explicit short reviewer assessments are
-not a complete explanation of model cognition or evidence of causal worker
-effectiveness. Full prompts, full snapshots, private profiles and billing
-envelopes are excluded. Privacy review is not consent or legal clearance for
-unrestricted redistribution; authors must confirm those terms before uploading.
+Every game has four core files plus nested timeline JSONL, a full derived text
+rendering and coverage manifest. Four root tables provide access views, not new
+scientific inputs. See [dataset guide](../DATASET.md),
+[dictionary](../DATA_DICTIONARY.md) and [manifest](../dataset_manifest.json).
+Timelines retain 53,360 of 54,918 source events, excluding 1,558 historical
+diagnostic records, and cover all six paper workers. This is not a full execution
+log: full prompts/snapshots, raw provider responses and private mappings are omitted.
+
+Historical timing is one-second precision since the first source event, not START.
+The first retained event need not be the anchor. No date, chat-clock merge,
+timezone correction or causal concurrency order is inferred. Future exports
+accept verified paired monotonic logger-segment intervals, not a game-start clock.
+There is no public segment-index column. Incomplete or restart-ambiguous unpaired
+timing stays null/unknown; restarted segments are independent and cannot be
+stitched into a continuous elapsed axis. Invalid paired timing is refused.
+None of this revises historical analysis windows or original numeric word counts.
+
+Missing events are not inactivity, WAIT or zeros. Candidate generation, selection
+and confirmed delivery remain distinct; personal-chat append is delivery authority.
+Emitted short assessments are not hidden reasoning or causal effectiveness proof.
+Recorded returned-item counts are not independent sources; available facts do not
+prove grounding or use. Persona/social output is not verified human biography.
+
+A first pass reviewed 7,408 unique text values; 52 were withheld at 135 payload
+occurrences. A further 22 withheld values occur at 111 payload locations.
+Rendered repetition is not counted again. Contextual checks were
+selective, not exhaustive. Author permission is conditional on not identifying
+individuals; review is not an anonymity guarantee, independent consent/IRB
+certification or clearance for unrestricted redistribution.

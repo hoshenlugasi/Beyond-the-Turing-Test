@@ -1,34 +1,37 @@
+---
+configs: [{config_name: games, default: true, data_files: [{split: data, path: "tables/games.jsonl"}]}, {config_name: messages, data_files: [{split: data, path: "tables/messages.jsonl"}]}, {config_name: votes, data_files: [{split: data, path: "tables/votes.jsonl"}]}, {config_name: surveys, data_files: [{split: data, path: "tables/surveys.jsonl"}]}, {config_name: events, data_files: [{split: data, path: "games/*/events/timeline.jsonl"}]}]
+---
+
 # Social Turing Test
 
-A chat game where humans try to find one AI player. After each discussion,
-players vote someone out. Humans win by removing the AI; the AI wins by reaching
-the final two.
+A group chat game with one AI player. Humans win by voting out the AI; the AI
+wins by reaching the final two. Includes one playable agent, 50 study games,
+reviewed component timelines and offline calculations for **Beyond the Turing
+Test: Evaluating AI Agents in Group Conversation**, Hoshen Lugasi, Uri Berger,
+Niv Eckhaus, Itay Itzhak and Gabriel Stanovsky (2026).
 
-This repository includes the V6 agent, a local game, the 50 released study games,
-and code for the paper's numerical analyses. It does not include the private
-recruitment or deployment system.
+Code: [GitHub](https://github.com/hoshenlugasi/Beyond-the-Turing-Test).
+Data mirror: [Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
+[Project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/).
+See [release notes](RELEASE_NOTES.md) for this dataset revision's mirror-refresh status.
 
-Paper: **Beyond the Turing Test: Evaluating AI Agents in Group Conversation**,
-Hoshen Lugasi, Uri Berger, Niv Eckhaus, Itay Itzhak and Gabriel Stanovsky (2026).
+## 1. Install on Windows
 
-## 1. Install
-
-Install Python 3.12, download or clone this repository, and open a terminal in its
-root folder. On Windows, run these commands in PowerShell. No activation is needed:
+Install Python 3.12 and open PowerShell in this package's root. All commands and
+loading examples below use that working directory; activation is unnecessary.
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Only want to read the data or run the offline analyses? Skip the game dependencies
-and credentials. Go straight to [the data](#5-the-50-study-games) or
-[the analysis commands](#6-run-the-paper-calculations).
+Reading files needs no credentials or installation. Offline paper calculations
+need only the standard library; skip to section 6 for those.
 
 ## 2. Set credentials and start the server
 
-You need your own Gemini API key and a strong admin password. In the same
-PowerShell terminal, run:
+In the same terminal, supply your own strong admin password and Gemini API key
+without putting their values in command history:
 
 ```powershell
 $adminSecret = Read-Host "Choose your admin password" -AsSecureString
@@ -39,111 +42,96 @@ Remove-Variable adminSecret, googleSecret
 .\.venv\Scripts\python.exe web_player.py
 ```
 
-The password is read when the server starts. Without it, the admin panel is
-disabled; restart the server after changing it. [.env.example](.env.example)
-lists the settings, but is **not loaded automatically**. Never commit real keys.
-
-Live games use paid external services. The default model is **Gemini 2.5 Flash**;
-check that your account can access it before playing. Availability depends on the
-provider. There is no automatic replacement model; changing models creates a new
-experiment. [Other credential options and Linux/Docker instructions](RELEASE_NOTES.md#other-ways-to-run)
-are available, but Linux/macOS and Docker have not been tested for this release.
+Missing password disables admin access; restart after changing it.
+[.env.example](.env.example) is a reference, **not automatically loaded**. Never
+commit secrets. Live requests incur costs; check your account's Gemini 2.5 Flash
+entitlement. Availability is conditional; replacement models are new conditions.
+See [other ways to run](RELEASE_NOTES.md#other-ways-to-run).
 
 ## 3. Play
 
-1. Open <http://localhost:5000>, enter the admin panel, and log in with your password.
-2. Create a game using the default V6 settings. Share its lobby link with players.
-   Players on another device need your computer's reachable LAN address instead
-   of `localhost`.
-3. Have **at least two humans** join. There is no fixed player cap or automatic
-   start. Wait for the AI to be ready, then press **START**.
-4. Chat, vote, and continue until the AI is eliminated or reaches the final two.
-   Players can then submit the post-game survey.
+1. Open <http://localhost:5000> and log into the admin panel with your password.
+2. Create a game with default agent settings and share the lobby link. Other
+   devices need your reachable LAN address rather than localhost.
+3. Have **at least two humans** join, wait for AI readiness, then press **START**.
+   There is no fixed five-human cap or automatic start.
+4. Chat and vote until the game ends; players can then submit surveys.
 
-The server listens on all network interfaces. Use a trusted network; do not put
-this development server or its admin panel directly on the public Internet.
+The server listens on all interfaces. Use a trusted network, not direct public
+Internet exposure. Defaults retain the paper's orchestration, Swiss student
+persona, 2.5-minute discussions, four candidates and verbatim reviewer selection.
+Selection is not delivery. Scheduler, Generator and Reviewer work with Internet
+Context, Round Summarizer, Persona Monitor, Social State Tracker, Behavior Adapter
+and Repetition Monitor. The Reviewer selects a candidate verbatim, without
+rewriting. Changing models, settings or roster is not a replay of the study.
 
-The defaults are V6 legacy orchestration, a Swiss student persona, 2.5-minute
-discussions and four generated candidates. The reviewer selects one candidate
-without rewriting it. Selection does not guarantee delivery: later checks can
-still suppress it. The public runtime has six background workers and **no Live
-Evaluator**. See [release details](RELEASE_NOTES.md) for the full settings and
-the difference from the historical research runtime.
+## 4. Save and export
 
-## 4. Save and export a new game
-
-**The runtime provides two storage layers:**
-
-- **Full local saving is automatic.** Configurations, chats, votes, events, logs
-  and memory traces stay under `games/real/v6/` or `games/test/v6/`. These files
-  are for running/debugging the game, not for public upload.
-- **A separate export is manual.** After the game manager and AI have stopped
-  and the surveys you want have arrived, run [export_game.py](export_game.py).
-
-For example, if your completed game is in `games/real/v6/0001`:
+Full raw saving is automatic under games/real/&lt;id&gt; or games/test/&lt;id&gt;:
+configuration, chats, votes, events, logs and memory traces. Keep raw files local.
+After the manager and AI stop and desired surveys arrive, export manually:
 
 ```powershell
-.\.venv\Scripts\python.exe export_game.py --game-dir games/real/v6/0001 --output local_exports/my_game --export-id local_game_001 --kind local_game
+.\.venv\Scripts\python.exe export_game.py --game-dir games/real/0001 --output local_exports/my_game --export-id local_game_001 --kind local_game
 ```
 
-Replace the source path with your actual game directory. Use a fresh destination
-and export ID each time. For scripted test seats, use `--kind scripted_test`.
-The example source is not an included game.
+Replace the source with your completed directory. Scripted seats use
+`--kind scripted_test`. [export_game.py](export_game.py) needs only the standard
+library, makes no network calls, leaves source unchanged and publishes atomically
+to a fresh destination without overwriting. Its 14 files comprise four core
+records, three nested event files, four root tables, loading schemas, a README
+and export manifest.
+It never extends the historical cohort. Export late surveys to another fresh
+output. Use the ignored local_exports directory inside this checkout.
 
-The output contains four core files under `games/local_game_001/` and selected
-events under `internal_outputs/games/local_game_001/events/`, plus a README and
-manifests. The command needs no API key, makes no network requests, and leaves
-the full source files unchanged. It never adds games to the historical cohort.
-Inside this checkout, use the ignored `local_exports` folder.
+**Every new export is privacy-review-PENDING and not publication-authorized.**
+Review all text, including rejected candidates, reviewer assessments and worker
+observations, and check consent/rights. Automatic masking is not clearance.
+Missing surveys remain missing; unfinished, inconsistent or unsupported drop/rescue
+records are refused. Future timing uses verified logger segments, not START.
+There is no public segment-index column; ambiguous unpaired timing is null and
+restart intervals must not be stitched. See [clock details](DATASET.md#clocks-order-and-scientific-limits).
 
-**New exports still need privacy review before sharing.** Automatic masking is
-not enough: check transcripts, surveys, rejected candidates and reviewer/worker
-text, and confirm consent and redistribution rights. Every new export is marked
-privacy-review-pending and not authorized for publication. Missing surveys stay
-missing. Existing output is never overwritten. Unfinished or inconsistent games,
-including unsupported drop/rescue records, are rejected rather than guessed.
-To include a late survey, export again to a new destination.
+## 5. Read study data
 
-## 5. The 50 study games
+Every [game](games/game_001) has seven files: [metadata](games/game_001/metadata.json),
+[transcript](games/game_001/transcript.txt), [ballots](games/game_001/votes.json),
+[surveys](games/game_001/surveys.json), [timeline JSONL](games/game_001/events/timeline.jsonl),
+[full text rendering](games/game_001/events/timeline.txt) and
+[coverage manifest](games/game_001/events/manifest.json).
 
-Start with [game_001](games/game_001). Every released game has four core files:
+Counts: 50 games, 135 rounds, 2,414 player messages, 618 ballots, 229 surveys and
+224 enjoyment ratings. Sixteen games started with four humans and 34 with five.
+Root tables have 50 games, 2,954 messages (2,414 player / 540 system), 618 votes
+and 229 surveys. Timelines retain 53,360 of 54,918 source events, excluding 1,558
+diagnostic records. All six paper workers are represented, not unrestricted logs.
+Historical timing is one-second precision since the **first source event, not
+START**; no chat-clock merge or timezone correction is asserted.
 
-| File | What it contains |
-|---|---|
-| [metadata.json](games/game_001/metadata.json) | AI pseudonym, starting human count, rounds and outcome |
-| [transcript.txt](games/game_001/transcript.txt) | Player-visible conversation and game notices |
-| [votes.json](games/game_001/votes.json) | Cast ballots, with AI votes marked |
-| [surveys.json](games/game_001/surveys.json) | Submitted ratings and comments |
+See [DATASET.md](DATASET.md), [DATA_DICTIONARY.md](DATA_DICTIONARY.md) and
+[dataset_manifest.json](dataset_manifest.json). Local standard-library reading:
 
-There is also a **separate filtered event export** under
-[internal_outputs](internal_outputs/README.md): candidates, short reviewer
-assessments, selections, delivery checks and selected worker updates. These are
-not all raw logs. Full prompts, full memory snapshots, credentials, recruitment
-identifiers and private ID mappings are excluded. Rejected candidates are not
-public chat messages.
+```python
+import json
+from pathlib import Path
+with Path("games/game_001/events/timeline.jsonl").open(encoding="utf-8") as handle:
+    events = [json.loads(line) for line in handle if line.strip()]
+```
 
-The dataset has 50 games, 135 rounds, 2,414 player messages, 618 cast ballots and
-229 surveys. Sixteen games began with four humans and 34 with five. Keep this
-difference in analyses; do not combine these games with Pro, custom or test games.
-Five surveys are missing, and the five legacy surveys have no enjoyment rating;
-missing values are not zeros. Demographic data is aggregate-only.
+Optional `datasets` loading, not a runtime dependency:
 
-The reviewed data is published in this GitHub repository and on
-[Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
-Shared dataset files are byte-identical; the repositories' root README and
-license files differ. See the
-[project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/) for an overview.
+```python
+from datasets import load_dataset
+messages = load_dataset(".", name="messages", split="data")
+events = load_dataset(".", name="events", split="data")
+players = messages.filter(lambda row: row["speaker_role"] != "system")
+```
 
-Text was reviewed and identifying spans removed; [public_redactions.json](public_redactions.json)
-records the additional public redactions. Review reduces risk, but cannot
-guarantee that no person could ever be identified from context. Do not attempt
-re-identification. [DATASET.md](DATASET.md) describes **only the four-file core**;
-its exclusion of internal traces does not refer to the separate filtered events.
+[dataset_infos.json](dataset_infos.json) supplies explicit nullable nested types;
+do not infer event types from the first shard, where some fields are all null.
+The same metadata and five loading configurations are included in new exports.
 
-## 6. Run the paper calculations
-
-Use Python 3.12. These commands need only the standard library: no dependency
-installation, credentials, model calls or paid services.
+## 6. Run paper calculations
 
 ```powershell
 py -3.12 analysis/takeaway_evidence.py
@@ -152,36 +140,35 @@ py -3.12 analysis/message_behavior_analysis.py
 py -3.12 analysis/analyze_message_behavior_interannotator.py
 ```
 
-Each command **prints JSON**. The checked-in [reference results](analysis/results)
-are not overwritten. The scripts use the included [calculation inputs](analysis/inputs)
-and frozen model judgments; they do not call judges again or create figures.
-The four core game files alone are not sufficient. Both release packages already
-include the same game data and inputs, so no copying is needed with this checkout.
+Each prints JSON without credentials, API calls or figures, using bundled
+[inputs](analysis/inputs) and frozen decisions. They do not overwrite
+[reference results](analysis/results). Four core records alone are insufficient.
+Preserve original numeric word counts, cohort order and midnight-window behavior;
+event clocks are not scientific corrections. See [analysis guide](analysis/README.md)
+and [reproduction limits](analysis/REPRODUCIBILITY_NOTES.md).
 
-Use the supplied original numeric word counts, not counts recomputed from redacted
-text. One game crosses midnight; the calculations preserve the original window
-behavior. See [analysis/README.md](analysis/README.md) for methods, inputs and limits.
-
-## 7. Run the tests
-
-After installing the game dependencies:
+## 7. Optional checks and validation scope
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-Validation used Windows Python 3.12.10 and fresh extracted packages. It covered
-the offline calculations, code tests and one real Flash game with two scripted
-human-seat clients. That is a functional check, not a study with real participants
-or proof of reliable web grounding. Details are in [RELEASE_NOTES.md](RELEASE_NOTES.md).
+The final outside-ZIP validation report identifies the exact artifacts checked:
+12 offline scientific reproductions, tests in a new external Windows virtual
+environment, server checks and local dataset loading. Its evidence applies only
+to those artifacts, not automatically to edited files or rebuilt packages. No new
+model-backed game, scientific-quality validation or remote Hub viewer validation
+is claimed. See [release notes](RELEASE_NOTES.md).
 
-## License and citation
+## Privacy, license and citation
 
-Code: [MIT](LICENSE), preserving Niv Eckhaus's 2025 notice and adding Hoshen
-Lugasi's 2026 contributions. Data: [MIT within the distributor's rights](DATA_LICENSE).
-Participant privacy and other third-party rights still apply; a license is not
-consent for unrelated personal-data use. The author's release permission is
-conditional on not identifying individual participants.
+A first pass reviewed 7,408 unique text values; 52 were withheld at 135 payload
+occurrences. A further 22 withheld values occur at 111 payload locations.
+Contextual checks were selective, not anonymity proof. Do not
+re-identify or externally link participants. Author permission is conditional on
+not identifying individuals, not independent consent/IRB certification.
 
-Please cite the paper using [CITATION.cff](CITATION.cff).
+Code: [MIT](LICENSE), preserving upstream/contributor notices. Data:
+[MIT within the distributor's rights](DATA_LICENSE); privacy and third-party
+rights still apply. Please cite [CITATION.cff](CITATION.cff).

@@ -39,16 +39,13 @@ _LOW_REASONING_PATTERNS = (
     re.compile(r"^openai/o[1-9](\b|[.\-])",       re.IGNORECASE),
     re.compile(r"^google/gemini-3.*pro",          re.IGNORECASE),
     re.compile(r"^google/gemini-2\.5-pro",        re.IGNORECASE),
-    # Grok 4.5 REJECTS reasoning:{enabled:false} with HTTP 400 (measured
-    # 2026-07-09), so the best available is low effort (~2-3s for a 5-word
-    # reply, 200+ reasoning tokens). Prefer grok-4.3 for live games — see
-    # _DISABLE_REASONING_PATTERNS below.
+    # Grok 4.5 rejects reasoning:{enabled:false} with HTTP 400, so use low
+    # effort rather than the full-disable setting supported by other variants.
     re.compile(r"^x-ai/grok-4\.5(\b|[.\-]|$)",    re.IGNORECASE),
 )
 
 # Models where reasoning can be fully DISABLED — the right mode for 2-6 word
-# chat messages. Measured on grok-4.3 (2026-07-09): default = 3-4s with ~300
-# wasted reasoning tokens per tiny reply; {"enabled": false} = 0.7s, clean.
+# chat messages, avoiding internal reasoning overhead on tiny replies.
 _DISABLE_REASONING_PATTERNS = (
     re.compile(r"^x-ai/grok-(?!4\.5)", re.IGNORECASE),   # grok-4.3, 4.20, build…
 )

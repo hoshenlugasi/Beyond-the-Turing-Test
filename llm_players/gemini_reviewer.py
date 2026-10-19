@@ -11,18 +11,16 @@ from llm_players.reviewer_base import BaseReviewer, ReviewResult, REVIEW_PROMPT_
 
 # Module-level default; the actual per-call timeout is set on the instance via
 # the constructor (api_timeout_sec) and matches reviewer_api_timeout_sec from
-# the player's llm_config. Kept here for backward compatibility with callers
-# that import the constant directly.
+# the player's llm_config. The constant is also available for direct import.
 REVIEWER_API_TIMEOUT_SEC = 10.0
 # Hard fallback timeout when caller passes None / 0 / invalid. Prevents the
 # reviewer from EVER calling the SDK without an external wall-clock guard —
 # critical because the Gemini SDK's internal tenacity retry can hang for
-# ~10 minutes on transient errors (observed in games 0089-0092).
+# minutes on transient errors.
 _DEFAULT_API_TIMEOUT_SEC = 30.0
 # Hard floor applied when api_timeout_sec is None / 0 / invalid. Prevents
 # accidental no-timeout calls that hang on Gemini SDK tenacity retry storms
-# (observed in games 0089-0092: a single 429 retry chain blocked the agent
-# for ~10 minutes, which prevented the AI from voting and hung round 2).
+# and prevent the agent from reaching the voting phase.
 _DEFAULT_API_TIMEOUT_SEC = 30.0
 
 
@@ -83,15 +81,12 @@ class GeminiReviewer(BaseReviewer):
         # Wrap the blocking SDK call in a thread with a hard wall-clock timeout
         # so a slow/hung Gemini backend cannot stall the reviewer pipeline.
         # The SDK's internal tenacity retries on transient 429s can block the
-        # main thread for ~10 minutes (observed in games 0089-0092). We never
+        # main thread for minutes. We never
         # call _call() directly — there is always a timeout via future.result.
         # Gemini thinking-model strategy (mirrors the generator in
         # llm_wrapper.py):
-        #   Gemini 3 (3.x): thinking_budget was REPLACED by thinking_level
-        #     ("low"/"high"). Sending thinking_budget is silently IGNORED, so the
-        #     reviewer thinks at the default (high) level and spends 12-20s per
-        #     call (the dominant per-message latency observed in game 9057).
-        #     Force the lowest level instead.
+        #   Gemini 3 (3.x): use thinking_level ("low"/"high"), not
+        #     thinking_budget. The lowest level limits review latency.
         #   Gemini 2.5: Flash can disable thinking entirely (budget=0), which is
         #     critical here — with thinking ON the reviewer call spends 20+ seconds
         #     "thinking" and hits the wall-clock timeout on EVERY call, returning a

@@ -1,4 +1,4 @@
-"""Per-model knowledge-cutoff lookup (V5.7 B2).
+"""Per-model knowledge-cutoff lookup.
 
 The agent needs a *soft* sense of where its own training knowledge ends so it can
 reason "Oct 7 2023 I'd obviously know, but today's score I wouldn't unless it came
@@ -74,7 +74,7 @@ def get_knowledge_cutoff(model_name: Optional[str], override: Optional[str] = No
 def refresh_cutoff_via_web(model_name: str, web_search_fn) -> str:
     """OPTIONAL network call: ask the grounding backend for a model's cutoff
     and write it to the cache. Not called in the game hot path. `web_search_fn`
-    is injected (e.g. llm_players.v6.sub_agents.web_search.gemini_grounded_search)."""
+    is injected by the caller."""
     try:
         results = web_search_fn(f"knowledge cutoff training data date of {model_name}", max_results=1)
         text = " ".join(r.get("snippet", "") for r in (results or []))

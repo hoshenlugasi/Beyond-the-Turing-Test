@@ -15,11 +15,13 @@ python -m unittest discover -s tests -p test_paper_analysis.py -v
 ```
 
 All paper numerical summaries use the frozen historical decisions and outputs;
-no paid judge or annotation reruns are planned. The accompanying public game now
-retains six paper workers and intentionally omits the original research
-checkout's diagnostic Live Evaluator and its model/control. That diagnostic ran
-historically with feedback off; removing it changes neither this dataset nor
-the cached judgments. A new live game is not historical-analysis reproduction.
+no paid judge or annotation reruns are planned. The agent has Scheduler, Generator
+and Reviewer plus six paper workers: Internet Context, Round Summarizer, Persona
+Monitor, Social State Tracker, Behavior Adapter and Repetition Monitor. The Reviewer
+selects a generated candidate verbatim, without rewriting. Recorded study diagnostic
+evaluation used Gemini 2.5 Pro (`gemini-2.5-pro`) with feedback disabled; its 1,558
+records are excluded from released timelines. The cached judgments remain frozen.
+A new live game is not historical-analysis reproduction.
 
 ## Inputs: four-file public core plus safe calculation exports
 
@@ -28,10 +30,9 @@ are not runnable game directories. After manual review of all transcripts and
 survey files, the public core has four additional redacted spans across three
 files (197/200 game files unchanged); no rows, ratings, ballots or outcomes changed.
 See [../public_redactions.json](../public_redactions.json) for categories and
-locations, without the removed strings. The reviewed data is published here and on
-[Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
-Shared dataset files are byte-identical; the public core is not wholly identical
-to the submitted baseline.
+locations, without the removed strings. The public core is not wholly identical
+to the submitted baseline. See [release notes](../RELEASE_NOTES.md) for the
+current GitHub/Hugging Face mirror-refresh status.
 
 - `metadata.json`: `game_id`, `ai_pseudonym`, `num_human_players`, `total_rounds`,
   `ai_eliminated` (Boolean), `ai_elimination_round` (integer or null).
@@ -41,7 +42,7 @@ to the submitted baseline.
   ballots only; exactly one non-self AI ballot per played round.
 - `surveys.json`: array of participant responses with `survey_schema` and available
   integer 1–5 ratings `human_likeness`, `timing`, `relevance`, `enjoyment`.
-  The five legacy surveys lack enjoyment. Missing ratings are not zeros.
+  The five terminal-format surveys lack enjoyment. Missing ratings are not zeros.
 
 The four files alone do **not** recover silent active players, original audit
 boundaries, elimination tie resolution, or pre-redaction word counts. The following
@@ -96,7 +97,7 @@ not a single six-player chance rate. It should round to 21.4%.
 Human stage ballots use `sum(tally.values()) - 1`, removing the single AI ballot;
 because the AI does not self-vote, its tally contains only human votes. Later
 stages are conditional on AI survival, and the original terminal/nonterminal split
-is retained. Neither version removes the stopping-rule selection; do not pool
+is retained. Neither grouping removes the stopping-rule selection; do not pool
 stages as an unconditional detection estimate.
 
 ### Cached external stage judges
@@ -168,11 +169,9 @@ The release contains no optional paid API-rerun code.
 
 All available ratings in the public surveys are used: 229 responses for likeness,
 timing and relevance, 224 for enjoyment. Public output declares conventional
-**sample SD (n−1)** and each 1–5 distribution. Tests confirm that sample SDs match
-the paper (0.94, 1.08, 0.90 and 0.78, respectively); no SD mismatch remains open.
-The original helper used population SD and omitted enjoyment; the public reader
-explicitly handles both survey schemas and uses sample SD, rather than changing
-conventions silently. `survey_sd_audit(games)` retains both conventions for audit
+**sample SD (n−1)** and each 1–5 distribution. The paper's sample SDs are
+0.94, 1.08, 0.90 and 0.78, respectively. The reader handles both survey schemas
+and uses sample SD. `survey_sd_audit(games)` retains sample and population SD for audit
 and is not emitted by the entry point. No survey free text is emitted.
 
 [inputs/demographics_summary.json](inputs/demographics_summary.json) supplies
@@ -180,19 +179,36 @@ paper-reported aggregates for 226 records. It cannot reproduce individual linkag
 or deduplication. The 234 starting human seats are not a verified count of 234
 distinct participants.
 
-## Separate structured internal outputs
+## Reviewed component timelines and access views
 
-[../internal_outputs/README.md](../internal_outputs/README.md) and
-[../internal_outputs/manifest.json](../internal_outputs/manifest.json) describe
-26,277 field-filtered events from the same 50 games. All 5,385 unique text values
-in the initial projection received manual review; 22 flagged/uncertain values
-were withheld across 54 occurrences. The export includes selected behavior,
-repetition and phase updates, not all workers or full social/persona memory.
-It excludes full prompts/snapshots, billing data and private identifiers.
-These records are separate from the four-file core and are not required inputs
-to the four calculations above. Selection/pipeline completion is not delivery;
-candidates must not inflate public-message denominators. Short reviewer
-assessments are emitted outputs, not hidden reasoning or causal explanations.
+Each game has four public core files plus three nested event
+files: [JSONL](../games/game_001/events/timeline.jsonl), its deterministic full
+[text rendering](../games/game_001/events/timeline.txt), and a
+[manifest](../games/game_001/events/manifest.json). The
+[dataset manifest](../dataset_manifest.json) records 53,360 retained events from
+54,918 source events, excluding 1,558 unreported diagnostic records. All six paper
+workers are represented alongside foreground and System observations. There is
+no parallel internal-output game tree. See [dictionary](../DATA_DICTIONARY.md).
+
+Four root access tables cover 50 games, 2,954 message rows (2,414 player and 540
+system), 618 ballots and 229 surveys; 224 enjoyment ratings are available. These
+views and timelines do not replace frozen calculation inputs. Selection/completion
+is not delivery, and candidates must not inflate public-message denominators.
+Short reviewer assessments are emitted outputs, not hidden reasoning or causal
+explanations. Recorded Internet counts are not independent-source counts; model
+persona/social observations are not verified human traits.
+
+Historical elapsed time has one-second precision since the first source event,
+not START. No chat-clock merge or timezone correction is asserted. Future verified
+monotonic logger segments are independent; there is no public segment-index column.
+Incomplete/restart-ambiguous unpaired timing remains null/unknown. None of these
+intervals corrects the frozen scientific midnight-window behavior.
+
+A first pass reviewed 7,408 unique text values; 52 were withheld at 135 payload
+occurrences. A further 22 withheld values occur at 111 payload locations.
+Contextual checks were selective, not exhaustive
+or anonymity proof. Full prompts/snapshots, raw provider responses and private
+mappings are excluded. See [dataset scope](../DATASET.md).
 
 ## Checks and missing inputs
 
@@ -201,19 +217,16 @@ weighting and request-setting checks, plus integrations against the public data.
 Expected paper numbers occur only in tests, never as analysis results. Missing
 inputs and skipped integrations are not successful reproduction.
 
-Fresh Windows Python 3.12.10 installation and `pip check` passed. Extracted
-archives passed 427 tests and 27,987 subtests, with two private-source checks
-skipped. All public-input integration tests ran. Each of the four analyses ran
-from the code root, an unrelated working directory and explicit sibling-dataset
-inputs: all twelve results matched bundled JSON, with zero API calls and no
-original-tree reads. Isolation used a fresh venv under the same account, not a VM.
-Current scope is Windows only;
-Linux/macOS and Docker are unvalidated. One real Flash functional game with two
-scripted human-seat clients passed separately; it does not validate scientific
-human-likeness, live multi-round behavior or reliably grounded Search. Further
-paid tests require separate approval. Offline analysis needs no provider key;
-live model availability is conditional as described in [../README.md](../README.md).
+The final outside-ZIP validation report identifies the exact artifacts checked,
+including 12 offline scientific reproductions, tests in a new external Windows
+virtual environment, server checks and local dataset loading. Its evidence applies
+only to those artifacts, not automatically to edited files or rebuilt packages.
+Isolation used same-account external directories and guarded processes, not a VM.
+No new model-backed game or scientific-quality validation is claimed.
+Linux/macOS, Docker and remote Hub behavior are not certified here. Offline analysis
+needs no provider key; model access is conditional as described in
+[../README.md](../README.md).
 
-This GitHub release is published with the author's conditional permission.
-Privacy review does not establish consent or IRB
-approval. See [../RELEASE_NOTES.md](../RELEASE_NOTES.md) for the release status.
+This GitHub release includes the refreshed package. Author permission is conditional on not identifying
+individuals; review is not anonymity proof or independent consent/IRB certification.
+See [../RELEASE_NOTES.md](../RELEASE_NOTES.md) for scope.

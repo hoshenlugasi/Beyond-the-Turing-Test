@@ -1,0 +1,951 @@
+{
+  "games": {
+    "config_name": "games",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "ai_pseudonym": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "num_human_players": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "total_rounds": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "ai_eliminated": {
+        "dtype": "bool",
+        "_type": "Value"
+      },
+      "ai_elimination_round": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "event_count": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "human_start_count": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "path": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "messages": {
+    "config_name": "messages",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "message_order": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "recorded_time": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "speaker": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "speaker_role": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "text": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "elapsed_seconds": {
+        "dtype": "float64",
+        "_type": "Value"
+      },
+      "time_basis": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "votes": {
+    "config_name": "votes",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "round": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "voter": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "voted_for": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "is_ai_voter": {
+        "dtype": "bool",
+        "_type": "Value"
+      }
+    }
+  },
+  "surveys": {
+    "config_name": "surveys",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "participant": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "survey_schema": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "human_likeness": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "timing": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "relevance": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "enjoyment": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "comments": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "suspicion_reason": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "additional_comments": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "events": {
+    "config_name": "events",
+    "features": {
+      "event_schema": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "event_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "event_order": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "component": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "action": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "turn_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "elapsed_seconds": {
+        "dtype": "float64",
+        "_type": "Value"
+      },
+      "time_basis": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "time_precision_seconds": {
+        "dtype": "float64",
+        "_type": "Value"
+      },
+      "event_text": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "payload": {
+        "scheduler": {
+          "decision": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "send_reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "latency_ms": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "last_send_ago_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "nudges": {
+            "dtype": "string",
+            "_type": "Value"
+          }
+        },
+        "candidates": {
+          "count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "candidates": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "history_lines": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "current_info_chars": {
+            "dtype": "int64",
+            "_type": "Value"
+          }
+        },
+        "review": {
+          "num_candidates": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "selected_index": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "verdicts": {
+            "feature": {
+              "index": {
+                "dtype": "int64",
+                "_type": "Value"
+              },
+              "pool_index": {
+                "dtype": "int64",
+                "_type": "Value"
+              },
+              "text": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "type": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "pros": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "cons": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "score": {
+                "dtype": "float64",
+                "_type": "Value"
+              },
+              "red_flags": {
+                "feature": {
+                  "dtype": "string",
+                  "_type": "Value"
+                },
+                "_type": "List"
+              },
+              "verdict": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "selected": {
+                "dtype": "bool",
+                "_type": "Value"
+              }
+            },
+            "_type": "List"
+          },
+          "selected_text": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "selected_word_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "source": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "review_status": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "review_risk": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "review_reason_codes": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          }
+        },
+        "filter": {
+          "removed": {
+            "feature": {
+              "text": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "reason": {
+                "dtype": "string",
+                "_type": "Value"
+              }
+            },
+            "_type": "List"
+          },
+          "removed_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "kept": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "demoted": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "tag": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "pool_size": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "mode": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "dodge_streak": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "streak": {
+            "dtype": "int64",
+            "_type": "Value"
+          }
+        },
+        "delivery": {
+          "message": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "outcome": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "stage": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "new_messages": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "suppressed_message": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "pipeline_elapsed_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "timeout_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          }
+        },
+        "internet": {
+          "query": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "query_in": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "corrected_query": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "summary": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "summary_out": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "topic": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "stored": {
+            "topic": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "volatility": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "confidence": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "returned_item_count": {
+              "dtype": "int64",
+              "_type": "Value"
+            },
+            "origin": {
+              "dtype": "string",
+              "_type": "Value"
+            }
+          },
+          "returned_item_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "origin": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "volatility": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "confidence": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "grounded": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "needs_search": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "dropped": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "retrying": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "year_corrected": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "error_category": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "plans": {
+            "feature": {
+              "query": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "volatility": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "confidence": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "reason": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "needs_search": {
+                "dtype": "bool",
+                "_type": "Value"
+              }
+            },
+            "_type": "List"
+          },
+          "history_len": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "phase_summary_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "tick_latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "searches_run": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "entries_written": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "replaced": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "total_entries_after": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "expired_fact_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "stale_search_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "remaining_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "snapshot_revision": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "pruned_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          }
+        },
+        "persona": {
+          "claims": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "own_msgs": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "first_person": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "facts": {
+            "location": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "city": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "country": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "timezone": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "nationality": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "age": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "occupation": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "name": {
+              "dtype": "string",
+              "_type": "Value"
+            }
+          },
+          "parse_ok": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "status": {
+            "dtype": "string",
+            "_type": "Value"
+          }
+        },
+        "social_state": {
+          "suspects_me": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "i_pointed_at": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "voted_out": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "prime_suspect": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "open_threads": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "group_mood": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "players": {
+            "feature": {
+              "pseudonym": {
+                "dtype": "string",
+                "_type": "Value"
+              },
+              "observation": {
+                "dtype": "string",
+                "_type": "Value"
+              }
+            },
+            "_type": "List"
+          },
+          "room_norm": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "room_vibe": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "pressure_type": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "interrogation_pressure": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "attention_on_me": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "msgs": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "had_signal": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "parse_ok": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "status": {
+            "dtype": "string",
+            "_type": "Value"
+          }
+        },
+        "behavior": {
+          "advice": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "players_left": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "suspicion_on_self": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "talk_share": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "llm_refreshed": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "warnings": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "recommendation": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "participation_assessment": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "agreement_ratio": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "deflection_ratio": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "cadence": {
+            "level": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "reason": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "talk_share": {
+              "dtype": "float64",
+              "_type": "Value"
+            }
+          },
+          "status": {
+            "dtype": "string",
+            "_type": "Value"
+          }
+        },
+        "repetition": {
+          "words": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "overused": {
+            "feature": {
+              "dtype": "string",
+              "_type": "Value"
+            },
+            "_type": "List"
+          },
+          "note": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "own_msgs": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "status": {
+            "dtype": "string",
+            "_type": "Value"
+          }
+        },
+        "round_summary": {
+          "phase": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "phase_label": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "n_messages": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "summary": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "pending_msgs_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "tick_latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "status": {
+            "dtype": "string",
+            "_type": "Value"
+          }
+        },
+        "system": {
+          "snapshot_revision": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "entry_count": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "turn_index": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "scheduler_decision": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "send_reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "final": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "review_risk": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "pipeline_latency_s": {
+            "dtype": "float64",
+            "_type": "Value"
+          },
+          "final_message_len": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "dropped": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "message_history_len": {
+            "dtype": "int64",
+            "_type": "Value"
+          },
+          "status": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "reason": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "mode": {
+            "dtype": "string",
+            "_type": "Value"
+          },
+          "generator_ok": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "reviewer_ok": {
+            "dtype": "bool",
+            "_type": "Value"
+          },
+          "scheduler_ok": {
+            "dtype": "bool",
+            "_type": "Value"
+          }
+        }
+      }
+    }
+  }
+}
