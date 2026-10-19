@@ -34,8 +34,10 @@ Hosted loading of the published dataset at
 [858633f](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test/commit/858633fdbf303f9243bb416c7e84c6d8a84ebd5b)
 passed with `datasets==5.1.0` for all five configs in normal and streaming modes:
 50 games, 2,954 messages, 618 votes, 229 surveys and 53,360 events. Every row and
-nullable schema matched the release. This verifies hosted library loading, not
-the visual Hugging Face Data Studio/Viewer, whose confirmation remains pending.
+nullable schema matched the release. Separately from these library checks and
+the earlier local clean-room report, visual Hugging Face Data Studio/Viewer
+processing passed for all five expected `data` configs: the row counts above,
+matching columns, nonempty preview rows and no pending, failed or partial jobs.
 
 ## Data, privacy and timing
 
