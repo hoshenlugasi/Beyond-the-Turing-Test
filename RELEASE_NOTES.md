@@ -2,7 +2,7 @@
 
 GitHub release updated from the 2026-10-18 package. The existing
 [Hugging Face mirror](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test)
-is being refreshed to match this revision. The author's release permission
+now matches this revision's shared dataset payloads. The author's release permission
 is conditional on not identifying participants. Text review and filtering reduce
 disclosure risk but do not guarantee anonymity or establish independent consent/IRB
 approval. New local-game exports always need their own review; they do not inherit
@@ -29,6 +29,13 @@ to those artifacts, not automatically to edited files or rebuilt packages.
 No new model-backed game or scientific-quality validation is claimed.
 Linux/macOS, Docker and a remote Hub viewer remain unvalidated for this package.
 No full lockfile or perpetual model entitlement is claimed.
+
+Hosted loading of the published dataset at
+[858633f](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test/commit/858633fdbf303f9243bb416c7e84c6d8a84ebd5b)
+passed with `datasets==5.1.0` for all five configs in normal and streaming modes:
+50 games, 2,954 messages, 618 votes, 229 surveys and 53,360 events. Every row and
+nullable schema matched the release. This verifies hosted library loading, not
+the visual Hugging Face Data Studio/Viewer, whose confirmation remains pending.
 
 ## Data, privacy and timing
 

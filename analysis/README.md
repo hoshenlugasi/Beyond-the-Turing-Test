@@ -32,7 +32,7 @@ files (197/200 game files unchanged); no rows, ratings, ballots or outcomes chan
 See [../public_redactions.json](../public_redactions.json) for categories and
 locations, without the removed strings. The public core is not wholly identical
 to the submitted baseline. See [release notes](../RELEASE_NOTES.md) for the
-current GitHub/Hugging Face mirror-refresh status.
+current GitHub/Hugging Face publication status.
 
 - `metadata.json`: `game_id`, `ai_pseudonym`, `num_human_players`, `total_rounds`,
   `ai_eliminated` (Boolean), `ai_elimination_round` (integer or null).

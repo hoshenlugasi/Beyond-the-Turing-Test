@@ -13,7 +13,7 @@ Niv Eckhaus, Itay Itzhak and Gabriel Stanovsky (2026).
 Code: [GitHub](https://github.com/hoshenlugasi/Beyond-the-Turing-Test).
 Data mirror: [Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
 [Project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/).
-See [release notes](RELEASE_NOTES.md) for this dataset revision's mirror-refresh status.
+See [release notes](RELEASE_NOTES.md) for this dataset revision's publication status.
 
 ## 1. Install on Windows
 
