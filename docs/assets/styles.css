@@ -57,6 +57,14 @@ h1 em { font-weight: 400; color: var(--accent); }
 .text-link:hover { text-decoration: underline; }
 .hero-actions .text-link { padding: 12px; }
 .hero-actions .button { min-width: 120px; }
+.research-opening { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: 52px; padding-block: 30px 40px; border-top: 1px solid var(--line); }
+.opening-lead h2 { margin-bottom: 16px; font-size: 1.65rem; letter-spacing: -.025em; }
+.opening-lead p { font-size: .96rem; line-height: 1.8; }
+.opening-lead p + p { margin-top: 13px; }
+.opening-lead strong { color: var(--accent); font-weight: 650; }
+.opening-quote { margin: 0; padding: 25px 28px; border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; background: var(--accent-light); }
+.opening-quote blockquote { margin: 0; font: 1.3rem/1.6 var(--serif); }
+.opening-quote figcaption { margin-top: 18px; color: var(--muted); font-size: .78rem; line-height: 1.8; }
 .resource-status { color: var(--muted); font-size: .73rem; margin-top: 14px; }
 .concept { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 35px; margin-top: 14px; padding: 42px 50px; border: 1px solid #cfdcd5; border-radius: 16px; background: var(--accent-light); }
 .concept h2 { margin-top: 13px; font-size: clamp(2.05rem, 3.3vw, 2.8rem); }
@@ -206,6 +214,7 @@ code { font-family: Consolas, "Courier New", monospace; }
   .survival-card .finding-detail { grid-column: 1 / -1; }
   .game-steps { gap: 24px; }
   .availability-note { align-items: flex-start; flex-direction: column; gap: 15px; }
+  .research-opening { grid-template-columns: 1fr; gap: 26px; }
 }
 
 @media (max-width: 650px) {
@@ -281,6 +290,10 @@ code { font-family: Consolas, "Courier New", monospace; }
   .game-details, .agent-details { grid-template-columns: 1fr; gap: 28px; }
   .dataset-summary { padding: 20px; font-size: 1.4rem; }
   .study-figure { margin-top: 26px; }
+  .research-opening { padding-block: 25px 30px; }
+  .opening-lead p { font-size: .93rem; }
+  .opening-quote { padding: 20px; }
+  .opening-quote blockquote { font-size: 1.15rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
