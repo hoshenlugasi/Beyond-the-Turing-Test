@@ -28,10 +28,10 @@ Each of the 50 game directories retains the submitted four-file layout. These
 are not runnable game directories. After manual review of all transcripts and
 survey files, the public core has four additional redacted spans across three
 files (197/200 game files unchanged); no rows, ratings, ballots or outcomes changed.
-See the [public redaction record](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/public_redactions.json) for categories and
-locations, without the removed strings. The public core is not wholly identical
-to the submitted baseline. See [release notes](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/guides/RELEASE_NOTES.md) for the
-current GitHub/Hugging Face publication status.
+The removed identifying text is not distributed. The public core is not wholly
+identical to the submitted baseline. See the
+[dataset guide](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md#publication-and-access)
+for current GitHub/Hugging Face publication status.
 
 - `metadata.json`: `game_id`, `ai_pseudonym`, `num_human_players`, `total_rounds`,
   `ai_eliminated` (Boolean), `ai_elimination_round` (integer or null).
@@ -199,4 +199,4 @@ needs no provider key; model access is conditional as described in
 
 This GitHub release includes the refreshed package. Author permission is conditional on not identifying
 individuals; review is not anonymity proof or independent consent/IRB certification.
-See the [release notes](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/guides/RELEASE_NOTES.md) for scope.
+See the [dataset guide](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md) for scope.

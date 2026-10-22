@@ -30,6 +30,16 @@ The four configs are `games`, `messages`, `votes` and `surveys`.
 `dataset_infos.json` supplies explicit nullable types. Filter message rows by
 `speaker_role != "system"` for the 2,414 player-message denominator.
 
+## Publication and access
+
+All four hosted configs passed full and streaming loading with exact canonical
+rows: 50 games, 2,954 messages, 618 votes and 229 surveys. This verifies library
+loading, not the four-view visual Viewer. The automatic Hugging Face Viewer is
+temporarily disabled by the author's choice because its server cache still
+showed the retired Events preview. Files and all four loading configs remain
+usable; no automatic re-enablement is scheduled. Older public Git history is
+not rewritten.
+
 ## Cohort and core records
 
 The message access table has 2,954 rows: 2,414 player messages and 540 system
@@ -41,10 +51,7 @@ sessions. Use roster-adjusted references and four-/five-human sensitivity result
 The 234 starting human seats are not a verified count of distinct people.
 Do not pool alternative model conditions or test games into this cohort.
 
-Relative to the submitted core, four additional identifying/linkable spans across
-three files were redacted;
-197 of 200 files were unchanged. [public_redactions.json](public_redactions.json)
-records categories and locations, not removed strings. No rows, ratings, ballots
+Identifying details in the public text were redacted. No rows, ratings, ballots
 or outcomes changed. Real-name mappings, recruitment IDs and raw configurations
 are not released. Pseudonyms support within-game joins, not external identity
 inference. Text review cannot guarantee anonymity.

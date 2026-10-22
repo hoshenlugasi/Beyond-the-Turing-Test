@@ -89,7 +89,7 @@ an absent field. Starting seats do not establish unique people across games.
 
 The four public views preserve the core records, recorded chat clocks and
 missingness. They do not add private identifier maps or individual demographics.
-The public-redaction record describes categories without the removed strings.
+Identifying details were redacted without publishing the removed strings.
 Review does not certify anonymity or consent. See the [dataset guide](README.md)
 for rights, linkage risks and intended use.
 

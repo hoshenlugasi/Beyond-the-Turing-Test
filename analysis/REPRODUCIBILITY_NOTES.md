@@ -22,7 +22,7 @@ revision, not an equivalent packaging change; no correction was silently made.
 
 The baseline is the 50-game supplementary release, not raw server directories.
 The public version additionally redacts four identifying/linkable spans across
-three files, documented in the public-redaction record alongside the dataset. Original message
+three files. Original message
 word counts are provided as numerical features without the removed source text.
 They support the paper's original word-length calculation. The participant
 rosters include silent humans for participation denominators; a silent player's

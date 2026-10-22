@@ -9,7 +9,7 @@ Niv Eckhaus, Itay Itzhak and Gabriel Stanovsky (2026).
 Code: [GitHub](https://github.com/hoshenlugasi/Beyond-the-Turing-Test).
 Data mirror: [Hugging Face](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test).
 [Project website](https://hoshenlugasi.github.io/Beyond-the-Turing-Test/).
-See [release notes](guides/RELEASE_NOTES.md) for this dataset revision's publication status.
+See the [dataset guide](data/README.md#publication-and-access) for publication and loading status.
 
 ## 1. Install on Windows
 
@@ -42,7 +42,20 @@ Missing password disables admin access; restart after changing it.
 [.env.example](.env.example) is a reference, **not automatically loaded**. Never
 commit secrets. Live requests incur costs; check your account's Gemini 2.5 Flash
 entitlement. Availability is conditional; replacement models are new conditions.
-See [other ways to run](guides/RELEASE_NOTES.md#other-ways-to-run).
+
+### Other local options
+
+`GOOGLE_API_KEY` may replace `GEMINI_API_KEY`. For your own Vertex AI project,
+leave both keys unset, set `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION`,
+and configure Application Default Credentials outside the repository.
+Optional `OPENROUTER_API_KEY` and `TOGETHER_API_KEY` support the corresponding
+per-role choices; Internet Context still needs Google authentication.
+
+Linux/macOS are not validated: create the environment with `python3.12 -m venv .venv`,
+activate it with `. .venv/bin/activate`, install `requirements.txt`, securely set
+the same credential environment variables, then run `python run_game.py`.
+The requirements specify direct dependencies, not a full lockfile. No local
+model weights or PyTorch are needed.
 
 ## 3. Play
 
@@ -57,6 +70,7 @@ See [other ways to run](guides/RELEASE_NOTES.md#other-ways-to-run).
 The local service listens on `127.0.0.1` by default. `--lan` explicitly enables
 all interfaces; do not expose this development service directly to the Internet. Defaults retain the paper's orchestration, Swiss student
 persona, 2.5-minute discussions, four candidates and verbatim reviewer selection.
+Generator/reviewer temperatures are 1.3/0.3, with a 35-second pipeline timeout.
 Selection is not delivery. Scheduler, Generator and Reviewer work with Internet
 Context, Round Summarizer, Persona Monitor, Social State Tracker, Behavior Adapter
 and Repetition Monitor. The Reviewer selects a candidate verbatim, without
@@ -79,6 +93,7 @@ to a fresh destination without overwriting. Its 14 files comprise four core
 records, three nested event files, four root tables, loading schemas, a README
 and export manifest. This is a private diagnostic export for new local games,
 not the four-view historical dataset published in this repository.
+Full prompts, raw provider responses and private identifier maps are excluded.
 It never extends the historical cohort. Export late surveys to another fresh
 output. Use the ignored local_exports directory inside this checkout.
 
@@ -88,7 +103,9 @@ observations, and check consent/rights. Automatic masking is not clearance.
 Missing surveys remain missing; unfinished, inconsistent or unsupported drop/rescue
 records are refused. Future timing uses verified logger segments, not START.
 There is no public segment-index column; ambiguous unpaired timing is null and
-restart intervals must not be stitched. See [local export timing](guides/RELEASE_NOTES.md#local-diagnostic-exports).
+restart intervals must not be stitched. Diagnostic observations do not establish
+grounding, causal influence or verified participant traits. New local games do
+not inherit the historical dataset's release permission.
 
 ## 5. Read study data
 
@@ -148,7 +165,6 @@ and [reproduction limits](analysis/REPRODUCIBILITY_NOTES.md).
 | `social_turing_test/` | Local game, agent, templates and packaged configuration |
 | `data/` | Four-view historical dataset, schemas and dataset documentation |
 | `analysis/` | Offline calculations, frozen inputs and reference results |
-| `guides/` | Release and local-use details |
 | `docs/` | Research website (GitHub Pages) |
 
 `run_game.py` is the local launcher. Other tools run as modules from the repository
@@ -161,9 +177,8 @@ setup is distributed.
 
 ## Privacy, license and citation
 
-Core text was reviewed and identifying spans withheld; the
-[public redaction record](data/public_redactions.json) records categories, not
-removed text. Do not re-identify or externally link participants. Review is not
+Identifying details in the public text were redacted. Ratings, ballots and outcomes
+were not changed. Do not re-identify or externally link participants. Review is not
 anonymity proof. Author permission is conditional on not identifying individuals,
 not independent consent/IRB certification.
 
