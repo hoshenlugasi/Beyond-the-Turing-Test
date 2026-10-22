@@ -18,7 +18,13 @@ removed from this revision. Older public Git history is not rewritten.
 See the [dataset guide](../data/README.md) and [dictionary](../data/DATA_DICTIONARY.md).
 The 200 core files and frozen scientific inputs/results retain their bytes.
 No model-backed game, new scientific result or new anonymity guarantee is claimed.
-Earlier hosted five-config validation concerned the prior release, not this one.
+The [Hugging Face release](https://huggingface.co/datasets/hoshen/Beyond-the-Turing-Test/commit/4636baff26110859e906e337619a2c0fb803f878)
+contains the same shared core data. All four hosted configs passed full and
+streaming loading with exact canonical rows: 50 games, 2,954 messages, 618 votes
+and 229 surveys. This verifies library loading, not the four-view visual Viewer.
+The automatic Viewer is temporarily disabled by the author's choice because its
+server cache still showed the retired Events preview. Files and all four loading
+configs remain usable; no automatic re-enablement is scheduled.
 
 ## Local diagnostic exports
 
