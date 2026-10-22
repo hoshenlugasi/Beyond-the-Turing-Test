@@ -11,7 +11,6 @@ python analysis/takeaway_evidence.py
 python analysis/external_stage_judge.py
 python analysis/message_behavior_analysis.py
 python analysis/analyze_message_behavior_interannotator.py
-python -m unittest discover -s tests -p test_paper_analysis.py -v
 ```
 
 All paper numerical summaries use the frozen historical decisions and outputs;
@@ -190,18 +189,9 @@ do not read them; frozen numeric inputs, judgments, annotations and reviewed
 paper examples remain unchanged. Local runtime diagnostics and manual exports
 are separate from the historical public dataset and remain privacy-pending.
 
-## Checks and missing inputs
+## Reproduction scope and missing inputs
 
-Tests include synthetic boundary, silent-roster, redaction/count, raw-kappa,
-weighting and request-setting checks, plus integrations against the public data.
-Expected paper numbers occur only in tests, never as analysis results. Missing
-inputs and skipped integrations are not successful reproduction.
-
-The final outside-ZIP validation report identifies the exact artifacts checked,
-including 12 offline scientific reproductions, tests in a new external Windows
-virtual environment, server checks and local dataset loading. Its evidence applies
-only to those artifacts, not automatically to edited files or rebuilt packages.
-Isolation used same-account external directories and guarded processes, not a VM.
+All required public inputs must be present for successful reproduction.
 No new model-backed game or scientific-quality validation is claimed.
 Linux/macOS and remote Hub behavior are not certified here. Offline analysis
 needs no provider key; model access is conditional as described in

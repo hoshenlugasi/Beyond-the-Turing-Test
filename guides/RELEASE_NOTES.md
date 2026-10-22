@@ -64,17 +64,12 @@ access tables, loading metadata, a README and export manifest. It never overwrit
 files, adds historical games, authorizes publication or creates new scientific
 judgments. Automatic masking leaves privacy status pending.
 
-## Reproduction and testing
+## Scientific reproduction
 
 The four [analysis commands](../analysis/README.md) use the four-file game core
 and frozen calculation inputs, not historical component traces. Keep cohort order,
 numeric word counts, missing survey values and midnight-window behavior unchanged.
 See [reproduction limits](../analysis/REPRODUCIBILITY_NOTES.md).
-
-The public offline regression suite is retained because it covers local HTTP/auth,
-configuration, imports, credentials, private diagnostic exports and reproduction.
-Historical-trace integration assertions have been replaced by core-only dataset
-checks. Tests use synthetic fixtures and mocked providers, not private study tooling.
 
 Author permission is conditional on not identifying participants. Review reduces
 disclosure risk but does not establish anonymity or independent consent/IRB approval.

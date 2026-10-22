@@ -141,18 +141,6 @@ Preserve original numeric word counts, cohort order and midnight-window behavior
 do not infer scientific corrections from displayed clocks. See [analysis guide](analysis/README.md)
 and [reproduction limits](analysis/REPRODUCIBILITY_NOTES.md).
 
-## 7. Optional checks and validation scope
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe -m pytest tests -q
-```
-
-The public regression suite covers installation/imports, local browser behavior,
-credentials, game paths, private diagnostic exports and scientific reproduction.
-It uses synthetic fixtures and mocked providers; no model-backed game is needed.
-See [release notes](guides/RELEASE_NOTES.md) for scope and limitations.
-
 ## Repository layout
 
 | Directory | Purpose |
@@ -160,7 +148,6 @@ See [release notes](guides/RELEASE_NOTES.md) for scope and limitations.
 | `social_turing_test/` | Local game, agent, templates and packaged configuration |
 | `data/` | Four-view historical dataset, schemas and dataset documentation |
 | `analysis/` | Offline calculations, frozen inputs and reference results |
-| `tests/` | Public offline regression tests |
 | `guides/` | Release and local-use details |
 | `docs/` | Research website (GitHub Pages) |
 

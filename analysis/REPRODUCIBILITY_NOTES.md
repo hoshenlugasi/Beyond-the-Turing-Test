@@ -65,11 +65,6 @@ or projects may lack access. Entitlement must be checked with the chosen provide
 there is no automatic-upgrade or continued-availability guarantee. A replacement
 model is a new experiment, not the original model condition.
 
-The final outside-ZIP validation report identifies the exact artifacts checked,
-including 12 offline scientific reproductions, tests in a new external Windows
-virtual environment, server checks and local dataset loading. Its evidence applies
-only to those artifacts, not automatically to edited files or rebuilt packages.
-Isolation used same-account external directories and guarded processes, not a VM.
 No new model-backed game, scientific-quality validation or remote Hub viewer
 validation is claimed here.
 
