@@ -112,7 +112,7 @@
           <div>
             <h2 id="agent-title">Agent Architecture</h2>
           </div>
-          <p>A three-stage foreground pipeline&mdash;Scheduler, Generator, and Reviewer&mdash;decides when the agent should speak and which message to send. In parallel, specialized asynchronous background workers analyze the conversation and write their latest results to a shared file. Each foreground poll reads the latest completed contents without waiting for unfinished background analysis.</p>
+          <p>A three-stage foreground pipeline (Scheduler, Generator, and Reviewer) decides when the agent should speak and which message to send. In parallel, specialized asynchronous background workers analyze the conversation and write their latest results to a shared file. Each foreground poll reads the latest completed contents without waiting for unfinished background analysis.</p>
         </div>
         <figure class="paper-figure">
           <a class="figure-image-link" href="assets/agent-architecture.png" target="_blank" rel="noopener">
