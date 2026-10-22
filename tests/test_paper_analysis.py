@@ -166,7 +166,7 @@ class CalculationTests(unittest.TestCase):
 class PublicOutcomeIntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.games = evidence.load(evidence.read_cohort(INPUTS / "games.csv"), ROOT / "games", INPUTS)
+        cls.games = evidence.load(evidence.read_cohort(INPUTS / "games.csv"), ROOT / "data/games", INPUTS)
 
     def test_survival_and_first_human_votes(self):
         result = evidence.survival(self.games)
@@ -218,7 +218,7 @@ class PublicOutcomeIntegrationTests(unittest.TestCase):
         ]
         independent = {h: Counter() for h in (5, 4, 3, 2)}
         for gid, game in self.games.items():
-            votes = json.loads((ROOT / "games" / gid / "votes.json").read_text(encoding="utf-8"))
+            votes = json.loads((ROOT / "data/games" / gid / "votes.json").read_text(encoding="utf-8"))
             for audit in game["audit"]:
                 h = len(audit["active_players"]) - 1
                 counts = independent[h]

@@ -15,8 +15,9 @@ import unittest
 from unittest.mock import Mock, patch
 
 
-EXPORT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(EXPORT))
+REPOSITORY = Path(__file__).resolve().parents[1]
+EXPORT = REPOSITORY / "social_turing_test"
+sys.path.insert(0, str(REPOSITORY))
 
 
 def _module(name):
@@ -46,7 +47,7 @@ class PromptRestorationTests(unittest.TestCase):
                 self.assertEqual(len(names), len(set(names)), "Duplicate module binding")
 
     def test_prompt_definitions_and_all_builder_branches(self):
-        constants = _module("llm_players.llm_constants")
+        constants = _module("social_turing_test.llm_players.llm_constants")
         self.assertTrue(callable(constants.build_identity_section))
         self.assertTrue(constants.STYLE_AND_BEHAVIOR_GUIDELINES)
         personas = [None, "missing-persona", *constants.load_personas()]
@@ -72,11 +73,11 @@ class PromptRestorationTests(unittest.TestCase):
                          constants.build_system_prompt(constants.DEFAULT_PERSONA_ID))
 
     def test_imported_constant_symbols_exist(self):
-        constants = _module("llm_players.llm_constants")
+        constants = _module("social_turing_test.llm_players.llm_constants")
         for path in (EXPORT / "llm_players").rglob("*.py"):
             tree = ast.parse(path.read_text(encoding="utf-8-sig"))
             for node in ast.walk(tree):
-                if isinstance(node, ast.ImportFrom) and node.module == "llm_players.llm_constants":
+                if isinstance(node, ast.ImportFrom) and node.module == "social_turing_test.llm_players.llm_constants":
                     for alias in node.names:
                         if alias.name != "*":
                             self.assertTrue(hasattr(constants, alias.name),
@@ -91,19 +92,19 @@ class RenamedRuntimeStateTests(unittest.TestCase):
                 tree = ast.parse(path.read_text(encoding="utf-8-sig"))
                 for node in ast.walk(tree):
                     if (not isinstance(node, ast.ImportFrom) or not node.module
-                            or not node.module.startswith("llm_players.")):
+                            or not node.module.startswith("social_turing_test.llm_players.")):
                         continue
                     module = _module(node.module)
                     for alias in node.names:
                         if alias.name == "*" or hasattr(module, alias.name):
                             continue
-                        child = EXPORT.joinpath(*node.module.split("."), alias.name)
+                        child = REPOSITORY.joinpath(*node.module.split("."), alias.name)
                         self.assertTrue(child.with_suffix(".py").is_file() or child.is_dir(),
                                         f"{path.relative_to(EXPORT)}: {node.module}.{alias.name}")
 
     def test_defaults_cover_all_inherited_and_agent_channels(self):
-        base = _module("llm_players.pipeline_base.agent_state")
-        agent = _module("llm_players.agent.agent_state")
+        base = _module("social_turing_test.llm_players.pipeline_base.agent_state")
+        agent = _module("social_turing_test.llm_players.agent.agent_state")
         for module in (base, agent):
             self.assertEqual(set(module.AgentState.__annotations__), set(module.DEFAULT_STATE))
         self.assertLess(set(base.AgentState.__annotations__), set(agent.AgentState.__annotations__))
@@ -113,7 +114,7 @@ class RenamedRuntimeStateTests(unittest.TestCase):
             self.assertNotIn(key, agent.DEFAULT_STATE)
 
     def test_snapshot_initial_read_mutators_and_copy_ownership(self):
-        snapshot = _module("llm_players.agent.shared_state").SharedSnapshot()
+        snapshot = _module("social_turing_test.llm_players.agent.shared_state").SharedSnapshot()
         before = snapshot.read()
         self.assertEqual(before["round_summaries"], [])
         self.assertEqual(before["social_state"], "")
@@ -137,8 +138,8 @@ class RenamedRuntimeStateTests(unittest.TestCase):
 
     def test_shared_channels_survive_real_langgraph_schema(self):
         """Exercise real channel filtering without constructors, sleeps or models."""
-        graph = _module("llm_players.agent.graph")
-        state = _module("llm_players.agent.agent_state")
+        graph = _module("social_turing_test.llm_players.agent.graph")
+        state = _module("social_turing_test.llm_players.agent.agent_state")
         shared = {
             "round_summaries": ["synthetic round context"],
             "social_state": "synthetic social context",
@@ -161,10 +162,10 @@ class RenamedRuntimeStateTests(unittest.TestCase):
         self.assertEqual(result["final_message"], "synthetic reply")
 
     def test_generator_receives_shared_context_in_actual_prompt(self):
-        state = _module("llm_players.agent.agent_state")
+        state = _module("social_turing_test.llm_players.agent.agent_state")
         with tempfile.TemporaryDirectory() as directory:
             for package in ("agent", "pipeline_base"):
-                module = _module(f"llm_players.{package}.nodes.generator_node")
+                module = _module(f"social_turing_test.llm_players.{package}.nodes.generator_node")
                 player = SimpleNamespace(
                     name="Alex", game_dir=Path(directory), logger=Mock(),
                     llm_config={}, llm=SimpleNamespace(generate=Mock(return_value="<skip>")),
@@ -200,8 +201,8 @@ class RenamedRuntimeStateTests(unittest.TestCase):
 class CredentialTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.wrapper = _module("llm_players.llm_wrapper")
-        cls.reviewer = _module("llm_players.gemini_reviewer")
+        cls.wrapper = _module("social_turing_test.llm_players.llm_wrapper")
+        cls.reviewer = _module("social_turing_test.llm_players.gemini_reviewer")
 
     def setUp(self):
         self.env = patch.dict(os.environ, {}, clear=True)
@@ -233,7 +234,7 @@ class CredentialTests(unittest.TestCase):
             # Together is an optional adapter, but test it whenever installed.
             if name == "together" and importlib.util.find_spec("together") is None:
                 continue
-            module = _module(f"llm_players.{name}_reviewer")
+            module = _module(f"social_turing_test.llm_players.{name}_reviewer")
             loaders.append(lambda _, m=module, attr=loader: getattr(m, attr)())
         with patch("builtins.open", side_effect=AssertionError("private file read")), \
                 patch.object(Path, "read_text", side_effect=AssertionError("private file read")):
@@ -311,7 +312,7 @@ class CredentialTests(unittest.TestCase):
         )
 
     def test_renamed_search_reaches_sdk_once_without_recursive_alias(self):
-        module = _module("llm_players.agent.sub_agents.web_search")
+        module = _module("social_turing_test.llm_players.agent.sub_agents.web_search")
         sdk = Mock()
         sdk.models.generate_content.return_value = SimpleNamespace(
             text="A synthetic search answer.", candidates=[],
@@ -331,7 +332,7 @@ class CredentialTests(unittest.TestCase):
         self.assertIsNotNone(request["config"].tools[0].google_search)
 
     def test_search_helper_authenticates_without_network(self):
-        module = _module("llm_players.agent.sub_agents.web_search")
+        module = _module("social_turing_test.llm_players.agent.sub_agents.web_search")
         with patch.object(module, "_client_cache", None):
             self.client.reset_mock()
             with self.assertRaisesRegex(RuntimeError, "authentication missing"):
@@ -354,7 +355,7 @@ class CredentialTests(unittest.TestCase):
 
 class RuntimeClosureTests(unittest.TestCase):
     def test_factory_is_single_agent_and_defaults_before_schema(self):
-        factory = _module("llm_players.factory")
+        factory = _module("social_turing_test.llm_players.factory")
         self.assertEqual(set(factory.llm_players_classes), {"social_turing_test_agent"})
         fake_player = Mock()
         with patch.dict(factory.llm_players_classes, {"social_turing_test_agent": fake_player}, clear=True):
@@ -364,7 +365,7 @@ class RuntimeClosureTests(unittest.TestCase):
                 factory.llm_player_factory({"llm_config": {"async_type": "unsupported_agent"}})
 
     def test_inheritance_chain_is_unchanged(self):
-        player = _module("llm_players.agent.agent").SocialTuringTestAgent
+        player = _module("social_turing_test.llm_players.agent.agent").SocialTuringTestAgent
         self.assertEqual([base.__name__ for base in player.__mro__[:5]], [
             "SocialTuringTestAgent", "PipelinePlayer", "ReviewedPlayer",
             "ScheduleThenGeneratePlayer", "LLMPlayer",
@@ -388,8 +389,8 @@ class RuntimeClosureTests(unittest.TestCase):
                 names = ([node.module] if isinstance(node, ast.ImportFrom) else
                          [alias.name for alias in node.names] if isinstance(node, ast.Import) else [])
                 for name in names:
-                    if name and name.startswith("llm_players."):
-                        target = EXPORT.joinpath(*name.split("."))
+                    if name and name.startswith("social_turing_test.llm_players."):
+                        target = REPOSITORY.joinpath(*name.split("."))
                         self.assertTrue(target.with_suffix(".py").exists() or target.is_dir(),
                                         f"{path.relative_to(EXPORT)} imports missing {name}")
 

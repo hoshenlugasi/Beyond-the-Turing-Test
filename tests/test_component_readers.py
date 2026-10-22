@@ -5,7 +5,8 @@ from types import SimpleNamespace
 from unittest.mock import Mock
 import re
 
-ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY = Path(__file__).resolve().parents[1]
+ROOT = REPOSITORY / "social_turing_test"
 
 
 def function(path, name):
@@ -47,7 +48,7 @@ def test_agent_panel_handlers_and_state_use_one_namespace():
 
 def test_single_agent_schema_and_example_agree_on_synchronous_mode():
     import json
-    from core.config_schema import CONFIG_SCHEMA
+    from social_turing_test.core.config_schema import CONFIG_SCHEMA
     mode = next(entry for entry in CONFIG_SCHEMA if entry["key"] == "orchestration_mode")
     assert mode["default"] == "synchronous"
     assert mode["choices"] == ["synchronous"]

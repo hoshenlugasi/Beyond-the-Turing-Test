@@ -4,7 +4,7 @@ import json
 import math
 import unittest
 
-from core.event_schema import (
+from social_turing_test.core.event_schema import (
     COMPONENTS, ENVELOPE_FIELDS, EVENT_SPECS, EXCLUDED_EVENTS, SCHEMAS,
     classify_event, make_manifest, project_event, render_text, validate_event,
 )

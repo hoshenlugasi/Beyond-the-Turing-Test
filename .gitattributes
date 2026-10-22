@@ -1,8 +1,7 @@
 # Preserve reviewed data bytes, including on Windows Git checkouts.
-games/** -text
+data/games/** -text
 analysis/inputs/** -text
-tables/** -text
-dataset_manifest.json -text
+data/tables/** -text
 analysis/results/** -text
 *.py text eol=lf
 *.html text eol=lf

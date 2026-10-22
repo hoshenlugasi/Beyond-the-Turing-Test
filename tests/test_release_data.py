@@ -1,14 +1,9 @@
 """Read-only checks of the complete approved public exports, using stdlib only.
 
 ROOT is this source bundle, never the research repository. No history, private
-mapping, original corpus, API or network is consulted. Only the optional mirror
-test reads the explicitly named sibling Hugging Face bundle.
-
-Nested reviewer ``selected: false`` and ``score: 0`` are valid recorded values.
-The exported score is a legacy/default field, NOT a calibrated measure of
-human-likeness, risk or quality. Selection is not delivery; absent outcomes are
-unknown, not synthesized ``delivery_unconfirmed`` events. Redactions can prevent
-verbatim comparisons. These structural checks do not certify anonymity/consent.
+mapping, original corpus, API or network is consulted. Published data contains
+only core records and four access views, not historical event traces.
+These structural checks do not certify anonymity or consent.
 """
 
 import csv
@@ -19,12 +14,13 @@ import unittest
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from core.event_schema import EVENT_SPECS, make_manifest, render_text, validate_event
-from core.dataset_tables import build_tables
+from social_turing_test.core.dataset_tables import build_tables
+from social_turing_test.core.hub_features import dataset_infos
 
 
-ROOT = Path(__file__).resolve().parents[1]
-INPUTS = ROOT / "analysis" / "inputs"
+REPOSITORY = Path(__file__).resolve().parents[1]
+ROOT = REPOSITORY / "data"
+INPUTS = REPOSITORY / "analysis" / "inputs"
 GAME_IDS = {f"game_{i:03d}" for i in range(1, 51)}
 CORE_FILES = {"metadata.json", "transcript.txt", "votes.json", "surveys.json"}
 META_KEYS = {"game_id", "ai_pseudonym", "num_human_players", "total_rounds",
@@ -124,12 +120,9 @@ class PublicCoreDataTests(unittest.TestCase):
         self.assertEqual({p.name for p in base.iterdir() if p.is_dir()}, GAME_IDS)
         expected = {f"{gid}/{name}" for gid in GAME_IDS for name in CORE_FILES}
         self.assertEqual(len(expected), 200)
-        expected |= {f"{gid}/events/{name}" for gid in GAME_IDS
-                     for name in ("timeline.jsonl", "timeline.txt", "manifest.json")}
         self.assertEqual(set(files_under(base)), expected)
-        self.assertEqual(len(expected), 350)
         for gid in sorted(GAME_IDS):
-            self.assertEqual({p.name for p in (base / gid).iterdir()}, CORE_FILES | {"events"})
+            self.assertEqual({p.name for p in (base / gid).iterdir()}, CORE_FILES)
         self.assertFalse((ROOT / "internal_outputs").exists())
 
     def test_core_schema_counts_rosters_and_round_tallies(self):
@@ -270,260 +263,29 @@ class PublicCoreDataTests(unittest.TestCase):
 # Fixed study acceptance targets, independent of the generated manifests and
 # executable schema. Supporting other actions in the exporter does not imply
 # that those actions occurred in this cohort.
-ACTION_COUNTS = {
-    "agent_models_status": 50, "agent_ready": 50,
-    "behavior_advice_updated": 407, "behavior_tick": 2245, "cadence_updated": 2248,
-    "delivery_phase_drop": 32, "delivery_sent": 519, "fixed_persona_facts_set": 50,
-    "generate_end": 551, "generator_candidates": 582, "generator_input": 578,
-    "internet_context_tick": 1528, "internet_decision_response": 1259,
-    "internet_fact_stored": 699, "internet_facts_pruned": 11,
-    "internet_search_error": 54, "internet_search_rejected": 404,
-    "internet_search_request": 939, "internet_search_response": 653,
-    "internet_search_trace": 599, "internet_seed": 100,
-    "internet_tick_begin": 1259, "internet_tick_end": 1255,
-    "orchestration_mode": 50, "overused_words_updated": 38,
-    "persona_claims_updated": 322, "persona_monitor_tick": 322,
-    "pipeline_complete": 580, "repetition_llm_pass": 282,
-    "repetition_monitor_tick": 419, "repetition_note_updated": 76,
-    "reviewer_analysis": 573, "reviewer_demote_response_required": 115,
-    "reviewer_demote_same_dodge_mode": 17, "reviewer_drop": 2,
-    "reviewer_filter_known_accusation": 4, "reviewer_selected": 580,
-    "round_summary_response": 126, "round_summary_tick": 126,
-    "round_summary_tick_begin": 2249, "round_summary_tick_end": 2249,
-    "scheduler_blocked": 17905, "scheduler_decision": 4408,
-    "snapshot_observed": 3366, "social_state_tick": 1838,
-    "social_state_updated": 1059, "stale_send_drop": 29,
-    "state_guard_filter": 2, "turn_context": 551,
-}
-COMPONENT_COUNTS = {
-    "Scheduler": 22313, "Generator": 1711, "Reviewer": 1293,
-    "Internet Context": 8760, "Round Summarizer": 4750, "Persona Monitor": 694,
-    "Social State Tracker": 2897, "Behavior Adapter": 4900,
-    "Repetition Monitor": 815, "System": 5227,
-}
-PREVIOUS_ACTIONS = {
-    "pipeline_complete", "behavior_advice_updated", "overused_words_updated",
-    "round_summary_tick", "repetition_llm_pass", "repetition_note_updated",
-    "scheduler_blocked", "delivery_phase_drop", "delivery_sent",
-    "generator_candidates", "reviewer_analysis", "reviewer_demote_response_required",
-    "reviewer_demote_same_dodge_mode", "reviewer_drop",
-    "reviewer_filter_known_accusation", "reviewer_selected", "scheduler_decision",
-    "stale_send_drop", "state_guard_filter",
-}
-VERDICT_KEYS = {"index", "text", "type", "pros", "cons", "score", "red_flags",
-                "verdict", "selected", "pool_index"}
 
 
-class PublicTimelineTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.manifest = load_json(ROOT / "dataset_manifest.json")
-        cls.events = {gid: load_jsonl(ROOT / "games" / gid / "events" / "timeline.jsonl")
-                      for gid in sorted(GAME_IDS)}
-
-    def test_exact_files_orders_types_and_sanitized_fields(self):
-        counts, components, omissions = Counter(), Counter(), Counter()
-        redactions = Counter()
-        false_selected = zero_scores = 0
-        for gid, rows in self.events.items():
-            self.assertTrue(rows)
-            base = ROOT / "games" / gid / "events"
-            self.assertEqual(set(files_under(base)), {"timeline.jsonl", "timeline.txt", "manifest.json"})
-            manifest = load_json(base / "manifest.json")
-            expected = make_manifest(rows, manifest["input_omission_counts"], "withheld")
-            for key, value in expected.items():
-                if key not in {"privacy_status", "limitations"}:
-                    self.assertEqual(manifest[key], value, f"{gid}: {key}")
-            self.assertEqual(manifest["privacy_status"], "reviewed_with_withholding")
-            self.assertEqual(manifest["game_id"], gid)
-            self.assertEqual(manifest["schema_version"], 1)
-            self.assertEqual(manifest["retained_event_count"], len(rows))
-            self.assertEqual(manifest["source_event_count"], len(rows) + manifest["input_omission_count"])
-            omissions.update(manifest["input_omission_counts"])
-            self.assertEqual((base / "timeline.txt").read_bytes(), render_text(rows).encode("utf-8"))
-            self.assertEqual(rows[0]["elapsed_seconds"], 0.0)
-            last_elapsed = 0.0
-            for order, row in enumerate(rows, 1):
-                with self.subTest(game=gid, order=order):
-                    self.assertTrue(validate_event(row))
-                    kind = row["action"]
-                    self.assertIn(kind, ACTION_COUNTS)
-                    self.assertEqual(row["component"], EVENT_SPECS[kind].component)
-                    self.assertEqual(row["game_id"], gid)
-                    self.assertIs(type(row["event_order"]), int)
-                    self.assertEqual(row["event_order"], order)
-                    self.assertEqual(row["event_id"], f"{gid}-event{order:06d}")
-                    self.assertNotIn("round", row)  # No inferred round annotation.
-                    self.assertEqual(row["time_basis"], "since_first_event")
-                    self.assertIs(type(row["elapsed_seconds"]), float)
-                    self.assertGreaterEqual(row["elapsed_seconds"], last_elapsed)
-                    self.assertEqual(row["elapsed_seconds"] % 1, 0)
-                    last_elapsed = row["elapsed_seconds"]
-                    self.assertEqual(row["time_precision_seconds"], 1.0)
-                    delivery = row["payload"]["delivery"]
-                    if delivery is not None and delivery["outcome"] == "sent":
-                        self.assertEqual(kind, "delivery_sent")
-                    if row["turn_id"] is not None:
-                        self.assertTrue(public_identifier("turn_id", row["turn_id"]))
-                        self.assertTrue(row["turn_id"].startswith(gid + "-turn"))
-                    for field, value in walk(row):
-                        self.assertFalse(PRIVATE_KEY.search(field), "private field in public event")
-                        self.assertNotIn(field, {"timestamp", "wall_t", "epoch", "date", "datetime",
-                                                 "source_event_id", "source_order", "source_timestamp"})
-                        self.assertTrue(public_identifier(field, value), "unsafe public identifier")
-                        if isinstance(value, str):
-                            self.assertFalse(UNSAFE_VALUE.search(value), "unsafe value in public event")
-                            self.assertFalse(re.search(r"\b\d{2}:\d{2}:\d{2}\b", value),
-                                             "source wall-clock in timeline")
-                            self.assertFalse(re.search(r"\b\d{4}-\d{2}-\d{2}T\d{2}:\d{2}", value),
-                                             "source absolute datetime in timeline")
-                    # Count canonical payload only, not its derived text echo.
-                    for _, value in walk(row["payload"]):
-                        if isinstance(value, str):
-                            redactions["prior"] += value.count("[REDACTED_PRIVATE_CONTEXT]")
-                            redactions["new"] += value.count("[REDACTED: privacy review]")
-                    payload = row["payload"][EVENT_SPECS[kind].branch]
-                    if kind == "reviewer_analysis":
-                        self.assertIsInstance(payload["verdicts"], list)
-                        for verdict in payload["verdicts"]:
-                            self.assertEqual(set(verdict), VERDICT_KEYS)
-                            self.assertIn("selected", verdict)
-                            self.assertIs(type(verdict["selected"]), bool)
-                            self.assertIn("score", verdict)
-                            self.assertIn(type(verdict["score"]), (int, float))
-                            for key in ("text", "type", "pros", "cons", "verdict"):
-                                self.assertIsInstance(verdict[key], str)
-                            self.assertIsInstance(verdict["red_flags"], list)
-                            false_selected += verdict["selected"] is False
-                            zero_scores += verdict["score"] == 0
-                    if kind == "state_guard_filter":
-                        for removed in payload["removed"]:
-                            self.assertEqual(set(removed), {"text", "reason"})
-                    counts[kind] += 1
-                    components[row["component"]] += 1
-        self.assertEqual(counts, ACTION_COUNTS)
-        self.assertEqual(components, COMPONENT_COUNTS)
-        self.assertEqual(sum(counts.values()), 53360)
-        self.assertEqual(sum(counts[k] for k in PREVIOUS_ACTIONS), 26277)
-        self.assertEqual(self.manifest["games"], 50)
-        self.assertEqual(self.manifest["source_event_count"], 54918)
-        self.assertEqual(self.manifest["retained_event_count"], 53360)
-        self.assertEqual(self.manifest["excluded_diagnostic_event_count"], 1558)
-        self.assertEqual(self.manifest["coverage"], {
-            "source_records": 54918, "retained_records": 53360,
-            "excluded_diagnostic_records": 1558, "clock_vetted_games": 50})
-        aggregate = make_manifest((row for rows in self.events.values() for row in rows),
-                                  omissions, "withheld")
-        for key, value in aggregate.items():
-            if key not in {"privacy_status", "limitations"}:
-                self.assertEqual(self.manifest[key], value, key)
-        self.assertEqual(omissions["retired_diagnostic"], 1558)
-        self.assertEqual(sum(omissions.values()), 1558)
-        self.assertEqual(self.manifest["privacy_status"], "reviewed_with_withholding")
-        self.assertEqual(set(self.manifest["components"]), set(COMPONENT_COUNTS))
-        self.assertGreater(false_selected, 0)
-        self.assertGreater(zero_scores, 0)
-        self.assertEqual(self.manifest["privacy_review"], {
-            "new_unique_strings_first_pass_reviewed": 7408,
-            "new_unique_strings_withheld": 52, "new_payload_values_withheld": 135,
-            "prior_unique_values_withheld": 22, "prior_baseline_withheld_occurrences": 54,
-            "anonymity_guaranteed": False})
-        self.assertEqual(redactions, {"prior": 111, "new": 135})
-        self.assertTrue(all(isinstance(s, str) for s in self.manifest["limitations"]))
-
-    def test_selection_delivery_and_redaction_aware_candidate_membership(self):
-        outcomes = Counter()
-        selected_turns, delivered_turns = set(), set()
-        for gid, rows in self.events.items():
-            candidates = {}
-            selected = {}
-            for row in rows:
-                kind, turn = row["action"], row["turn_id"]
-                payload = row["payload"][EVENT_SPECS[kind].branch]
-                if kind == "generator_candidates":
-                    self.assertIsNotNone(turn)
-                    self.assertIsInstance(payload["candidates"], list)
-                    self.assertEqual(payload["count"], len(payload["candidates"]))
-                    self.assertTrue(all(isinstance(s, str) for s in payload["candidates"]))
-                    candidates[turn] = payload["candidates"]
-                elif kind == "reviewer_selected":
-                    self.assertIsNotNone(turn)
-                    selected_turns.add((gid, turn))
-                    text = payload["selected_text"]
-                    self.assertIsInstance(text, str)
-                    self.assertIs(type(payload["selected_index"]), int)
-                    selected[turn] = text
-                    pool = candidates.get(turn)
-                    # Filtering may reindex a pool. Require exact membership when
-                    # known, not equality at an unverified original pool index.
-                    if pool is not None and not REDACTION.search(text) and not any(
-                            REDACTION.search(candidate) for candidate in pool):
-                        self.assertIn(text, pool)
-                    elif pool is not None and text == "[REDACTED_PRIVATE_CONTEXT]":
-                        self.assertIn(text, pool, "redacted copies must be consistent")
-                elif kind in {"delivery_sent", "delivery_phase_drop"}:
-                    expected = "sent" if kind == "delivery_sent" else "phase_drop"
-                    self.assertEqual(payload["outcome"], expected)
-                    outcomes[expected] += 1
-                    if expected == "sent":
-                        delivered_turns.add((gid, turn))
-                        if turn in selected:
-                            a, b = selected[turn], payload["message"]
-                            if not REDACTION.search(a) and not REDACTION.search(b):
-                                self.assertEqual(a, b)
-                elif kind == "stale_send_drop":
-                    self.assertIsNone(payload["outcome"])  # Unknown, not synthesized.
-                    outcomes["suppressed_stale"] += 1
-                elif kind == "reviewer_drop":
-                    self.assertEqual(payload["review_status"], "drop")
-                    outcomes["reviewer_drop"] += 1
-        self.assertEqual(outcomes, {"sent": 519, "phase_drop": 32,
-                                    "suppressed_stale": 29, "reviewer_drop": 2})
-        self.assertTrue(selected_turns - delivered_turns)
-        # In particular, no synthetic timeout/parse/dedup/unconfirmed events.
-        self.assertNotIn("delivery_unconfirmed", outcomes)
-
-    def test_delivery_counts_join_authoritative_core_without_clock_merge(self):
-        case_only_differences = Counter()
-        for gid, rows in self.events.items():
-            ai = load_json(ROOT / "games" / gid / "metadata.json")["ai_pseudonym"]
-            transcript = (ROOT / "games" / gid / "transcript.txt").read_text(encoding="utf-8")
-            messages = [text for _, speaker, text in LINE.findall(transcript) if speaker == ai]
-            delivered = [row["payload"]["delivery"]["message"] for row in rows
-                         if row["action"] == "delivery_sent"]
-            self.assertEqual(len(delivered), len(messages), gid)
-            # Compare only intact occurrences; different approved redaction
-            # categories in core and timelines need not have identical tokens.
-            intact_core = Counter(text for text in messages if "[REDACTED" not in text)
-            intact_events = Counter(text for text in delivered if "[REDACTED" not in text)
-            common = intact_core & intact_events
-            # One recorded message differs only in a single letter's case
-            # between the historical event and participant-facing transcript.
-            # Preserve both observations; never rewrite either authoritative
-            # source or silently normalize arbitrary mismatches.
-            if gid == "game_038":
-                a, b = list((intact_core - common).elements()), list((intact_events - common).elements())
-                self.assertEqual((len(a), len(b)), (1, 1))
-                self.assertEqual(a[0].casefold(), b[0].casefold())
-                self.assertEqual(len(a[0]), len(b[0]))
-                self.assertEqual(sum(x != y for x, y in zip(a[0], b[0])), 1)
-                intact_core.subtract(a)
-                intact_events.subtract(b)
-                common = intact_core & intact_events
-                case_only_differences[gid] += 1
-            self.assertLessEqual(sum((intact_events - common).values()),
-                                 sum("[REDACTED" in text for text in messages), gid)
-            self.assertLessEqual(sum((intact_core - common).values()),
-                                 sum("[REDACTED" in text for text in delivered), gid)
-        self.assertEqual(case_only_differences, {"game_038": 1})
 
 
 class PublicAccessTableTests(unittest.TestCase):
+    def test_exact_core_only_loading_schema_and_config_paths(self):
+        infos = load_json(ROOT / "dataset_infos.json")
+        self.assertEqual(infos, dataset_infos(include_events=False))
+        self.assertEqual(set(infos), {"games", "messages", "votes", "surveys"})
+        self.assertNotIn("event_count", infos["games"]["features"])
+        self.assertFalse((ROOT / "dataset_manifest.json").exists())
+        self.assertFalse(list((ROOT / "games").glob("*/events/*")))
+        card = (ROOT / "README.md").read_text(encoding="utf-8")
+        for name in infos:
+            self.assertIn(f"config_name: {name}", card)
+            self.assertIn(f'tables/{name}.jsonl', card)
+        self.assertNotIn("config_name: events", card)
+
     def test_exact_tables_and_canonical_derivation(self):
         expected_counts = {"games": 50, "messages": 2954, "votes": 618, "surveys": 229}
         self.assertEqual(set(files_under(ROOT / "tables")),
                          {name + ".jsonl" for name in expected_counts})
-        derived = build_tables(ROOT / "games")
+        derived = build_tables(ROOT / "games", include_event_coverage=False)
         actual = {}
         for name, count in expected_counts.items():
             path = ROOT / "tables" / (name + ".jsonl")
@@ -544,7 +306,6 @@ class PublicAccessTableTests(unittest.TestCase):
             game = [r for r in actual["games"] if r["game_id"] == gid]
             self.assertEqual(len(game), 1)
             self.assertEqual(game[0], dict(meta,
-                event_count=load_json(base / "events" / "manifest.json")["event_count"],
                 human_start_count=meta["num_human_players"], path=f"games/{gid}"))
             for name in ("votes", "surveys"):
                 source = load_json(base / (name + ".json"))
@@ -659,57 +420,29 @@ class PublicPrivacyAndPackagingTests(unittest.TestCase):
                     for field, value in walk(records):
                         self.assertFalse(PRIVATE_KEY.search(field), "private structured-data field")
                         self.assertTrue(public_identifier(field, value), "invalid released identifier")
-        # The global manifest is outside those trees and remains mandatory.
-        manifest = load_json(ROOT / "dataset_manifest.json")
-        for field, value in walk(manifest):
-            self.assertFalse(PRIVATE_KEY.search(field), "private manifest field")
-            self.assertTrue(public_identifier(field, value), "invalid manifest identifier")
-            if isinstance(value, str):
-                self.assertFalse(UNSAFE_VALUE.search(value), "unsafe manifest value")
 
     def test_license_environment_template_and_documentation_exist(self):
-        for name in ("LICENSE", ".env.example", "README.md", "DATASET.md",
-                     "analysis/README.md", "analysis/inputs/PROVENANCE.md",
-                     "DATA_DICTIONARY.md", "dataset_manifest.json", "public_redactions.json"):
-            self.assertTrue((ROOT / name).is_file(), name)
+        for name in ("README.md", "DATA_DICTIONARY.md", "dataset_infos.json", "public_redactions.json"):
             self.assertGreater((ROOT / name).stat().st_size, 0, name)
-        license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
-        self.assertIn("MIT License", license_text)
-        self.assertFalse((ROOT / ".env").exists(), "actual environment file must not ship")
+        for name in ("LICENSE", "DATA_LICENSE", ".env.example", "README.md",
+                     "analysis/README.md", "analysis/inputs/PROVENANCE.md",
+                     "guides/RELEASE_NOTES.md"):
+            self.assertGreater((REPOSITORY / name).stat().st_size, 0, name)
+        self.assertIn("MIT License", (REPOSITORY / "LICENSE").read_text(encoding="utf-8"))
+        self.assertFalse((REPOSITORY / ".env").exists())
         assignments = {}
-        for line in (ROOT / ".env.example").read_text(encoding="utf-8").splitlines():
+        for line in (REPOSITORY / ".env.example").read_text(encoding="utf-8").splitlines():
             if not line.strip() or line.lstrip().startswith("#"):
                 continue
             key, separator, value = line.partition("=")
-            self.assertEqual(separator, "=", "invalid environment-template assignment")
+            self.assertEqual(separator, "=")
             self.assertRegex(key.strip(), r"^[A-Z][A-Z0-9_]*$")
-            # Do not echo a failing secret assignment into test output.
             self.assertTrue(not value.strip(), "environment template contains a nonempty value")
             assignments[key.strip()] = True
         self.assertIn("STT_ADMIN_PASSWORD", assignments)
         self.assertIn("GEMINI_API_KEY", assignments)
 
-    def test_optional_huggingface_mirror_hashes(self):
-        mirror = ROOT.parent / "huggingface"
-        if not mirror.exists():
-            self.skipTest("optional sibling Hugging Face bundle is absent in source-only checkout")
-        self.assertTrue(mirror.is_dir())
-        self.assertFalse((mirror / "internal_outputs").exists())
-        for relative in ("games", "analysis/inputs", "tables"):
-            a, b = ROOT / relative, mirror / relative
-            self.assertTrue(b.is_dir(), "incomplete Hugging Face data mirror")
-            original, copied = files_under(a), files_under(b)
-            self.assertEqual(set(original), set(copied), relative)
-            for name in original:
-                self.assertEqual(hashlib.sha256(original[name].read_bytes()).digest(),
-                                 hashlib.sha256(copied[name].read_bytes()).digest(),
-                                 f"mirror mismatch: {relative}/{name}")
-        for relative in ("DATASET.md", "DATA_DICTIONARY.md", "dataset_manifest.json",
-                         "public_redactions.json"):
-            self.assertEqual(hashlib.sha256((ROOT / relative).read_bytes()).digest(),
-                             hashlib.sha256((mirror / relative).read_bytes()).digest(), relative)
-        # Upstream software copyright differs intentionally from dataset rights.
-        self.assertEqual((ROOT / "DATA_LICENSE").read_bytes(), (mirror / "LICENSE").read_bytes())
+
 
 
 if __name__ == "__main__":

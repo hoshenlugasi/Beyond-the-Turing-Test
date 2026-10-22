@@ -20,7 +20,8 @@ from unittest.mock import Mock
 import pytest
 
 
-ROOT = Path(__file__).resolve().parents[1]
+REPOSITORY = Path(__file__).resolve().parents[1]
+ROOT = REPOSITORY / "social_turing_test"
 
 
 RETIRED_KEYS = (
@@ -45,7 +46,7 @@ def assert_current_config(config):
 @pytest.fixture(autouse=True)
 def offline_only(monkeypatch, tmp_path):
     """Never inherit provider credentials or allow real I/O in this module."""
-    monkeypatch.syspath_prepend(str(ROOT))
+    monkeypatch.syspath_prepend(str(REPOSITORY))
     for key in tuple(os.environ):
         if (key.endswith(('_API_KEY', '_API_TOKEN', '_ACCESS_TOKEN'))
                 or key.startswith(('GOOGLE_', 'GCLOUD_', 'CLOUDSDK_', 'VERTEX_',
@@ -82,7 +83,7 @@ def server_code():
 @pytest.fixture
 def server(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
-    monkeypatch.syspath_prepend(str(ROOT))
+    monkeypatch.syspath_prepend(str(REPOSITORY))
     monkeypatch.setenv('STT_ADMIN_PASSWORD', 'offline-test-password')
     source = ROOT / 'web_player.py'
     module = types.ModuleType('local_release_web_test')
@@ -139,6 +140,87 @@ def test_password_is_env_only(server, monkeypatch):
     monkeypatch.setenv('STT_ADMIN_PASSWORD', 'own-password')
     assert server._load_admin_password() == 'own-password'
     assert '_preload_api_keys_from_secrets' not in server.__dict__
+
+
+@pytest.mark.parametrize(("arguments", "host"), [([], "127.0.0.1"), (["--lan"], "0.0.0.0")])
+def test_local_launcher_bind_and_session_restore(server, monkeypatch, arguments, host):
+    run = Mock()
+    restore = Mock()
+    monkeypatch.setattr(server.app, "run", run)
+    monkeypatch.setattr(server, "_load_persisted_sessions", restore)
+    monkeypatch.setattr(server, "REPOSITORY_ROOT", server._offline_root)
+    server.main([*arguments, "--port", "5055"])
+    run.assert_called_once_with(debug=False, host=host, port=5055)
+    restore.assert_called_once_with()
+    assert Path.cwd() == server._offline_root
+
+
+@pytest.mark.parametrize("port", ["0", "65536", "not-a-port"])
+def test_local_launcher_rejects_invalid_ports(server, monkeypatch, port):
+    run = Mock()
+    monkeypatch.setattr(server.app, "run", run)
+    with pytest.raises(SystemExit):
+        server.main(["--port", port])
+    run.assert_not_called()
+
+
+def test_packaged_paths_and_deployment_absence(server):
+    from social_turing_test.paths import CONFIGURATIONS, PACKAGE_ROOT, REPOSITORY_ROOT
+
+    assert PACKAGE_ROOT == ROOT
+    assert REPOSITORY_ROOT == REPOSITORY
+    assert (CONFIGURATIONS / "conversation_topics.json").is_file()
+    assert (CONFIGURATIONS / "model_knowledge_cutoffs.json").is_file()
+    assert server._BASE_DIR == str(REPOSITORY)
+    assert Path(server.DIRS_PREFIX).parts == ("local_data", "games")
+    assert server._SESSIONS_FILE == Path("local_data/sessions.json")
+    for name in ("Dockerfile", ".dockerignore", "requirements-server.txt"):
+        assert not (REPOSITORY / name).exists()
+    assert "gunicorn" not in (REPOSITORY / "requirements.txt").read_text(encoding="utf-8").lower()
+    tree = ast.parse((ROOT / "web_player.py").read_text(encoding="utf-8"))
+    launches = [
+        node.args[0] for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+        and node.func.attr == "Popen"
+    ]
+    assert len(launches) == 3
+    for command in launches:
+        assert isinstance(command, ast.List)
+        assert command.elts[1].value == "-m"
+        assert command.elts[2].value in {
+            "social_turing_test.llm_interface", "social_turing_test.stt_main"
+        }
+
+
+def test_fingerprint_covers_local_package_only():
+    from social_turing_test.core.source_fingerprint import _candidate_files
+
+    paths = {p.relative_to(REPOSITORY).as_posix() for p in _candidate_files(REPOSITORY)}
+    assert {"run_game.py", "requirements.txt", "social_turing_test/web_player.py",
+            "social_turing_test/export_game.py",
+            "social_turing_test/configurations/model_knowledge_cutoffs.json",
+            "social_turing_test/templates/game.html"} <= paths
+    assert all(p.startswith("social_turing_test/") or p in {"run_game.py", "requirements.txt"}
+               for p in paths)
+
+
+def test_local_raw_file_routes_preserve_runtime_boundary_and_auth(server, client, monkeypatch):
+    monkeypatch.setattr(server, "_BASE_DIR", str(server._offline_root))
+    game = server._offline_root / "local_data" / "games" / "real" / "0001"
+    game.mkdir(parents=True)
+    monkeypatch.setattr(server, "resolve_game_dir", lambda _: game)
+    (game / "phase_status.txt").write_text("daytime", encoding="utf-8")
+    (game / "config.json").write_text("{}", encoding="utf-8")
+    public = server.app.test_client()
+    assert public.get("/api/file", query_string={"path": "games/0001/phase_status.txt"}).status_code == 200
+    assert public.get("/api/file", query_string={"path": "games/0001/config.json"}).status_code == 401
+    assert client.get("/api/file", query_string={"path": "games/0001/config.json"}).status_code == 200
+    listed = public.get("/api/list_files", query_string={"path": "games/0001"})
+    assert listed.status_code == 200
+    assert listed.get_json()["files"] == ["phase_status.txt"]
+    for endpoint in ("/api/file", "/api/list_files"):
+        assert client.get(endpoint, query_string={"path": "data/games/game_001"}).status_code == 403
+        assert client.get(endpoint, query_string={"path": "games/0001/../../../outside"}).status_code == 403
 
 
 def test_index_and_excluded_routes(client):
@@ -419,8 +501,8 @@ def local_cli(monkeypatch):
     """Import only config preparation; no Flask startup, SDK clients or input."""
     import importlib
 
-    monkeypatch.syspath_prepend(str(ROOT))
-    module = importlib.import_module('prepare_config')
+    monkeypatch.syspath_prepend(str(REPOSITORY))
+    module = importlib.import_module('social_turing_test.prepare_config')
     assert Path(module.__file__).resolve() == ROOT / 'prepare_config.py'
 
     def forbidden(*args, **kwargs):
@@ -452,7 +534,7 @@ def test_cli_agent_defaults_and_sample_parity(local_cli, monkeypatch):
         'agent_code': 'current',
     }
     assert {key: settings[key] for key in expected} == expected
-    from core.game_constants import DEFAULT_GAME_CONFIG
+    from social_turing_test.core.game_constants import DEFAULT_GAME_CONFIG
     config = json.loads((ROOT / DEFAULT_GAME_CONFIG).read_text(encoding='utf-8'))
     humans = [p for p in config['players'] if not p['is_llm']]
     ais = [p for p in config['players'] if p['is_llm']]
@@ -555,9 +637,9 @@ def test_cli_name_fallback_only_after_pool_exhaustion(local_cli, monkeypatch):
 
 
 def test_local_sample_prepares_agent_without_touching_dataset(local_cli, monkeypatch, tmp_path):
-    import prepare_game
-    from core import game_paths, game_identity
-    from core.game_constants import DEFAULT_GAME_CONFIG
+    from social_turing_test import prepare_game
+    from social_turing_test.core import game_paths, game_identity
+    from social_turing_test.core.game_constants import DEFAULT_GAME_CONFIG
 
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(game_paths, 'DIRS_PREFIX', str(tmp_path / 'games'))
@@ -585,7 +667,7 @@ def test_local_sample_prepares_agent_without_touching_dataset(local_cli, monkeyp
 
 
 def test_local_runtime_paths_resolve_real_and_test(local_cli, monkeypatch, tmp_path):
-    from core import game_paths
+    from social_turing_test.core import game_paths
 
     monkeypatch.setattr(game_paths, 'DIRS_PREFIX', str(tmp_path))
     for relative, gid in [('real/0001', '0001'), ('test/0002', '0002'),
@@ -599,7 +681,7 @@ def test_local_runtime_paths_resolve_real_and_test(local_cli, monkeypatch, tmp_p
 
 
 def test_cli_provider_only_override_and_test_routing(local_cli, monkeypatch, tmp_path):
-    from core import game_paths
+    from social_turing_test.core import game_paths
 
     args, settings = cli_settings(local_cli, monkeypatch, '--provider', 'openrouter', '--test')
     assert settings['model_name'] == 'gemini-2.5-flash'
@@ -617,7 +699,7 @@ def test_cli_provider_only_override_and_test_routing(local_cli, monkeypatch, tmp
 @pytest.mark.parametrize('value', [False, None, 'offline-retired-value'])
 @pytest.mark.parametrize('placement', ['direct', 'dict', 'list'])
 def test_retired_config_helper_rejects_recursively_without_mutation(key, value, placement):
-    from core.config_schema import ConfigError, reject_retired_config
+    from social_turing_test.core.config_schema import ConfigError, reject_retired_config
 
     payload = {key: value}
     if placement == 'dict':
@@ -652,7 +734,7 @@ def test_web_rejects_retired_settings_before_saving(server, client, key, value, 
 @pytest.mark.parametrize('value', [False, None, 'offline-retired-value'])
 @pytest.mark.parametrize('nested', [False, True])
 def test_cli_json_rejects_retired_settings(local_cli, monkeypatch, tmp_path, key, value, nested):
-    from core.config_schema import ConfigError
+    from social_turing_test.core.config_schema import ConfigError
 
     payload = {key: value}
     if nested:
@@ -714,10 +796,10 @@ def test_saved_config_and_recreation_reject_retired_settings_before_write(
 @pytest.mark.parametrize('placement', ['top_level', 'settings', 'nested'])
 def test_prepare_game_rejects_retired_settings_before_any_write(
         local_cli, monkeypatch, tmp_path, key, value, placement):
-    import prepare_game
-    from core import game_paths
-    from core.config_schema import ConfigError
-    from core.game_constants import DEFAULT_GAME_CONFIG
+    from social_turing_test import prepare_game
+    from social_turing_test.core import game_paths
+    from social_turing_test.core.config_schema import ConfigError
+    from social_turing_test.core.game_constants import DEFAULT_GAME_CONFIG
 
     config = json.loads((ROOT / DEFAULT_GAME_CONFIG).read_text(encoding='utf-8'))
     # Put the AI first so this fixture exercises the same placements as the web API.
@@ -738,7 +820,7 @@ def test_prepare_game_rejects_retired_settings_before_any_write(
 
 
 def test_current_ui_and_schema_have_no_evaluator_controls(client):
-    from core.config_schema import CONFIG_SCHEMA, apply_defaults
+    from social_turing_test.core.config_schema import CONFIG_SCHEMA, apply_defaults
 
     html = (ROOT / 'templates' / 'game.html').read_text(encoding='utf-8')
     for retired in ('cfgLiveEval', 'live_evaluator', 'Live Evaluator', 'liveEvaluator'):

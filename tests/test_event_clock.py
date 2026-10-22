@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
-from core import event_clock as clock
+from social_turing_test.core import event_clock as clock
 
 
 class EventClockTests(unittest.TestCase):

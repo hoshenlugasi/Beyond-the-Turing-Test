@@ -22,7 +22,7 @@ revision, not an equivalent packaging change; no correction was silently made.
 
 The baseline is the 50-game supplementary release, not raw server directories.
 The public version additionally redacts four identifying/linkable spans across
-three files, documented in the root public-redaction manifest. Original message
+three files, documented in the public-redaction record alongside the dataset. Original message
 word counts are provided as numerical features without the removed source text.
 They support the paper's original word-length calculation. The participant
 rosters include silent humans for participation denominators; a silent player's
@@ -56,7 +56,7 @@ and Repetition Monitor. The reference model is Gemini 2.5 Flash
 (`gemini-2.5-flash`); the Reviewer selects a generated candidate verbatim, without
 rewriting. Recorded study diagnostic evaluation used Gemini 2.5 Pro
 (`gemini-2.5-pro`) with feedback disabled; its 1,558 records are excluded from
-released timelines. Historical data, cached judgments and annotations are frozen.
+the public dataset. Historical data, cached judgments and annotations are frozen.
 
 Provider-side model behavior, availability, latency and live web-search results
 can change. Google's [official model catalog](https://ai.google.dev/gemini-api/docs/models/gemini),
@@ -73,34 +73,18 @@ Isolation used same-account external directories and guarded processes, not a VM
 No new model-backed game, scientific-quality validation or remote Hub viewer
 validation is claimed here.
 
-## Component observability, clocks and privacy
+## Dataset scope and privacy
 
-Every game has four core files plus nested timeline JSONL, a full derived text
-rendering and coverage manifest. Four root tables provide access views, not new
-scientific inputs. See [dataset guide](../DATASET.md),
-[dictionary](../DATA_DICTIONARY.md) and [manifest](../dataset_manifest.json).
-Timelines retain 53,360 of 54,918 source events, excluding 1,558 historical
-diagnostic records, and cover all six paper workers. This is not a full execution
-log: full prompts/snapshots, raw provider responses and private mappings are omitted.
+Every published game has four core files. Four tables provide access views, not
+new scientific inputs. See the
+[dataset guide](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md) and
+[dictionary](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/DATA_DICTIONARY.md).
+Historical component event traces are
+not included. Their removal leaves the calculation inputs and reference outputs
+unchanged; none of the four calculations requires those traces.
 
-Historical timing is one-second precision since the first source event, not START.
-The first retained event need not be the anchor. No date, chat-clock merge,
-timezone correction or causal concurrency order is inferred. Future exports
-accept verified paired monotonic logger-segment intervals, not a game-start clock.
-There is no public segment-index column. Incomplete or restart-ambiguous unpaired
-timing stays null/unknown; restarted segments are independent and cannot be
-stitched into a continuous elapsed axis. Invalid paired timing is refused.
-None of this revises historical analysis windows or original numeric word counts.
-
-Missing events are not inactivity, WAIT or zeros. Candidate generation, selection
-and confirmed delivery remain distinct; personal-chat append is delivery authority.
-Emitted short assessments are not hidden reasoning or causal effectiveness proof.
-Recorded returned-item counts are not independent sources; available facts do not
-prove grounding or use. Persona/social output is not verified human biography.
-
-A first pass reviewed 7,408 unique text values; 52 were withheld at 135 payload
-occurrences. A further 22 withheld values occur at 111 payload locations.
-Rendered repetition is not counted again. Contextual checks were
-selective, not exhaustive. Author permission is conditional on not identifying
-individuals; review is not an anonymity guarantee, independent consent/IRB
-certification or clearance for unrestricted redistribution.
+Local runtime logging and manual diagnostic exports remain available for new
+games, but are not historical data or publication-authorized outputs. Fixed paper
+examples are documented separately in [input provenance](inputs/PROVENANCE.md).
+Author permission remains conditional on not identifying individuals; review
+does not certify anonymity, consent or unrestricted redistribution rights.

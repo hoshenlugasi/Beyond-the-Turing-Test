@@ -1,0 +1,146 @@
+{
+  "games": {
+    "config_name": "games",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "ai_pseudonym": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "num_human_players": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "total_rounds": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "ai_eliminated": {
+        "dtype": "bool",
+        "_type": "Value"
+      },
+      "ai_elimination_round": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "human_start_count": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "path": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "messages": {
+    "config_name": "messages",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "message_order": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "recorded_time": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "speaker": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "speaker_role": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "text": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "elapsed_seconds": {
+        "dtype": "float64",
+        "_type": "Value"
+      },
+      "time_basis": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "votes": {
+    "config_name": "votes",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "round": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "voter": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "voted_for": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "is_ai_voter": {
+        "dtype": "bool",
+        "_type": "Value"
+      }
+    }
+  },
+  "surveys": {
+    "config_name": "surveys",
+    "features": {
+      "game_id": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "participant": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "survey_schema": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "human_likeness": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "timing": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "relevance": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "enjoyment": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "comments": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "suspicion_reason": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "additional_comments": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  }
+}

@@ -326,7 +326,9 @@ def survey_sd_audit(games):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--inputs", type=Path, default=ROOT / "analysis/inputs")
-    parser.add_argument("--games", type=Path, default=ROOT / "games")
+    # The code repository groups data under data/; the data-only mirror uses games/.
+    games_root = ROOT / "data/games" if (ROOT / "data/games").is_dir() else ROOT / "games"
+    parser.add_argument("--games", type=Path, default=games_root)
     args = parser.parse_args()
     games = load(read_cohort(args.inputs / "games.csv"), args.games, args.inputs)
     result = {"survival": survival(games), "identification": identification(games),

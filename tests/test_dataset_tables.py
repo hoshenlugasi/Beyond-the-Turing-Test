@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from collections import Counter
 
-from core.dataset_tables import (
+from social_turing_test.core.dataset_tables import (
     GAME_FIELDS, MESSAGE_FIELDS, SURVEY_FIELDS, TABLE_NAMES, VOTE_FIELDS,
     build_tables, write_tables,
 )
@@ -147,7 +147,7 @@ class SyntheticTableTests(unittest.TestCase):
 
 class CompleteCohortTableTests(unittest.TestCase):
     def test_all_fifty_games_match_canonical_core(self):
-        games = ROOT / "games"
+        games = ROOT / "data/games"
         before = hashes(games)
         tables = build_tables(games)
         self.assertEqual(before, hashes(games))

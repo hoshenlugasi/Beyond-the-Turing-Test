@@ -15,10 +15,10 @@ import sys
 
 import pytest
 
-import export_game as exporter
-from export_game import ExportError, export_game
-from core.dataset_tables import build_tables
-from core.event_schema import ENVELOPE_FIELDS, SCHEMAS, render_text, validate_event
+import social_turing_test.export_game as exporter
+from social_turing_test.export_game import ExportError, export_game
+from social_turing_test.core.dataset_tables import build_tables
+from social_turing_test.core.event_schema import ENVELOPE_FIELDS, SCHEMAS, render_text, validate_event
 
 
 EXPORT_ID = "local_game_001"
@@ -467,7 +467,7 @@ def test_protected_package_games_destination_rejected(raw_game, tmp_path, monkey
     # Simulate the installed package root; never write into the real cohort tree.
     package = tmp_path / "pretend_package"
     (package / "games").mkdir(parents=True)
-    monkeypatch.setattr(exporter, "__file__", str(package / "export_game.py"))
+    monkeypatch.setattr(exporter, "__file__", str(package / "social_turing_test" / "export_game.py"))
     before = snapshot(package)
     with pytest.raises(ExportError):
         export_game(raw_game, package / "games" / "new_export", EXPORT_ID, "local_game")
@@ -538,10 +538,10 @@ def test_cli_exports_scripted_test_offline(raw_game, tmp_path):
     env.pop("PYTHONHOME", None)
     # -S excludes site initialization and SDKs; -B avoids package cache writes.
     completed = subprocess.run(
-        [sys.executable, "-S", "-B", str(PACKAGE_ROOT / "export_game.py"),
+        [sys.executable, "-S", "-B", "-m", "social_turing_test.export_game",
          "--game-dir", str(raw_game), "--output", str(output),
          "--export-id", EXPORT_ID, "--kind", "scripted_test"],
-        cwd=tmp_path, env=env, capture_output=True, text=True, timeout=30,
+        cwd=PACKAGE_ROOT, env=env, capture_output=True, text=True, timeout=30,
         check=False,
     )
     assert completed.returncode == 0, "offline exporter CLI failed"

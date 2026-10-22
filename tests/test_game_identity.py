@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from core import game_paths
-from core.game_identity import CURRENT_AGENT_IDENTITY, detect_agent_identity
+from social_turing_test.core import game_paths
+from social_turing_test.core.game_identity import CURRENT_AGENT_IDENTITY, detect_agent_identity
 
 
 def test_identity_is_independent_of_model_and_provider():

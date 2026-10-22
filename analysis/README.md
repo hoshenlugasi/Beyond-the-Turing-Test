@@ -20,7 +20,7 @@ and Reviewer plus six paper workers: Internet Context, Round Summarizer, Persona
 Monitor, Social State Tracker, Behavior Adapter and Repetition Monitor. The Reviewer
 selects a generated candidate verbatim, without rewriting. Recorded study diagnostic
 evaluation used Gemini 2.5 Pro (`gemini-2.5-pro`) with feedback disabled; its 1,558
-records are excluded from released timelines. The cached judgments remain frozen.
+records are not part of the public dataset. The cached judgments remain frozen.
 A new live game is not historical-analysis reproduction.
 
 ## Inputs: four-file public core plus safe calculation exports
@@ -29,9 +29,9 @@ Each of the 50 game directories retains the submitted four-file layout. These
 are not runnable game directories. After manual review of all transcripts and
 survey files, the public core has four additional redacted spans across three
 files (197/200 game files unchanged); no rows, ratings, ballots or outcomes changed.
-See [../public_redactions.json](../public_redactions.json) for categories and
+See the [public redaction record](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/public_redactions.json) for categories and
 locations, without the removed strings. The public core is not wholly identical
-to the submitted baseline. See [release notes](../RELEASE_NOTES.md) for the
+to the submitted baseline. See [release notes](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/guides/RELEASE_NOTES.md) for the
 current GitHub/Hugging Face publication status.
 
 - `metadata.json`: `game_id`, `ai_pseudonym`, `num_human_players`, `total_rounds`,
@@ -41,7 +41,7 @@ current GitHub/Hugging Face publication status.
 - `votes.json`: array of `{round, voter, voted_for, is_ai_voter}`. Non-abstaining
   ballots only; exactly one non-self AI ballot per played round.
 - `surveys.json`: array of participant responses with `survey_schema` and available
-  integer 1–5 ratings `human_likeness`, `timing`, `relevance`, `enjoyment`.
+  integer 1-5 ratings `human_likeness`, `timing`, `relevance`, `enjoyment`.
   The five terminal-format surveys lack enjoyment. Missing ratings are not zeros.
 
 The four files alone do **not** recover silent active players, original audit
@@ -143,8 +143,8 @@ accuracy is produced, because later stages condition on survival.
 The ten labels are asks question, answers question/request, opens new topic,
 accuses/suspects another, responds to accusation, deflects/evades, brief reaction,
 greeting/social ritual, personal detail, and slang/informal abbreviation.
-Validation reports raw binary Cohen kappa for human1–human2, model–human1 and
-model–human2. Retention requires **all three defined point estimates >= 0.6**.
+Validation reports raw binary Cohen kappa for human1-human2, model-human1 and
+model-human2. Retention requires **all three defined point estimates >= 0.6**.
 No recoding, composites, OR labels, or bootstrap kappa intervals. Constant-marginal
 kappa is undefined, not perfect agreement. All ten categories remain visible.
 
@@ -169,7 +169,7 @@ The release contains no optional paid API-rerun code.
 
 All available ratings in the public surveys are used: 229 responses for likeness,
 timing and relevance, 224 for enjoyment. Public output declares conventional
-**sample SD (n−1)** and each 1–5 distribution. The paper's sample SDs are
+**sample SD (n−1)** and each 1-5 distribution. The paper's sample SDs are
 0.94, 1.08, 0.90 and 0.78, respectively. The reader handles both survey schemas
 and uses sample SD. `survey_sd_audit(games)` retains sample and population SD for audit
 and is not emitted by the entry point. No survey free text is emitted.
@@ -179,36 +179,16 @@ paper-reported aggregates for 226 records. It cannot reproduce individual linkag
 or deduplication. The 234 starting human seats are not a verified count of 234
 distinct participants.
 
-## Reviewed component timelines and access views
+## Four public access views
 
-Each game has four public core files plus three nested event
-files: [JSONL](../games/game_001/events/timeline.jsonl), its deterministic full
-[text rendering](../games/game_001/events/timeline.txt), and a
-[manifest](../games/game_001/events/manifest.json). The
-[dataset manifest](../dataset_manifest.json) records 53,360 retained events from
-54,918 source events, excluding 1,558 unreported diagnostic records. All six paper
-workers are represented alongside foreground and System observations. There is
-no parallel internal-output game tree. See [dictionary](../DATA_DICTIONARY.md).
-
-Four root access tables cover 50 games, 2,954 message rows (2,414 player and 540
-system), 618 ballots and 229 surveys; 224 enjoyment ratings are available. These
-views and timelines do not replace frozen calculation inputs. Selection/completion
-is not delivery, and candidates must not inflate public-message denominators.
-Short reviewer assessments are emitted outputs, not hidden reasoning or causal
-explanations. Recorded Internet counts are not independent-source counts; model
-persona/social observations are not verified human traits.
-
-Historical elapsed time has one-second precision since the first source event,
-not START. No chat-clock merge or timezone correction is asserted. Future verified
-monotonic logger segments are independent; there is no public segment-index column.
-Incomplete/restart-ambiguous unpaired timing remains null/unknown. None of these
-intervals corrects the frozen scientific midnight-window behavior.
-
-A first pass reviewed 7,408 unique text values; 52 were withheld at 135 payload
-occurrences. A further 22 withheld values occur at 111 payload locations.
-Contextual checks were selective, not exhaustive
-or anonymity proof. Full prompts/snapshots, raw provider responses and private
-mappings are excluded. See [dataset scope](../DATASET.md).
+The current release includes four core files per game and four derived tables:
+50 games, 2,954 messages (2,414 player / 540 system), 618 votes and 229 surveys.
+See the [dataset guide](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md)
+and [dictionary](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/DATA_DICTIONARY.md).
+Historical component event traces are not distributed. The four calculations
+do not read them; frozen numeric inputs, judgments, annotations and reviewed
+paper examples remain unchanged. Local runtime diagnostics and manual exports
+are separate from the historical public dataset and remain privacy-pending.
 
 ## Checks and missing inputs
 
@@ -223,10 +203,10 @@ virtual environment, server checks and local dataset loading. Its evidence appli
 only to those artifacts, not automatically to edited files or rebuilt packages.
 Isolation used same-account external directories and guarded processes, not a VM.
 No new model-backed game or scientific-quality validation is claimed.
-Linux/macOS, Docker and remote Hub behavior are not certified here. Offline analysis
+Linux/macOS and remote Hub behavior are not certified here. Offline analysis
 needs no provider key; model access is conditional as described in
 [../README.md](../README.md).
 
 This GitHub release includes the refreshed package. Author permission is conditional on not identifying
 individuals; review is not anonymity proof or independent consent/IRB certification.
-See [../RELEASE_NOTES.md](../RELEASE_NOTES.md) for scope.
+See the [release notes](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/guides/RELEASE_NOTES.md) for scope.

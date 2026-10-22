@@ -38,17 +38,10 @@ application_default_credentials.json
 /messages/
 _outputs/
 *.log
-/games/*
-!/games/game_*/
-/games/game_*/*
-!/games/game_*/metadata.json
-!/games/game_*/transcript.txt
-!/games/game_*/votes.json
-!/games/game_*/surveys.json
-!/games/game_*/events/
-!/games/game_*/events/**
-/games/real/
-/games/test/
+/local_data/
+/games/
+/configurations/
+/data/games/game_*/events/
 /local_exports/
 *.export.lock
 

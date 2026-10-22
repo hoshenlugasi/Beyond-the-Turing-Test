@@ -17,8 +17,9 @@ import unittest
 from unittest.mock import Mock, patch
 
 
-EXPORT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(EXPORT))
+REPOSITORY = Path(__file__).resolve().parents[1]
+EXPORT = REPOSITORY / "social_turing_test"
+sys.path.insert(0, str(REPOSITORY))
 WORKERS = [
     "InternetContextAgent", "RoundSummarizerAgent", "PersonaMonitorAgent",
     "SocialStateTrackerAgent", "BehaviorAdapterAgent", "RepetitionMonitorAgent",
@@ -34,11 +35,11 @@ def _module(name):
 
 class EvaluatorRemovalTests(unittest.TestCase):
     def setUp(self):
-        self.factory = _module("llm_players.factory")
-        self.wrapper = _module("llm_players.llm_wrapper")
-        self.reviewer = _module("llm_players.gemini_reviewer")
-        self.base = _module("llm_players.agent.sub_agents.base")
-        self.constants = _module("core.game_constants")
+        self.factory = _module("social_turing_test.llm_players.factory")
+        self.wrapper = _module("social_turing_test.llm_players.llm_wrapper")
+        self.reviewer = _module("social_turing_test.llm_players.gemini_reviewer")
+        self.base = _module("social_turing_test.llm_players.agent.sub_agents.base")
+        self.constants = _module("social_turing_test.core.game_constants")
         self.environment = patch.dict(os.environ, {"GEMINI_API_KEY": "offline-sdk-spy"}, clear=True)
         self.environment.start()
         self.addCleanup(self.environment.stop)
@@ -190,8 +191,8 @@ class EvaluatorRemovalTests(unittest.TestCase):
     def test_evaluator_modules_state_and_runtime_references_are_absent(self):
         for relative in ("llm_players/agent/sub_agents/live_evaluator.py", "llm_players/evaluation_prompts.py"):
             self.assertFalse((EXPORT / relative).exists(), relative)
-        state = _module("llm_players.agent.agent_state")
-        snapshot = _module("llm_players.agent.shared_state").SharedSnapshot()
+        state = _module("social_turing_test.llm_players.agent.agent_state")
+        snapshot = _module("social_turing_test.llm_players.agent.shared_state").SharedSnapshot()
         self.assertNotIn("self_weaknesses", state.DEFAULT_STATE)
         self.assertNotIn("self_weaknesses", state.AgentState.__annotations__)
         self.assertNotIn("self_weaknesses", snapshot.read())
@@ -207,7 +208,7 @@ class EvaluatorRemovalTests(unittest.TestCase):
                 elif isinstance(node, ast.Constant) and isinstance(node.value, str):
                     self.assertNotIn(node.value, {"self_weaknesses", "self_weaknesses_state"}, str(path))
                 elif isinstance(node, ast.ImportFrom):
-                    self.assertNotIn(node.module, {"llm_players.evaluation_prompts", "llm_players.agent.sub_agents.live_evaluator"}, str(path))
+                    self.assertNotIn(node.module, {"social_turing_test.llm_players.evaluation_prompts", "social_turing_test.llm_players.agent.sub_agents.live_evaluator"}, str(path))
 
 
 if __name__ == "__main__":
