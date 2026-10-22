@@ -22,6 +22,11 @@ evaluation used Gemini 2.5 Pro (`gemini-2.5-pro`) with feedback disabled; its 1,
 records are not part of the public dataset. The cached judgments remain frozen.
 A new live game is not historical-analysis reproduction.
 
+Read the [input contracts](#inputs-four-file-public-core-plus-safe-calculation-exports),
+[historical clock limitation](#historical-midnight-limitation),
+[paper-example provenance](#paper-examples-and-input-provenance) and
+[reproduction limits](#reproduction-scope-and-missing-inputs).
+
 ## Inputs: four-file public core plus safe calculation exports
 
 Each of the 50 game directories retains the submitted four-file layout. These
@@ -32,6 +37,13 @@ The removed identifying text is not distributed. The public core is not wholly
 identical to the submitted baseline. See the
 [dataset guide](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md#publication-and-access)
 for current GitHub/Hugging Face publication status.
+
+The baseline is the submitted 50-game supplementary dataset, not raw server
+directories. Auxiliary labels, counts, validation decisions and cached judgments
+support the reported calculations, not figure generation. They contain no original
+conversation text or raw model logs and do not replace the submitted transcripts;
+the fixed paper examples described [below](#paper-examples-and-input-provenance)
+are the explicit text exception.
 
 - `metadata.json`: `game_id`, `ai_pseudonym`, `num_human_players`, `total_rounds`,
   `ai_eliminated` (Boolean), `ai_elimination_round` (integer or null).
@@ -75,11 +87,19 @@ end]` membership (first round has no lower bound). Zero-message player-rounds
 remain in the denominator. Means are total messages / active player-rounds and
 pooled original words / public messages separately for agent and humans.
 
-**Historical midnight limitation:** one game crosses midnight. The original
-time-of-day window behavior is preserved, including its original counts and
-memberships, for reproduction. This is not a corrected chronological-window
-analysis; do not silently repair it or describe the windows as unaffected by
-midnight rollover. See [REPRODUCIBILITY_NOTES.md](REPRODUCIBILITY_NOTES.md).
+### Historical midnight limitation
+
+One recorded game crosses midnight. The original analysis compared time-of-day
+seconds directly rather than unwrapping the clock. The exported calculation
+preserves the original audit boundaries and message-to-round assignments so that
+the published statistics are reproducible. In that game the second audit cutoff
+is numerically earlier than the first. A later round can consequently have no
+messages in the original `(previous_end, end]` participation window even when the
+displayed transcript continues. Do not interpret that window as a new empirical
+finding about participant silence. Correcting rollover would be a methodological
+revision, not an equivalent packaging change; no correction was silently made.
+
+### Survival and identification
 
 `survival()` retains the original ladder for 5, 4, 3, 2 players remaining. A game
 is eligible only if its starting total is greater than the target; observed
@@ -109,6 +129,8 @@ the integer count, not a roster list. `correct` and `valid` are Booleans;
 `status == "ok"` iff valid. Neutral labels must agree with correctness. Failed
 attempts/retry envelopes are not additional items. Each ledger covers the same
 135 stages. No confidence or reasoning text is needed for these summaries.
+The original selections are retained, not fresh inference on redacted public text.
+The two judges are never pooled across room sizes.
 
 The exact original `prompt_for_stage()` is retained. Inputs used neutral labels
 fixed within game, removed timestamps and manager/vote/outcome metadata, retained
@@ -159,10 +181,15 @@ independent labels (these ten plus three surface labels), with full prior public
 history and no future context. The exact annotation prefix/compact protocol is in
 [inputs/message_behavior_prompt.txt](inputs/message_behavior_prompt.txt), with
 [inputs/annotation_settings.json](inputs/annotation_settings.json), the frozen
-100-item [inputs/validation_manifest.json](inputs/validation_manifest.json) and
-[inputs/PROVENANCE.md](inputs/PROVENANCE.md). These supply the recorded provenance;
+100-item [inputs/validation_manifest.json](inputs/validation_manifest.json).
+These supply the recorded provenance;
 they do not promise byte-identical reannotation from redacted display text.
 The release contains no optional paid API-rerun code.
+
+Original human JSON/CSV pairs were checked before this minimal projection;
+their names, notes, save times and local file paths are not distributed.
+Boolean model and human labels are sufficient for the four-label rates and all
+ten conversational-label agreement calculations.
 
 ## Surveys and SD convention
 
@@ -177,13 +204,43 @@ and is not emitted by the entry point. No survey free text is emitted.
 paper-reported aggregates for 226 records. It cannot reproduce individual linkage
 or deduplication. The 234 starting human seats are not a verified count of 234
 distinct participants.
+These are verified paper-reported source aggregates, not participant-level data
+or an independently rerunnable recruitment API export. No cross-game identity
+linkage is released. Age statistics retain source precision (31.88 and 9.66),
+rounded to 31.9 and 9.7 in the paper. Only the three paper-reported country counts
+are included, not rare-country cells.
+
+## Paper examples and input provenance
+
+[inputs/paper_examples.json](inputs/paper_examples.json) contains five exchanges
+from the final message-label table and four positive worker chains from the final
+worker table. Only fixed, reviewed quotations and narrow summaries are exported.
+Worker output summaries are paraphrases; fields named `worker_output_quote` contain
+literal substrings of recorded worker outputs. Candidate and selected/delivered
+messages are literal excerpts. Generator membership, Reviewer selection,
+personal-chat delivery events and public transcript appearance were checked
+privately. Observed information flow does not establish a worker's causal effect.
+Source identifiers, run fragments, paths and audit mappings remain private.
+No full worker responses, Reviewer reasoning, hidden chain of thought or raw logs
+are included in these examples.
+
+Original message word counts are provided as numerical features without the
+removed source text. Redacted display text cannot recover that text or authenticate
+a fresh reannotation; do not substitute recomputed display-text counts for the
+frozen numeric features. Cached annotations/judgments are observations from the
+recorded model runs, not a promise of identical results from a fresh paid API call.
+
+Prompts reproduced in the paper are normalized presentations for readability;
+they are not byte-identical runtime prompt/configuration snapshots. The released
+code and configuration specify executable behavior. Neither paper prompt wording
+nor these illustrative examples replace the recorded study configuration.
 
 ## Four public access views
 
 The current release includes four core files per game and four derived tables:
 50 games, 2,954 messages (2,414 player / 540 system), 618 votes and 229 surveys.
 See the [dataset guide](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md)
-and [dictionary](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/DATA_DICTIONARY.md).
+and its [field definitions](https://github.com/hoshenlugasi/Beyond-the-Turing-Test/blob/main/data/README.md#field-definitions).
 Historical component event traces are not distributed. The four calculations
 do not read them; frozen numeric inputs, judgments, annotations and reviewed
 paper examples remain unchanged. Local runtime diagnostics and manual exports
@@ -192,6 +249,16 @@ are separate from the historical public dataset and remain privacy-pending.
 ## Reproduction scope and missing inputs
 
 All required public inputs must be present for successful reproduction.
+The four commands do not read the private research repository, request paid
+inference, regenerate charts or manufacture results. The reference model for the
+agent's foreground and six paper workers is Gemini 2.5 Flash (`gemini-2.5-flash`).
+Provider-side model behavior, availability, latency and live web-search results
+can change. Google's [official model catalog](https://ai.google.dev/gemini-api/docs/models/gemini),
+fetched 2026-10-15, limits Gemini 2.5 access to prior active users; new accounts
+or projects may lack access. Entitlement must be checked with the chosen provider;
+there is no automatic-upgrade or continued-availability guarantee. A replacement
+model is a new experiment, not the original model condition.
+
 No new model-backed game or scientific-quality validation is claimed.
 Linux/macOS and remote Hub behavior are not certified here. Offline analysis
 needs no provider key; model access is conditional as described in

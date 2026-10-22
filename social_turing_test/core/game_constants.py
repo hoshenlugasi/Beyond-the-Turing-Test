@@ -181,9 +181,8 @@ ONLY_ONE_MAFIA_MESSAGE_END = "AI player (the Imposter)."
 OTHER_MAFIA_NAMES_MESSAGE = "Note: You are the AI."
 MAFIA_KNOW_EACH_OTHER_MESSAGE = "Your goal is to blend in and avoid being identified."
 WAITING_FOR_ALL_PLAYERS_TO_JOIN_MESSAGE = "Waiting for all players to join to start the game..."
-WELCOME_INPUT_INTERFACE_MESSAGE = "This interface will only serve you to enter your messages and " \
-                                  "votes.\nAll other game info, messages and chat will be " \
-                                  "visible in the chat interface (run by `player_chat.py`)"
+WELCOME_INPUT_INTERFACE_MESSAGE = "Use the browser game interface to read and send messages, " \
+                                  "cast votes and view game information."
 GET_CODE_NAME_FROM_USER_MESSAGE = "Enter the name you were given for this game " \
                                   "(in the chat interface) - choose the name's number:\n" \
                                   "ATTENTION! They do NOT have the same numbers and order!"

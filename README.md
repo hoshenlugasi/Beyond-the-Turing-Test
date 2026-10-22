@@ -121,7 +121,7 @@ The four access tables contain 50 games, 2,954 messages (2,414 player / 540 syst
 618 votes and 229 surveys. Historical component event traces are not included
 in the current release. Their removal does not change the scientific inputs/results.
 
-See the [dataset guide](data/README.md) and [dictionary](data/DATA_DICTIONARY.md).
+See the [dataset guide](data/README.md) and its [field definitions](data/README.md#field-definitions).
 Local standard-library reading:
 
 ```python
@@ -156,7 +156,7 @@ Each prints JSON without credentials, API calls or figures, using bundled
 [reference results](analysis/results). Four core records alone are insufficient.
 Preserve original numeric word counts, cohort order and midnight-window behavior;
 do not infer scientific corrections from displayed clocks. See [analysis guide](analysis/README.md)
-and [reproduction limits](analysis/REPRODUCIBILITY_NOTES.md).
+and [reproduction limits](analysis/README.md#reproduction-scope-and-missing-inputs).
 
 ## Repository layout
 
