@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 2,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "the \"hmmm.\" that's not normal text speech.",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "the Ai wanted to talk about weekend plans",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Elliot was the first to response to the question I posed at the start, Taylor's response didn't come across as AI and Avery & Casey responded to Elliot so I felt I could rule them out too. Morgan didn't contribute until late on.",
+    "additional_comments": "Fun little test, would have loved it to have gone on longer."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The fact that it suggested to talk of weekend plans (personal information were not allowed)",
+    "additional_comments": "the answers were very banal"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Morgan repeated what I just said.",
+    "additional_comments": "None."
+  }
+]

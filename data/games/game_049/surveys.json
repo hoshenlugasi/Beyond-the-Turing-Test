@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I didn't notice it in the first round, but they just copied the weather from others. They were never the first to start a topic or respond; it would always be others first.",
+    "additional_comments": "Really enjoyed playing. The only disappointing thing is that it was short! Would have happily done more rounds. Thank you!"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "i suspected taylor and bailey at the first round. because they response sounded a bit like AI. Too cheerful or friendly",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "he just follow other's talk and don't ask question himself.",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "It was too descriptive and formal ,  was a bit difficult to identify . On second attempt it was a bit clear that Bailey was AI .",
+    "additional_comments": "Bailey (AI) almost blended itself in our conversation , to improve it must give responses little more naturally and not like giving facts which was indicated by the way it answered ."
+  }
+]

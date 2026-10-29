@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "AI's answers were really neutral, even though I was voted out first I immediatelly figured out Jackie was the AI by the comment \"Weird vote out\". It sounded so generic, and out of heart, very humanless thing to say in my opinion.",
+    "additional_comments": "I really enjoyed this survey and I would gladly join more as I get excited talking to strangers. Probably, my excitement is what got me kicked out early in the game. This also reminded me of the \"Among Us\" game, so it was very fun to be part of this study. Good luck on your results!"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I got suspicious based on the way things were worded. it was directed answers no questions, waiting until others had responded to match the dynamic etc",
+    "additional_comments": "No other comments or suggestions"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I felt she was asking awkward questions",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I had no idea. Their comments seemed totally natural and unremarkable.",
+    "additional_comments": "[REDACTED]"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I didn't suspect the AI (Jackie) because her responses were short and brief, but sounded natural. \nOnly until the end, where I think she gave it away by saying \"it's a good way to clear your head\" after mentioning hiking as her weekend plan. I think she did this to try and sell hiking as something she definitely partook in.",
+    "additional_comments": "I really enjoyed this game! I like the mystery and paranoia aspects of finding who is the imposter"
+  }
+]

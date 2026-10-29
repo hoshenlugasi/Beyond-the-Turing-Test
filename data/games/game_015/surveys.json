@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Logan messages looked very human",
+    "additional_comments": "no"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The AI said I had been quiet lately, which was false. I knew then and accused, every response the AI made after that point just felt wrong which reinforced my thinking.",
+    "additional_comments": "I absolutely loved this, really great study guys!"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "First I suspected Casey because it was very articulate, then I suspected Taylor because it was the only one that didn't say it wasn't AI and then Logan because maybe Taylor knew something, and if it wasn't Taylor than it was Logan",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "the way they were chatting",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Logan acted overly defensive right from the beginning by immediately replying \"not me either\" before anyone even accused him. His responses were brief and aimed at deflecting attention rather than engaging naturally in the conversation context.",
+    "additional_comments": "no"
+  }
+]

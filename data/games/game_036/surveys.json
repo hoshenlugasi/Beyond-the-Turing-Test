@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 1,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The ai wasn't saying anything, while everyone else was actively typing or responding to messages. That made me suspicious, the game is too find out who's the Ai so talking is a must. When the Ai said they like to listen then respond it confirmed my doubts.",
+    "additional_comments": "No other comments. really enjoyed the game."
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "They were queit initially and they were also typing too perfecty for the time it took to send the response",
+    "additional_comments": "yes i wish i could have  spoken with the other humans to debrief after harper was found to be the ai"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 2,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The other people sused Harper out after I was eliminated",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "He was very silent, talking less then the others, but i didn't suspect much becauses the players were all talking about it, I thought that maybe could be a prank",
+    "additional_comments": "none"
+  }
+]

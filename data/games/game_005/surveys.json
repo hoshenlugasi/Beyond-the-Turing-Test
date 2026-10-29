@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Morgan",
+    "human_likeness": 2,
+    "timing": 2,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "the sentence structure was clearly ai written",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "could not see anything suspect until it had an unusual answer to my question about the first 10 digits of pi.",
+    "additional_comments": "Very difficult, was really not sure at all who was the AI has I was also suspicious of real players who had unusual answers."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "He seemed completely normal and he replied quite fast but he would have been my second choice.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "It didnt do any typos and wrote everything correctly.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Riley",
+    "human_likeness": 2,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The AI didn't use expressions like xd, lol and lmao, those were the main things i suspect casey, also, some of the things the AI said were too formal.",
+    "additional_comments": "No suggestions from me. The game was extremely fun!"
+  }
+]

@@ -1,0 +1,52 @@
+[13:04:52] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:05:10] Riley: hello
+[13:05:12] Casey: ey!
+[13:05:13] Taylor: hello, what would you guys like to discuss?
+[13:05:14] Morgan: hi
+[13:05:22] Rowan: anything interesting happen recently
+[13:05:35] Taylor: have you been on vacation?
+[13:05:38] Avery: hi hi
+[13:05:49] Riley: idk have u
+[13:05:59] Avery: taylor you good?
+[13:06:02] Morgan: oh yes - lets start with that. i would propose to talk about sth that recently happened. like iran war?
+[13:06:04] Taylor: yeah, i came back two days ago
+[13:06:13] Rowan: yeah that sounds like a good topic
+[13:06:45] Morgan: ok so what do you guys think - will the war be over soon?
+[13:06:52] Taylor: i'm not really into politics
+[13:07:16] Morgan: ok what else? any celebrity news?
+[13:07:21] Rowan: is anyone else into politics much?
+[13:07:22] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:07:45] Game-Manager: 🗳️ Vote results:
+    Morgan: 4
+    Riley: 1
+    Rowan: 1
+    → eliminated: Morgan
+[13:07:45] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[13:07:45] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:07:57] Taylor: gg morgan
+[13:08:10] Rowan: i prefer gaming news over celebrity stuff
+[13:08:28] Taylor: same here
+[13:08:39] Casey: all i know about gaming is gta announcement
+[13:08:40] Riley: whats game u like guys
+[13:08:56] Taylor: i recently played expedition 33, good stuff
+[13:08:59] Avery: gta took it 's sweet time releasing this one
+[13:09:07] Rowan: i like fifa and valorant
+[13:09:17] Riley: is newest gta even out yet
+[13:09:27] Taylor: not yet
+[13:09:35] Casey: i dont know about games but i like playing like these collaborative games
+[13:09:47] Riley: that sure take along time
+[13:09:48] Taylor: it will be on november
+[13:10:00] Riley: ohh i see finally
+[13:10:15] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:10:27] Game-Manager: 🗳️ Vote results:
+    Riley: 2
+    Rowan: 2
+    Taylor: 1
+    → eliminated: Rowan
+[13:10:27] Game-Manager: 📣 Rowan was eliminated. They were: AI

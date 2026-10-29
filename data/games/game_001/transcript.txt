@@ -1,0 +1,94 @@
+[14:39:29] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:39:36] Taylor: hi
+[14:39:39] Ashton: hey
+[14:39:42] Jordan: hello
+[14:39:44] Casey: hi
+[14:39:44] Morgan: hi everyone!
+[14:39:45] Avery: hi
+[14:39:53] Taylor: how are you ?
+[14:40:02] Morgan: good, just had lunch!
+[14:40:06] Jordan: really tired tbh
+[14:40:11] Casey: good, how about you
+[14:40:12] Avery: i'm fine what about u all
+[14:40:14] Ashton: all good here
+[14:40:34] Taylor: same, good
+[14:40:42] Morgan: late shift, @jordan? what topic will help you to stay awake?
+[14:40:42] Avery: so i think we can start.
+[14:41:05] Jordan: i had trouble sleeping today
+[14:41:14] Taylor: morgan, how is the weather here ? not too hot ?
+[14:41:20] Ashton: yeah that sucks
+[14:41:25] Casey: yah we can begin
+[14:41:32] Morgan: it is really hot, you know the current heatwave...
+[14:41:42] Morgan: that is why i had gazpacho for lunch!
+[14:41:49] Taylor: no i don't
+[14:41:59] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:42:48] Game-Manager: 🗳️ Vote results:
+    Ashton: 2
+    Avery: 2
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Avery
+[14:42:48] Game-Manager: 📣 Avery was eliminated. They were: Human
+[14:42:48] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:43:11] Jordan: any other news?
+[14:43:18] Taylor: morgan, give me a joke please
+[14:43:26] Ashton: just the heat wave continues
+[14:43:27] Morgan: knock knoch ;-)
+[14:43:39] Taylor: ok, got you
+[14:43:39] Casey: who's there?
+[14:43:51] Morgan: it's me, the grinch!
+[14:43:54] Jordan: @ashton how do you deal with those heatwaves?
+[14:44:02] Ashton: cold showers help
+[14:44:06] Casey: the grinch who?
+[14:44:09] Jordan: for sure
+[14:44:14] Ashton: mostly just stay inside
+[14:44:16] Morgan: heat wave grinch!
+[14:44:22] Taylor: jordan, how about you?
+[14:44:25] Jordan: i live in a tropical country so the heat is common
+[14:44:39] Taylor: i see
+[14:44:43] Morgan: @jordan: is it also humid where you live?
+[14:44:59] Jordan: not really where i live but up the north it is really humid
+[14:45:00] Morgan: i find it much more bearable if it is only hot, but not humid
+[14:45:00] Casey: anyone who's in africa?
+[14:45:10] Jordan: humidity with hot weather sucks
+[14:45:12] Taylor: not me casey
+[14:45:17] Ashton: i'm not
+[14:45:17] Jordan: not me either
+[14:45:18] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:46:07] Game-Manager: 🗳️ Vote results:
+    Morgan: 3
+    Ashton: 1
+    Taylor: 1
+    → eliminated: Morgan
+[14:46:07] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[14:46:07] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[14:46:22] Jordan: morgan felt like a ai tbh
+[14:46:31] Ashton: not really feeling ai from jordan
+[14:46:54] Casey: how do you spot an ai?
+[14:46:59] Taylor: ashton, is it the night on your side ?
+[14:47:07] Ashton: it's afternoon still
+[14:47:11] Jordan: the way they interact i think
+[14:47:22] Ashton: still got a bit of sun left
+[14:47:31] Jordan: the ai here is probably using our own conversations to feed themselves
+[14:47:43] Jordan: and make responses similar to the ones the humans are sending
+[14:47:44] Taylor: ok, so end of afternoon
+[14:48:02] Ashton: yeah that's about right
+[14:48:05] Casey: that's what i wanted to say, some ai are trained to be human
+[14:48:09] Taylor: how do you parse a list in python ashton ?
+[14:48:37] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[14:49:08] Game-Manager: 🗳️ Vote results:
+    Ashton: 1
+    Casey: 1
+    Jordan: 1
+    Taylor: 1
+    → eliminated: Ashton
+[14:49:08] Game-Manager: 📣 Ashton was eliminated. They were: AI

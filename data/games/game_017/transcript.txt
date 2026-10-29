@@ -1,0 +1,30 @@
+[22:27:46] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[22:27:53] Taylor: hi
+[22:27:57] Cameron: hey there
+[22:27:59] Jordan: hi
+[22:28:04] Avery: hello
+[22:28:06] Casey: hello all =)
+[22:28:34] Cameron: how's everyone doing
+[22:28:46] Avery: fine
+[22:28:49] Casey: well... ehehe
+[22:28:50] Jordan: pretty good. just too hot today here
+[22:28:54] Taylor: i'm doing good
+[22:29:02] Taylor: same it's so hot
+[22:29:09] Cameron: yeah it's melting here too
+[22:29:28] Morgan: i am on fire
+[22:29:29] Jordan: hopefully its not as bad next week
+[22:29:30] Casey: not the same here... for now
+[22:29:37] Cameron: hope you can cool down a bit
+[22:30:06] Morgan: rain will come
+[22:30:12] Taylor: so what can we talk about
+[22:30:16] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[22:30:39] Game-Manager: 🗳️ Vote results:
+    Cameron: 3
+    Jordan: 1
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Cameron
+[22:30:39] Game-Manager: 📣 Cameron was eliminated. They were: AI

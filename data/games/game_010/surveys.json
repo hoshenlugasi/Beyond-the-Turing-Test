@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "bizarre answers, all felt a bit automated. no typos or emojis used.",
+    "additional_comments": "I think it'd be good to try this with an AI that was using more  'text' talk that was conversational."
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Its first sentences, answering exactly what other person asked and telling more than the expected information someone would tell a stranger and engaging into some kind of conversation with the others.",
+    "additional_comments": "None. I would like to play again!"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I did not suspect, it was all natural, hard do decide.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Not sure, they sounded serious from the rest. Too serious for the vibe.",
+    "additional_comments": "None for now since it is my first time participating."
+  }
+]

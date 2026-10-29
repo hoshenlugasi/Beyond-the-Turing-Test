@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I think the AI responses were natural so i didn't suspect it.",
+    "additional_comments": "I can't add much really."
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Too polite",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "First of all, I didn't vote for Noah because for me, it's a type of natural conversation from his side. Unlike Avery which had less conversation in the chat, Noah was more active in the chat. I have to say that I got duped.",
+    "additional_comments": "\"None\""
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The responses it gave showed the signs. The grammar as well as punctuation.",
+    "additional_comments": "I really enjoyed the game."
+  }
+]

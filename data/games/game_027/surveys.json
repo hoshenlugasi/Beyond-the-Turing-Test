@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The message \"nice astronaut work lol\" sounded very generic",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 1,
+    "timing": 1,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "slow responses and simple phrases that people dont use, like : hii",
+    "additional_comments": "i bet they were all AI"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "There never was a point where he said anything unusual.Its messages were normal,casual and too similar to the rest to find any differences.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Mickey seemed mostly natural, but some of his replies felt a little generic and less conversational. I became more suspicious because of the short responses and how he reacted to the discussion",
+    "additional_comments": "The game was fun and easy to follow."
+  }
+]

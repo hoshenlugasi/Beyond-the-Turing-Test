@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The responses that were provided by AI",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "simple responses, a little too formal",
+    "additional_comments": "great survey"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Vague answers made me suspect them.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "At first I suspected Morgan because his replies felt kind of generated.But at the end Brook was talking kind of weird on the last 3 messages he sent.",
+    "additional_comments": "It would be more fun to have more rounds with different people every time."
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I did not suspect because I felt like they were answering in a very natural way",
+    "additional_comments": "None"
+  }
+]

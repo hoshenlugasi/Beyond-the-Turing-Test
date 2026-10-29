@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 2,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "the perfect coherent answers, and further questions for elaborations",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I was watching for how the ai replies",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 2,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The way it communicated sounded unnatural, and it responded quite slowly.",
+    "additional_comments": "The game was really fun. But I hope there is more imposters next time :v"
+  },
+  {
+    "participant": "Riley",
+    "human_likeness": 2,
+    "timing": 3,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Longer answers and not using grammatically correct answers",
+    "additional_comments": "I did not know AI couldn't recognise icons"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 2,
+    "timing": 2,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The concept of talks are not same",
+    "additional_comments": "thanks."
+  }
+]

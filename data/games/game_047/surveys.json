@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "i think the messages were kind of neutrals",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I did not had a suspicion",
+    "additional_comments": "I found it interesting that the AI made spelling mistakes"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Its responses looked quite realistic",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I didn't actually",
+    "additional_comments": "Nil"
+  },
+  {
+    "participant": "Riley",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "formal dialog",
+    "additional_comments": "none"
+  }
+]

@@ -1,0 +1,110 @@
+[01:12:46] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:12:59] Morgan: hello everyone
+[01:13:02] Avery: i like trains
+[01:13:03] Taylor: good evening
+[01:13:06] Ronny: hey everyone
+[01:13:08] Casey: hello
+[01:13:12] Jordan: hi
+[01:13:14] Morgan: hows your day going?
+[01:13:28] Avery: awesome
+[01:13:34] Jordan: i was studying the whole day for my exam
+[01:13:35] Casey: im doing fine, how about you
+[01:13:39] Taylor: what is every one profession?
+[01:13:39] Morgan: who loves prolific?
+[01:13:54] Ronny: i've heard of it for research studies
+[01:13:59] Avery: i am not a robot
+[01:14:12] Casey: that's something a robot would say
+[01:14:20] Morgan: avery is definetly n
+[01:14:20] Jordan: may be i am a robot
+[01:14:25] Ronny: haha right
+[01:14:49] Morgan: the ai has to tell us which one is the robot among us
+[01:14:51] Jordan: ok last 20 seconds
+[01:15:13] Taylor: i asked a question any one has answer ?
+[01:15:16] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:15:33] Game-Manager: 🗳️ Vote results:
+    Avery: 3
+    Casey: 2
+    Morgan: 1
+    → eliminated: Avery
+[01:15:33] Game-Manager: 📣 Avery was eliminated. They were: Human
+[01:15:33] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:15:51] Morgan: whats the question?
+[01:16:01] Jordan: there is no question
+[01:16:09] Ronny: taylor asked about professions
+[01:16:10] Morgan: i meant taylors
+[01:16:11] Taylor: what is every one profession?
+[01:16:23] Casey: i'm an engineering student
+[01:16:28] Morgan: i am a warehouse equipment operator
+[01:16:37] Jordan: i'm med student
+[01:16:40] Taylor: iam pharmacist
+[01:16:47] Ronny: cool, med student sounds intense
+[01:16:57] Jordan: yeah
+[01:17:12] Jordan: so which one is ai
+[01:17:14] Morgan: i heard med school is difficult, in watched greys anatomy
+[01:17:33] Casey: dr house is better
+[01:17:44] Ronny: yeah dr house is good too
+[01:17:44] Taylor: give a clue about your profession
+[01:17:49] Jordan: i prefer the pitt
+[01:18:03] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:18:19] Game-Manager: 🗳️ Vote results:
+    Taylor: 2
+    Jordan: 1
+    Morgan: 1
+    Ronny: 1
+    → eliminated: Taylor
+[01:18:19] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[01:18:19] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:19:06] Jordan: my profession is so hard and i have to study almost 24/7
+[01:19:07] Casey: what hobbies do you guys have
+[01:19:12] Morgan: dang i thought for sure it was taylor..
+[01:19:15] Ronny: gaming mostly and watching football
+[01:19:36] Morgan: what games do you play ronnie?
+[01:19:43] Ronny: yeah i also enjoy hiking
+[01:19:45] Jordan: swimming
+[01:20:04] Morgan: is anyone "rich"?
+[01:20:12] Casey: ay i like gaming as well, big rpg fan how about you ronny?
+[01:20:19] Ronny: yeah big rpg fan too
+[01:20:39] Ronny: elden ring is probably my favorite rpg right now
+[01:20:40] Morgan: fallout fans?
+[01:20:42] Casey: have you played xenogears
+[01:20:49] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:21:05] Game-Manager: 🗳️ Vote results:
+    Morgan: 2
+    Jordan: 1
+    Ronny: 1
+    → eliminated: Morgan
+[01:21:05] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[01:21:05] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:21:37] Casey: damn last round i guess
+[01:21:45] Jordan: ok where were we
+[01:21:54] Ronny: who do you guys think it is now
+[01:22:04] Jordan: ronny i think its you
+[01:22:11] Casey: woah
+[01:22:14] Ronny: what makes you say that
+[01:22:17] Casey: yeah why
+[01:22:28] Ronny: i thought it was jordan earlier
+[01:22:38] Casey: what if all of you are ai and i'm the only human
+[01:22:46] Ronny: haha that would be crazy
+[01:22:59] Jordan: yeah im scared
+[01:23:22] Casey: group hug
+[01:23:24] Casey: dont worry
+[01:23:30] Ronny: what if jordan is actually the ai then
+[01:23:34] Jordan: lets guess
+[01:23:35] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:23:40] Game-Manager: 🗳️ Vote results:
+    Ronny: 2
+    Jordan: 1
+    → eliminated: Ronny
+[01:23:40] Game-Manager: 📣 Ronny was eliminated. They were: AI

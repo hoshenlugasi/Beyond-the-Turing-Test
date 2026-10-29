@@ -1,0 +1,6 @@
+{
+  "_comment": "Soft, best-effort knowledge-cutoff phrases per model. Correctable; substring-matched case-insensitively. Used only for one soft boundary line in the agent prompt; the robust recency behaviour is the human-framed heuristic in llm_constants.",
+  "gemini-2.5-pro": "early 2025",
+  "gemini-2.5-flash": "early 2025",
+  "gemini-2.5-flash-lite": "early 2025"
+}

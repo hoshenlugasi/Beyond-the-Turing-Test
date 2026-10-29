@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "every conversation seems very natural",
+    "additional_comments": "i think more of this should be made."
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The answers of the AI were not noticable in a good way: they did fit in with the rest of the answers well.",
+    "additional_comments": "Interesting to see how well AI can communicate but also very terifying"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "I was eliminated before I got to vote. It's clear Dylan's the AI, but I had no choice left to participate in the game. despite dylan's timely mesaaging, his messaging style was indded a lil too rigid, the AI tried to mimic human's way of texting to cover its disguise (especially with capitalization of initial letter but i think it's just how the game disabled the capitalization for everyone) but its clear because the sentence structure is kinda polished with no grammatical mistakes",
+    "additional_comments": "Maybe a slight bonus for whoever gets to reveal the AI, even when they are eliminated makes it more interesting. I knew it from the second I was taken out, not to boast, but its kind of really obvious from the second round, I struggled to vote in the first round, and I was eliminated before I get to vote\n\nRegardless, I really loved the game. I like these sorts of games very much, interactive and fun"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "they all seemed similar",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I never suspect Dylan!!!",
+    "additional_comments": "none"
+  }
+]

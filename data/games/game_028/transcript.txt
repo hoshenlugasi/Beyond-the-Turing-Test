@@ -1,0 +1,42 @@
+[15:03:48] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[15:03:55] Taylor: hi :v
+[15:03:58] Morgan: hey
+[15:04:01] Avery: hey
+[15:04:01] Whitney: hey there
+[15:04:08] Riley: hello
+[15:04:10] Taylor: use icon :v
+[15:04:15] Taylor: we will know
+[15:04:17] Casey: hello
+[15:04:28] Taylor: :d
+[15:04:35] Avery: ai can use it btw
+[15:04:39] Whitney: that's fair
+[15:04:46] Taylor: i dont think they can
+[15:04:52] Casey: use what?
+[15:04:55] Taylor: icon
+[15:04:57] Taylor: :(
+[15:05:04] Taylor: ;)
+[15:05:07] Avery: :v
+[15:05:11] Casey: (:
+[15:05:12] Riley: ai can't use icons?
+[15:05:15] Whitney: true they can
+[15:05:19] Riley: :0
+[15:05:19] Morgan: ;)
+[15:05:20] Taylor: i guess so
+[15:05:34] Morgan: i honestly don't know if they can or can't
+[15:05:34] Avery: whitney make an icon
+[15:05:38] Whitney: what kind?
+[15:05:45] Avery: any kind
+[15:05:52] Whitney: like :v ?
+[15:05:58] Morgan: hmm
+[15:06:01] Taylor: hmmm
+[15:06:07] Whitney: just checking :v works for me
+[15:06:17] Casey: :v
+[15:06:18] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[15:06:29] Game-Manager: 🗳️ Vote results:
+    Taylor: 3
+    Whitney: 3
+    → eliminated: Whitney
+[15:06:29] Game-Manager: 📣 Whitney was eliminated. They were: AI

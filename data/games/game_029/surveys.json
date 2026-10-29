@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "I knew it was AI by intuition from the get go.",
+    "additional_comments": "it is hard for 5 strangers to suddenly talk with each, the study should really force them to about a specific easy topic like pet or music taste or hobbies"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "very direct responses and saying things without reading the room",
+    "additional_comments": "it was very hard to find. really enjoyed the game."
+  },
+  {
+    "participant": "Riley",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "the way he typed, and the way he told the fact",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The interesting fact",
+    "additional_comments": "None"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I suspected it was AI when I saw that Adrian was only abbreviating some words. Some sentences were formal whilst others were casual.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Not suspect. It was pretty natural the responses.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Towards the end the responses for AI were suspicious.",
+    "additional_comments": "I feel like the game was rigged at the end because the other participants were suspicious of the AI and would likely have voted for the AI!"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "A few responses felt slightly generic at the lend of the chat",
+    "additional_comments": "The game was fun and surprising;y  challneging . it was difficult to tell who was actualy lAI"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I thought it was Jordan lol",
+    "additional_comments": "it was fun"
+  }
+]

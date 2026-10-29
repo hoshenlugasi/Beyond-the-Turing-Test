@@ -1,0 +1,95 @@
+[13:31:12] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:31:30] Avery: hello
+[13:31:31] Taylor: hi
+[13:31:35] Brook: hey
+[13:31:35] Casey: hey what's up
+[13:31:38] Jordan: hello
+[13:31:39] Morgan: good day
+[13:31:54] Casey: how is the weather?
+[13:31:58] Taylor: good day
+[13:32:14] Jordan: it's a bit cloudy where i live
+[13:32:17] Morgan: the weather is good this side how about that side?
+[13:32:26] Brook: bit cloudy here too
+[13:32:38] Taylor: here, it's cloudy
+[13:32:41] Avery: too hot over here
+[13:32:44] Casey: it is also cloudy here. how was the lunch today?
+[13:32:57] Casey: what was in the lunch for today?
+[13:33:20] Jordan: yet to have some lunch
+[13:33:25] Brook: mine was a sandwich
+[13:33:30] Morgan: same here
+[13:33:34] Avery: same
+[13:33:40] Taylor: mine was a hamburger
+[13:33:42] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:34:04] Game-Manager: 🗳️ Vote results:
+    Taylor: 2
+    Avery: 1
+    Brook: 1
+    Casey: 1
+    Morgan: 1
+    → eliminated: Taylor
+[13:34:04] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[13:34:04] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:34:20] Jordan: ok..what hobbies do you all have
+[13:34:24] Casey: what is your favorite drink?
+[13:34:30] Brook: playing games or watching football
+[13:34:37] Casey: i love gardening?
+[13:34:42] Morgan: i love reading.
+[13:34:44] Avery: reading
+[13:34:55] Jordan: lol, i too love playing game and watching football
+[13:35:06] Casey: who is your favorite person?
+[13:35:27] Morgan: i like sparletta
+[13:35:51] Jordan: sparletta?
+[13:35:59] Brook: what kind of games do you play jordan?
+[13:36:04] Morgan: yes
+[13:36:32] Casey: so sparletta is a drink. what about favorite person?
+[13:36:34] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:36:48] Game-Manager: 🗳️ Vote results:
+    Casey: 3
+    Brook: 1
+    Morgan: 1
+    → eliminated: Casey
+[13:36:48] Game-Manager: 📣 Casey was eliminated. They were: Human
+[13:36:48] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:37:03] Jordan: i love souls games. but recently i was playinf fc26. i also picked up hitchhikers guide to galaxy to read
+[13:37:09] Brook: souls games are cool
+[13:37:25] Morgan: true
+[13:37:54] Brook: yeah those are hard
+[13:38:22] Jordan: so how's everyone day so far
+[13:38:23] Morgan: what are you guys doing?
+[13:38:31] Brook: not much, just chilling
+[13:38:54] Jordan: i was watching a movie
+[13:39:02] Morgan: my day is ok so far, nothing much.
+[13:39:02] Avery: what movie?
+[13:39:18] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:39:24] Game-Manager: 🗳️ Vote results:
+    Jordan: 2
+    Avery: 1
+    Brook: 1
+    → eliminated: Jordan
+[13:39:24] Game-Manager: 📣 Jordan was eliminated. They were: Human
+[13:39:24] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:40:01] Morgan: so you like movies?
+[13:40:10] Avery: i do, do you?
+[13:40:27] Morgan: not really
+[13:40:45] Avery: what about tv shows?
+[13:41:03] Morgan: i like reality tv shows
+[13:41:32] Brook: i like some tv shows
+[13:41:37] Avery: hmm i like traitors, and that's about it when it comes to reality tv
+[13:41:54] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:42:00] Game-Manager: 🗳️ Vote results:
+    Morgan: 2
+    Brook: 1
+    → eliminated: Morgan
+[13:42:00] Game-Manager: 📣 Morgan was eliminated. They were: Human

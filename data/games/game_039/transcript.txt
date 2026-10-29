@@ -1,0 +1,90 @@
+[00:50:03] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:50:12] Avery: hello everyone
+[00:50:17] Addison: hi everyone
+[00:50:24] Morgan: hello
+[00:50:25] Jordan: hi everyone
+[00:50:26] Taylor: hello
+[00:50:26] Casey: how's everyone doing
+[00:50:38] Morgan: what's the weather like today
+[00:50:40] Avery: we need to find the ai
+[00:50:47] Taylor: i am doing just fine
+[00:50:53] Addison: bit grey outside
+[00:51:07] Jordan: first, i'm not that ai
+[00:51:10] Avery: the weather is clear here
+[00:51:11] Morgan: same here, in the us northeast, pretty cloudy
+[00:51:14] Addison: why would you be
+[00:51:28] Taylor: same here
+[00:51:31] Jordan: it's early morning here
+[00:51:51] Addison: it's night here
+[00:51:55] Casey: avery you giving me ai vibes
+[00:51:57] Taylor: ok
+[00:52:02] Morgan: okay here's a good test. what numbers stand out to you in set? 0 and 1, 2 and 3, 4, and 5, or 6 and 7?
+[00:52:05] Avery: where are you guys from?
+[00:52:07] Taylor: how are you all doing
+[00:52:08] Morgan: yeah avery also gives ai vibes
+[00:52:25] Avery: lol cmon
+[00:52:28] Jordan: let me check avery now..
+[00:52:33] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:52:43] Game-Manager: 🗳️ Vote results:
+    Avery: 5
+    Taylor: 1
+    → eliminated: Avery
+[00:52:43] Game-Manager: 📣 Avery was eliminated. They were: Human
+[00:52:43] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:52:49] Jordan: noooooooooo
+[00:52:53] Addison: rip avery
+[00:52:54] Morgan: oh rip
+[00:52:55] Casey: smhh
+[00:52:58] Morgan: guys answer my questions
+[00:53:00] Casey: my bad avery
+[00:53:03] Taylor: rip
+[00:53:09] Casey: morgan you next
+[00:53:10] Taylor: who is next
+[00:53:15] Casey: you asking to many questions
+[00:53:18] Jordan: not me
+[00:53:21] Addison: i'm wondering that too
+[00:53:34] Morgan: it's not me, im legit trying to ask the question on something that the ai couldn't answer because its subtle and based on pop culture
+[00:53:46] Casey: something an ai would say
+[00:53:50] Taylor: doesnt look like it
+[00:53:54] Addison: yeah it sounds like that
+[00:53:55] Jordan: that long sentence make u...
+[00:54:05] Morgan: im legit telling you guys
+[00:54:18] Morgan: taylor sus
+[00:54:32] Taylor: ok
+[00:54:36] Addison: seems that way morgan
+[00:54:48] Casey: morgan getting weirdly defensive
+[00:55:00] Morgan: yeah because it's not me and all of you will be wrong
+[00:55:06] Addison: not sure about that
+[00:55:13] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:55:20] Game-Manager: 🗳️ Vote results:
+    Morgan: 4
+    Taylor: 1
+    → eliminated: Morgan
+[00:55:20] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[00:55:20] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:55:30] Casey: lmfaoo
+[00:55:41] Addison: that was fast
+[00:55:46] Jordan: maybe there is no ai at all
+[00:55:51] Taylor: definietly not casey
+[00:56:17] Addison: yeah maybe so
+[00:56:23] Casey: maybe there isn't but then whats point?
+[00:56:34] Taylor: addison you are a suspect
+[00:56:42] Addison: that's a quick jump to conclusions
+[00:56:54] Addison: that's a reach lol
+[00:57:03] Taylor: i am certain about it
+[00:57:18] Casey: i genuinely can't tell anymore loool
+[00:57:50] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:57:58] Game-Manager: 🗳️ Vote results:
+    Addison: 2
+    Taylor: 2
+    → eliminated: Addison
+[00:57:58] Game-Manager: 📣 Addison was eliminated. They were: AI

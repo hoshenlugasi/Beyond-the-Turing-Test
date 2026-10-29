@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "well, i was trying to understand if the answers were natural or not, which didn't help",
+    "additional_comments": "no other comments"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Slightly simpler answers.",
+    "additional_comments": "Nice game, although there was a bit of wait for players."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The conversations did not seem like they were AI-generated",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I couldn't suspect AI, as they were acting exactly like humans, and people thought, I'm the one and eliminated me in the first round.",
+    "additional_comments": "None"
+  }
+]

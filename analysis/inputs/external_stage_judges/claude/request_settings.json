@@ -1,0 +1,18 @@
+{
+  "model": "anthropic/claude-sonnet-4.5",
+  "seed": 42,
+  "request_settings": {
+    "max_tokens": 1024,
+    "temperature": 0.0
+  },
+  "privacy": {
+    "neutral_labels_fixed_within_game": true,
+    "timestamps_removed": true,
+    "round_boundaries_visible": true,
+    "manager_vote_elimination_outcome_metadata_removed": true,
+    "current_candidates_only": true,
+    "private_label_maps_not_sent": true
+  },
+  "items": 135,
+  "note": "Archived model selections, not new inference on redacted public text; see prompt template in calculation source"
+}

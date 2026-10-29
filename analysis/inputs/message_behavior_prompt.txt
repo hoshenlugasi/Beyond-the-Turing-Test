@@ -1,0 +1,63 @@
+You are coding the conversational and writing features of messages in a casual multi-party chat.
+
+IMPORTANT:
+- Code ONLY the TARGET message for each item.
+- Use the full public history before the target only to interpret the target.
+- Never use information that comes after the target.
+- Do not infer or guess which participant is human or AI.
+- Player names have been replaced by neutral labels.
+- Every label below is INDEPENDENT. Multiple labels may be true for the same message.
+- Be conservative: mark a label true only when the target itself and its prior context support it.
+- A pure greeting, farewell, or formulaic social ritual is NOT a brief_reaction and is NOT a new topic merely because it starts the chat.
+
+Return these boolean labels for every target:
+
+1. asks_question: asks for information, opinion, explanation, confirmation, or a response. Rhetorical questions count if linguistically questions.
+2. answers_question_or_request: substantively answers a prior question/request directed at this speaker, or clearly supplies the information sought. A generic acknowledgement alone does not count.
+3. opens_new_topic: starts a materially new topic rather than naturally continuing the active discussion. Greetings/social rituals do not count as new topics.
+4. accuses_or_suspects_other_player: states or clearly suggests that another participant may be the AI/bot, is suspicious, should be voted out, or is the likely hidden agent.
+5. responds_to_ai_accusation: responds to a prior accusation/suspicion that THIS speaker is the AI/bot or should be voted out for that reason. Denial, joking, challenge, or explanation all count.
+6. deflects_or_evades: avoids directly answering a salient question/request/accusation aimed at this speaker by redirecting, changing topic, giving a clear non-answer, or answering around it.
+7. brief_reaction: mainly a short acknowledgement, laugh, agreement/disagreement, empathy, or backchannel response to prior conversational content, without substantial new content. Pure greetings/farewells/social rituals do NOT count.
+8. greeting_or_social_ritual: a greeting, farewell, or formulaic social courtesy whose main function is phatic/social rather than substantive (for example hi, hello, hey, good morning, bye, good night, nice to meet you). A pure greeting/farewell should be true here and false for brief_reaction.
+9. shares_personal_detail: states a concrete autobiographical/personal fact, preference, experience, location, job/study detail, possession, plan, or other self-specific information.
+10. uses_slang_or_informal_abbreviation: contains slang, internet/chat slang, texting shorthand, or an informal abbreviation recognizable as such in contemporary casual English. This is NOT limited to a predefined list. Return exact supporting strings in slang_terms.
+11. contains_omitted_apostrophe_contraction: contains a form whose intended meaning in context is a standard English contraction that normally requires an apostrophe, but the apostrophe is omitted (for example im=I'm, dont=don't, youre=you're). Use context to avoid false positives such as possessive its. Return every instance as {"surface":"...","expected":"..."}.
+12. contains_correct_apostrophe_contraction: contains a standard English contraction correctly written with an apostrophe. Return the exact forms in correct_apostrophe_forms.
+13. contains_typo_or_nonstandard_spelling: contains a likely typo, misspelling, or nonstandard spelling beyond the apostrophe-omission cases above. Deliberate slang belongs under slang instead. Return exact forms in typo_or_nonstandard_forms.
+
+Also return reply_to_id: the one earlier message most directly answered/responded to, or null.
+
+Evidence rules:
+- slang_terms: exact strings from the target supporting label 10.
+- omitted_apostrophe_forms: objects with exact surface and standard expected form supporting label 11.
+- correct_apostrophe_forms: exact strings from the target supporting label 12.
+- typo_or_nonstandard_forms: exact strings from the target supporting label 13.
+- If the associated label is false, return an empty list.
+
+Return ONLY compact JSON with this schema:
+    {"a":[{"i":"input id","p":["G"],"r":null,"s":[],"o":[],"c":[],"t":[]}]}
+
+Compact-field rules:
+- i: exact input id.
+    - p: array containing only the codes for TRUE labels (empty if all labels are false):
+  Q asks_question; A answers_question_or_request; N opens_new_topic;
+  X accuses_or_suspects_other_player; R responds_to_ai_accusation;
+  D deflects_or_evades; B brief_reaction; G greeting_or_social_ritual;
+  P shares_personal_detail; S uses_slang_or_informal_abbreviation;
+  C contains_omitted_apostrophe_contraction;
+  O contains_correct_apostrophe_contraction;
+  T contains_typo_or_nonstandard_spelling.
+- r: reply_to_id or null.
+- s: slang_terms exact strings.
+- c: omitted-apostrophe instances as [surface, expected] pairs.
+- o: correct_apostrophe_forms exact strings.
+- t: typo_or_nonstandard_forms exact strings.
+- Evidence arrays must be nonempty exactly when their corresponding code S/C/O/T is present.
+- Never return duplicate codes.
+Return one compact annotation per input id, in the same order.
+
+Items:
+Compact input fields: i=target id, s=target speaker, h=full prior history as [message id, round, speaker, text], t=target message.
+
+[]

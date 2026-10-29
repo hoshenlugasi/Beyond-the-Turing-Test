@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Game — Spectator View</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0d1117; color: #e6edf3; height: 100vh; display: flex;
+         flex-direction: column; overflow: hidden; }
+
+  /* Header */
+  #header { background: linear-gradient(135deg,#1a1f3c,#2d1b69);
+             padding: 10px 20px; display: flex; align-items: center; gap: 16px;
+             flex-shrink: 0; border-bottom: 1px solid #21262d; }
+  #header h1 { font-size: 16px; font-weight: 700; color: #c9d1d9; }
+  #phaseBadge { padding: 3px 10px; border-radius: 20px; font-size: 12px;
+                font-weight: 600; background: #21262d; color: #8b949e; }
+  #phaseBadge.discussing { background: #0a3d0a; color: #3fb950; }
+  #phaseBadge.voting { background: #3d1a0a; color: #f0883e; }
+  #phaseBadge.waiting { background: #21262d; color: #8b949e; }
+  #timer { font-size: 13px; color: #8b949e; margin-left: auto; }
+  #gameIdLabel { font-size: 12px; color: #484f58; }
+  #topicBadge { font-size: 11px; color: #8b949e; font-style: italic; max-width: 220px;
+                overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #spectatorTag { font-size: 10px; background: #30363d; color: #8b949e;
+                  padding: 2px 8px; border-radius: 10px; letter-spacing: .5px; }
+
+  /* Main layout */
+  #main { display: flex; flex: 1; min-height: 0; gap: 0; }
+
+  /* Sidebar — players */
+  #sidebar { width: 160px; flex-shrink: 0; background: #161b22;
+             border-right: 1px solid #21262d; padding: 12px 8px; overflow-y: auto; }
+  #sidebar h3 { font-size: 10px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .6px; color: #484f58; margin-bottom: 10px; }
+  .player-chip { display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+                 border-radius: 8px; margin-bottom: 4px; font-size: 13px;
+                 font-weight: 600; background: #21262d; color: #c9d1d9;
+                 transition: opacity .3s; }
+  .player-chip.eliminated { opacity: 0.35; text-decoration: line-through;
+                             background: #161b22; color: #484f58; }
+  .player-dot { width: 8px; height: 8px; border-radius: 50%; background: #3fb950;
+                flex-shrink: 0; }
+  .player-chip.eliminated .player-dot { background: #484f58; }
+  #winnerBanner { margin-top: 16px; padding: 10px; border-radius: 8px;
+                  background: #0a3d2a; border: 1px solid #238636;
+                  font-size: 12px; color: #3fb950; text-align: center; display: none; }
+
+  /* Chat */
+  #chatWrap { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  #chatFeed { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex;
+              flex-direction: column; gap: 6px; }
+  .msg { font-size: 14px; line-height: 1.55; padding: 6px 10px;
+         border-radius: 6px; background: #161b22; }
+  .msg .sender { font-weight: 700; margin-right: 6px; }
+  .msg.system-msg { background: transparent; color: #484f58; font-size: 12px;
+                    font-style: italic; }
+  #chatFeed::-webkit-scrollbar { width: 6px; }
+  #chatFeed::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+  #noMsgs { text-align: center; color: #484f58; padding: 40px;
+             font-size: 14px; display: none; }
+
+  #statusBar { flex-shrink: 0; padding: 8px 20px; background: #0d1117;
+               border-top: 1px solid #21262d; font-size: 11px; color: #484f58;
+               display: flex; gap: 16px; align-items: center; }
+  #pollStatus { margin-left: auto; }
+
+  /* Player colours (cycling through 8 hues) */
+  :root {
+    --c0:#58a6ff; --c1:#3fb950; --c2:#f0883e; --c3:#bc8cff;
+    --c4:#26c6da; --c5:#f06292; --c6:#d29922; --c7:#80cbc4;
+  }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>🔍 Live Game</h1>
+  <span id="phaseBadge" class="waiting">Waiting</span>
+  <span id="topicBadge"></span>
+  <span id="timer"></span>
+  <span id="gameIdLabel">#{{ game_id }}</span>
+  <span id="spectatorTag">SPECTATOR</span>
+</div>
+
+<div id="main">
+  <div id="sidebar">
+    <h3>Players</h3>
+    <div id="playerList"></div>
+    <div id="winnerBanner"></div>
+  </div>
+  <div id="chatWrap">
+    <div id="chatFeed">
+      <div id="noMsgs">Waiting for the game to start…</div>
+    </div>
+    <div id="statusBar">
+      <span id="msgCount">0 messages</span>
+      <span id="pollStatus">connecting…</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const GAME_ID = {{ game_id | tojson }};
+  const PLAYER_COLORS = ['--c0','--c1','--c2','--c3','--c4','--c5','--c6','--c7'];
+  let colorMap = {};
+  let colorIdx = 0;
+  let lastMsgCount = 0;
+  let knownMessages = new Set();
+  let allMessages = [];
+  // CB9: clock offset between this browser and the server, so the spectator
+  // timer stays in sync with the game UI timer (which applies the same offset).
+  let _clockOffset = 0;
+
+  function playerColor(name) {
+    if (!colorMap[name]) colorMap[name] = PLAYER_COLORS[colorIdx++ % PLAYER_COLORS.length];
+    return `var(${colorMap[name]})`;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                    .replace(/"/g,'&quot;');
+  }
+
+  function formatPhase(phase) {
+    const p = (phase || '').toLowerCase();
+    if (p.includes('discuss')) return ['Discussing', 'discussing'];
+    if (p.includes('vot')) return ['Voting', 'voting'];
+    if (p.includes('wait')) return ['Waiting', 'waiting'];
+    if (p.includes('over') || p.includes('end')) return ['Game Over', 'voting'];
+    return [phase, 'waiting'];
+  }
+
+  function renderPlayers(all, remaining) {
+    const list = document.getElementById('playerList');
+    list.innerHTML = '';
+    const remainSet = new Set(remaining);
+    for (const name of all) {
+      const eliminated = !remainSet.has(name);
+      const chip = document.createElement('div');
+      chip.className = 'player-chip' + (eliminated ? ' eliminated' : '');
+      chip.innerHTML = `<span class="player-dot"></span>
+        <span style="color:${eliminated ? '' : playerColor(name)}">${esc(name)}</span>`;
+      list.appendChild(chip);
+    }
+  }
+
+  function renderMessages(messages) {
+    const feed = document.getElementById('chatFeed');
+    const noMsgs = document.getElementById('noMsgs');
+    let added = 0;
+    for (const line of messages) {
+      if (knownMessages.has(line)) continue;
+      knownMessages.add(line);
+      allMessages.push(line);
+      added++;
+      const div = document.createElement('div');
+      // Parse "[timestamp] Name: text" format
+      const m = line.match(/^\[([^\]]+)\]\s+([^:]+):\s(.+)$/);
+      if (m) {
+        const ts = m[1], sender = m[2].trim(), text = m[3].trim();
+        const isSystem = sender === 'SYSTEM' || sender === 'Game' || text.startsWith('---');
+        if (isSystem) {
+          div.className = 'msg system-msg';
+          div.textContent = `[${ts}] ${text}`;
+        } else {
+          div.className = 'msg';
+          // Lowercase the message body only (keep sender prefix for color).
+          div.innerHTML = `<span class="sender" style="color:${playerColor(sender)}">${esc(sender)}:</span>${esc(text.toLowerCase())}`;
+        }
+      } else {
+        div.className = 'msg system-msg';
+        div.textContent = line;
+      }
+      feed.appendChild(div);
+    }
+    if (allMessages.length > 0) noMsgs.style.display = 'none';
+    else noMsgs.style.display = 'block';
+    if (added > 0) feed.scrollTop = feed.scrollHeight;
+    document.getElementById('msgCount').textContent = `${allMessages.length} messages`;
+  }
+
+  function updateTimer(discussionStart, phase) {
+    const el = document.getElementById('timer');
+    if (!discussionStart || phase.toLowerCase().includes('wait')) { el.textContent = ''; return; }
+    // CB9: apply server clock offset so spectator and game timers match.
+    const nowMs = Date.now() + _clockOffset;
+    const elapsed = Math.max(0, Math.floor((nowMs / 1000) - discussionStart));
+    const m = Math.floor(elapsed / 60), s = elapsed % 60;
+    el.textContent = `${m}:${s.toString().padStart(2,'0')} elapsed`;
+  }
+
+  async function poll() {
+    try {
+      const r = await fetch(`/api/spectator/status?game_id=${encodeURIComponent(GAME_ID)}`);
+      if (!r.ok) { document.getElementById('pollStatus').textContent = `Error ${r.status}`; return; }
+      const d = await r.json();
+
+      // CB9: update clock offset so timer matches game UI across clients.
+      if (typeof d.server_time_ms === 'number') {
+        const newOffset = d.server_time_ms - Date.now();
+        if (Math.abs(newOffset - _clockOffset) > 2000 && _clockOffset !== 0) {
+          console.warn(`[Spectator] Clock drift: ${newOffset}ms`);
+        }
+        _clockOffset = newOffset;
+      }
+
+      // Phase badge
+      const [label, cls] = formatPhase(d.phase);
+      const badge = document.getElementById('phaseBadge');
+      badge.textContent = label;
+      badge.className = `waiting ${cls}`;
+
+      // Topic
+      const topicEl = document.getElementById('topicBadge');
+      topicEl.textContent = d.topic ? `Topic: ${d.topic}` : '';
+
+      // Players
+      renderPlayers(d.all_players || [], d.remaining_players || []);
+
+      // Winner banner
+      const banner = document.getElementById('winnerBanner');
+      if (d.winner) {
+        banner.style.display = 'block';
+        banner.textContent = `🏆 ${d.winner}`;
+      }
+
+      // Messages
+      renderMessages(d.messages || []);
+
+      // Timer
+      updateTimer(d.discussion_start, d.phase);
+
+      document.getElementById('pollStatus').textContent = `Updated ${new Date().toLocaleTimeString()}`;
+    } catch(e) {
+      document.getElementById('pollStatus').textContent = `Poll error: ${e.message}`;
+    }
+  }
+
+  poll();
+  setInterval(poll, 2000);
+  setInterval(() => {
+    // Refresh timer display every second without a full poll
+    const el = document.getElementById('timer');
+    if (el.textContent) poll();
+  }, 1000);
+</script>
+</body>
+</html>

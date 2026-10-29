@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 1,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I was thinking about Hayden 'cause its conversation was pretty basic level and he was typing really fast but jordan through me off with all of those questions (sorry)",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I suspected Hayden because their typing speed was unnaturally fast, which Morgan also pointed out.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Fast answers; his sentences were long and very correct",
+    "additional_comments": "AI didn't use slang or emojis"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Their typing speed is insane",
+    "additional_comments": "none"
+  }
+]

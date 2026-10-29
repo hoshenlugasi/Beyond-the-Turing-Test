@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "talking about feelings.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I thought Reese was a human being. The conversation sounded natural for me",
+    "additional_comments": "no"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 2,
+    "timing": 3,
+    "relevance": 2,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "By automatically stating that \"finishing a major project is its favorite sensation,\" it demonstrated an inability to identify a real-life human situation as a pleasant feeling; thus, it made it quite clear that it was an AI lacking the kind of life experience humans have.",
+    "additional_comments": "I enjoyed the game and managed to test my supposed investigative skills."
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "It was TOO PERFECT, the laugh, the answers, I don't know exactly what but something felt off.",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 2,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "My first message gave it off, the \"good try\" is so obvious. Also \"the feeling right after finishing a big project\" is obvious. Pretty generic thing AI likes.",
+    "additional_comments": "Would be cool to laugh after we guessed it after"
+  }
+]

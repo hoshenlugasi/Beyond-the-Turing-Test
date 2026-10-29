@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "I have absolutely no clue.",
+    "additional_comments": "The game was fun."
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "ray's response looked AI generated",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Actually I did not suspect AI to be AI",
+    "additional_comments": "It was really fun"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I didn't suspect Ray because of the language used and all the word shortening. It felt as if a human was writing those words.",
+    "additional_comments": "The discussion time was short, maybe it's because I was enjoying chatting with the other participants."
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Ray's responses felt a bit generic and lacked personal detail compared to the others.",
+    "additional_comments": "None, it was a fun study!"
+  }
+]

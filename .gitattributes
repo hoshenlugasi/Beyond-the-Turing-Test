@@ -1,0 +1,13 @@
+# Preserve reviewed data bytes, including on Windows Git checkouts.
+data/games/** -text
+analysis/inputs/** -text
+data/tables/** -text
+analysis/results/** -text
+*.py text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+LICENSE text eol=lf
+.gitattributes text eol=lf
+
+# Preserve standalone classifier release checksums on every platform.
+bge_m3_detector/** -text

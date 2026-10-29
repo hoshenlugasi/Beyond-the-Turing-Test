@@ -1,0 +1,59 @@
+[12:35:40] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[12:36:03] Morgan: hi
+[12:36:07] Bailey: hey everyone
+[12:36:16] Avery: hey! do any of you guys have a pet? and are you a cat or a dog person?
+[12:36:25] Taylor: hey guys
+[12:36:26] Casey: hi
+[12:36:39] Casey: yes, i've dogs
+[12:37:08] Bailey: dog person for sure
+[12:37:12] Casey: i mean a dog
+[12:37:25] Morgan: dog person, i hate cats
+[12:37:33] Taylor: i have a puppy
+[12:37:37] Avery: am i the only cat person here?:d
+[12:38:02] Morgan: i once had a rabbit
+[12:38:08] Casey: i think so, avery :)
+[12:38:10] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[12:38:54] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Casey: 2
+    Taylor: 1
+    → eliminated: Casey
+[12:38:54] Game-Manager: 📣 Casey was eliminated. They were: Human
+[12:38:54] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[12:39:40] Morgan: anyone interested in games?
+[12:39:51] Bailey: yeah sometimes
+[12:39:59] Avery: you mean computer games or board games?
+[12:40:11] Taylor: yes, they are fun
+[12:40:37] Bailey: mostly video games
+[12:41:12] Avery: i prefer board games tbh
+[12:41:17] Morgan: today is the premiere of the game from my country, i recommend - dawnwalker - ps5, xbox, pc
+[12:41:20] Taylor: video games are me to go too
+[12:41:24] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[12:41:36] Game-Manager: 🗳️ Vote results:
+    Bailey: 2
+    Taylor: 2
+    → eliminated: Taylor
+[12:41:36] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[12:41:36] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[12:42:43] Avery: sooo, any other hobbies except of computer games?
+[12:42:50] Bailey: i like to hike sometimes
+[12:43:14] Avery: i also like it!
+[12:43:18] Bailey: cooking is another one
+[12:43:23] Morgan: i am interested in history
+[12:43:38] Avery: do you like reading about it?
+[12:44:00] Morgan: yes
+[12:44:06] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[12:44:17] Game-Manager: 🗳️ Vote results:
+    Morgan: 2
+    Bailey: 1
+    → eliminated: Morgan
+[12:44:17] Game-Manager: 📣 Morgan was eliminated. They were: Human

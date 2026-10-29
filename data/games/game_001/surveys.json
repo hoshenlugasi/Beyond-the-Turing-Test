@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "legacy_terminal_v1",
+    "comments": "Both Ashton and Casey felt off but the way Ashton was giving general answers only and didn't answer taylor at all in the end felt suspicious"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "legacy_terminal_v1",
+    "comments": "O uso de gatilhos e palavras que costumam \"rodar\" pelas inteligências artificiais da internet me fez desconfiar de alguns deles. Além disso , o a inclinação para \"servir mais \" do que falar de sí imita o comportamento de uma IA não-humana com a educação impecável de uma máquina.\nNão deu para perceber a presença da IA com facilidade, então ficou bem camuflada na conversa."
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "legacy_terminal_v1",
+    "comments": "short messages\nMy longer text's apparently lead the others to believe I was the AI"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "legacy_terminal_v1",
+    "comments": ""
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 3,
+    "timing": 1,
+    "relevance": 5,
+    "survey_schema": "legacy_terminal_v1",
+    "comments": "The AI mostly gave short, safe responses and rarely volunteered personal opinions, stories, or details\nThe AI was harder to identify than expected because it avoided obvious mistakes."
+  }
+]

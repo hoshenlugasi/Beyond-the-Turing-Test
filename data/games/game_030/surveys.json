@@ -1,0 +1,52 @@
+[
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The responses",
+    "additional_comments": "Very interesting and kept one on the edge"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "The location confused me, and it was just hard as they came across the same as everybody nobody else",
+    "additional_comments": "No"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 3,
+    "suspicion_reason": "Winter seemed evasive of the questions and they were very simple",
+    "additional_comments": "thank you"
+  },
+  {
+    "participant": "Casey",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I Just voted once for avery cause there were not much messages from them",
+    "additional_comments": "it was great to play.."
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "The AI ​​exhibited very human-like behavior.",
+    "additional_comments": "I found it a very fun experience, thanks!"
+  }
+]

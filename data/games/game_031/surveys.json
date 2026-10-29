@@ -1,0 +1,32 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "At first I thought Jordan was an AI because of his punctuation in his posts, when it turned out that he was human, i was really surprised, i was eliminated but i guessed AI correctly in the end",
+    "additional_comments": "Great game, hope to take part in it again :)"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I didn't suspect them at all!",
+    "additional_comments": "none, very good and fun game!"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I couldn't suspect the ai at all there responses were very natural and the tone of their messages was smooth.",
+    "additional_comments": "None"
+  }
+]

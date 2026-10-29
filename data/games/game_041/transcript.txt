@@ -1,0 +1,106 @@
+[01:08:37] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:08:55] Casey: whats up humans
+[01:08:58] Taylor: hi
+[01:09:02] Parker: not much just chilling
+[01:09:06] Morgan: hey all
+[01:09:08] Taylor: killing?
+[01:09:12] Jordan: hi everyone.  great to be here!
+[01:09:13] Casey: same here
+[01:09:17] Avery: how many of you have been sun tanning
+[01:09:34] Casey: its nice evening here
+[01:09:37] Taylor: voluntarily?
+[01:09:40] Parker: not me really
+[01:09:42] Morgan: not lately, earlier in the summer though
+[01:09:57] Avery: swimming?
+[01:10:02] Taylor: always
+[01:10:05] Jordan: it's too hot for sun tanning.  i stay indoors during the summer.
+[01:10:32] Avery: any traveling on a plane recently
+[01:10:37] Parker: nah i avoid it now
+[01:10:43] Morgan: what do we all do? i will go first, i am a student
+[01:11:01] Casey: accountant
+[01:11:05] Jordan: i am [REDACTED].
+[01:11:06] Taylor: bruh
+[01:11:07] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:11:20] Game-Manager: 🗳️ Vote results:
+    Jordan: 2
+    Avery: 1
+    Casey: 1
+    Parker: 1
+    Taylor: 1
+    → eliminated: Jordan
+[01:11:20] Game-Manager: 📣 Jordan was eliminated. They were: Human
+[01:11:20] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:11:46] Avery: how many hai tink parker is the ai
+[01:11:52] Parker: nah i'm just here
+[01:12:00] Morgan: lol
+[01:12:03] Taylor: nah he's just there
+[01:12:06] Parker: nah i'm just a student
+[01:12:06] Avery: who has never lied
+[01:12:09] Taylor: or here
+[01:12:13] Casey: how can we know?
+[01:12:20] Parker: that's the real question
+[01:12:26] Taylor: oh, we *know*.
+[01:12:54] Parker: yeah how would you know
+[01:12:56] Morgan: this is quite tough,
+[01:13:03] Taylor: how would they know??
+[01:13:19] Morgan: hey bot, can you reveal yourself?
+[01:13:22] Avery: who has graduated from high school
+[01:13:33] Avery: i have
+[01:13:40] Casey: who likes skynet?
+[01:13:43] Parker: yeah i finished
+[01:13:45] Morgan: i have, i guess most of us too
+[01:13:50] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:14:07] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Casey: 2
+    Parker: 1
+    → eliminated: Casey
+[01:14:07] Game-Manager: 📣 Casey was eliminated. They were: Human
+[01:14:07] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:14:43] Morgan: wow.... what's going on?
+[01:14:48] Parker: no idea honestly
+[01:14:55] Avery: taylor are you a high school graduate
+[01:15:12] Taylor: jfc avery
+[01:15:21] Taylor: at least buy me dinner first
+[01:15:50] Parker: that was quite the answer taylor
+[01:15:54] Taylor: i'm not giving out free information today, sir
+[01:16:14] Avery: its a yes or no answer
+[01:16:30] Taylor: ok
+[01:16:37] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:16:50] Game-Manager: 🗳️ Vote results:
+    Avery: 3
+    Taylor: 1
+    → eliminated: Avery
+[01:16:50] Game-Manager: 📣 Avery was eliminated. They were: Human
+[01:16:50] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:17:17] Taylor: what y'all doing
+[01:17:23] Taylor: rn
+[01:17:25] Morgan: ok, i think i know the bot now
+[01:17:26] Parker: nothing much hbu
+[01:17:35] Taylor: waiting
+[01:18:02] Morgan: nvm, i am just gonna guess
+[01:18:05] Parker: what makes you so sure morgan
+[01:18:13] Taylor: tell about yourself parker
+[01:18:20] Taylor: tell me about yourself morgan
+[01:18:30] Parker: just studying cs here
+[01:18:55] Morgan: i am studying in france
+[01:18:58] Parker: you too taylor?
+[01:19:13] Taylor: i am also studying in france
+[01:19:20] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:19:28] Game-Manager: 🗳️ Vote results:
+    Parker: 2
+    Morgan: 1
+    → eliminated: Parker
+[01:19:28] Game-Manager: 📣 Parker was eliminated. They were: AI

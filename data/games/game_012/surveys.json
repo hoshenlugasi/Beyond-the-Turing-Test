@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 3,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "ela acabou confundindo todos na hora de dar a resposta",
+    "additional_comments": "eu achei que o time não pensou antes de votar"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 2,
+    "suspicion_reason": "when it said it was from switerland and then said heard some bad news about switzerland as if it wasn't from there and already know",
+    "additional_comments": "the other users suck"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I was looking at the tone of everyone else and realised that I actually lost.",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "The switzerland comment made me suspect finley especially with the tunnel",
+    "additional_comments": "No I enjoyed this and would love to participate in more future studies like this"
+  }
+]

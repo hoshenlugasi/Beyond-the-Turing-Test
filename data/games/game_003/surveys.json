@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Avery",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "I suspected the AI because it was quiet most of the chat and would reply late in the chat",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Jordan",
+    "human_likeness": 4,
+    "timing": 3,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "That he not made any gramatical mistakes",
+    "additional_comments": "if people used bad grammar, that the AI also wrote like that"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Mf typed \"I can see why you would feel that way\" bro is not fooling anyone with that",
+    "additional_comments": "Pretty fun gotta admit"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 5,
+    "timing": 4,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "he typed faster than us",
+    "additional_comments": "none"
+  }
+]

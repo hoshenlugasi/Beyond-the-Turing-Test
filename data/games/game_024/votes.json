@@ -1,0 +1,110 @@
+[
+  {
+    "round": 1,
+    "voter": "Brook",
+    "voted_for": "Casey",
+    "is_ai_voter": true
+  },
+  {
+    "round": 1,
+    "voter": "Jordan",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Morgan",
+    "voted_for": "Brook",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Avery",
+    "voted_for": "Taylor",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Casey",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 1,
+    "voter": "Taylor",
+    "voted_for": "Morgan",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Brook",
+    "voted_for": "Casey",
+    "is_ai_voter": true
+  },
+  {
+    "round": 2,
+    "voter": "Jordan",
+    "voted_for": "Casey",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Morgan",
+    "voted_for": "Brook",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Avery",
+    "voted_for": "Casey",
+    "is_ai_voter": false
+  },
+  {
+    "round": 2,
+    "voter": "Casey",
+    "voted_for": "Morgan",
+    "is_ai_voter": false
+  },
+  {
+    "round": 3,
+    "voter": "Brook",
+    "voted_for": "Jordan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 3,
+    "voter": "Jordan",
+    "voted_for": "Avery",
+    "is_ai_voter": false
+  },
+  {
+    "round": 3,
+    "voter": "Morgan",
+    "voted_for": "Brook",
+    "is_ai_voter": false
+  },
+  {
+    "round": 3,
+    "voter": "Avery",
+    "voted_for": "Jordan",
+    "is_ai_voter": false
+  },
+  {
+    "round": 4,
+    "voter": "Brook",
+    "voted_for": "Morgan",
+    "is_ai_voter": true
+  },
+  {
+    "round": 4,
+    "voter": "Morgan",
+    "voted_for": "Brook",
+    "is_ai_voter": false
+  },
+  {
+    "round": 4,
+    "voter": "Avery",
+    "voted_for": "Morgan",
+    "is_ai_voter": false
+  }
+]

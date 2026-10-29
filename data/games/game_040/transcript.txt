@@ -1,0 +1,31 @@
+[00:54:44] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[00:55:01] Jordan: greetings fellow humans
+[00:55:05] Skylar: hey everyone
+[00:55:07] Morgan: hi all
+[00:55:18] Taylor: hello hello, where are you guys from?
+[00:55:24] Morgan: brazil here
+[00:55:28] Morgan: what about you guys
+[00:55:29] Casey: hello
+[00:55:32] Taylor: finland
+[00:55:38] Skylar: switzerland for me
+[00:55:45] Jordan: canada over here
+[00:55:46] Casey: united kingdom
+[00:56:17] Skylar: anyone playing any games lately
+[00:56:25] Taylor: no
+[00:56:30] Casey: how are you all doing today?
+[00:56:44] Casey: no
+[00:56:49] Taylor: doing ok, trying to get some money on prolific before sleep
+[00:56:57] Morgan: yeah, just playing some swedish crossword puzzles
+[00:56:58] Taylor: wbu
+[00:57:06] Skylar: just chilling now
+[00:57:14] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[00:57:58] Game-Manager: 🗳️ Vote results:
+    Skylar: 2
+    Jordan: 1
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Skylar
+[00:57:58] Game-Manager: 📣 Skylar was eliminated. They were: AI

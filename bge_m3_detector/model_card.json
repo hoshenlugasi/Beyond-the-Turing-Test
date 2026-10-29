@@ -1,0 +1,103 @@
+{
+  "name": "Social Turing Test BGE-M3 + LDA message detector",
+  "format_version": 1,
+  "classifier": {
+    "type": "LinearDiscriminantAnalysis",
+    "training_parameters": {
+      "covariance_estimator": null,
+      "n_components": null,
+      "priors": null,
+      "shrinkage": null,
+      "solver": "svd",
+      "store_covariance": false,
+      "tol": 0.0001
+    },
+    "weights_file": "classifier.npz",
+    "weights_sha256": "9e2d6eaf7923604c84b38585b94c3e94e42fef00e5eb2e7672589da2b279d578",
+    "export": "Binary linear decision rule; no pickle or executable serialization",
+    "embedding_dimensions": 1024,
+    "classes": {
+      "0": "human",
+      "1": "agent"
+    },
+    "decision_rule": "agent iff embedding @ coef.T + intercept > 0",
+    "posterior": "agent_probability = sigmoid(decision_score); not calibrated"
+  },
+  "encoder": {
+    "repository": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "normalize_embeddings": true,
+    "fine_tuned": false,
+    "redistributed": false
+  },
+  "preprocessing": {
+    "strip_whitespace": true,
+    "mask_player_names": true,
+    "name_replacement": "<name>",
+    "name_matching": "Case-insensitive regex word boundaries, longest name first",
+    "lowercase": true,
+    "mask_persona_terms": false
+  },
+  "training": {
+    "games": 50,
+    "messages": 2414,
+    "human_messages": 1895,
+    "agent_messages": 519,
+    "cohort_sha256": "a44cd705e176a2eb1d01160ef4a7a4703caa47e7fc2ff3c79d2f26cd5ea39db9",
+    "message_source": "transcripts/public_daytime_chat.txt (delivered public messages only)",
+    "condition": "Historical post-W15 Flash cohort; 34 five-human and 16 four-human games"
+  },
+  "evaluation": {
+    "protocol": "in-sample: fit and predict on the same 2414 messages",
+    "macro_f1": 0.937093034266331,
+    "balanced_accuracy": 0.9306790509453435,
+    "confusion_matrix_human_agent": [
+      [
+        1855,
+        40
+      ],
+      [
+        61,
+        458
+      ]
+    ],
+    "reference_macro_f1": 0.937093034266331,
+    "export_prediction_matches": 2414,
+    "export_probability_max_absolute_error": 0.0,
+    "warning": "Not held-out performance or evidence of general-purpose AI detection."
+  },
+  "provenance": {
+    "status": "Refit from original messages; original trained object was not persisted",
+    "reference_result": "analysis/results_takeaways/text_detector_bge.json",
+    "reference_function": "analysis/text_detector.py::eckhaus_protocol",
+    "original_runtime": {
+      "python": "3.12.10",
+      "numpy": "2.2.6",
+      "scikit_learn": "1.6.1",
+      "cohort_sha256": "a44cd705e176a2eb1d01160ef4a7a4703caa47e7fc2ff3c79d2f26cd5ea39db9",
+      "sentence_transformers": "4.0.2",
+      "transformers": "4.57.6",
+      "torch": "2.14.0+cpu",
+      "device": "cpu",
+      "embedding_normalization": true,
+      "model_repository": "BAAI/bge-m3",
+      "model_commit_hash": "5617a9f61b028005a4858fdac845db406aefb181"
+    },
+    "export_runtime": {
+      "python": "3.12.10",
+      "numpy": "2.2.6",
+      "scipy": "1.17.1",
+      "scikit_learn": "1.6.1",
+      "torch": "2.14.0+cpu",
+      "device": "cpu"
+    },
+    "exported_at_utc": "2026-10-29T09:58:59.202173+00:00"
+  },
+  "limitations": [
+    "Trained on one fixed agent condition, not arbitrary AI models.",
+    "The 0.937 result uses the training messages themselves.",
+    "Names must be supplied to reproduce the original masking on new conversations.",
+    "The public dataset contains redactions and is not claimed to reproduce the exact fit.",
+    "Do not use the detector alone for moderation, identity verification, or sanctions."
+  ]
+}

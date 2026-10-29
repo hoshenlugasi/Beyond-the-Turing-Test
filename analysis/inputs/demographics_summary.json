@@ -1,0 +1,21 @@
+{
+  "n_available": 226,
+  "age": {
+    "mean": 31.88,
+    "sd": 9.66,
+    "median": 30.0,
+    "min": 18.0,
+    "max": 70.0
+  },
+  "sex": {
+    "Male": 130,
+    "Female": 94,
+    "Prefer not to say": 2
+  },
+  "number_of_countries_of_residence": 37,
+  "most_common_countries_of_residence": {
+    "United Kingdom": 30,
+    "South Africa": 27,
+    "Poland": 20
+  }
+}

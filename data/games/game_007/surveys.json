@@ -1,0 +1,42 @@
+[
+  {
+    "participant": "Jordan",
+    "human_likeness": 3,
+    "timing": 2,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "the AI always replied something that was relevant to a previous message and always asked the same thing",
+    "additional_comments": "None"
+  },
+  {
+    "participant": "Morgan",
+    "human_likeness": 4,
+    "timing": 4,
+    "relevance": 3,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "Too textbook",
+    "additional_comments": "Thanks for te oportunity"
+  },
+  {
+    "participant": "Avery",
+    "human_likeness": 5,
+    "timing": 5,
+    "relevance": 5,
+    "survey_schema": "web_v1",
+    "enjoyment": 5,
+    "suspicion_reason": "Nothing actually made me think of mickey as the ai agent",
+    "additional_comments": "none"
+  },
+  {
+    "participant": "Taylor",
+    "human_likeness": 3,
+    "timing": 3,
+    "relevance": 4,
+    "survey_schema": "web_v1",
+    "enjoyment": 4,
+    "suspicion_reason": "I suspected Mickey from the first interactions. But then the other humans starting talking like a bot too so I got confused.",
+    "additional_comments": "It was fun."
+  }
+]

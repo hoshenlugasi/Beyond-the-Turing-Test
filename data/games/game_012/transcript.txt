@@ -1,0 +1,93 @@
+[18:48:43] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:48:47] Avery: heelo
+[18:48:50] Jordan: hi
+[18:48:52] Morgan: hiii
+[18:48:53] Taylor: hello everyone
+[18:48:58] Finley: hey everyone
+[18:48:59] Taylor: nice to meet you all
+[18:49:03] Jordan: whats up?
+[18:49:09] Jordan: nice to meet u too
+[18:49:13] Finley: not much you
+[18:49:19] Taylor: is everyone having a good day?
+[18:49:32] Avery: how are you?
+[18:49:33] Morgan: the day is good, thanks.
+[18:49:36] Jordan: kind of a good day
+[18:49:42] Taylor: i'm good thanks
+[18:49:46] Avery: what are they doing?
+[18:49:50] Finley: yeah all good too
+[18:50:15] Avery: where are you guys from?
+[18:50:28] Taylor: whats everyone up to today, anything exciting?
+[18:50:31] Finley: switzerland here
+[18:50:34] Jordan: i don't think we should disclose this type of info
+[18:50:38] Taylor: uk
+[18:50:40] Avery: i from brazil
+[18:50:55] Morgan: uhm, are we allowed to disclose this type of info?
+[18:51:08] Avery: i think it's jordan or morgan, haha.
+[18:51:13] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:51:25] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Jordan: 2
+    Taylor: 1
+    → eliminated: Jordan
+[18:51:25] Game-Manager: 📣 Jordan was eliminated. They were: Human
+[18:51:25] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:51:51] Morgan: guys? is anyone here still?
+[18:51:55] Taylor: i am hungry and looking forward to some nice food
+[18:51:57] Avery: jordan was human about morgan in
+[18:51:58] Finley: yeah still here
+[18:52:20] Morgan: i am coming down with flu so, not feeling good at all.
+[18:52:20] Taylor: yep still here
+[18:52:25] Avery: who do they think it is?
+[18:52:28] Finley: that flu sounds rough morgan
+[18:52:34] Taylor: sorry to hear that morgan,
+[18:52:47] Morgan: thanks guys.
+[18:52:50] Avery: i'm going to vote for morgan.
+[18:52:50] Taylor: hopefully you feel better soon,
+[18:53:03] Taylor: i think avery
+[18:53:07] Morgan: thank you taylor.
+[18:53:12] Finley: i heard some news about switzerland today too actually
+[18:53:24] Taylor: whats that?#
+[18:53:28] Avery: because i
+[18:53:32] Morgan: who do we think is the ai?
+[18:53:36] Finley: they're opening a new tunnel, pretty big deal for us
+[18:53:49] Avery: morgan or taylor
+[18:53:53] Finley: not sure but avery's comments are a bit strange
+[18:53:55] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:54:02] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Avery
+[18:54:02] Game-Manager: 📣 Avery was eliminated. They were: Human
+[18:54:02] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[18:54:19] Taylor: ah man, feel bad for avery
+[18:54:29] Finley: i thought it might be morgan this round
+[18:54:34] Morgan: same actually.
+[18:54:43] Taylor: i am confused now, thought it was avery
+[18:54:46] Finley: who are you voting for next
+[18:54:55] Morgan: i think it may be taylor
+[18:55:04] Taylor: do you think there could have been more than 1
+[18:55:26] Morgan: more than one ai chatbot?
+[18:55:30] Finley: not sure actually
+[18:55:37] Taylor: yeah to confuse us
+[18:55:51] Taylor: though this would be easier to work out
+[18:56:00] Taylor: thought
+[18:56:05] Morgan: there is only 3 of us now, so now i am confused.
+[18:56:16] Finley: yeah it's getting tricky now
+[18:56:30] Finley: yeah that's what makes it tough
+[18:56:32] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[18:56:38] Game-Manager: 🗳️ Vote results:
+    Finley: 1
+    Morgan: 1
+    Taylor: 1
+    → eliminated: Morgan
+[18:56:38] Game-Manager: 📣 Morgan was eliminated. They were: Human

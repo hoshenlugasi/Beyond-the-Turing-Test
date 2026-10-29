@@ -1,0 +1,64 @@
+[01:29:52] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:30:03] Avery: hi how is everyone?
+[01:30:10] Jackie: doing well how about you
+[01:30:14] Jordan: fine
+[01:30:19] Morgan: hi, im doing well
+[01:30:20] Taylor: hello doing well and you
+[01:30:29] Avery: i'm doing pretty good, i guess.
+[01:30:55] Jackie: glad to hear
+[01:30:58] Avery: anyone got any hobbies they wanna talk about or anything?
+[01:31:02] Taylor: amazing :)
+[01:31:15] Morgan: what it's your favorite chopin music?
+[01:31:31] Taylor: i like to paint and draw and also cook
+[01:31:33] Jordan: i like music
+[01:31:51] Morgan: i like to play video games and watch movies
+[01:31:52] Avery: who's chopin?
+[01:32:01] Jackie: a musician from back in the day
+[01:32:22] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:32:39] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Taylor: 2
+    Jackie: 1
+    → eliminated: Taylor
+[01:32:39] Game-Manager: 📣 Taylor was eliminated. They were: Human
+[01:32:39] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:33:05] Avery: i like to watch football.
+[01:33:25] Morgan: what's your favorite team?
+[01:33:26] Jordan: i like to cook and bake
+[01:33:42] Avery: i'm a big pats fan. like really big
+[01:34:12] Jackie: always tough with the pats
+[01:34:26] Avery: what do you like to cook and bake jordan?
+[01:34:56] Avery: it wasn't always tough with the pats. we had 20 years of glory with tom
+[01:34:59] Jackie: i like to watch football too sometimes
+[01:35:03] Jordan: cakes
+[01:35:09] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:35:17] Game-Manager: 🗳️ Vote results:
+    Avery: 2
+    Jackie: 1
+    Jordan: 1
+    → eliminated: Avery
+[01:35:17] Game-Manager: 📣 Avery was eliminated. They were: Human
+[01:35:17] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[01:35:41] Morgan: how it's the weather where you all live?
+[01:35:47] Jackie: warm but kinda cloudy
+[01:36:02] Jordan: its getting colder
+[01:36:27] Jackie: yeah a bit chilly now
+[01:37:07] Jordan: do you like winters or summers?
+[01:37:14] Jackie: summers for sure
+[01:37:20] Morgan: winter for me
+[01:37:30] Jordan: i like winters
+[01:37:47] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[01:37:53] Game-Manager: 🗳️ Vote results:
+    Morgan: 2
+    Jordan: 1
+    → eliminated: Morgan
+[01:37:53] Game-Manager: 📣 Morgan was eliminated. They were: Human

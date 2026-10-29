@@ -1,0 +1,74 @@
+[13:22:47] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:23:04] Taylor: hi everyone
+[13:23:08] Remi: hey there
+[13:23:12] Casey: hi!!
+[13:23:12] Morgan: hello
+[13:23:40] Morgan: so maybe the one who is ai will tell us that ?
+[13:23:43] Remi: nice to meet everyone
+[13:24:09] Quinn: hello
+[13:24:15] Taylor: what do you do in your free time?
+[13:24:41] Casey: yes, lets answer some questions, that way it is easier
+[13:24:53] Remi: i like to hike sometimes
+[13:24:56] Quinn: i watch movies and enjoy spending time with my partner
+[13:24:59] Morgan: i like to go swimming
+[13:25:07] Casey: i like going to the beach
+[13:25:17] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:25:49] Game-Manager: 🗳️ Vote results:
+    Quinn: 2
+    Morgan: 1
+    Remi: 1
+    Taylor: 1
+    → eliminated: Quinn
+[13:25:49] Game-Manager: 📣 Quinn was eliminated. They were: Human
+[13:25:49] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:26:00] Taylor: oops
+[13:26:06] Remi: oops for real haha
+[13:26:08] Casey: ....
+[13:26:16] Morgan: fun game xd
+[13:26:22] Remi: yeah that was quick
+[13:26:55] Morgan: remi are you a human?
+[13:27:05] Remi: haha what kind of question is that
+[13:27:19] Morgan: and casey?
+[13:27:38] Casey: haha yes, i am
+[13:27:39] Taylor: morgan and you?
+[13:27:55] Morgan: yes i am a human
+[13:27:55] Casey: in the flesh
+[13:28:00] Remi: is anyone not human haha
+[13:28:10] Taylor: that would be suprising
+[13:28:19] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:28:28] Game-Manager: 🗳️ Vote results:
+    Morgan: 2
+    Casey: 1
+    Remi: 1
+    → eliminated: Morgan
+[13:28:28] Game-Manager: 📣 Morgan was eliminated. They were: Human
+[13:28:28] Game-Manager: 📣 🎮 Welcome! Let's play 🕵️
+
+You have 2.5 minutes to chat.
+One of you is an AI — can you find them? 👀
+[13:28:38] Taylor: ok so i think that everybody is a human
+[13:28:41] Casey: omg again
+[13:28:43] Taylor: because there are 5 slots in this study
+[13:28:46] Remi: for now, i guess
+[13:29:22] Remi: that makes sense
+[13:29:41] Casey: we didnt vote the ai out
+[13:29:52] Casey: so no everyone here is human
+[13:29:54] Taylor: i think that there is no ai here
+[13:30:03] Remi: we sure about that
+[13:30:33] Remi: somebody here has to be
+[13:30:38] Casey: exactly
+[13:30:44] Taylor: i dont think so
+[13:30:47] Remi: yeah who could it be then
+[13:30:58] Game-Manager: 📣 Discussion phase has ended, now it's time to vote! Who do you think is the AI? Waiting for all players to vote...
+[13:31:15] Game-Manager: 🗳️ Vote results:
+    Casey: 1
+    Remi: 1
+    Taylor: 1
+    → eliminated: Casey
+[13:31:15] Game-Manager: 📣 Casey was eliminated. They were: Human
